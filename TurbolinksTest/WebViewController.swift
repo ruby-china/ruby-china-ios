@@ -17,10 +17,9 @@ class WebViewController: VisitableViewController {
         
         navController = self.navigationController as! ApplicationController
         
-        
-//        if (navigationItem) {
+        if (navController.viewControllers.count == 1) {
             navigationItem.leftBarButtonItem = navController.menuButton
-//        }
+        }
         navigationItem.rightBarButtonItem = navController.notificationsButton
         // Do any additional setup after loading the view, typically from a nib.
     }
