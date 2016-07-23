@@ -15,9 +15,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "9670F18B1D4235D200128F8A"
-               BuildableName = "TurbolinksTest.app"
-               BlueprintName = "TurbolinksTest"
-               ReferencedContainer = "container:ruby-china.xcodeproj">
+               BuildableName = "Ruby China.app"
+               BlueprintName = "ruby-china-ios"
+               ReferencedContainer = "container:ruby-china-ios.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -33,9 +33,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "9670F18B1D4235D200128F8A"
-            BuildableName = "TurbolinksTest.app"
-            BlueprintName = "TurbolinksTest"
-            ReferencedContainer = "container:ruby-china.xcodeproj">
+            BuildableName = "Ruby China.app"
+            BlueprintName = "ruby-china-ios"
+            ReferencedContainer = "container:ruby-china-ios.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
       <AdditionalOptions>
@@ -56,9 +56,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "9670F18B1D4235D200128F8A"
-            BuildableName = "TurbolinksTest.app"
-            BlueprintName = "TurbolinksTest"
-            ReferencedContainer = "container:ruby-china.xcodeproj">
+            BuildableName = "Ruby China.app"
+            BlueprintName = "ruby-china-ios"
+            ReferencedContainer = "container:ruby-china-ios.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
       <AdditionalOptions>
@@ -75,9 +75,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "9670F18B1D4235D200128F8A"
-            BuildableName = "TurbolinksTest.app"
-            BlueprintName = "TurbolinksTest"
-            ReferencedContainer = "container:ruby-china.xcodeproj">
+            BuildableName = "Ruby China.app"
+            BlueprintName = "ruby-china-ios"
+            ReferencedContainer = "container:ruby-china-ios.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </ProfileAction>

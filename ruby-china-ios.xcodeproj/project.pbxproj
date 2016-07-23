@@ -20,7 +20,7 @@
 		963895F01D4239C400A43352 /* Turbolinks.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Turbolinks.framework; path = Carthage/Build/iOS/Turbolinks.framework; sourceTree = "<group>"; };
 		966F56D51D432C7A0069135F /* ApplicationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ApplicationController.swift; sourceTree = "<group>"; };
 		966F56D71D4345650069135F /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		9670F18C1D4235D200128F8A /* TurbolinksTest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TurbolinksTest.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		9670F18C1D4235D200128F8A /* Ruby China.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Ruby China.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		9670F18F1D4235D200128F8A /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		9670F1911D4235D200128F8A /* WebViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebViewController.swift; sourceTree = "<group>"; };
 		9670F1941D4235D200128F8A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -44,7 +44,7 @@
 			isa = PBXGroup;
 			children = (
 				963895F01D4239C400A43352 /* Turbolinks.framework */,
-				9670F18E1D4235D200128F8A /* TurbolinksTest */,
+				9670F18E1D4235D200128F8A /* ruby-china-ios */,
 				9670F18D1D4235D200128F8A /* Products */,
 			);
 			sourceTree = "<group>";
@@ -52,12 +52,12 @@
 		9670F18D1D4235D200128F8A /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				9670F18C1D4235D200128F8A /* TurbolinksTest.app */,
+				9670F18C1D4235D200128F8A /* Ruby China.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
 		};
-		9670F18E1D4235D200128F8A /* TurbolinksTest */ = {
+		9670F18E1D4235D200128F8A /* ruby-china-ios */ = {
 			isa = PBXGroup;
 			children = (
 				966F56D71D4345650069135F /* Assets.xcassets */,
@@ -68,15 +68,15 @@
 				9670F19B1D4235D200128F8A /* Info.plist */,
 				966F56D51D432C7A0069135F /* ApplicationController.swift */,
 			);
-			path = TurbolinksTest;
+			path = "ruby-china-ios";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		9670F18B1D4235D200128F8A /* TurbolinksTest */ = {
+		9670F18B1D4235D200128F8A /* ruby-china-ios */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 9670F19E1D4235D200128F8A /* Build configuration list for PBXNativeTarget "TurbolinksTest" */;
+			buildConfigurationList = 9670F19E1D4235D200128F8A /* Build configuration list for PBXNativeTarget "ruby-china-ios" */;
 			buildPhases = (
 				9670F1881D4235D200128F8A /* Sources */,
 				9670F1891D4235D200128F8A /* Frameworks */,
@@ -87,9 +87,9 @@
 			);
 			dependencies = (
 			);
-			name = TurbolinksTest;
-			productName = TurbolinksTest;
-			productReference = 9670F18C1D4235D200128F8A /* TurbolinksTest.app */;
+			name = "ruby-china-ios";
+			productName = "ruby-china-ios";
+			productReference = 9670F18C1D4235D200128F8A /* Ruby China.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -107,7 +107,7 @@
 					};
 				};
 			};
-			buildConfigurationList = 9670F1871D4235D200128F8A /* Build configuration list for PBXProject "ruby-china" */;
+			buildConfigurationList = 9670F1871D4235D200128F8A /* Build configuration list for PBXProject "ruby-china-ios" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
@@ -120,7 +120,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				9670F18B1D4235D200128F8A /* TurbolinksTest */,
+				9670F18B1D4235D200128F8A /* ruby-china-ios */,
 			);
 		};
 /* End PBXProject section */
@@ -280,10 +280,10 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/Carthage/Build/iOS",
 				);
-				INFOPLIST_FILE = TurbolinksTest/Info.plist;
+				INFOPLIST_FILE = "ruby-china-ios/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.ruby-china.app";
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = "Ruby China";
 			};
 			name = Debug;
 		};
@@ -296,17 +296,17 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/Carthage/Build/iOS",
 				);
-				INFOPLIST_FILE = TurbolinksTest/Info.plist;
+				INFOPLIST_FILE = "ruby-china-ios/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.ruby-china.app";
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = "Ruby China";
 			};
 			name = Release;
 		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		9670F1871D4235D200128F8A /* Build configuration list for PBXProject "ruby-china" */ = {
+		9670F1871D4235D200128F8A /* Build configuration list for PBXProject "ruby-china-ios" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				9670F19C1D4235D200128F8A /* Debug */,
@@ -315,7 +315,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		9670F19E1D4235D200128F8A /* Build configuration list for PBXNativeTarget "TurbolinksTest" */ = {
+		9670F19E1D4235D200128F8A /* Build configuration list for PBXNativeTarget "ruby-china-ios" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				9670F19F1D4235D200128F8A /* Debug */,
