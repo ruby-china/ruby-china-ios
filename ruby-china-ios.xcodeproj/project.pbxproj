@@ -107,7 +107,7 @@
 					};
 				};
 			};
-			buildConfigurationList = 9670F1871D4235D200128F8A /* Build configuration list for PBXProject "TurbolinksTest" */;
+			buildConfigurationList = 9670F1871D4235D200128F8A /* Build configuration list for PBXProject "ruby-china" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
@@ -282,7 +282,7 @@
 				);
 				INFOPLIST_FILE = TurbolinksTest/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "com.ruby-china.turbolinks";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.ruby-china.app";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Debug;
@@ -298,7 +298,7 @@
 				);
 				INFOPLIST_FILE = TurbolinksTest/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "com.ruby-china.turbolinks";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.ruby-china.app";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Release;
@@ -306,7 +306,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		9670F1871D4235D200128F8A /* Build configuration list for PBXProject "TurbolinksTest" */ = {
+		9670F1871D4235D200128F8A /* Build configuration list for PBXProject "ruby-china" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				9670F19C1D4235D200128F8A /* Debug */,

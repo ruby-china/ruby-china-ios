@@ -2,6 +2,6 @@
 <Workspace
    version = "1.0">
    <FileRef
-      location = "self:TurbolinksTest.xcodeproj">
+      location = "self:/Users/jason/work/TurbolinksTest/ruby-china.xcodeproj">
    </FileRef>
 </Workspace>

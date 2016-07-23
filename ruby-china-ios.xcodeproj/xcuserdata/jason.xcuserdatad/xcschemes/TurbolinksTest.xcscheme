@@ -17,7 +17,7 @@
                BlueprintIdentifier = "9670F18B1D4235D200128F8A"
                BuildableName = "TurbolinksTest.app"
                BlueprintName = "TurbolinksTest"
-               ReferencedContainer = "container:TurbolinksTest.xcodeproj">
+               ReferencedContainer = "container:ruby-china.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -35,7 +35,7 @@
             BlueprintIdentifier = "9670F18B1D4235D200128F8A"
             BuildableName = "TurbolinksTest.app"
             BlueprintName = "TurbolinksTest"
-            ReferencedContainer = "container:TurbolinksTest.xcodeproj">
+            ReferencedContainer = "container:ruby-china.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
       <AdditionalOptions>
@@ -58,7 +58,7 @@
             BlueprintIdentifier = "9670F18B1D4235D200128F8A"
             BuildableName = "TurbolinksTest.app"
             BlueprintName = "TurbolinksTest"
-            ReferencedContainer = "container:TurbolinksTest.xcodeproj">
+            ReferencedContainer = "container:ruby-china.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
       <AdditionalOptions>
@@ -77,7 +77,7 @@
             BlueprintIdentifier = "9670F18B1D4235D200128F8A"
             BuildableName = "TurbolinksTest.app"
             BlueprintName = "TurbolinksTest"
-            ReferencedContainer = "container:TurbolinksTest.xcodeproj">
+            ReferencedContainer = "container:ruby-china.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </ProfileAction>
