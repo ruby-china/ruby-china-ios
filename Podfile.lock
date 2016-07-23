@@ -1,0 +1,24 @@
+PODS:
+  - SideMenu (1.1.7)
+  - Turbolinks (1.0.2)
+
+DEPENDENCIES:
+  - SideMenu
+  - Turbolinks (from `https://github.com/turbolinks/turbolinks-ios.git`)
+
+EXTERNAL SOURCES:
+  Turbolinks:
+    :git: https://github.com/turbolinks/turbolinks-ios.git
+
+CHECKOUT OPTIONS:
+  Turbolinks:
+    :commit: b8702ffd6e06748120a678949fdde6dfc3edd397
+    :git: https://github.com/turbolinks/turbolinks-ios.git
+
+SPEC CHECKSUMS:
+  SideMenu: 7b420772e1aa7a2b3a0b0e191566e7e8e0868f53
+  Turbolinks: d8209bab43803adae8c06d434368e16479023407
+
+PODFILE CHECKSUM: 4b7976232cd3306d6ccc1a196121cac3bc0d7968
+
+COCOAPODS: 1.0.1

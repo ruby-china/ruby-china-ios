@@ -14,9 +14,12 @@
 		9670F1921D4235D200128F8A /* WebViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9670F1911D4235D200128F8A /* WebViewController.swift */; };
 		9670F1951D4235D200128F8A /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9670F1931D4235D200128F8A /* Main.storyboard */; };
 		9670F19A1D4235D200128F8A /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9670F1981D4235D200128F8A /* LaunchScreen.storyboard */; };
+		E8009FD8B1AB73F4FB8C336F /* Pods_ruby_china_ios.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3D8873230E620CCF5BBCEE42 /* Pods_ruby_china_ios.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		27849C620AD961F60F073D43 /* Pods-ruby-china-ios.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ruby-china-ios.release.xcconfig"; path = "Pods/Target Support Files/Pods-ruby-china-ios/Pods-ruby-china-ios.release.xcconfig"; sourceTree = "<group>"; };
+		3D8873230E620CCF5BBCEE42 /* Pods_ruby_china_ios.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ruby_china_ios.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		963895F01D4239C400A43352 /* Turbolinks.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Turbolinks.framework; path = Carthage/Build/iOS/Turbolinks.framework; sourceTree = "<group>"; };
 		966F56D51D432C7A0069135F /* ApplicationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ApplicationController.swift; sourceTree = "<group>"; };
 		966F56D71D4345650069135F /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -26,6 +29,7 @@
 		9670F1941D4235D200128F8A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		9670F1991D4235D200128F8A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		9670F19B1D4235D200128F8A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		C095BB2F4502B2B10DA854CC /* Pods-ruby-china-ios.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ruby-china-ios.debug.xcconfig"; path = "Pods/Target Support Files/Pods-ruby-china-ios/Pods-ruby-china-ios.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -34,18 +38,29 @@
 			buildActionMask = 2147483647;
 			files = (
 				963895F11D4239C400A43352 /* Turbolinks.framework in Frameworks */,
+				E8009FD8B1AB73F4FB8C336F /* Pods_ruby_china_ios.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		697FC324893655A09B22EB35 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				3D8873230E620CCF5BBCEE42 /* Pods_ruby_china_ios.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		9670F1831D4235D200128F8A = {
 			isa = PBXGroup;
 			children = (
 				963895F01D4239C400A43352 /* Turbolinks.framework */,
 				9670F18E1D4235D200128F8A /* ruby-china-ios */,
 				9670F18D1D4235D200128F8A /* Products */,
+				D75ADDEB9F2D0E7BEA5059E6 /* Pods */,
+				697FC324893655A09B22EB35 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -71,6 +86,15 @@
 			path = "ruby-china-ios";
 			sourceTree = "<group>";
 		};
+		D75ADDEB9F2D0E7BEA5059E6 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				C095BB2F4502B2B10DA854CC /* Pods-ruby-china-ios.debug.xcconfig */,
+				27849C620AD961F60F073D43 /* Pods-ruby-china-ios.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -78,10 +102,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 9670F19E1D4235D200128F8A /* Build configuration list for PBXNativeTarget "ruby-china-ios" */;
 			buildPhases = (
+				4DF31C8E3D733AA7E3104E8F /* [CP] Check Pods Manifest.lock */,
 				9670F1881D4235D200128F8A /* Sources */,
 				9670F1891D4235D200128F8A /* Frameworks */,
 				9670F18A1D4235D200128F8A /* Resources */,
-				963895F21D4239D800A43352 /* ShellScript */,
+				A493C2F4C2D843A7EC1873C7 /* [CP] Embed Pods Frameworks */,
+				B1E4A300D82B62D2BD015D93 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -139,19 +165,50 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		963895F21D4239D800A43352 /* ShellScript */ = {
+		4DF31C8E3D733AA7E3104E8F /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
-				"$(SRCROOT)/Carthage/Build/iOS/Turbolinks.framework",
 			);
+			name = "[CP] Check Pods Manifest.lock";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "/usr/local/bin/carthage copy-frameworks";
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		A493C2F4C2D843A7EC1873C7 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-ruby-china-ios/Pods-ruby-china-ios-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		B1E4A300D82B62D2BD015D93 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-ruby-china-ios/Pods-ruby-china-ios-resources.sh\"\n";
+			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -273,6 +330,7 @@
 		};
 		9670F19F1D4235D200128F8A /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = C095BB2F4502B2B10DA854CC /* Pods-ruby-china-ios.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = "Brand Assets";
@@ -289,6 +347,7 @@
 		};
 		9670F1A01D4235D200128F8A /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 27849C620AD961F60F073D43 /* Pods-ruby-china-ios.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = "Brand Assets";
