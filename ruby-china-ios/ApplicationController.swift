@@ -2,13 +2,16 @@ import UIKit
 import WebKit
 import Turbolinks
 import SafariServices
+import SideMenu
 
 class ApplicationController: UINavigationController {
-    private let URL = NSURL(string: "http://192.168.0.75:3000/topics")!
-    private let URL_NOTIFICATIONS = NSURL(string: "http://192.168.0.75:3000/notifications")!
+    private let ROOT_URL = "http://192.168.0.75:3000"
     private let webViewProcessPool = WKProcessPool()
     var menuButton = UIBarButtonItem()
     var notificationsButton = UIBarButtonItem()
+    var mainStoryboard = UIStoryboard.init(name: "Main", bundle: nil)
+    var sideMenuController: SideMenuNavigationController?
+    var sideMenuTableViewController: SideMenuViewController?
     
     private var application: UIApplication {
         return UIApplication.sharedApplication()
@@ -16,7 +19,6 @@ class ApplicationController: UINavigationController {
     
     private lazy var webViewConfiguration: WKWebViewConfiguration = {
         let configuration = WKWebViewConfiguration()
-//        configuration.userContentController.addScriptMessageHandler(self, name: "ruby-china")
         configuration.processPool = self.webViewProcessPool
         configuration.applicationNameForUserAgent = "ruby-china-turbolinks"
         return configuration
@@ -33,20 +35,25 @@ class ApplicationController: UINavigationController {
         
         navigationBar.tintColor = UIColor.blackColor()
         
-        menuButton = UIBarButtonItem.init(image: UIImage.init(named: "menu"), style: .Plain, target: self, action: #selector(ApplicationController.actionNotifications))
+        initSideMenu()
+        
+        menuButton = UIBarButtonItem.init(image: UIImage.init(named: "menu"), style: .Plain, target: self, action: #selector(ApplicationController.actionSideMenu))
         
         notificationsButton = UIBarButtonItem.init(image: UIImage.init(named: "box"), style: .Plain, target: self, action: #selector(ApplicationController.actionNotifications))
         
-        presentVisitableForSession(session, URL: URL)
+        actionToPath("/topics", withAction: .Restore)
     }
     
-    private func presentVisitableForSession(session: Session, URL: NSURL, action: Action = .Advance) {
-        let visitable = WebViewController(URL: URL)
+    private func presentVisitableForSession(session: Session, path: String, withAction action: Action = .Advance) {
+        let visitable = WebViewController(URL: NSURL(string: "\(ROOT_URL)\(path)")!)
         
         if action == .Advance {
             pushViewController(visitable, animated: true)
         } else if action == .Replace {
             popViewControllerAnimated(false)
+            pushViewController(visitable, animated: false)
+        } else {
+            viewControllers.removeAll()
             pushViewController(visitable, animated: false)
         }
         
@@ -54,37 +61,48 @@ class ApplicationController: UINavigationController {
     }
 
     func actionNotifications() {
-        presentVisitableForSession(session, URL: URL_NOTIFICATIONS)
+        presentVisitableForSession(session, path: "/notifications")
+    }
+    
+    func actionSideMenu() {
+//        presentViewController(SideMenuManager.menuLeftNavigationController!, animated: true, completion: nil)
+        presentViewController(sideMenuController!, animated: true, completion: nil)
+    }
+    
+    func actionToPath(path: String, withAction action: Action) {
+        presentVisitableForSession(session, path: path, withAction: action)
+    }
+    
+    func initSideMenu() {
+        sideMenuController = mainStoryboard.instantiateViewControllerWithIdentifier("sideMenuController") as?SideMenuNavigationController
+        sideMenuTableViewController = mainStoryboard.instantiateViewControllerWithIdentifier("sideMenuTableViewController") as? SideMenuViewController
+        SideMenuManager.menuLeftNavigationController = sideMenuController
+        SideMenuManager.menuFadeStatusBar = false
+        SideMenuManager.menuAnimationBackgroundColor = UIColor.grayColor()
+        SideMenuManager.menuAddPanGestureToPresent(toView: navigationBar)
+        SideMenuManager.menuAddScreenEdgePanGesturesToPresent(toView: view)
+        
+        NSNotificationCenter.defaultCenter().addObserver(self, selector:#selector(ApplicationController.menuClicked(_:)), name: "menuClicked", object: nil)
+    }
+    
+    func menuClicked(notification: NSNotification) {
+        let userInfo = notification.userInfo as! [String: AnyObject]
+        let path = userInfo["path"] as! String
+        actionToPath(path, withAction: .Restore)
     }
 }
 
 extension ApplicationController: SessionDelegate {
     func session(session: Session, didProposeVisitToURL URL: NSURL, withAction action: Action) {
-        if URL.path == "/numbers" {
-//            presentNumbersViewController()
+        if URL.path == "/account/sign_in" {
+            presentVisitableForSession(session, path: URL.path!, withAction: .Replace)
         } else {
-            presentVisitableForSession(session, URL: URL, action: action)
+            presentVisitableForSession(session, path: URL.path!, withAction: action)
         }
     }
     
     func session(session: Session, didFailRequestForVisitable visitable: Visitable, withError error: NSError) {
         NSLog("ERROR: %@", error)
-//        guard let viewController = visitable as? VisitableViewController, errorCode = ErrorCode(rawValue: error.code) else { return }
-//
-//        switch errorCode {
-//        case .HTTPFailure:
-//            let statusCode = error.userInfo["statusCode"] as! Int
-//            switch statusCode {
-////            case 401:
-////                presentAuthenticationController()
-//            case 404:
-//                viewController.presentError(.HTTPNotFoundError)
-//            default:
-//                viewController.presentError(Error(HTTPStatusCode: statusCode))
-//            }
-//        case .NetworkFailure:
-//            viewController.presentError(.NetworkError)
-//        }
     }
     
     func sessionDidStartRequest(session: Session) {
@@ -117,3 +135,4 @@ extension ApplicationController: WKScriptMessageHandler {
         }
     }
 }
+

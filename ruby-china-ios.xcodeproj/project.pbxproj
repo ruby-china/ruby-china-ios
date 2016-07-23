@@ -7,20 +7,20 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		963895F11D4239C400A43352 /* Turbolinks.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 963895F01D4239C400A43352 /* Turbolinks.framework */; };
 		966F56D61D432C7A0069135F /* ApplicationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 966F56D51D432C7A0069135F /* ApplicationController.swift */; };
 		966F56D81D4345650069135F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 966F56D71D4345650069135F /* Assets.xcassets */; };
 		9670F1901D4235D200128F8A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9670F18F1D4235D200128F8A /* AppDelegate.swift */; };
 		9670F1921D4235D200128F8A /* WebViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9670F1911D4235D200128F8A /* WebViewController.swift */; };
 		9670F1951D4235D200128F8A /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9670F1931D4235D200128F8A /* Main.storyboard */; };
 		9670F19A1D4235D200128F8A /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9670F1981D4235D200128F8A /* LaunchScreen.storyboard */; };
+		969EB8851D436A330004707F /* SideMenuViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 969EB8841D436A330004707F /* SideMenuViewController.swift */; };
+		969EB8871D4372AB0004707F /* SideMenuNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 969EB8861D4372AB0004707F /* SideMenuNavigationController.swift */; };
 		E8009FD8B1AB73F4FB8C336F /* Pods_ruby_china_ios.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3D8873230E620CCF5BBCEE42 /* Pods_ruby_china_ios.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		27849C620AD961F60F073D43 /* Pods-ruby-china-ios.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ruby-china-ios.release.xcconfig"; path = "Pods/Target Support Files/Pods-ruby-china-ios/Pods-ruby-china-ios.release.xcconfig"; sourceTree = "<group>"; };
 		3D8873230E620CCF5BBCEE42 /* Pods_ruby_china_ios.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ruby_china_ios.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		963895F01D4239C400A43352 /* Turbolinks.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Turbolinks.framework; path = Carthage/Build/iOS/Turbolinks.framework; sourceTree = "<group>"; };
 		966F56D51D432C7A0069135F /* ApplicationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ApplicationController.swift; sourceTree = "<group>"; };
 		966F56D71D4345650069135F /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		9670F18C1D4235D200128F8A /* Ruby China.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Ruby China.app"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -29,6 +29,8 @@
 		9670F1941D4235D200128F8A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		9670F1991D4235D200128F8A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		9670F19B1D4235D200128F8A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		969EB8841D436A330004707F /* SideMenuViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SideMenuViewController.swift; sourceTree = "<group>"; };
+		969EB8861D4372AB0004707F /* SideMenuNavigationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SideMenuNavigationController.swift; sourceTree = "<group>"; };
 		C095BB2F4502B2B10DA854CC /* Pods-ruby-china-ios.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ruby-china-ios.debug.xcconfig"; path = "Pods/Target Support Files/Pods-ruby-china-ios/Pods-ruby-china-ios.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -37,7 +39,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				963895F11D4239C400A43352 /* Turbolinks.framework in Frameworks */,
 				E8009FD8B1AB73F4FB8C336F /* Pods_ruby_china_ios.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -56,7 +57,6 @@
 		9670F1831D4235D200128F8A = {
 			isa = PBXGroup;
 			children = (
-				963895F01D4239C400A43352 /* Turbolinks.framework */,
 				9670F18E1D4235D200128F8A /* ruby-china-ios */,
 				9670F18D1D4235D200128F8A /* Products */,
 				D75ADDEB9F2D0E7BEA5059E6 /* Pods */,
@@ -78,10 +78,12 @@
 				966F56D71D4345650069135F /* Assets.xcassets */,
 				9670F18F1D4235D200128F8A /* AppDelegate.swift */,
 				9670F1911D4235D200128F8A /* WebViewController.swift */,
-				9670F1931D4235D200128F8A /* Main.storyboard */,
-				9670F1981D4235D200128F8A /* LaunchScreen.storyboard */,
-				9670F19B1D4235D200128F8A /* Info.plist */,
 				966F56D51D432C7A0069135F /* ApplicationController.swift */,
+				9670F1981D4235D200128F8A /* LaunchScreen.storyboard */,
+				9670F1931D4235D200128F8A /* Main.storyboard */,
+				9670F19B1D4235D200128F8A /* Info.plist */,
+				969EB8841D436A330004707F /* SideMenuViewController.swift */,
+				969EB8861D4372AB0004707F /* SideMenuNavigationController.swift */,
 			);
 			path = "ruby-china-ios";
 			sourceTree = "<group>";
@@ -217,8 +219,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				969EB8851D436A330004707F /* SideMenuViewController.swift in Sources */,
 				966F56D61D432C7A0069135F /* ApplicationController.swift in Sources */,
 				9670F1921D4235D200128F8A /* WebViewController.swift in Sources */,
+				969EB8871D4372AB0004707F /* SideMenuNavigationController.swift in Sources */,
 				9670F1901D4235D200128F8A /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
