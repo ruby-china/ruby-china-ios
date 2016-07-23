@@ -17,6 +17,8 @@ DerivedData/
 !default.perspectivev3
 xcuserdata/
 
+Carthage/
+
 ## Other
 *.moved-aside
 *.xcuserstate
