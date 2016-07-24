@@ -5,8 +5,11 @@ import SafariServices
 import SideMenu
 
 class ApplicationController: UINavigationController {
-    private let ROOT_URL = "http://192.168.0.75:3000"
+    let ROOT_URL = "http://192.168.0.75:3000"
+    let USER_AGENT = "turbolinks-app, ruby-china, official"
+    
     private let webViewProcessPool = WKProcessPool()
+    
     var menuButton = UIBarButtonItem()
     var notificationsButton = UIBarButtonItem()
     var mainStoryboard = UIStoryboard.init(name: "Main", bundle: nil)
@@ -20,7 +23,7 @@ class ApplicationController: UINavigationController {
     private lazy var webViewConfiguration: WKWebViewConfiguration = {
         let configuration = WKWebViewConfiguration()
         configuration.processPool = self.webViewProcessPool
-        configuration.applicationNameForUserAgent = "ruby-china-turbolinks"
+        configuration.applicationNameForUserAgent = self.USER_AGENT
         return configuration
     }()
     

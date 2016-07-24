@@ -30,11 +30,10 @@ class WebViewController: VisitableViewController {
     }
     
     override func visitableDidRender() {
-        title = formatTitle((visitableView.webView?.title)!)
+        title = ""
     }
     
     func formatTitle(title: String) -> String {
-        // ...
         return title.stringByReplacingOccurrencesOfString(" · Ruby China", withString: "")
     }
 }
