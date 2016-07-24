@@ -378,7 +378,7 @@
 				INFOPLIST_FILE = "ruby-china-ios/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				OTHER_SWIFT_FLAGS = "$(inherited) \"-D\" \"DEBUG\"";
-				PRODUCT_BUNDLE_IDENTIFIER = "com.ruby-china.app";
+				PRODUCT_BUNDLE_IDENTIFIER = "org.ruby-china.app";
 				PRODUCT_NAME = "Ruby China";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
@@ -396,7 +396,7 @@
 				);
 				INFOPLIST_FILE = "ruby-china-ios/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "com.ruby-china.app";
+				PRODUCT_BUNDLE_IDENTIFIER = "org.ruby-china.app";
 				PRODUCT_NAME = "Ruby China";
 			};
 			name = Release;
