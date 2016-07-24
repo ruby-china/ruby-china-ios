@@ -62,6 +62,18 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		966D84CA1D449901007CFFDB /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				969E3CE11D448676004D7403 /* ErrorView.xib */,
+				9670F1981D4235D200128F8A /* LaunchScreen.storyboard */,
+				9670F1931D4235D200128F8A /* Main.storyboard */,
+				966F56D71D4345650069135F /* Assets.xcassets */,
+				9670F19B1D4235D200128F8A /* Info.plist */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
 		9670F1831D4235D200128F8A = {
 			isa = PBXGroup;
 			children = (
@@ -83,19 +95,15 @@
 		9670F18E1D4235D200128F8A /* ruby-china-ios */ = {
 			isa = PBXGroup;
 			children = (
-				969E3CE11D448676004D7403 /* ErrorView.xib */,
-				966F56D71D4345650069135F /* Assets.xcassets */,
 				969E3CE31D4486AB004D7403 /* ErrorView.swift */,
 				969E3CE51D4486BB004D7403 /* Error.swift */,
 				9670F18F1D4235D200128F8A /* AppDelegate.swift */,
 				9670F1911D4235D200128F8A /* WebViewController.swift */,
 				966F56D51D432C7A0069135F /* ApplicationController.swift */,
-				9670F1981D4235D200128F8A /* LaunchScreen.storyboard */,
-				9670F1931D4235D200128F8A /* Main.storyboard */,
-				9670F19B1D4235D200128F8A /* Info.plist */,
 				969EB8841D436A330004707F /* SideMenuViewController.swift */,
 				969EB8861D4372AB0004707F /* SideMenuNavigationController.swift */,
 				969E3CDF1D4484B8004D7403 /* LoginViewController.swift */,
+				966D84CA1D449901007CFFDB /* Supporting Files */,
 			);
 			path = "ruby-china-ios";
 			sourceTree = "<group>";
@@ -144,6 +152,7 @@
 				TargetAttributes = {
 					9670F18B1D4235D200128F8A = {
 						CreatedOnToolsVersion = 7.3.1;
+						DevelopmentTeam = A38T799N53;
 						SystemCapabilities = {
 							com.apple.Push = {
 								enabled = 1;

@@ -153,11 +153,27 @@ extension ApplicationController: SessionDelegate {
         application.networkActivityIndicatorVisible = false
     }
     
-    func session(session: Session, openExternalURL URL: NSURL) {
-        let safariViewController = SFSafariViewController(URL: URL)
-        presentViewController(safariViewController, animated: true, completion: nil)
+    func sessionDidLoadWebView(session: Session) {
+        session.webView.navigationDelegate = self
     }
+    
 }
+
+extension ApplicationController: WKNavigationDelegate {
+    func webView(webView: WKWebView, decidePolicyForNavigationAction navigationAction: WKNavigationAction, decisionHandler: (WKNavigationActionPolicy) -> ()) {
+        let url = navigationAction.request.URL
+        if (url?.host != NSURL(string: ROOT_URL)?.host) {
+            let safariViewController = SFSafariViewController(URL: url!)
+            presentViewController(safariViewController, animated: true, completion: nil)
+        } else {
+            actionToPath((url?.path)!, withAction: .Advance)
+        }
+        decisionHandler(.Cancel)
+    }
+    
+
+}
+
 
 extension ApplicationController: LoginViewControllerDelegate {
     func loginViewControllerDidAuthenticate(controller: LoginViewController) {
