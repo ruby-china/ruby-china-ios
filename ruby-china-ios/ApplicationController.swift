@@ -5,7 +5,11 @@ import SafariServices
 import SideMenu
 
 class ApplicationController: UINavigationController {
-    let ROOT_URL = "http://192.168.0.75:3000"
+    #if DEBUG
+    let ROOT_URL = "http://127.0.0.1:3000"
+    #else
+    let ROOT_URL = "https://ruby-china.org"
+    #endif
     let USER_AGENT = "turbolinks-app, ruby-china, official"
     
     private let webViewProcessPool = WKProcessPool()
@@ -23,6 +27,7 @@ class ApplicationController: UINavigationController {
     private lazy var webViewConfiguration: WKWebViewConfiguration = {
         let configuration = WKWebViewConfiguration()
         configuration.processPool = self.webViewProcessPool
+        configuration.userContentController.addScriptMessageHandler(self, name: "ruby-china-turbolinks")
         configuration.applicationNameForUserAgent = self.USER_AGENT
         return configuration
     }()
@@ -92,13 +97,27 @@ class ApplicationController: UINavigationController {
         let userInfo = notification.userInfo as! [String: AnyObject]
         let path = userInfo["path"] as! String
         actionToPath(path, withAction: .Restore)
+        
+        sideMenuController?.dismissViewControllerAnimated(true, completion: nil)
+    }
+    
+    private func presentLoginController() {
+        let controller = LoginViewController()
+        controller.delegate = self
+        controller.webViewConfiguration = webViewConfiguration
+        controller.URL = NSURL(string: "\(ROOT_URL)/account/sign_in")
+        controller.title = "登录"
+        
+        let authNavigationController = UINavigationController(rootViewController: controller)
+        presentViewController(authNavigationController, animated: true, completion: nil)
     }
 }
 
 extension ApplicationController: SessionDelegate {
     func session(session: Session, didProposeVisitToURL URL: NSURL, withAction action: Action) {
-        if URL.path == "/account/sign_in" {
-            presentVisitableForSession(session, path: URL.path!, withAction: .Replace)
+        let path = URL.path
+        if path == "/account/sign_in" {
+            presentLoginController()
         } else {
             presentVisitableForSession(session, path: URL.path!, withAction: action)
         }
@@ -106,6 +125,24 @@ extension ApplicationController: SessionDelegate {
     
     func session(session: Session, didFailRequestForVisitable visitable: Visitable, withError error: NSError) {
         NSLog("ERROR: %@", error)
+        guard let viewController = visitable as? WebViewController, errorCode = ErrorCode(rawValue: error.code) else { return }
+        
+        switch errorCode {
+        case .HTTPFailure:
+            let statusCode = error.userInfo["statusCode"] as! Int
+            switch statusCode {
+            case 401:
+                presentLoginController()
+            case 302:
+                presentLoginController()
+            case 404:
+                viewController.presentError(.HTTPNotFoundError)
+            default:
+                viewController.presentError(Error(HTTPStatusCode: statusCode))
+            }
+        case .NetworkFailure:
+            viewController.presentError(.NetworkError)
+        }
     }
     
     func sessionDidStartRequest(session: Session) {
@@ -122,12 +159,12 @@ extension ApplicationController: SessionDelegate {
     }
 }
 
-//extension ApplicationController: AuthenticationControllerDelegate {
-//    func authenticationControllerDidAuthenticate(authenticationController: AuthenticationController) {
-//        session.reload()
-//        dismissViewControllerAnimated(true, completion: nil)
-//    }
-//}
+extension ApplicationController: LoginViewControllerDelegate {
+    func loginViewControllerDidAuthenticate(controller: LoginViewController) {
+        session.reload()
+        dismissViewControllerAnimated(true, completion: nil)
+    }
+}
 
 extension ApplicationController: WKScriptMessageHandler {
     func userContentController(userContentController: WKUserContentController, didReceiveScriptMessage message: WKScriptMessage) {

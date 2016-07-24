@@ -22,7 +22,7 @@ class SideMenuViewController: UITableViewController {
         // Set up a cool background image for demo purposes
         let imageView = UIImageView(image: UIImage(named: "Appicon"))
         imageView.contentMode = .ScaleAspectFit
-        imageView.backgroundColor = UIColor.blackColor().colorWithAlphaComponent(0.2)
+        imageView.backgroundColor = UIColor.blackColor().colorWithAlphaComponent(0.01)
         tableView.backgroundView = imageView
         
         tableView.delegate = self;

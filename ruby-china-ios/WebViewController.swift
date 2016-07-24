@@ -1,11 +1,3 @@
-//
-//  ViewController.swift
-//  TurbolinksTest
-//
-//  Created by Jason Lee on 16/7/22.
-//  Copyright © 2016年 ruby-china. All rights reserved.
-//
-
 import UIKit
 import Turbolinks
 
@@ -33,8 +25,27 @@ class WebViewController: VisitableViewController {
         title = ""
     }
     
-    func formatTitle(title: String) -> String {
-        return title.stringByReplacingOccurrencesOfString(" · Ruby China", withString: "")
+    lazy var errorView: ErrorView = {
+        let view = NSBundle.mainBundle().loadNibNamed("ErrorView", owner: self, options: nil).first as! ErrorView
+        view.translatesAutoresizingMaskIntoConstraints = false
+        view.retryButton.addTarget(self, action: #selector(retry(_:)), forControlEvents: .TouchUpInside)
+        return view
+    }()
+    
+    func presentError(error: Error) {
+        errorView.error = error
+        view.addSubview(errorView)
+        installErrorViewConstraints()
+    }
+    
+    func installErrorViewConstraints() {
+        view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:|[view]|", options: [], metrics: nil, views: [ "view": errorView ]))
+        view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:|[view]|", options: [], metrics: nil, views: [ "view": errorView ]))
+    }
+    
+    func retry(sender: AnyObject) {
+        errorView.removeFromSuperview()
+        reloadVisitable()
     }
 }
 
