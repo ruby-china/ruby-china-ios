@@ -5,7 +5,7 @@ import SafariServices
 import SideMenu
 
 class ApplicationController: UINavigationController {
-    #if DEBUG
+    #if DEBUG1
     let ROOT_URL = "http://127.0.0.1:3000"
     #else
     let ROOT_URL = "https://ruby-china.org"
