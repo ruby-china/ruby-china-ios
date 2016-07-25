@@ -7,6 +7,8 @@ class WebViewController: VisitableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        visitableView.allowsPullToRefresh = true
+        
         navController = self.navigationController as! ApplicationController
         
         if (navController.viewControllers.count == 1) {
