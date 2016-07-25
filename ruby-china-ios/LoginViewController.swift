@@ -6,7 +6,7 @@ protocol LoginViewControllerDelegate: class {
 }
 
 class LoginViewController: UIViewController {
-    var URL: NSURL?
+    var URL = NSURL(string: "\(ROOT_URL)/account/sign_in")
     var webViewConfiguration: WKWebViewConfiguration?
     weak var delegate: LoginViewControllerDelegate?
     
@@ -20,6 +20,8 @@ class LoginViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        title = "登录"
         
         view.addSubview(webView)
         view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:|[view]|", options: [], metrics: nil, views: [ "view": webView ]))

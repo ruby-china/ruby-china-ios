@@ -9,8 +9,8 @@
 import UIKit
 
 class SideMenuViewController: UITableViewController {
-    let menuItems = ["讨论区", "优质话题", "最近发布", "招聘"]
-    let menuItemPaths = ["/topics", "/topics/popular", "/topics/last", "/jobs"]
+    let menuItems = ["讨论区", "优质话题", "最近发布", "招聘", "创建新话题"]
+    let menuItemPaths = ["/topics", "/topics/popular", "/topics/last", "/jobs", "/topics/new"]
     
     override func viewDidLoad() {
         super.viewDidLoad()

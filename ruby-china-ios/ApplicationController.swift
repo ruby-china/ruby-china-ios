@@ -4,14 +4,7 @@ import Turbolinks
 import SafariServices
 import SideMenu
 
-class ApplicationController: UINavigationController {
-    #if DEBUG1
-    let ROOT_URL = "http://127.0.0.1:3000"
-    #else
-    let ROOT_URL = "https://ruby-china.org"
-    #endif
-    let USER_AGENT = "turbolinks-app, ruby-china, official"
-    
+class ApplicationController: UINavigationController {    
     private let webViewProcessPool = WKProcessPool()
     
     var menuButton = UIBarButtonItem()
@@ -28,7 +21,7 @@ class ApplicationController: UINavigationController {
         let configuration = WKWebViewConfiguration()
         configuration.processPool = self.webViewProcessPool
         configuration.userContentController.addScriptMessageHandler(self, name: "ruby-china-turbolinks")
-        configuration.applicationNameForUserAgent = self.USER_AGENT
+        configuration.applicationNameForUserAgent = USER_AGENT
         return configuration
     }()
     
@@ -78,7 +71,13 @@ class ApplicationController: UINavigationController {
     }
     
     func actionToPath(path: String, withAction action: Action) {
-        presentVisitableForSession(session, path: path, withAction: action)
+        if path == "/account/sign_in" {
+            presentLoginController()
+        } else if (path == "/topics/new") {
+            presentNewTopicController()
+        }else {
+            presentVisitableForSession(session, path: path, withAction: action)
+        }
     }
     
     func initSideMenu() {
@@ -96,31 +95,36 @@ class ApplicationController: UINavigationController {
     func menuClicked(notification: NSNotification) {
         let userInfo = notification.userInfo as! [String: AnyObject]
         let path = userInfo["path"] as! String
-        actionToPath(path, withAction: .Restore)
         
         sideMenuController?.dismissViewControllerAnimated(true, completion: nil)
+        
+        actionToPath(path, withAction: .Restore)
+
     }
     
     private func presentLoginController() {
         let controller = LoginViewController()
         controller.delegate = self
         controller.webViewConfiguration = webViewConfiguration
-        controller.URL = NSURL(string: "\(ROOT_URL)/account/sign_in")
-        controller.title = "登录"
         
-        let authNavigationController = UINavigationController(rootViewController: controller)
-        presentViewController(authNavigationController, animated: true, completion: nil)
+        let navController = UINavigationController(rootViewController: controller)
+        presentViewController(navController, animated: true, completion: nil)
+    }
+    
+    private func presentNewTopicController() {
+        let controller = NewTopicViewController()
+        controller.delegate = self
+        controller.webViewConfiguration = webViewConfiguration
+        
+        let navController = UINavigationController(rootViewController: controller)
+        presentViewController(navController, animated: true, completion: nil)
     }
 }
 
 extension ApplicationController: SessionDelegate {
     func session(session: Session, didProposeVisitToURL URL: NSURL, withAction action: Action) {
         let path = URL.path
-        if path == "/account/sign_in" {
-            presentLoginController()
-        } else {
-            presentVisitableForSession(session, path: URL.path!, withAction: action)
-        }
+        actionToPath(path!, withAction: action)
     }
     
     func session(session: Session, didFailRequestForVisitable visitable: Visitable, withError error: NSError) {
@@ -170,8 +174,6 @@ extension ApplicationController: WKNavigationDelegate {
         }
         decisionHandler(.Cancel)
     }
-    
-
 }
 
 
@@ -179,6 +181,12 @@ extension ApplicationController: LoginViewControllerDelegate {
     func loginViewControllerDidAuthenticate(controller: LoginViewController) {
         session.reload()
         dismissViewControllerAnimated(true, completion: nil)
+    }
+}
+
+extension ApplicationController: NewTopicViewControllerDelegate {
+    func newTopicViewDidFinished(controller: NewTopicViewController, toURL url: NSURL) {
+        actionToPath(url.path!, withAction: .Advance)
     }
 }
 
