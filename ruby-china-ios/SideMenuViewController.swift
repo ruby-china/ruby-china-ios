@@ -10,6 +10,7 @@ import UIKit
 
 class SideMenuViewController: UITableViewController {
     let menuItems = ["讨论区", "优质话题", "最近发布", "招聘"]
+    let menuItemIcons = ["topic", "popular", "latest", "jobs"]
     let menuItemPaths = ["/topics", "/topics/popular", "/topics/last", "/jobs"]
     
     override func viewDidLoad() {
@@ -17,8 +18,17 @@ class SideMenuViewController: UITableViewController {
         
         title = "Ruby China"
         
-        navigationItem.rightBarButtonItem = UIBarButtonItem.init(image: UIImage.init(named: "send"), style: .Plain, target: self, action: #selector(actionNewTopic))
-        navigationItem.leftBarButtonItem = UIBarButtonItem.init(image: UIImage.init(named: "profile"), style: .Plain, target: self, action: #selector(actionProfile))
+        let newButton = UIBarButtonItem.init(image: UIImage.init(named: "send"), style: .Plain, target: self, action: #selector(actionNewTopic))
+        newButton.tintColor = UIColor.blackColor()
+        let profileButton = UIBarButtonItem.init(image: UIImage.init(named: "profile"), style: .Plain, target: self, action: #selector(actionProfile))
+        profileButton.tintColor = UIColor.blackColor()
+        
+//        navigationItem.rightBarButtonItem = newButton
+//        navigationItem.leftBarButtonItem = profileButton
+        
+        let blankButton = UIBarButtonItem.init()
+        
+        self.toolbarItems = [profileButton, blankButton, blankButton, newButton]
         
         guard tableView.backgroundView == nil else {
             return
@@ -47,6 +57,7 @@ class SideMenuViewController: UITableViewController {
         
         // Configure the cell...
         cell.textLabel!.text = menuItems[indexPath.row]
+        cell.imageView?.image = UIImage.init(named: menuItemIcons[indexPath.row])
         
         return cell
     }
