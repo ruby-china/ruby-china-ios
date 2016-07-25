@@ -66,7 +66,6 @@ class ApplicationController: UINavigationController {
     }
     
     func actionSideMenu() {
-//        presentViewController(SideMenuManager.menuLeftNavigationController!, animated: true, completion: nil)
         presentViewController(sideMenuController!, animated: true, completion: nil)
     }
     
@@ -98,9 +97,9 @@ class ApplicationController: UINavigationController {
         let userInfo = notification.userInfo as! [String: AnyObject]
         let path = userInfo["path"] as! String
         
-        sideMenuController?.dismissViewControllerAnimated(true, completion: nil)
-        
         actionToPath(path, withAction: .Restore)
+        
+        sideMenuController?.dismissViewControllerAnimated(true, completion: nil)
 
     }
     
@@ -177,6 +176,7 @@ extension ApplicationController: WKNavigationDelegate {
     func webView(webView: WKWebView, decidePolicyForNavigationAction navigationAction: WKNavigationAction, decisionHandler: (WKNavigationActionPolicy) -> ()) {
         let url = navigationAction.request.URL
         if (url?.host != NSURL(string: ROOT_URL)?.host) {
+            // 外部网站, open in SafariView
             let safariViewController = SFSafariViewController(URL: url!)
             presentViewController(safariViewController, animated: true, completion: nil)
         } else {
