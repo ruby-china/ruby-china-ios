@@ -41,7 +41,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func applicationDidBecomeActive(application: UIApplication) {
         if (becomeActivePage == "notifications") {
             becomeActivePage = ""
-            application.applicationIconBadgeNumber = 0
+            UIApplication.sharedApplication().applicationIconBadgeNumber = 0
             navigationController.actionNotifications()
         }
     }
