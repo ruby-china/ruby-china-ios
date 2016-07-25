@@ -9,11 +9,16 @@
 import UIKit
 
 class SideMenuViewController: UITableViewController {
-    let menuItems = ["讨论区", "优质话题", "最近发布", "招聘", "创建新话题"]
-    let menuItemPaths = ["/topics", "/topics/popular", "/topics/last", "/jobs", "/topics/new"]
+    let menuItems = ["讨论区", "优质话题", "最近发布", "招聘"]
+    let menuItemPaths = ["/topics", "/topics/popular", "/topics/last", "/jobs"]
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        title = "Ruby China"
+        
+        navigationItem.rightBarButtonItem = UIBarButtonItem.init(image: UIImage.init(named: "send"), style: .Plain, target: self, action: #selector(actionNewTopic))
+        navigationItem.leftBarButtonItem = UIBarButtonItem.init(image: UIImage.init(named: "profile"), style: .Plain, target: self, action: #selector(actionProfile))
         
         guard tableView.backgroundView == nil else {
             return
@@ -48,7 +53,18 @@ class SideMenuViewController: UITableViewController {
     
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         let path = menuItemPaths[indexPath.row]
-        
+        actionWithPath(path)
+    }
+    
+    func actionWithPath(path: String) {
         NSNotificationCenter.defaultCenter().postNotificationName("menuClicked", object: self, userInfo: ["path": path])
+    }
+    
+    func actionProfile() {
+        actionWithPath("/account/edit")
+    }
+    
+    func actionNewTopic() {
+        actionWithPath("/topics/new")
     }
 }

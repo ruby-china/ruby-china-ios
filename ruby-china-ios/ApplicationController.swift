@@ -75,6 +75,8 @@ class ApplicationController: UINavigationController {
             presentLoginController()
         } else if (path == "/topics/new") {
             presentNewTopicController()
+        } else if (path == "/account/edit") {
+            presentEditAccountController()
         }else {
             presentVisitableForSession(session, path: path, withAction: action)
         }
@@ -114,6 +116,14 @@ class ApplicationController: UINavigationController {
     private func presentNewTopicController() {
         let controller = NewTopicViewController()
         controller.delegate = self
+        controller.webViewConfiguration = webViewConfiguration
+        
+        let navController = UINavigationController(rootViewController: controller)
+        presentViewController(navController, animated: true, completion: nil)
+    }
+    
+    private func presentEditAccountController() {
+        let controller = EditAccountViewController()
         controller.webViewConfiguration = webViewConfiguration
         
         let navController = UINavigationController(rootViewController: controller)

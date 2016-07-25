@@ -1,35 +1,30 @@
 import UIKit
 import WebKit
 
-protocol NewTopicViewControllerDelegate: class {
-    func newTopicViewDidFinished(controller: NewTopicViewController, toURL url: NSURL)
-}
 
-class NewTopicViewController: UIViewController {
-    var URL = NSURL(string: "\(ROOT_URL)/topics/new")
+class EditAccountViewController: UIViewController {
+    var URL = NSURL(string: "\(ROOT_URL)/account/edit")
     var webViewConfiguration: WKWebViewConfiguration?
     var doneButton: UIBarButtonItem?
     var closeButton: UIBarButtonItem?
-    weak var delegate: NewTopicViewControllerDelegate?
     
     lazy var webView: WKWebView = {
         let configuration = self.webViewConfiguration ?? WKWebViewConfiguration()
         let webView = WKWebView(frame: CGRectZero, configuration: configuration)
         webView.translatesAutoresizingMaskIntoConstraints = false
-        webView.navigationDelegate = self
         return webView
     }()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        title = "创建新话题"
+        title = "个人设置"
         
-        
-        doneButton = UIBarButtonItem.init(title: "发布", style: .Plain, target: self, action: #selector(actionDone))
-        closeButton = UIBarButtonItem.init(barButtonSystemItem: .Cancel, target: self, action: #selector(actionClose))
+        closeButton = UIBarButtonItem.init(title: "关闭", style: .Plain, target: self, action: #selector(actionClose))
+        doneButton = UIBarButtonItem.init(title: "保存", style: .Plain, target: self, action: #selector(actionSubmit))
         
         navigationController?.navigationBar.tintColor = UIColor.blackColor()
+        
         navigationItem.leftBarButtonItem = closeButton
         navigationItem.rightBarButtonItem = doneButton
         
@@ -42,8 +37,9 @@ class NewTopicViewController: UIViewController {
         }
     }
     
-    func actionDone() {
-        webView.evaluateJavaScript("$('form.new_topic').submit()", completionHandler: nil)
+    func actionSubmit() {
+        webView.evaluateJavaScript("$('form.edit_user').first().submit()", completionHandler: nil)
+
     }
     
     func actionClose() {
@@ -51,12 +47,11 @@ class NewTopicViewController: UIViewController {
     }
 }
 
-extension NewTopicViewController: WKNavigationDelegate {
+extension EditAccountViewController: WKNavigationDelegate {
     func webView(webView: WKWebView, decidePolicyForNavigationAction navigationAction: WKNavigationAction, decisionHandler: (WKNavigationActionPolicy) -> Void) {
         if (navigationAction.request.HTTPMethod == "GET") {
-            if let URL = navigationAction.request.URL where URL != self.URL {
+            if let URL = navigationAction.request.URL where URL.path == "/account/edit"  {
                 dismissViewControllerAnimated(true, completion: nil)
-                delegate?.newTopicViewDidFinished(self, toURL: URL)
                 decisionHandler(.Cancel)
                 return
             }
