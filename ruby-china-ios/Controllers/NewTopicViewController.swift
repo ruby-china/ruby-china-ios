@@ -6,7 +6,7 @@ protocol NewTopicViewControllerDelegate: class {
 }
 
 class NewTopicViewController: UIViewController {
-    var URL = NSURL(string: "\(ROOT_URL)/topics/new")
+    var URL = NSURL(string: "\(ROOT_URL)/topics/new?access_token=\(OAuth2.shared.accessToken!)")
     var webViewConfiguration: WKWebViewConfiguration?
     var doneButton: UIBarButtonItem?
     var closeButton: UIBarButtonItem?
@@ -43,7 +43,7 @@ class NewTopicViewController: UIViewController {
     }
     
     func actionDone() {
-        webView.evaluateJavaScript("$('form.new_topic').submit()", completionHandler: nil)
+        webView.evaluateJavaScript("$('form#new_topic').submit()", completionHandler: nil)
     }
     
     func actionClose() {

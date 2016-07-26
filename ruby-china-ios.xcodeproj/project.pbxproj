@@ -20,8 +20,8 @@
 		9615809E1D4745F200B32BDA /* RBTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9615809D1D4745F200B32BDA /* RBTextField.swift */; };
 		961580A31D47543600B32BDA /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 961580A21D47543600B32BDA /* User.swift */; };
 		961580A51D4755EA00B32BDA /* APIRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 961580A41D4755EA00B32BDA /* APIRequest.swift */; };
+		961580A71D477A7600B32BDA /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 961580A61D477A7600B32BDA /* Assets.xcassets */; };
 		966C8F431D47183800270E0C /* OAuth2.swift in Sources */ = {isa = PBXBuildFile; fileRef = 966C8F421D47183800270E0C /* OAuth2.swift */; };
-		966F56D81D4345650069135F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 966F56D71D4345650069135F /* Assets.xcassets */; };
 		9670F1901D4235D200128F8A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9670F18F1D4235D200128F8A /* AppDelegate.swift */; };
 		9670F1951D4235D200128F8A /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9670F1931D4235D200128F8A /* Main.storyboard */; };
 		9670F19A1D4235D200128F8A /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9670F1981D4235D200128F8A /* LaunchScreen.storyboard */; };
@@ -46,8 +46,8 @@
 		9615809D1D4745F200B32BDA /* RBTextField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = RBTextField.swift; path = Views/RBTextField.swift; sourceTree = "<group>"; };
 		961580A21D47543600B32BDA /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = User.swift; path = Models/User.swift; sourceTree = "<group>"; };
 		961580A41D4755EA00B32BDA /* APIRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = APIRequest.swift; path = Libraries/APIRequest.swift; sourceTree = "<group>"; };
+		961580A61D477A7600B32BDA /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		966C8F421D47183800270E0C /* OAuth2.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = OAuth2.swift; path = Libraries/OAuth2.swift; sourceTree = "<group>"; };
-		966F56D71D4345650069135F /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		9670F18C1D4235D200128F8A /* Ruby China.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Ruby China.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		9670F18F1D4235D200128F8A /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		9670F1941D4235D200128F8A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -123,10 +123,10 @@
 		966D84CA1D449901007CFFDB /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				961580A61D477A7600B32BDA /* Assets.xcassets */,
 				969E3CE11D448676004D7403 /* ErrorView.xib */,
 				9670F1981D4235D200128F8A /* LaunchScreen.storyboard */,
 				9670F1931D4235D200128F8A /* Main.storyboard */,
-				966F56D71D4345650069135F /* Assets.xcassets */,
 				9670F19B1D4235D200128F8A /* Info.plist */,
 			);
 			name = "Supporting Files";
@@ -244,8 +244,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				9670F19A1D4235D200128F8A /* LaunchScreen.storyboard in Resources */,
-				966F56D81D4345650069135F /* Assets.xcassets in Resources */,
 				9670F1951D4235D200128F8A /* Main.storyboard in Resources */,
+				961580A71D477A7600B32BDA /* Assets.xcassets in Resources */,
 				969E3CE21D448676004D7403 /* ErrorView.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

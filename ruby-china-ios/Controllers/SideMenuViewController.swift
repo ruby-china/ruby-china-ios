@@ -19,13 +19,13 @@ class SideMenuViewController: UITableViewController {
     let blankButton = UIBarButtonItem()
     
     deinit {
-        OAuth2.shared.removeObserver(self, forKeyPath: "currentUser")
+        OAuth2.shared.removeObserver(self, forKeyPath: "accessToken")
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        OAuth2.shared.addObserver(self, forKeyPath: "currentUser", options: .New, context: nil)
+        OAuth2.shared.addObserver(self, forKeyPath: "accessToken", options: .New, context: nil)
         
         title = "Ruby China"
         
@@ -77,7 +77,18 @@ class SideMenuViewController: UITableViewController {
     
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         let path = menuItemPaths[indexPath.row]
+        uploadLoginState()
         actionWithPath(path)
+    }
+    
+    func uploadLoginState() {
+        if OAuth2.shared.isLogined {
+            self.toolbarItems = [profileButton, logoutButton]
+            navigationItem.rightBarButtonItem = newButton
+        } else {
+            self.toolbarItems = [loginButton]
+            navigationItem.rightBarButtonItem = nil
+        }
     }
     
     func actionWithPath(path: String) {
@@ -110,14 +121,5 @@ class SideMenuViewController: UITableViewController {
         }
     }
     
-    func uploadLoginState() {
-        if OAuth2.shared.isLogined {
-            self.toolbarItems = [profileButton, blankButton, blankButton, logoutButton]
-            navigationItem.rightBarButtonItem = newButton
-        } else {
-            self.toolbarItems = [loginButton]
-            navigationItem.rightBarButtonItem = nil
-
-        }
-    }
+    
 }

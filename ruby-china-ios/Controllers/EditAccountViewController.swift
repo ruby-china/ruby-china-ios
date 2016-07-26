@@ -3,7 +3,7 @@ import WebKit
 
 
 class EditAccountViewController: UIViewController {
-    var URL = NSURL(string: "\(ROOT_URL)/account/edit")
+    var URL = NSURL(string: "\(ROOT_URL)/account/edit?access_token=\(OAuth2.shared.accessToken!)")
     var webViewConfiguration: WKWebViewConfiguration?
     var doneButton: UIBarButtonItem?
     var closeButton: UIBarButtonItem?

@@ -192,8 +192,7 @@ extension ApplicationController: WKNavigationDelegate {
 extension ApplicationController: SignInViewControllerDelegate {
     func signInViewControllerDidAuthenticate(controller: SignInViewController) {
         // 重新载入之前的页面
-        actionToPath((session.webView.URL?.path)!, withAction: .Replace)
-        dismissViewControllerAnimated(true, completion: nil)
+        actionToPath((session.webView.URL?.path)!, withAction: .Restore)
     }
 }
 

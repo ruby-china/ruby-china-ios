@@ -24,6 +24,10 @@ class APIRequest {
     func headers() -> [String : String] {
         let token = NSUserDefaults.standardUserDefaults().valueForKey("accessToken")
         
+        if token == nil {
+            return [ "Authorization": "" ]
+        }
+        
         return [
             "Authorization": "Bearer \(token!)"
         ]

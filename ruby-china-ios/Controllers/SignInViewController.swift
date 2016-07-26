@@ -1,6 +1,5 @@
 import UIKit
 import WebKit
-import NXOAuth2Client
 
 protocol SignInViewControllerDelegate: class {
     func signInViewControllerDidAuthenticate(controller: SignInViewController)
@@ -66,10 +65,11 @@ class SignInViewController: UIViewController {
 }
 
 extension SignInViewController: OAuth2Delegate {
-    func oauth2DidLoginSuccessed(accessToken: NXOAuth2AccessToken) {
+    func oauth2DidLoginSuccessed(accessToken: String?) {
         print("Login successed", OAuth2.shared.accessToken)
-//        self.navigationController?.dismissViewControllerAnimated(true, completion: nil)
-        delegate?.signInViewControllerDidAuthenticate(self)
+        self.navigationController?.dismissViewControllerAnimated(false, completion: {
+            self.delegate?.signInViewControllerDidAuthenticate(self)
+        })
     }
     
     func oauth2DidLoginFailed(error: NSError) {

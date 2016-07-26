@@ -1,14 +1,17 @@
-import NXOAuth2Client
+import Heimdallr
 import SwiftyJSON
 
 protocol OAuth2Delegate: class {
-    func oauth2DidLoginSuccessed(accessToken: NXOAuth2AccessToken)
+    func oauth2DidLoginSuccessed(accessToken: String?)
     func oauth2DidLoginFailed(error: NSError)
 }
 
 class OAuth2 : NSObject {
     weak var delegate: OAuth2Delegate?
-    let client = NXOAuth2AccountStore.sharedStore()
+    let client = OAuthClientCredentials(id: OAUTH_CLIENT_ID, secret: OAUTH_SECRET)
+    let accessTokenStore = OAuthAccessTokenKeychainStore()
+    
+    dynamic var accessToken: String?
     
     var currentUser = User.init(json: JSON.null)
     
@@ -22,54 +25,36 @@ class OAuth2 : NSObject {
     
     override init() {
         super.init()
-        
-        NSNotificationCenter.defaultCenter().addObserverForName(NXOAuth2AccountStoreAccountsDidChangeNotification,
-                                                                object: client, queue: nil) { (note) in
-            let account = note.userInfo![NXOAuth2AccountStoreNewAccountUserInfoKey] as! NXOAuth2Account
-            self.storeLogin(account.accessToken)
-            self.delegate?.oauth2DidLoginSuccessed(account.accessToken)
-        }
-        
-        NSNotificationCenter.defaultCenter().addObserverForName(NXOAuth2AccountStoreDidFailToRequestAccessNotification,
-                                                                object: client, queue: nil) { (note) in
-            let error = note.userInfo![NXOAuth2AccountStoreErrorKey] as! NSError
-            self.delegate?.oauth2DidLoginFailed(error)
-        }
-        
-        client.setClientID(OAUTH_CLIENT_ID,
-                           secret: OAUTH_SECRET,
-                           authorizationURL: NSURL(string: "\(ROOT_URL)/oauth/authorize"),
-                           tokenURL: NSURL(string: "\(ROOT_URL)/oauth/token"),
-                           redirectURL: nil,
-                           forAccountType: "all")
-        
+        self.accessToken = NSUserDefaults.standardUserDefaults().valueForKey("accessToken") as? String
         reloadCurrentUser()
     }
     
     func login(username: String, password: String) {
-        client.requestAccessToAccountWithType("all", username: username, password: password)
+        let heimdallr = Heimdallr(tokenURL: NSURL(string: "\(ROOT_URL)/oauth/token")!)
+        heimdallr.requestAccessToken(username: username, password: password) { result in
+            switch result {
+            case .Success:
+                let accessTokenString = self.accessTokenStore.retrieveAccessToken()?.accessToken
+                self.storeAccessToken(accessTokenString)
+                print("Login successed.")
+                self.delegate?.oauth2DidLoginSuccessed(accessTokenString)
+            case .Failure(let err):
+                print("Login failed: ", err)
+                self.delegate?.oauth2DidLoginFailed(err)
+            }
+        }
     }
     
-    var accessToken : String? {
-        get {
-            let token = NSUserDefaults.standardUserDefaults().valueForKey("accessToken") as? String
-            return token
-        }
+    func storeAccessToken(token: String?) {
+        self.accessToken = token
+        NSUserDefaults.standardUserDefaults().setValue(token, forKey: "accessToken")
+        NSUserDefaults.standardUserDefaults().synchronize()
     }
     
     var isLogined : Bool {
         get {
             return self.accessToken != nil
         }
-    }
-    
-    private func storeLogin(accessToken: NXOAuth2AccessToken) {
-        NSUserDefaults.standardUserDefaults().setValue(accessToken.accessToken, forKey: "accessToken")
-        NSUserDefaults.standardUserDefaults().setValue(accessToken.refreshToken, forKey: "refreshToken")
-        NSUserDefaults.standardUserDefaults().synchronize()
-        
-        reloadCurrentUser()
-        
     }
     
     func reloadCurrentUser() {
@@ -81,6 +66,7 @@ class OAuth2 : NSObject {
     }
     
     func logout() {
+        self.accessToken = nil
         NSUserDefaults.standardUserDefaults().removeObjectForKey("accessToken")
         NSUserDefaults.standardUserDefaults().synchronize()
     }

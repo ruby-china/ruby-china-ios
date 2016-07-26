@@ -1,17 +1,19 @@
 PODS:
   - Alamofire (3.4.1)
-  - NXOAuth2Client (1.2.8)
-  - p2.OAuth2 (2.2.7):
-    - SwiftKeychain (~> 1.0)
+  - Argo (3.0.1)
+  - Heimdallr (3.3.0):
+    - Heimdallr/Core (= 3.3.0)
+  - Heimdallr/Core (3.3.0):
+    - Argo (~> 3.0)
+    - Result (~> 2.0)
+  - Result (2.1.2)
   - SideMenu (1.1.7)
-  - SwiftKeychain (1.0.0)
   - SwiftyJSON (2.3.2)
   - Turbolinks (1.0.2)
 
 DEPENDENCIES:
   - Alamofire
-  - NXOAuth2Client (~> 1.2.8)
-  - p2.OAuth2
+  - Heimdallr
   - SideMenu
   - SwiftyJSON
   - Turbolinks (from `https://github.com/turbolinks/turbolinks-ios.git`)
@@ -27,13 +29,13 @@ CHECKOUT OPTIONS:
 
 SPEC CHECKSUMS:
   Alamofire: 01a82e2f6c0f860ade35534c8dd88be61bdef40c
-  NXOAuth2Client: 98c4d4c594edd2b289cfc34a8928653e1dab7adf
-  p2.OAuth2: a4391406917fc2a3bb820aec6e1180b8f87321fd
+  Argo: 22c5d62b7967020a641468c91dc9488bea9523b8
+  Heimdallr: 47da8957bd089006ab14b3f8fcedd5d570035183
+  Result: 6e722d4a66b1408680dbfcdf51c0b1c4b706316a
   SideMenu: 7b420772e1aa7a2b3a0b0e191566e7e8e0868f53
-  SwiftKeychain: fd9ad69f7b3ff7a0c7ba579da508bbaa89a395b2
   SwiftyJSON: 04ccea08915aa0109039157c7974cf0298da292a
   Turbolinks: d8209bab43803adae8c06d434368e16479023407
 
-PODFILE CHECKSUM: b74b5946c933124d9936753da497cf2d8b445df1
+PODFILE CHECKSUM: 14f86061dac53f3371669fbd9b477ec102b9c257
 
 COCOAPODS: 1.0.1
