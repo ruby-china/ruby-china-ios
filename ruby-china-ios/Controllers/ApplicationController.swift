@@ -48,8 +48,8 @@ class ApplicationController: UINavigationController {
     private func presentVisitableForSession(session: Session, path: String, withAction action: Action = .Advance) {
         var url = NSURL(string: "\(ROOT_URL)\(path)")
         
-        if (OAuth2.isLogined) {
-            url = NSURL(string: "\(ROOT_URL)\(path)?access_token=\(OAuth2.accessToken!)")
+        if (OAuth2.shared.isLogined) {
+            url = NSURL(string: "\(ROOT_URL)\(path)?access_token=\(OAuth2.shared.accessToken!)")
         }
         
         let visitable = WebViewController(URL: url!)
@@ -103,10 +103,7 @@ class ApplicationController: UINavigationController {
         let userInfo = notification.userInfo as! [String: AnyObject]
         let path = userInfo["path"] as! String
         
-        actionToPath(path, withAction: .Restore)
-        
-        sideMenuController?.dismissViewControllerAnimated(true, completion: nil)
-
+        self.actionToPath(path, withAction: .Restore)
     }
     
     private func presentLoginController() {

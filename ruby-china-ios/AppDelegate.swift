@@ -19,8 +19,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         application.registerUserNotificationSettings(notificationSettings)
         application.registerForRemoteNotifications()
         
-        OAuth2.logout()
-                
+        APIRequest.shared.get("/api/v3/topics.json", parameters: nil, callback: { result in })
+        
         return true
     }
     

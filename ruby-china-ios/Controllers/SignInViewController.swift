@@ -8,7 +8,6 @@ protocol SignInViewControllerDelegate: class {
 
 class SignInViewController: UIViewController {
     weak var delegate: SignInViewControllerDelegate?
-    let oauth2 = OAuth2()
     
     var closeButton: UIBarButtonItem?
     
@@ -54,11 +53,11 @@ class SignInViewController: UIViewController {
         view.addSubview(passwordField)
         view.addSubview(loginButton)
         
-        oauth2.delegate = self
+        OAuth2.shared.delegate = self
     }
     
     func actionLogin() {
-        oauth2.login(loginField.text!, password: passwordField.text!)
+        OAuth2.shared.login(loginField.text!, password: passwordField.text!)
     }
     
     func actionClose() {
@@ -68,7 +67,7 @@ class SignInViewController: UIViewController {
 
 extension SignInViewController: OAuth2Delegate {
     func oauth2DidLoginSuccessed(accessToken: NXOAuth2AccessToken) {
-        print("Login successed", OAuth2.accessToken)
+        print("Login successed", OAuth2.shared.accessToken)
 //        self.navigationController?.dismissViewControllerAnimated(true, completion: nil)
         delegate?.signInViewControllerDidAuthenticate(self)
     }

@@ -18,6 +18,8 @@
 		96076B2E1D47050500452E85 /* Error.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96076B2B1D47050500452E85 /* Error.swift */; };
 		96076B2F1D47050500452E85 /* ErrorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96076B2C1D47050500452E85 /* ErrorView.swift */; };
 		9615809E1D4745F200B32BDA /* RBTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9615809D1D4745F200B32BDA /* RBTextField.swift */; };
+		961580A31D47543600B32BDA /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 961580A21D47543600B32BDA /* User.swift */; };
+		961580A51D4755EA00B32BDA /* APIRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 961580A41D4755EA00B32BDA /* APIRequest.swift */; };
 		966C8F431D47183800270E0C /* OAuth2.swift in Sources */ = {isa = PBXBuildFile; fileRef = 966C8F421D47183800270E0C /* OAuth2.swift */; };
 		966F56D81D4345650069135F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 966F56D71D4345650069135F /* Assets.xcassets */; };
 		9670F1901D4235D200128F8A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9670F18F1D4235D200128F8A /* AppDelegate.swift */; };
@@ -42,6 +44,8 @@
 		96076B2B1D47050500452E85 /* Error.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Error.swift; path = Views/Error.swift; sourceTree = "<group>"; };
 		96076B2C1D47050500452E85 /* ErrorView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ErrorView.swift; path = Views/ErrorView.swift; sourceTree = "<group>"; };
 		9615809D1D4745F200B32BDA /* RBTextField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = RBTextField.swift; path = Views/RBTextField.swift; sourceTree = "<group>"; };
+		961580A21D47543600B32BDA /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = User.swift; path = Models/User.swift; sourceTree = "<group>"; };
+		961580A41D4755EA00B32BDA /* APIRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = APIRequest.swift; path = Libraries/APIRequest.swift; sourceTree = "<group>"; };
 		966C8F421D47183800270E0C /* OAuth2.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = OAuth2.swift; path = Libraries/OAuth2.swift; sourceTree = "<group>"; };
 		966F56D71D4345650069135F /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		9670F18C1D4235D200128F8A /* Ruby China.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Ruby China.app"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -99,10 +103,19 @@
 			name = Views;
 			sourceTree = "<group>";
 		};
+		961580A11D47542300B32BDA /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				961580A21D47543600B32BDA /* User.swift */,
+			);
+			name = Models;
+			sourceTree = "<group>";
+		};
 		966C8F441D4719FB00270E0C /* Libraries */ = {
 			isa = PBXGroup;
 			children = (
 				966C8F421D47183800270E0C /* OAuth2.swift */,
+				961580A41D4755EA00B32BDA /* APIRequest.swift */,
 			);
 			name = Libraries;
 			sourceTree = "<group>";
@@ -140,6 +153,7 @@
 		9670F18E1D4235D200128F8A /* ruby-china-ios */ = {
 			isa = PBXGroup;
 			children = (
+				961580A11D47542300B32BDA /* Models */,
 				966C8F441D4719FB00270E0C /* Libraries */,
 				96076B2A1D4704FD00452E85 /* Views */,
 				96076B191D4704E000452E85 /* Controllers */,
@@ -292,6 +306,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				96076B271D4704F100452E85 /* SideMenuViewController.swift in Sources */,
+				961580A51D4755EA00B32BDA /* APIRequest.swift in Sources */,
 				96076B231D4704F100452E85 /* EditAccountViewController.swift in Sources */,
 				96076B221D4704F100452E85 /* ApplicationController.swift in Sources */,
 				96076B2E1D47050500452E85 /* Error.swift in Sources */,
@@ -299,6 +314,7 @@
 				967684771D45D88300EC9BD9 /* Constants.swift in Sources */,
 				96076B241D4704F100452E85 /* LoginViewController.swift in Sources */,
 				96076B2F1D47050500452E85 /* ErrorView.swift in Sources */,
+				961580A31D47543600B32BDA /* User.swift in Sources */,
 				96076B281D4704F100452E85 /* SignInViewController.swift in Sources */,
 				9670F1901D4235D200128F8A /* AppDelegate.swift in Sources */,
 				96076B261D4704F100452E85 /* SideMenuNavigationController.swift in Sources */,
