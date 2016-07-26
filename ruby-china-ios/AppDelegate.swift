@@ -4,6 +4,7 @@ import SafariServices
 import WebKit
 import SideMenu
 
+
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
     var window: UIWindow?
@@ -18,6 +19,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         application.registerUserNotificationSettings(notificationSettings)
         application.registerForRemoteNotifications()
         
+        OAuth2.logout()
+                
         return true
     }
     
@@ -42,7 +45,5 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             UIApplication.sharedApplication().applicationIconBadgeNumber = 0
             navigationController.actionNotifications()
         }
-    }
+    }    
 }
-
-

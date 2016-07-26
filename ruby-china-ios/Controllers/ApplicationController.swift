@@ -46,7 +46,13 @@ class ApplicationController: UINavigationController {
     }
     
     private func presentVisitableForSession(session: Session, path: String, withAction action: Action = .Advance) {
-        let visitable = WebViewController(URL: NSURL(string: "\(ROOT_URL)\(path)")!)
+        var url = NSURL(string: "\(ROOT_URL)\(path)")
+        
+        if (OAuth2.isLogined) {
+            url = NSURL(string: "\(ROOT_URL)\(path)?access_token=\(OAuth2.accessToken!)")
+        }
+        
+        let visitable = WebViewController(URL: url!)
         
         if action == .Advance {
             pushViewController(visitable, animated: true)
@@ -104,9 +110,8 @@ class ApplicationController: UINavigationController {
     }
     
     private func presentLoginController() {
-        let controller = LoginViewController()
+        let controller = mainStoryboard.instantiateViewControllerWithIdentifier("loginViewController") as!SignInViewController
         controller.delegate = self
-        controller.webViewConfiguration = webViewConfiguration
         
         let navController = UINavigationController(rootViewController: controller)
         presentViewController(navController, animated: true, completion: nil)
@@ -187,9 +192,10 @@ extension ApplicationController: WKNavigationDelegate {
 }
 
 
-extension ApplicationController: LoginViewControllerDelegate {
-    func loginViewControllerDidAuthenticate(controller: LoginViewController) {
-        session.reload()
+extension ApplicationController: SignInViewControllerDelegate {
+    func signInViewControllerDidAuthenticate(controller: SignInViewController) {
+        // 重新载入之前的页面
+        actionToPath((session.webView.URL?.path)!, withAction: .Replace)
         dismissViewControllerAnimated(true, completion: nil)
     }
 }

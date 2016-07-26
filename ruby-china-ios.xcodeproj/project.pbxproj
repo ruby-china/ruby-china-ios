@@ -7,44 +7,48 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		966F56D61D432C7A0069135F /* ApplicationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 966F56D51D432C7A0069135F /* ApplicationController.swift */; };
+		96076B221D4704F100452E85 /* ApplicationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96076B1A1D4704F100452E85 /* ApplicationController.swift */; };
+		96076B231D4704F100452E85 /* EditAccountViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96076B1B1D4704F100452E85 /* EditAccountViewController.swift */; };
+		96076B241D4704F100452E85 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96076B1C1D4704F100452E85 /* LoginViewController.swift */; };
+		96076B251D4704F100452E85 /* NewTopicViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96076B1D1D4704F100452E85 /* NewTopicViewController.swift */; };
+		96076B261D4704F100452E85 /* SideMenuNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96076B1E1D4704F100452E85 /* SideMenuNavigationController.swift */; };
+		96076B271D4704F100452E85 /* SideMenuViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96076B1F1D4704F100452E85 /* SideMenuViewController.swift */; };
+		96076B281D4704F100452E85 /* SignInViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96076B201D4704F100452E85 /* SignInViewController.swift */; };
+		96076B291D4704F100452E85 /* WebViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96076B211D4704F100452E85 /* WebViewController.swift */; };
+		96076B2E1D47050500452E85 /* Error.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96076B2B1D47050500452E85 /* Error.swift */; };
+		96076B2F1D47050500452E85 /* ErrorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96076B2C1D47050500452E85 /* ErrorView.swift */; };
+		966C8F431D47183800270E0C /* OAuth2.swift in Sources */ = {isa = PBXBuildFile; fileRef = 966C8F421D47183800270E0C /* OAuth2.swift */; };
 		966F56D81D4345650069135F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 966F56D71D4345650069135F /* Assets.xcassets */; };
 		9670F1901D4235D200128F8A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9670F18F1D4235D200128F8A /* AppDelegate.swift */; };
-		9670F1921D4235D200128F8A /* WebViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9670F1911D4235D200128F8A /* WebViewController.swift */; };
 		9670F1951D4235D200128F8A /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9670F1931D4235D200128F8A /* Main.storyboard */; };
 		9670F19A1D4235D200128F8A /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9670F1981D4235D200128F8A /* LaunchScreen.storyboard */; };
-		967684751D45D7A700EC9BD9 /* NewTopicViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 967684741D45D7A700EC9BD9 /* NewTopicViewController.swift */; };
 		967684771D45D88300EC9BD9 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 967684761D45D88300EC9BD9 /* Constants.swift */; };
-		967684791D45E9B800EC9BD9 /* EditAccountViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 967684781D45E9B800EC9BD9 /* EditAccountViewController.swift */; };
-		969E3CE01D4484B8004D7403 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 969E3CDF1D4484B8004D7403 /* LoginViewController.swift */; };
 		969E3CE21D448676004D7403 /* ErrorView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 969E3CE11D448676004D7403 /* ErrorView.xib */; };
-		969E3CE41D4486AB004D7403 /* ErrorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 969E3CE31D4486AB004D7403 /* ErrorView.swift */; };
-		969E3CE61D4486BB004D7403 /* Error.swift in Sources */ = {isa = PBXBuildFile; fileRef = 969E3CE51D4486BB004D7403 /* Error.swift */; };
-		969EB8851D436A330004707F /* SideMenuViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 969EB8841D436A330004707F /* SideMenuViewController.swift */; };
-		969EB8871D4372AB0004707F /* SideMenuNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 969EB8861D4372AB0004707F /* SideMenuNavigationController.swift */; };
 		E8009FD8B1AB73F4FB8C336F /* Pods_ruby_china_ios.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3D8873230E620CCF5BBCEE42 /* Pods_ruby_china_ios.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		27849C620AD961F60F073D43 /* Pods-ruby-china-ios.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ruby-china-ios.release.xcconfig"; path = "Pods/Target Support Files/Pods-ruby-china-ios/Pods-ruby-china-ios.release.xcconfig"; sourceTree = "<group>"; };
 		3D8873230E620CCF5BBCEE42 /* Pods_ruby_china_ios.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ruby_china_ios.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		966F56D51D432C7A0069135F /* ApplicationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ApplicationController.swift; sourceTree = "<group>"; };
+		96076B1A1D4704F100452E85 /* ApplicationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ApplicationController.swift; path = Controllers/ApplicationController.swift; sourceTree = "<group>"; };
+		96076B1B1D4704F100452E85 /* EditAccountViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = EditAccountViewController.swift; path = Controllers/EditAccountViewController.swift; sourceTree = "<group>"; };
+		96076B1C1D4704F100452E85 /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LoginViewController.swift; path = Controllers/LoginViewController.swift; sourceTree = "<group>"; };
+		96076B1D1D4704F100452E85 /* NewTopicViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = NewTopicViewController.swift; path = Controllers/NewTopicViewController.swift; sourceTree = "<group>"; };
+		96076B1E1D4704F100452E85 /* SideMenuNavigationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SideMenuNavigationController.swift; path = Controllers/SideMenuNavigationController.swift; sourceTree = "<group>"; };
+		96076B1F1D4704F100452E85 /* SideMenuViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SideMenuViewController.swift; path = Controllers/SideMenuViewController.swift; sourceTree = "<group>"; };
+		96076B201D4704F100452E85 /* SignInViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SignInViewController.swift; path = Controllers/SignInViewController.swift; sourceTree = "<group>"; };
+		96076B211D4704F100452E85 /* WebViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = WebViewController.swift; path = Controllers/WebViewController.swift; sourceTree = "<group>"; };
+		96076B2B1D47050500452E85 /* Error.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Error.swift; path = Views/Error.swift; sourceTree = "<group>"; };
+		96076B2C1D47050500452E85 /* ErrorView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ErrorView.swift; path = Views/ErrorView.swift; sourceTree = "<group>"; };
+		966C8F421D47183800270E0C /* OAuth2.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = OAuth2.swift; path = Libraries/OAuth2.swift; sourceTree = "<group>"; };
 		966F56D71D4345650069135F /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		9670F18C1D4235D200128F8A /* Ruby China.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Ruby China.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		9670F18F1D4235D200128F8A /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		9670F1911D4235D200128F8A /* WebViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebViewController.swift; sourceTree = "<group>"; };
 		9670F1941D4235D200128F8A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		9670F1991D4235D200128F8A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		9670F19B1D4235D200128F8A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		967684741D45D7A700EC9BD9 /* NewTopicViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewTopicViewController.swift; sourceTree = "<group>"; };
 		967684761D45D88300EC9BD9 /* Constants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
-		967684781D45E9B800EC9BD9 /* EditAccountViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditAccountViewController.swift; sourceTree = "<group>"; };
-		969E3CDF1D4484B8004D7403 /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		969E3CE11D448676004D7403 /* ErrorView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ErrorView.xib; sourceTree = "<group>"; };
-		969E3CE31D4486AB004D7403 /* ErrorView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ErrorView.swift; sourceTree = "<group>"; };
-		969E3CE51D4486BB004D7403 /* Error.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Error.swift; sourceTree = "<group>"; };
-		969EB8841D436A330004707F /* SideMenuViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SideMenuViewController.swift; sourceTree = "<group>"; };
-		969EB8861D4372AB0004707F /* SideMenuNavigationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SideMenuNavigationController.swift; sourceTree = "<group>"; };
 		C095BB2F4502B2B10DA854CC /* Pods-ruby-china-ios.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ruby-china-ios.debug.xcconfig"; path = "Pods/Target Support Files/Pods-ruby-china-ios/Pods-ruby-china-ios.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -66,6 +70,38 @@
 				3D8873230E620CCF5BBCEE42 /* Pods_ruby_china_ios.framework */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		96076B191D4704E000452E85 /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				96076B1A1D4704F100452E85 /* ApplicationController.swift */,
+				96076B1B1D4704F100452E85 /* EditAccountViewController.swift */,
+				96076B1C1D4704F100452E85 /* LoginViewController.swift */,
+				96076B1D1D4704F100452E85 /* NewTopicViewController.swift */,
+				96076B1E1D4704F100452E85 /* SideMenuNavigationController.swift */,
+				96076B1F1D4704F100452E85 /* SideMenuViewController.swift */,
+				96076B201D4704F100452E85 /* SignInViewController.swift */,
+				96076B211D4704F100452E85 /* WebViewController.swift */,
+			);
+			name = Controllers;
+			sourceTree = "<group>";
+		};
+		96076B2A1D4704FD00452E85 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				96076B2B1D47050500452E85 /* Error.swift */,
+				96076B2C1D47050500452E85 /* ErrorView.swift */,
+			);
+			name = Views;
+			sourceTree = "<group>";
+		};
+		966C8F441D4719FB00270E0C /* Libraries */ = {
+			isa = PBXGroup;
+			children = (
+				966C8F421D47183800270E0C /* OAuth2.swift */,
+			);
+			name = Libraries;
 			sourceTree = "<group>";
 		};
 		966D84CA1D449901007CFFDB /* Supporting Files */ = {
@@ -101,17 +137,11 @@
 		9670F18E1D4235D200128F8A /* ruby-china-ios */ = {
 			isa = PBXGroup;
 			children = (
+				966C8F441D4719FB00270E0C /* Libraries */,
+				96076B2A1D4704FD00452E85 /* Views */,
+				96076B191D4704E000452E85 /* Controllers */,
 				967684761D45D88300EC9BD9 /* Constants.swift */,
-				969E3CE31D4486AB004D7403 /* ErrorView.swift */,
-				969E3CE51D4486BB004D7403 /* Error.swift */,
 				9670F18F1D4235D200128F8A /* AppDelegate.swift */,
-				9670F1911D4235D200128F8A /* WebViewController.swift */,
-				966F56D51D432C7A0069135F /* ApplicationController.swift */,
-				969EB8841D436A330004707F /* SideMenuViewController.swift */,
-				969EB8861D4372AB0004707F /* SideMenuNavigationController.swift */,
-				969E3CDF1D4484B8004D7403 /* LoginViewController.swift */,
-				967684781D45E9B800EC9BD9 /* EditAccountViewController.swift */,
-				967684741D45D7A700EC9BD9 /* NewTopicViewController.swift */,
 				966D84CA1D449901007CFFDB /* Supporting Files */,
 			);
 			path = "ruby-china-ios";
@@ -258,17 +288,19 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				969E3CE61D4486BB004D7403 /* Error.swift in Sources */,
+				96076B271D4704F100452E85 /* SideMenuViewController.swift in Sources */,
+				96076B231D4704F100452E85 /* EditAccountViewController.swift in Sources */,
+				96076B221D4704F100452E85 /* ApplicationController.swift in Sources */,
+				96076B2E1D47050500452E85 /* Error.swift in Sources */,
+				96076B291D4704F100452E85 /* WebViewController.swift in Sources */,
 				967684771D45D88300EC9BD9 /* Constants.swift in Sources */,
-				969E3CE01D4484B8004D7403 /* LoginViewController.swift in Sources */,
-				969EB8851D436A330004707F /* SideMenuViewController.swift in Sources */,
-				966F56D61D432C7A0069135F /* ApplicationController.swift in Sources */,
-				967684791D45E9B800EC9BD9 /* EditAccountViewController.swift in Sources */,
-				9670F1921D4235D200128F8A /* WebViewController.swift in Sources */,
-				969E3CE41D4486AB004D7403 /* ErrorView.swift in Sources */,
-				969EB8871D4372AB0004707F /* SideMenuNavigationController.swift in Sources */,
+				96076B241D4704F100452E85 /* LoginViewController.swift in Sources */,
+				96076B2F1D47050500452E85 /* ErrorView.swift in Sources */,
+				96076B281D4704F100452E85 /* SignInViewController.swift in Sources */,
 				9670F1901D4235D200128F8A /* AppDelegate.swift in Sources */,
-				967684751D45D7A700EC9BD9 /* NewTopicViewController.swift in Sources */,
+				96076B261D4704F100452E85 /* SideMenuNavigationController.swift in Sources */,
+				96076B251D4704F100452E85 /* NewTopicViewController.swift in Sources */,
+				966C8F431D47183800270E0C /* OAuth2.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
