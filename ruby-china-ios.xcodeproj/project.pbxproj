@@ -21,6 +21,7 @@
 		961580A31D47543600B32BDA /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 961580A21D47543600B32BDA /* User.swift */; };
 		961580A51D4755EA00B32BDA /* APIRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 961580A41D4755EA00B32BDA /* APIRequest.swift */; };
 		961580A71D477A7600B32BDA /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 961580A61D477A7600B32BDA /* Assets.xcassets */; };
+		961580A91D47836600B32BDA /* DeviceService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 961580A81D47836600B32BDA /* DeviceService.swift */; };
 		966C8F431D47183800270E0C /* OAuth2.swift in Sources */ = {isa = PBXBuildFile; fileRef = 966C8F421D47183800270E0C /* OAuth2.swift */; };
 		9670F1901D4235D200128F8A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9670F18F1D4235D200128F8A /* AppDelegate.swift */; };
 		9670F1951D4235D200128F8A /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9670F1931D4235D200128F8A /* Main.storyboard */; };
@@ -47,6 +48,7 @@
 		961580A21D47543600B32BDA /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = User.swift; path = Models/User.swift; sourceTree = "<group>"; };
 		961580A41D4755EA00B32BDA /* APIRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = APIRequest.swift; path = Libraries/APIRequest.swift; sourceTree = "<group>"; };
 		961580A61D477A7600B32BDA /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		961580A81D47836600B32BDA /* DeviceService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DeviceService.swift; path = Libraries/DeviceService.swift; sourceTree = "<group>"; };
 		966C8F421D47183800270E0C /* OAuth2.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = OAuth2.swift; path = Libraries/OAuth2.swift; sourceTree = "<group>"; };
 		9670F18C1D4235D200128F8A /* Ruby China.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Ruby China.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		9670F18F1D4235D200128F8A /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -116,6 +118,7 @@
 			children = (
 				966C8F421D47183800270E0C /* OAuth2.swift */,
 				961580A41D4755EA00B32BDA /* APIRequest.swift */,
+				961580A81D47836600B32BDA /* DeviceService.swift */,
 			);
 			name = Libraries;
 			sourceTree = "<group>";
@@ -314,6 +317,7 @@
 				967684771D45D88300EC9BD9 /* Constants.swift in Sources */,
 				96076B241D4704F100452E85 /* LoginViewController.swift in Sources */,
 				96076B2F1D47050500452E85 /* ErrorView.swift in Sources */,
+				961580A91D47836600B32BDA /* DeviceService.swift in Sources */,
 				961580A31D47543600B32BDA /* User.swift in Sources */,
 				96076B281D4704F100452E85 /* SignInViewController.swift in Sources */,
 				9670F1901D4235D200128F8A /* AppDelegate.swift in Sources */,

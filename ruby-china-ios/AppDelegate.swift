@@ -15,11 +15,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         window?.rootViewController = navigationController
         
+        application.delegate = self
+        
         let notificationSettings = UIUserNotificationSettings(forTypes: [.Badge, .Sound, .Alert], categories: nil)
         application.registerUserNotificationSettings(notificationSettings)
         application.registerForRemoteNotifications()
-        
-        APIRequest.shared.get("/api/v3/topics.json", parameters: nil, callback: { result in })
         
         return true
     }
@@ -33,6 +33,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             .stringByReplacingOccurrencesOfString( " ", withString: "") as String
         
         print("DeviceToken \(deviceTokenString)")
+        
+        NSUserDefaults.standardUserDefaults().setValue(deviceTokenString, forKey: "deviceToken")
+        
+        DeviseService.create(deviceTokenString)
+    }
+    
+    func application(application: UIApplication, didFailToRegisterForRemoteNotificationsWithError error: NSError) {
+        print("didFailToRegisterForRemoteNotificationsWithError", error)
     }
     
     func application(application: UIApplication, didReceiveRemoteNotification userInfo: [NSObject : AnyObject]) {

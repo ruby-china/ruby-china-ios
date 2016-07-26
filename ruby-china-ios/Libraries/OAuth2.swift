@@ -49,6 +49,11 @@ class OAuth2 : NSObject {
         self.accessToken = token
         NSUserDefaults.standardUserDefaults().setValue(token, forKey: "accessToken")
         NSUserDefaults.standardUserDefaults().synchronize()
+        
+        let deviceToken = NSUserDefaults.standardUserDefaults().valueForKey("deviceToken") as? String
+        if (deviceToken != nil) {
+            DeviseService.create(deviceToken!)
+        }
     }
     
     var isLogined : Bool {

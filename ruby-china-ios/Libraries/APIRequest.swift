@@ -44,6 +44,13 @@ class APIRequest {
         }
     }
     
+    func post(path: String, parameters: [String : AnyObject]?, callback: (JSON? -> Void)) {
+        return _request(.POST, path: path, parameters: parameters, callback: { result in
+            callback(result)
+        })
+    }
+    
+    
     func get(path: String, parameters: [String : AnyObject]?, callback: (JSON? -> Void)) {
         return _request(.GET, path: path, parameters: parameters, callback: { result in
             callback(result)
