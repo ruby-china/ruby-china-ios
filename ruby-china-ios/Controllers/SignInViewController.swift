@@ -12,9 +12,9 @@ class SignInViewController: UIViewController {
     
     var closeButton: UIBarButtonItem?
     
-    @IBOutlet weak var loginField: UITextField!
-    @IBOutlet weak var passwordField: UITextField!
-    @IBOutlet weak var loginButton: UIButton!
+    var loginField = RBTextField()
+    var passwordField = RBTextField()
+    var loginButton = UIButton()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -26,16 +26,38 @@ class SignInViewController: UIViewController {
         navigationController?.navigationBar.tintColor = UIColor.blackColor()
         navigationItem.leftBarButtonItem = closeButton
 
-        loginButton.backgroundColor = UIColor.whiteColor()
+        loginField = RBTextField.init(frame: CGRectMake(15, 100, self.view.frame.width - 30, 40))
+        loginField.clearButtonMode = .WhileEditing
+        loginField.autocorrectionType = .No
+        loginField.keyboardType = .EmailAddress
+        loginField.autocapitalizationType = .None
+        loginField.placeholder = "用户名 / Email"
+        
+        passwordField = RBTextField.init(frame: CGRectMake(15, loginField.frame.maxY + 15, self.view.frame.width - 30, 40))
+        passwordField.placeholder = "密码"
+        passwordField.secureTextEntry = true
+        
+        loginButton = UIButton.init(frame: CGRectMake(15, passwordField.frame.maxY + 25, self.view.frame.width - 30, 40))
+        loginButton.setTitle("登录", forState: .Normal)
+        loginButton.setBackgroundImage(UIImage.init(named: "button-normal"), forState: .Normal)
+        loginButton.setBackgroundImage(UIImage.init(named: "button-down"), forState: .Highlighted)
+        loginButton.setTitleColor(UIColor.whiteColor(), forState: .Normal)
         loginButton.layer.cornerRadius = 6
+        loginButton.addTarget(self, action: #selector(actionLogin), forControlEvents: .TouchDown)
         
         loginField.layer.cornerRadius = 0
         passwordField.layer.cornerRadius = 0
         
+        view.backgroundColor = UIColor.whiteColor()
+        
+        view.addSubview(loginField)
+        view.addSubview(passwordField)
+        view.addSubview(loginButton)
+        
         oauth2.delegate = self
     }
     
-    @IBAction func actionLogin() {
+    func actionLogin() {
         oauth2.login(loginField.text!, password: passwordField.text!)
     }
     

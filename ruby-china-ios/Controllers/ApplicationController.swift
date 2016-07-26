@@ -110,7 +110,7 @@ class ApplicationController: UINavigationController {
     }
     
     private func presentLoginController() {
-        let controller = mainStoryboard.instantiateViewControllerWithIdentifier("loginViewController") as!SignInViewController
+        let controller = SignInViewController()
         controller.delegate = self
         
         let navController = UINavigationController(rootViewController: controller)
