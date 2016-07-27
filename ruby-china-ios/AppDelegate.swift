@@ -27,7 +27,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
 //        window?.rootViewController = navigationController
+        initAppearance()
         setupTabbar()
+        
+        application.applicationIconBadgeNumber = 18
         
         application.delegate = self
         
@@ -65,10 +68,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         tabBarController.viewControllers = [topicsController, favoritesController, notificationsController]
     }
     
-    func actionToolbarItemClick() {
-        
-    }
-    
     
     func application(application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: NSData) {
         let characterSet: NSCharacterSet = NSCharacterSet(charactersInString: "<>")
@@ -95,11 +94,20 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func applicationDidBecomeActive(application: UIApplication) {
         if (becomeActivePage == "notifications") {
             becomeActivePage = ""
-            UIApplication.sharedApplication().applicationIconBadgeNumber = 0
+            application.applicationIconBadgeNumber = 0
             tabBarController.selectedIndex = (tabBarController.viewControllers?.count)!
 //            topicsController.actionNotifications()
         }
-    }    
+    }
+    
+    func initAppearance() {
+        UITabBarItem.appearance().setTitleTextAttributes([NSForegroundColorAttributeName: BLACK_LIGHT], forState: .Normal)
+        UITabBarItem.appearance().setTitleTextAttributes([NSForegroundColorAttributeName: BLACK], forState: .Selected)
+        
+        tabBarController.tabBar.tintColor = BLACK
+        
+        UIBarButtonItem.appearance().setTitleTextAttributes([NSForegroundColorAttributeName: BLACK], forState: .Normal)
+    }
 }
 
 extension AppDelegate: UITabBarControllerDelegate {

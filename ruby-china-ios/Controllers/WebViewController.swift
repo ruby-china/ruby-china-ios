@@ -33,6 +33,7 @@ class WebViewController: VisitableViewController {
         }
         
         if (navController.rootPath == "/notifications") {
+            UIApplication.sharedApplication().applicationIconBadgeNumber = 0
             navigationItem.rightBarButtonItem = cleanNotificationButton
         }
     }
@@ -47,7 +48,7 @@ class WebViewController: VisitableViewController {
     }
     
     override func visitableDidRender() {
-        title = ""
+        navigationItem.title = ""
     }
     
     lazy var errorView: ErrorView = {

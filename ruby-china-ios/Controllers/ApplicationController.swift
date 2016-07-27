@@ -128,7 +128,7 @@ class ApplicationController: UINavigationController {
         SideMenuManager.menuFadeStatusBar = false
         SideMenuManager.menuAnimationBackgroundColor = UIColor.grayColor()
         SideMenuManager.menuAddPanGestureToPresent(toView: navigationBar)
-        SideMenuManager.menuAddScreenEdgePanGesturesToPresent(toView: view)
+//        SideMenuManager.menuAddScreenEdgePanGesturesToPresent(toView: view)
         
         NSNotificationCenter.defaultCenter().addObserver(self, selector:#selector(ApplicationController.menuClicked(_:)), name: "menuClicked", object: nil)
     }
