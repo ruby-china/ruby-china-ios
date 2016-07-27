@@ -11,7 +11,7 @@ class OAuth2 : NSObject {
     let client = OAuthClientCredentials(id: OAUTH_CLIENT_ID, secret: OAUTH_SECRET)
     let accessTokenStore = OAuthAccessTokenKeychainStore()
     
-    dynamic var accessToken: String?
+    dynamic var accessToken = ""
     
     var currentUser = User.init(json: JSON.null)
     
@@ -25,7 +25,10 @@ class OAuth2 : NSObject {
     
     override init() {
         super.init()
-        self.accessToken = NSUserDefaults.standardUserDefaults().valueForKey("accessToken") as? String
+        let token = NSUserDefaults.standardUserDefaults().valueForKey("accessToken") as? String
+        if (token != nil) {
+            self.accessToken = token!
+        }
         reloadCurrentUser()
     }
     
@@ -35,7 +38,7 @@ class OAuth2 : NSObject {
             switch result {
             case .Success:
                 let accessTokenString = self.accessTokenStore.retrieveAccessToken()?.accessToken
-                self.storeAccessToken(accessTokenString)
+                self.storeAccessToken(accessTokenString!)
                 print("Login successed.")
                 self.delegate?.oauth2DidLoginSuccessed(accessTokenString)
             case .Failure(let err):
@@ -45,7 +48,7 @@ class OAuth2 : NSObject {
         }
     }
     
-    func storeAccessToken(token: String?) {
+    func storeAccessToken(token: String) {
         self.accessToken = token
         NSUserDefaults.standardUserDefaults().setValue(token, forKey: "accessToken")
         NSUserDefaults.standardUserDefaults().synchronize()
@@ -58,7 +61,7 @@ class OAuth2 : NSObject {
     
     var isLogined : Bool {
         get {
-            return self.accessToken != nil
+            return self.accessToken != ""
         }
     }
     
@@ -71,7 +74,7 @@ class OAuth2 : NSObject {
     }
     
     func logout() {
-        self.accessToken = nil
+        self.accessToken = ""
         NSUserDefaults.standardUserDefaults().removeObjectForKey("accessToken")
         NSUserDefaults.standardUserDefaults().synchronize()
     }

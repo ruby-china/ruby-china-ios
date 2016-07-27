@@ -6,7 +6,6 @@ protocol NewTopicViewControllerDelegate: class {
 }
 
 class NewTopicViewController: UIViewController {
-    var URL = NSURL(string: "\(ROOT_URL)/topics/new?access_token=\(OAuth2.shared.accessToken!)")
     var webViewConfiguration: WKWebViewConfiguration?
     var doneButton: UIBarButtonItem?
     var closeButton: UIBarButtonItem?
@@ -37,9 +36,8 @@ class NewTopicViewController: UIViewController {
         view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:|[view]|", options: [], metrics: nil, views: [ "view": webView ]))
         view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:|[view]|", options: [], metrics: nil, views: [ "view": webView ]))
         
-        if let URL = self.URL {
-            webView.loadRequest(NSURLRequest(URL: URL))
-        }
+    
+        webView.loadRequest(NSURLRequest(URL: NSURL(string: "\(ROOT_URL)/topics/new?access_token=\(OAuth2.shared.accessToken)")!))
     }
     
     func actionDone() {
@@ -54,7 +52,7 @@ class NewTopicViewController: UIViewController {
 extension NewTopicViewController: WKNavigationDelegate {
     func webView(webView: WKWebView, decidePolicyForNavigationAction navigationAction: WKNavigationAction, decisionHandler: (WKNavigationActionPolicy) -> Void) {
         if (navigationAction.request.HTTPMethod == "GET") {
-            if let URL = navigationAction.request.URL where URL != self.URL {
+            if let URL = navigationAction.request.URL where URL.path != "/topics/new" {
                 dismissViewControllerAnimated(true, completion: nil)
                 delegate?.newTopicViewDidFinished(self, toURL: URL)
                 decisionHandler(.Cancel)

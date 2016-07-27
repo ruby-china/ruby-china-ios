@@ -59,7 +59,7 @@ class ApplicationController: UINavigationController {
         var url = NSURL(string: "\(ROOT_URL)\(path)")
         
         if (OAuth2.shared.isLogined) {
-            url = NSURL(string: "\(ROOT_URL)\(path)?access_token=\(OAuth2.shared.accessToken!)")
+            url = NSURL(string: "\(ROOT_URL)\(path)?access_token=\(OAuth2.shared.accessToken)")
         }
         
         if (action == .Restore && topViewController != nil) {
@@ -149,6 +149,11 @@ class ApplicationController: UINavigationController {
     }
     
     private func presentNewTopicController() {
+        if (!OAuth2.shared.isLogined) {
+            presentLoginController()
+            return
+        }
+        
         let controller = NewTopicViewController()
         controller.delegate = self
         controller.webViewConfiguration = webViewConfiguration

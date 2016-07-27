@@ -3,7 +3,6 @@ import WebKit
 
 
 class EditAccountViewController: UIViewController {
-    var URL = NSURL(string: "\(ROOT_URL)/account/edit?access_token=\(OAuth2.shared.accessToken!)")
     var webViewConfiguration: WKWebViewConfiguration?
     var doneButton: UIBarButtonItem?
     var closeButton: UIBarButtonItem?
@@ -32,9 +31,7 @@ class EditAccountViewController: UIViewController {
         view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:|[view]|", options: [], metrics: nil, views: [ "view": webView ]))
         view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:|[view]|", options: [], metrics: nil, views: [ "view": webView ]))
         
-        if let URL = self.URL {
-            webView.loadRequest(NSURLRequest(URL: URL))
-        }
+        webView.loadRequest(NSURLRequest(URL: NSURL(string: "\(ROOT_URL)/account/edit?access_token=\(OAuth2.shared.accessToken)")!))
     }
     
     func actionSubmit() {
