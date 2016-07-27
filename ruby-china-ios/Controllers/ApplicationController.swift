@@ -4,7 +4,7 @@ import Turbolinks
 import SafariServices
 import SideMenu
 
-class ApplicationController: UINavigationController {    
+class ApplicationController: UINavigationController {
     private let webViewProcessPool = WKProcessPool()
     
     var menuButton = UIBarButtonItem()
@@ -51,6 +51,8 @@ class ApplicationController: UINavigationController {
         filterSegment = UISegmentedControl.init(items: ["默认","精选", "最新", "招聘"])
         filterSegment.selectedSegmentIndex = 0
         filterSegment.addTarget(self, action: #selector(actionFilterChanged), forControlEvents: .ValueChanged)
+        
+        interactivePopGestureRecognizer?.delegate = self
         
         actionToPath(rootPath, withAction: .Restore)
     }
@@ -252,5 +254,14 @@ extension ApplicationController: WKScriptMessageHandler {
             alertController.addAction(UIAlertAction(title: "OK", style: .Default, handler: nil))
             presentViewController(alertController, animated: true, completion: nil)
         }
+    }
+}
+
+extension ApplicationController: UIGestureRecognizerDelegate {
+    func gestureRecognizerShouldBegin(gestureRecognizer: UIGestureRecognizer) -> Bool {
+        if (viewControllers.count > 1) {
+            return true
+        }
+        return false
     }
 }
