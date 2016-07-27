@@ -57,9 +57,9 @@
         <!--Side Menu Navigation Controller-->
         <scene sceneID="MC9-CZ-2Av">
             <objects>
-                <navigationController storyboardIdentifier="sideMenuController" useStoryboardIdentifierAsRestorationIdentifier="YES" toolbarHidden="NO" id="Zkr-c3-61o" customClass="SideMenuNavigationController" customModule="Ruby_China" customModuleProvider="target" sceneMemberID="viewController">
+                <navigationController storyboardIdentifier="sideMenuController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="Zkr-c3-61o" customClass="SideMenuNavigationController" customModule="Ruby_China" customModuleProvider="target" sceneMemberID="viewController">
                     <toolbarItems/>
-                    <simulatedTabBarMetrics key="simulatedBottomBarMetrics"/>
+                    <nil key="simulatedBottomBarMetrics"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="FZv-pp-PoL">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>

@@ -8,10 +8,16 @@ class ApplicationController: UINavigationController {
     private let webViewProcessPool = WKProcessPool()
     
     var menuButton = UIBarButtonItem()
-    var notificationsButton = UIBarButtonItem()
+    
+    var filterSegment = UISegmentedControl()
+    
     var mainStoryboard = UIStoryboard.init(name: "Main", bundle: nil)
     var sideMenuController: SideMenuNavigationController?
     var sideMenuTableViewController: SideMenuViewController?
+    
+    var rootPath = "/topics"
+    
+    var newButton = UIBarButtonItem()
     
     private var application: UIApplication {
         return UIApplication.sharedApplication()
@@ -40,9 +46,13 @@ class ApplicationController: UINavigationController {
         
         menuButton = UIBarButtonItem.init(image: UIImage.init(named: "menu"), style: .Plain, target: self, action: #selector(ApplicationController.actionSideMenu))
         
-        notificationsButton = UIBarButtonItem.init(image: UIImage.init(named: "box"), style: .Plain, target: self, action: #selector(ApplicationController.actionNotifications))
+        newButton = UIBarButtonItem.init(image: UIImage.init(named: "send"), style: .Plain, target: self, action: #selector(ApplicationController.actionNewTopic))
         
-        actionToPath("/topics", withAction: .Restore)
+        filterSegment = UISegmentedControl.init(items: ["默认","精选", "最新", "招聘"])
+        filterSegment.selectedSegmentIndex = 0
+        filterSegment.addTarget(self, action: #selector(actionFilterChanged), forControlEvents: .ValueChanged)
+        
+        actionToPath(rootPath, withAction: .Restore)
     }
     
     private func presentVisitableForSession(session: Session, path: String, withAction action: Action = .Advance) {
@@ -52,19 +62,24 @@ class ApplicationController: UINavigationController {
             url = NSURL(string: "\(ROOT_URL)\(path)?access_token=\(OAuth2.shared.accessToken!)")
         }
         
-        let visitable = WebViewController(URL: url!)
-        
-        if action == .Advance {
-            pushViewController(visitable, animated: true)
-        } else if action == .Replace {
-            popViewControllerAnimated(false)
-            pushViewController(visitable, animated: false)
+        if (action == .Restore && topViewController != nil) {
+            let visitable = topViewController as! WebViewController
+            visitable.visitableURL = url
+            session.reload()
         } else {
-            viewControllers.removeAll()
-            pushViewController(visitable, animated: false)
-        }
         
-        session.visit(visitable)
+            let visitable = WebViewController(URL: url!)
+            if action == .Advance {
+                pushViewController(visitable, animated: true)
+            } else if action == .Replace {
+                popViewControllerAnimated(false)
+                pushViewController(visitable, animated: false)
+            } else {
+                pushViewController(visitable, animated: false)
+            }
+    
+            session.visit(visitable)
+        }
     }
 
     func actionNotifications() {
@@ -72,7 +87,26 @@ class ApplicationController: UINavigationController {
     }
     
     func actionSideMenu() {
-        presentViewController(sideMenuController!, animated: true, completion: nil)
+        if (sideMenuController != nil) {
+            presentViewController(sideMenuController!, animated: true, completion: nil)
+        }
+    }
+    
+    func actionNewTopic() {
+        presentNewTopicController()
+    }
+    
+    func actionFilterChanged() {
+        switch filterSegment.selectedSegmentIndex {
+        case 1:
+            actionToPath("/topics/popular", withAction: .Restore)
+        case 2:
+            actionToPath("/topics/last", withAction: .Restore)
+        case 3:
+            actionToPath("/jobs", withAction: .Restore)
+        default:
+            actionToPath("/topics", withAction: .Restore)
+        }
     }
     
     func actionToPath(path: String, withAction action: Action) {
@@ -192,7 +226,11 @@ extension ApplicationController: WKNavigationDelegate {
 extension ApplicationController: SignInViewControllerDelegate {
     func signInViewControllerDidAuthenticate(controller: SignInViewController) {
         // 重新载入之前的页面
-        actionToPath((session.webView.URL?.path)!, withAction: .Restore)
+        if (session.webView.URL?.path != nil ){
+            actionToPath((session.webView.URL?.path)!, withAction: .Restore)
+        } else {
+            session.reload()
+        }
     }
 }
 
@@ -211,4 +249,3 @@ extension ApplicationController: WKScriptMessageHandler {
         }
     }
 }
-

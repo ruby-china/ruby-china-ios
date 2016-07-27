@@ -9,37 +9,29 @@
 import UIKit
 
 class SideMenuViewController: UITableViewController {
-    let menuItems = ["讨论区", "优质话题", "最近发布", "招聘"]
-    let menuItemIcons = ["topic", "popular", "latest", "jobs"]
-    let menuItemPaths = ["/topics", "/topics/popular", "/topics/last", "/jobs"]
-    var newButton = UIBarButtonItem()
+    let menuItems = ["个人资料设置", "记事本"]
+    let menuItemIcons = ["profile", "notes"]
+    let menuItemPaths = ["/account/edit", "/notes"]
+    
     var loginButton = UIBarButtonItem()
     var logoutButton = UIBarButtonItem()
     var profileButton = UIBarButtonItem()
     let blankButton = UIBarButtonItem()
     
     deinit {
-        OAuth2.shared.removeObserver(self, forKeyPath: "accessToken")
+        OAuth2.shared.removeObserver(self, forKeyPath: "currentUser")
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        OAuth2.shared.addObserver(self, forKeyPath: "accessToken", options: .New, context: nil)
-        
-        title = "Ruby China"
-        
-        newButton = UIBarButtonItem.init(image: UIImage.init(named: "send"), style: .Plain, target: self, action: #selector(actionNewTopic))
-        newButton.tintColor = UIColor.blackColor()
-        profileButton = UIBarButtonItem.init(image: UIImage.init(named: "profile"), style: .Plain, target: self, action: #selector(actionProfile))
-        profileButton.tintColor = UIColor.blackColor()
+        OAuth2.shared.addObserver(self, forKeyPath: "currentUser", options: .New, context: nil)
         
         loginButton = UIBarButtonItem.init(image: UIImage.init(named: "login"), style: .Plain, target: self, action: #selector(actionLogin))
         loginButton.tintColor = UIColor.blackColor()
         
         logoutButton = UIBarButtonItem.init(image: UIImage.init(named: "logout"), style: .Plain, target: self, action: #selector(actionLogout))
         logoutButton.tintColor = UIColor.blackColor()
-        
         
         uploadLoginState()
         
@@ -83,11 +75,13 @@ class SideMenuViewController: UITableViewController {
     
     func uploadLoginState() {
         if OAuth2.shared.isLogined {
-            self.toolbarItems = [profileButton, logoutButton]
-            navigationItem.rightBarButtonItem = newButton
+            title = OAuth2.shared.currentUser?.name
+            
+            navigationItem.rightBarButtonItem = logoutButton
         } else {
-            self.toolbarItems = [loginButton]
-            navigationItem.rightBarButtonItem = nil
+            title = "Ruby China"
+            
+            navigationItem.rightBarButtonItem = loginButton
         }
     }
     
@@ -116,7 +110,7 @@ class SideMenuViewController: UITableViewController {
     }
     
     override func observeValueForKeyPath(keyPath: String?, ofObject object: AnyObject?, change: [String : AnyObject]?, context: UnsafeMutablePointer<Void>) {
-        if keyPath == "accessToken" {
+        if keyPath == "currentUser" {
             uploadLoginState()
         }
     }

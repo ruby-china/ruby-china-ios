@@ -3,19 +3,42 @@ import Turbolinks
 
 class WebViewController: VisitableViewController {
     var navController = ApplicationController()
+    
+    var cleanNotificationButton = UIBarButtonItem()
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        initButtons()
         
         visitableView.allowsPullToRefresh = true
         
         navController = self.navigationController as! ApplicationController
         
+        // Do any additional setup after loading the view, typically from a nib.
+    }
+    
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(true)
+        
         if (navController.viewControllers.count == 1) {
             navigationItem.leftBarButtonItem = navController.menuButton
         }
-        navigationItem.rightBarButtonItem = navController.notificationsButton
-        // Do any additional setup after loading the view, typically from a nib.
+        
+        if (navController.rootPath == "/topics") {
+            if (navigationController?.viewControllers.count == 1) {
+                navigationItem.titleView = navController.filterSegment
+                navigationItem.rightBarButtonItem = navController.newButton
+            }            
+        }
+        
+        if (navController.rootPath == "/notifications") {
+            navigationItem.rightBarButtonItem = cleanNotificationButton
+        }
+    }
+    
+    func initButtons() {
+        cleanNotificationButton = UIBarButtonItem.init(image: UIImage.init(named: "trash"), style: .Plain, target: self, action: nil)
     }
 
     override func didReceiveMemoryWarning() {
