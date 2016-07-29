@@ -30,8 +30,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         initAppearance()
         setupTabbar()
         
-        application.applicationIconBadgeNumber = 18
-        
         application.delegate = self
         
         let notificationSettings = UIUserNotificationSettings(forTypes: [.Badge, .Sound, .Alert], categories: nil)

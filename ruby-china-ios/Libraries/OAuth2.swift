@@ -73,6 +73,14 @@ class OAuth2 : NSObject {
         })
     }
     
+    func refreshUnreadNotifications() {
+        APIRequest.shared.get("/api/v3/notifications/unread_count", parameters: nil) { (result) in
+            let unreadCount = (result!["count"] as JSON).intValue
+            print("Unread notification count", unreadCount)
+            UIApplication.sharedApplication().applicationIconBadgeNumber = unreadCount;
+        }
+    }
+    
     func logout() {
         self.accessToken = ""
         NSUserDefaults.standardUserDefaults().removeObjectForKey("accessToken")
