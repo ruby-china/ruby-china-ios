@@ -30,10 +30,12 @@ class SignInViewController: UIViewController {
         loginField.keyboardType = .EmailAddress
         loginField.autocapitalizationType = .None
         loginField.placeholder = "用户名 / Email"
+        loginField.delegate = self
         
         passwordField = RBTextField.init(frame: CGRectMake(15, loginField.frame.maxY + 15, self.view.frame.width - 30, 40))
         passwordField.placeholder = "密码"
         passwordField.secureTextEntry = true
+        passwordField.delegate = self
         
         loginButton = UIButton.init(frame: CGRectMake(15, passwordField.frame.maxY + 25, self.view.frame.width - 30, 40))
         loginButton.setTitle("登录", forState: .Normal)
@@ -61,6 +63,19 @@ class SignInViewController: UIViewController {
     
     func actionClose() {
         navigationController?.dismissViewControllerAnimated(true, completion: nil)
+    }
+}
+
+extension SignInViewController: UITextFieldDelegate {
+    func textFieldShouldReturn(textField: UITextField) -> Bool {
+        if (textField == loginField) {
+            passwordField.becomeFirstResponder()
+        }
+        
+        if (textField == passwordField) {
+            actionLogin()
+        }
+        return true
     }
 }
 
