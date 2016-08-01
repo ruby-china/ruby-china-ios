@@ -19,13 +19,13 @@ class SideMenuViewController: UITableViewController {
     let blankButton = UIBarButtonItem()
     
     deinit {
-        OAuth2.shared.removeObserver(self, forKeyPath: "currentUser")
+        OAuth2.shared.removeObserver(self, forKeyPath: "accessToken")
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        OAuth2.shared.addObserver(self, forKeyPath: "currentUser", options: .New, context: nil)
+        OAuth2.shared.addObserver(self, forKeyPath: "accessToken", options: .New, context: nil)
         
         loginButton = UIBarButtonItem.init(image: UIImage.init(named: "login"), style: .Plain, target: self, action: #selector(actionLogin))
         loginButton.tintColor = UIColor.blackColor()
@@ -110,7 +110,7 @@ class SideMenuViewController: UITableViewController {
     }
     
     override func observeValueForKeyPath(keyPath: String?, ofObject object: AnyObject?, change: [String : AnyObject]?, context: UnsafeMutablePointer<Void>) {
-        if keyPath == "currentUser" {
+        if keyPath == "accessToken" {
             uploadLoginState()
         }
     }

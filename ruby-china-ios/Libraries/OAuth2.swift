@@ -40,10 +40,14 @@ class OAuth2 : NSObject {
                 let accessTokenString = self.accessTokenStore.retrieveAccessToken()?.accessToken
                 self.storeAccessToken(accessTokenString!)
                 print("Login successed.")
-                self.delegate?.oauth2DidLoginSuccessed(accessTokenString)
+                dispatch_async(dispatch_get_main_queue(), {
+                    self.delegate?.oauth2DidLoginSuccessed(accessTokenString)
+                })
             case .Failure(let err):
                 print("Login failed: ", err)
-                self.delegate?.oauth2DidLoginFailed(err)
+                dispatch_async(dispatch_get_main_queue(), {
+                    self.delegate?.oauth2DidLoginFailed(err)
+                })
             }
         }
     }
