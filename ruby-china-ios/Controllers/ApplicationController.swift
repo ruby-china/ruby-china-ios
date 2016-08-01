@@ -12,9 +12,15 @@ class ApplicationController: UINavigationController {
     
     var filterSegment = UISegmentedControl()
     
-    var mainStoryboard = UIStoryboard.init(name: "Main", bundle: nil)
-    var sideMenuController: SideMenuNavigationController?
-    var sideMenuTableViewController: SideMenuViewController?
+    lazy var mainStoryboard: UIStoryboard = {
+        return UIStoryboard.init(name: "Main", bundle: nil)
+    }()
+    lazy var sideMenuController: SideMenuNavigationController? = {
+        return self.mainStoryboard.instantiateViewControllerWithIdentifier("sideMenuController") as?SideMenuNavigationController
+    }()
+    lazy var sideMenuTableViewController: SideMenuViewController? = {
+        return self.mainStoryboard.instantiateViewControllerWithIdentifier("sideMenuTableViewController") as? SideMenuViewController
+    }()
     
     var rootPath = "/topics"
     
@@ -46,7 +52,6 @@ class ApplicationController: UINavigationController {
         navigationBar.tintColor = UIColor.blackColor()
         
         initRouter()
-        initSideMenu()
         
         menuButton = UIBarButtonItem.init(image: UIImage.init(named: "menu"), style: .Plain, target: self, action: #selector(ApplicationController.actionSideMenu))
         
@@ -59,6 +64,11 @@ class ApplicationController: UINavigationController {
         interactivePopGestureRecognizer?.delegate = self
         
         actionToPath(rootPath, withAction: .Restore)
+    }
+    
+    override func viewDidAppear(animated: Bool) {
+        super.viewDidAppear(animated)
+        initSideMenu()
     }
     
     private func presentVisitableForSession(session: Session, path: String, withAction action: Action = .Advance) {
@@ -149,8 +159,6 @@ class ApplicationController: UINavigationController {
     }
     
     func initSideMenu() {
-        sideMenuController = mainStoryboard.instantiateViewControllerWithIdentifier("sideMenuController") as?SideMenuNavigationController
-        sideMenuTableViewController = mainStoryboard.instantiateViewControllerWithIdentifier("sideMenuTableViewController") as? SideMenuViewController
         SideMenuManager.menuLeftNavigationController = sideMenuController
         SideMenuManager.menuFadeStatusBar = false
         SideMenuManager.menuAnimationBackgroundColor = UIColor.grayColor()
