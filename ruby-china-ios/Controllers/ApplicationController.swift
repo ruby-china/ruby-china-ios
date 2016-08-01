@@ -104,6 +104,11 @@ class ApplicationController: UINavigationController {
         router.bind("/account/sign_in") { (req) in
             self.presentLoginController()
         }
+        
+        router.bind("/topics/:topic_id/replies/:id/edit") { (req) in
+            let path = "/topics/\(req.param("topic_id")!)/replies/\(req.param("id")!)/edit"
+            self.presentEditReplyController(path)
+        }
     }
     
     func actionSideMenu() {
@@ -177,6 +182,21 @@ class ApplicationController: UINavigationController {
         }
         
         let controller = NewTopicViewController()
+        controller.delegate = self
+        controller.webViewConfiguration = webViewConfiguration
+        controller.path = path
+        
+        let navController = UINavigationController(rootViewController: controller)
+        presentViewController(navController, animated: true, completion: nil)
+    }
+    
+    private func presentEditReplyController(path: String) {
+        if (!OAuth2.shared.isLogined) {
+            presentLoginController()
+            return
+        }
+        
+        let controller = EditReplyViewController()
         controller.delegate = self
         controller.webViewConfiguration = webViewConfiguration
         controller.path = path
@@ -264,6 +284,12 @@ extension ApplicationController: SignInViewControllerDelegate {
 
 extension ApplicationController: NewTopicViewControllerDelegate {
     func newTopicViewDidFinished(controller: NewTopicViewController, toURL url: NSURL) {
+        actionToPath(url.path!, withAction: .Advance)
+    }
+}
+
+extension ApplicationController: EditReplyViewControllerDelegate {
+    func editReplyViewDidFinished(controller: EditReplyViewController, toURL url: NSURL) {
         actionToPath(url.path!, withAction: .Advance)
     }
 }

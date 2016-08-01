@@ -28,6 +28,7 @@
 		9670F19A1D4235D200128F8A /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9670F1981D4235D200128F8A /* LaunchScreen.storyboard */; };
 		967684771D45D88300EC9BD9 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 967684761D45D88300EC9BD9 /* Constants.swift */; };
 		969E3CE21D448676004D7403 /* ErrorView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 969E3CE11D448676004D7403 /* ErrorView.xib */; };
+		96BF50CB1D4EF9010018FD9C /* EditReplyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96BF50CA1D4EF9010018FD9C /* EditReplyViewController.swift */; };
 		E8009FD8B1AB73F4FB8C336F /* Pods_ruby_china_ios.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3D8873230E620CCF5BBCEE42 /* Pods_ruby_china_ios.framework */; };
 /* End PBXBuildFile section */
 
@@ -57,6 +58,7 @@
 		9670F19B1D4235D200128F8A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		967684761D45D88300EC9BD9 /* Constants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		969E3CE11D448676004D7403 /* ErrorView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ErrorView.xib; sourceTree = "<group>"; };
+		96BF50CA1D4EF9010018FD9C /* EditReplyViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = EditReplyViewController.swift; path = Controllers/EditReplyViewController.swift; sourceTree = "<group>"; };
 		C095BB2F4502B2B10DA854CC /* Pods-ruby-china-ios.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ruby-china-ios.debug.xcconfig"; path = "Pods/Target Support Files/Pods-ruby-china-ios/Pods-ruby-china-ios.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -91,6 +93,7 @@
 				96076B1F1D4704F100452E85 /* SideMenuViewController.swift */,
 				96076B201D4704F100452E85 /* SignInViewController.swift */,
 				96076B211D4704F100452E85 /* WebViewController.swift */,
+				96BF50CA1D4EF9010018FD9C /* EditReplyViewController.swift */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -315,6 +318,7 @@
 				96076B2E1D47050500452E85 /* Error.swift in Sources */,
 				96076B291D4704F100452E85 /* WebViewController.swift in Sources */,
 				967684771D45D88300EC9BD9 /* Constants.swift in Sources */,
+				96BF50CB1D4EF9010018FD9C /* EditReplyViewController.swift in Sources */,
 				96076B241D4704F100452E85 /* LoginViewController.swift in Sources */,
 				96076B2F1D47050500452E85 /* ErrorView.swift in Sources */,
 				961580A91D47836600B32BDA /* DeviceService.swift in Sources */,
