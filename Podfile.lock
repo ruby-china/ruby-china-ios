@@ -7,6 +7,7 @@ PODS:
     - Argo (~> 3.0)
     - Result (~> 2.0)
   - Result (2.1.2)
+  - Router (1.0.0)
   - SideMenu (1.1.7)
   - SwiftyJSON (2.3.2)
   - Turbolinks (1.0.2)
@@ -14,6 +15,7 @@ PODS:
 DEPENDENCIES:
   - Alamofire
   - Heimdallr
+  - Router
   - SideMenu
   - SwiftyJSON
   - Turbolinks (from `https://github.com/turbolinks/turbolinks-ios.git`)
@@ -32,10 +34,11 @@ SPEC CHECKSUMS:
   Argo: 22c5d62b7967020a641468c91dc9488bea9523b8
   Heimdallr: 47da8957bd089006ab14b3f8fcedd5d570035183
   Result: 6e722d4a66b1408680dbfcdf51c0b1c4b706316a
+  Router: 6088d6d321e097070d5ea4bd792cb015dfa0fbb4
   SideMenu: 7b420772e1aa7a2b3a0b0e191566e7e8e0868f53
   SwiftyJSON: 04ccea08915aa0109039157c7974cf0298da292a
   Turbolinks: d8209bab43803adae8c06d434368e16479023407
 
-PODFILE CHECKSUM: 14f86061dac53f3371669fbd9b477ec102b9c257
+PODFILE CHECKSUM: 0ea73d7ea1e92344024db17dc36df48a6d707247
 
 COCOAPODS: 1.0.1

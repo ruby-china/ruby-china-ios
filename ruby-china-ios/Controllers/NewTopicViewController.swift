@@ -10,6 +10,7 @@ class NewTopicViewController: UIViewController {
     var doneButton: UIBarButtonItem?
     var closeButton: UIBarButtonItem?
     weak var delegate: NewTopicViewControllerDelegate?
+    var path = "/topics/new"
     
     lazy var webView: WKWebView = {
         let configuration = self.webViewConfiguration ?? WKWebViewConfiguration()
@@ -22,10 +23,15 @@ class NewTopicViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        title = "创建新话题"
+        if path == "/topics/new" {
+            title = "创建新话题"
+        }
+        else {
+            title = "修改话题"
+        }
         
         
-        doneButton = UIBarButtonItem.init(title: "发布", style: .Plain, target: self, action: #selector(actionDone))
+        doneButton = UIBarButtonItem.init(title: "提交", style: .Plain, target: self, action: #selector(actionDone))
         closeButton = UIBarButtonItem.init(barButtonSystemItem: .Cancel, target: self, action: #selector(actionClose))
         
         navigationController?.navigationBar.tintColor = UIColor.blackColor()
@@ -37,11 +43,11 @@ class NewTopicViewController: UIViewController {
         view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:|[view]|", options: [], metrics: nil, views: [ "view": webView ]))
         
     
-        webView.loadRequest(NSURLRequest(URL: NSURL(string: "\(ROOT_URL)/topics/new?access_token=\(OAuth2.shared.accessToken)")!))
+        webView.loadRequest(NSURLRequest(URL: NSURL(string: "\(ROOT_URL)\(path)?access_token=\(OAuth2.shared.accessToken)")!))
     }
     
     func actionDone() {
-        webView.evaluateJavaScript("$('form#new_topic').submit()", completionHandler: nil)
+        webView.evaluateJavaScript("$('form[tb=\"edit-topic\"]').submit()", completionHandler: nil)
     }
     
     func actionClose() {
@@ -52,7 +58,7 @@ class NewTopicViewController: UIViewController {
 extension NewTopicViewController: WKNavigationDelegate {
     func webView(webView: WKWebView, decidePolicyForNavigationAction navigationAction: WKNavigationAction, decisionHandler: (WKNavigationActionPolicy) -> Void) {
         if (navigationAction.request.HTTPMethod == "GET") {
-            if let URL = navigationAction.request.URL where URL.path != "/topics/new" {
+            if let URL = navigationAction.request.URL where URL.path != path {
                 dismissViewControllerAnimated(true, completion: nil)
                 delegate?.newTopicViewDidFinished(self, toURL: URL)
                 decisionHandler(.Cancel)

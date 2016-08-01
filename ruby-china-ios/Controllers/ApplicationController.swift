@@ -3,6 +3,7 @@ import WebKit
 import Turbolinks
 import SafariServices
 import SideMenu
+import Router
 
 class ApplicationController: UINavigationController {
     private let webViewProcessPool = WKProcessPool()
@@ -16,6 +17,8 @@ class ApplicationController: UINavigationController {
     var sideMenuTableViewController: SideMenuViewController?
     
     var rootPath = "/topics"
+    
+    let router = Router()
     
     var newButton = UIBarButtonItem()
     
@@ -42,6 +45,7 @@ class ApplicationController: UINavigationController {
         
         navigationBar.tintColor = UIColor.blackColor()
         
+        initRouter()
         initSideMenu()
         
         menuButton = UIBarButtonItem.init(image: UIImage.init(named: "menu"), style: .Plain, target: self, action: #selector(ApplicationController.actionSideMenu))
@@ -83,9 +87,23 @@ class ApplicationController: UINavigationController {
             session.visit(visitable)
         }
     }
-
-    func actionNotifications() {
-        presentVisitableForSession(session, path: "/notifications")
+    
+    func initRouter() {
+        router.bind("/account/edit") { (req) in
+            self.presentEditAccountController()
+        }
+        
+        router.bind("/topics/new") { (req) in
+            self.presentEditTopicController("/topics/new")
+        }
+        
+        router.bind("/topics/:id/edit") { (req) in
+            self.presentEditTopicController("/topics/\(req.param("id")!)/edit")
+        }
+        
+        router.bind("/account/sign_in") { (req) in
+            self.presentLoginController()
+        }
     }
     
     func actionSideMenu() {
@@ -95,7 +113,7 @@ class ApplicationController: UINavigationController {
     }
     
     func actionNewTopic() {
-        presentNewTopicController()
+        actionToPath("/topics/new", withAction: .Replace)
     }
     
     func actionFilterChanged() {
@@ -112,14 +130,16 @@ class ApplicationController: UINavigationController {
     }
     
     func actionToPath(path: String, withAction action: Action) {
-        if path == "/account/sign_in" {
-            presentLoginController()
-        } else if (path == "/topics/new") {
-            presentNewTopicController()
-        } else if (path == "/account/edit") {
-            presentEditAccountController()
-        }else {
-            presentVisitableForSession(session, path: path, withAction: action)
+        let matched = router.match(NSURL.init(string: path)!)
+        var realAction = action
+        
+        if ((matched == nil)) {
+            if (session.webView.URL?.path == path) {
+                // 如果要访问的地址是相同的，直接 Replace，而不是创建新的页面
+                realAction = .Replace
+            }
+        
+            presentVisitableForSession(session, path: path, withAction: realAction)
         }
     }
     
@@ -150,7 +170,7 @@ class ApplicationController: UINavigationController {
         presentViewController(navController, animated: true, completion: nil)
     }
     
-    private func presentNewTopicController() {
+    private func presentEditTopicController(path: String) {
         if (!OAuth2.shared.isLogined) {
             presentLoginController()
             return
@@ -159,6 +179,7 @@ class ApplicationController: UINavigationController {
         let controller = NewTopicViewController()
         controller.delegate = self
         controller.webViewConfiguration = webViewConfiguration
+        controller.path = path
         
         let navController = UINavigationController(rootViewController: controller)
         presentViewController(navController, animated: true, completion: nil)

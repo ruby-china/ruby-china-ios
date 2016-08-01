@@ -5,4 +5,5 @@ target 'ruby-china-ios' do
   pod 'SwiftyJSON'
   pod 'Alamofire'
   pod 'Heimdallr'
+  pod 'Router'
 end
