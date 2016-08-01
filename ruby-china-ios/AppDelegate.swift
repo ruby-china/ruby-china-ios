@@ -9,16 +9,14 @@ import SideMenu
 class AppDelegate: UIResponder, UIApplicationDelegate {
     var window: UIWindow?
     var topicsController = ApplicationController()
-    var popularController = ApplicationController()
     var favoritesController = ApplicationController()
-    var jobsController = ApplicationController()
     var notificationsController = ApplicationController()
+    var pagesController = ApplicationController()
     
     var tabBarController = UITabBarController()
     
     var homeButton = UITabBarItem()
-    var popularButton = UITabBarItem()
-    var jobsButton = UITabBarItem()
+    var pagesButton = UITabBarItem()
     var favoritesButton = UITabBarItem()
     var notificationsButton = UITabBarItem()
     
@@ -43,19 +41,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         window?.rootViewController = tabBarController
         
         homeButton = UITabBarItem(title: "讨论", image: UIImage(named: "topic"), tag: 0)
-        popularButton = UITabBarItem(title: "精选", image: UIImage(named: "popular"), tag: 1)
-        jobsButton = UITabBarItem(title: "招聘", image: UIImage(named: "jobs"), tag: 2)
-        favoritesButton = UITabBarItem(title: "收藏", image: UIImage(named: "favorites"), tag: 3)
+        pagesButton = UITabBarItem(title: "Wiki", image: UIImage(named: "wiki"), tag: 1)
+        favoritesButton = UITabBarItem(title: "收藏", image: UIImage(named: "favorites"), tag: 2)
         notificationsButton = UITabBarItem(title: "通知", image: UIImage(named: "notifications"), tag: 99)
         
         topicsController.rootPath = "/topics"
         topicsController.tabBarItem = homeButton
-        
-        popularController.rootPath = "/topics/popular"
-        popularController.tabBarItem = popularButton
-        
-        jobsController.rootPath = "/jobs"
-        jobsController.tabBarItem = jobsButton
         
         favoritesController.rootPath = "/topics/favorites"
         favoritesController.tabBarItem = favoritesButton
@@ -63,7 +54,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         notificationsController.rootPath = "/notifications"
         notificationsController.tabBarItem = notificationsButton
         
-        tabBarController.viewControllers = [topicsController, favoritesController, notificationsController]
+        pagesController.rootPath = "/wiki"
+        pagesController.tabBarItem = pagesButton
+        
+        tabBarController.viewControllers = [topicsController, pagesController, favoritesController, notificationsController]
     }
     
     
