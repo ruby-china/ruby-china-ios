@@ -34,8 +34,6 @@ class RootViewController: UITabBarController {
         notificationsController.rootPath = "/notifications"
         notificationsController.tabBarItem = UITabBarItem(title: "通知", image: UIImage(named: "notifications"), tag: 99)
         
-        
-        
         viewControllers = [topicsController, pagesController, favoritesController, notificationsController]
     }
     

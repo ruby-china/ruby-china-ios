@@ -77,11 +77,15 @@ class OAuth2 : NSObject {
         })
     }
     
-    func refreshUnreadNotifications() {
+    func refreshUnreadNotifications(callback: (Int -> Void)) {
         APIRequest.shared.get("/api/v3/notifications/unread_count", parameters: nil) { (result) in
             let unreadCount = (result!["count"] as JSON).intValue
             print("Unread notification count", unreadCount)
             UIApplication.sharedApplication().applicationIconBadgeNumber = unreadCount;
+            
+            dispatch_async(dispatch_get_main_queue(), {
+                callback(unreadCount)
+            })
         }
     }
     

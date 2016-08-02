@@ -202,6 +202,14 @@ extension ApplicationController: SessionDelegate {
         actionToPath(path!, withAction: action)
     }
     
+    func session(session: Session, openExternalURL URL: NSURL) {
+        // 外部网站, open in SafariView
+        // TODO: 貌似 turbolinks-ios 的 Bug，target="_blank" 的连接无法触发这个事件
+        //       https://github.com/turbolinks/turbolinks-ios/issues/51
+        let safariViewController = SFSafariViewController(URL: URL)
+        presentViewController(safariViewController, animated: true, completion: nil)
+    }
+    
     func session(session: Session, didFailRequestForVisitable visitable: Visitable, withError error: NSError) {
         NSLog("ERROR: %@", error)
         guard let viewController = visitable as? WebViewController, errorCode = ErrorCode(rawValue: error.code) else { return }
@@ -230,25 +238,6 @@ extension ApplicationController: SessionDelegate {
     
     func sessionDidFinishRequest(session: Session) {
         application.networkActivityIndicatorVisible = false
-    }
-    
-    func sessionDidLoadWebView(session: Session) {
-        session.webView.navigationDelegate = self
-    }
-    
-}
-
-extension ApplicationController: WKNavigationDelegate {
-    func webView(webView: WKWebView, decidePolicyForNavigationAction navigationAction: WKNavigationAction, decisionHandler: (WKNavigationActionPolicy) -> ()) {
-        let url = navigationAction.request.URL
-        if (url?.host != NSURL(string: ROOT_URL)?.host) {
-            // 外部网站, open in SafariView
-            let safariViewController = SFSafariViewController(URL: url!)
-            presentViewController(safariViewController, animated: true, completion: nil)
-        } else {
-            actionToPath((url?.path)!, withAction: .Advance)
-        }
-        decisionHandler(.Cancel)
     }
 }
 

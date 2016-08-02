@@ -80,7 +80,8 @@ class WebViewController: VisitableViewController {
     func actionCleanNotifications() {
         visitableView.webView?.evaluateJavaScript("$('#btn-remove-all').click();", completionHandler: { (obj, err) in
             self.visitableView.webView?.reload()
-            OAuth2.shared.refreshUnreadNotifications()
+            OAuth2.shared.refreshUnreadNotifications({ (count) in
+            });
         })
     }
     
@@ -91,7 +92,8 @@ class WebViewController: VisitableViewController {
 extension WebViewController: WKNavigationDelegate {
     func webView(webView: WKWebView, didFinishNavigation navigation: WKNavigation!) {
         if (navController.rootPath == "/notifications") {
-            OAuth2.shared.refreshUnreadNotifications()
+            OAuth2.shared.refreshUnreadNotifications({ (count) in
+            });
         }
     }
 }

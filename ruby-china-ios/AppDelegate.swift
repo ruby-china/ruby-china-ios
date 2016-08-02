@@ -55,6 +55,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     func application(application: UIApplication, didReceiveRemoteNotification userInfo: [NSObject : AnyObject]) {
         becomeActivePage = "notifications"
+        
+        OAuth2.shared.refreshUnreadNotifications({ (count) in
+            self.setBadge(count)
+        });
     }
     
     func applicationDidBecomeActive(application: UIApplication) {
@@ -62,7 +66,20 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             becomeActivePage = ""
             application.applicationIconBadgeNumber = 0
             rootViewController.selectedIndex = (rootViewController.viewControllers?.count)!
-//            topicsController.actionNotifications()
+        } else {
+            OAuth2.shared.refreshUnreadNotifications({ (count) in
+                self.setBadge(count)
+            });
+        }
+    }
+    
+    func setBadge(count: Int) {
+        if (count > 0) {
+            UIApplication.sharedApplication().applicationIconBadgeNumber = count
+            self.rootViewController.tabBar.items?.last?.badgeValue = "\(count)"
+        } else {
+            UIApplication.sharedApplication().applicationIconBadgeNumber = 0
+            self.rootViewController.tabBar.items?.last?.badgeValue = nil
         }
     }
     
