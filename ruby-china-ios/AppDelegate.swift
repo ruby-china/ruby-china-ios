@@ -14,6 +14,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }()
     
     private func initAppearance() {
+        UINavigationBar.appearance().tintColor = BLACK
         UITabBarItem.appearance().setTitleTextAttributes([NSForegroundColorAttributeName: BLACK_LIGHT], forState: .Normal)
         UITabBarItem.appearance().setTitleTextAttributes([NSForegroundColorAttributeName: BLACK], forState: .Selected)
         UITabBar.appearance().tintColor = BLACK
