@@ -11,7 +11,6 @@
 		24742CD31D50F33200D16CA9 /* RootViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24742CD21D50F33200D16CA9 /* RootViewController.swift */; };
 		24742CD51D50F33A00D16CA9 /* TurbolinksSessionLib.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24742CD41D50F33A00D16CA9 /* TurbolinksSessionLib.swift */; };
 		24742CD71D50F64F00D16CA9 /* NotificationsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24742CD61D50F64F00D16CA9 /* NotificationsViewController.swift */; };
-		96076B221D4704F100452E85 /* ApplicationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96076B1A1D4704F100452E85 /* ApplicationController.swift */; };
 		96076B231D4704F100452E85 /* EditAccountViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96076B1B1D4704F100452E85 /* EditAccountViewController.swift */; };
 		96076B241D4704F100452E85 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96076B1C1D4704F100452E85 /* LoginViewController.swift */; };
 		96076B251D4704F100452E85 /* NewTopicViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96076B1D1D4704F100452E85 /* NewTopicViewController.swift */; };
@@ -43,7 +42,6 @@
 		24742CD61D50F64F00D16CA9 /* NotificationsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = NotificationsViewController.swift; path = Controllers/NotificationsViewController.swift; sourceTree = "<group>"; };
 		27849C620AD961F60F073D43 /* Pods-ruby-china-ios.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ruby-china-ios.release.xcconfig"; path = "Pods/Target Support Files/Pods-ruby-china-ios/Pods-ruby-china-ios.release.xcconfig"; sourceTree = "<group>"; };
 		3D8873230E620CCF5BBCEE42 /* Pods_ruby_china_ios.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ruby_china_ios.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		96076B1A1D4704F100452E85 /* ApplicationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ApplicationController.swift; path = Controllers/ApplicationController.swift; sourceTree = "<group>"; };
 		96076B1B1D4704F100452E85 /* EditAccountViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = EditAccountViewController.swift; path = Controllers/EditAccountViewController.swift; sourceTree = "<group>"; };
 		96076B1C1D4704F100452E85 /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LoginViewController.swift; path = Controllers/LoginViewController.swift; sourceTree = "<group>"; };
 		96076B1D1D4704F100452E85 /* NewTopicViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = NewTopicViewController.swift; path = Controllers/NewTopicViewController.swift; sourceTree = "<group>"; };
@@ -94,7 +92,6 @@
 			isa = PBXGroup;
 			children = (
 				24742CD21D50F33200D16CA9 /* RootViewController.swift */,
-				96076B1A1D4704F100452E85 /* ApplicationController.swift */,
 				96076B1B1D4704F100452E85 /* EditAccountViewController.swift */,
 				96076B1C1D4704F100452E85 /* LoginViewController.swift */,
 				96076B1D1D4704F100452E85 /* NewTopicViewController.swift */,
@@ -326,7 +323,6 @@
 				96076B271D4704F100452E85 /* SideMenuViewController.swift in Sources */,
 				961580A51D4755EA00B32BDA /* APIRequest.swift in Sources */,
 				96076B231D4704F100452E85 /* EditAccountViewController.swift in Sources */,
-				96076B221D4704F100452E85 /* ApplicationController.swift in Sources */,
 				96076B2E1D47050500452E85 /* Error.swift in Sources */,
 				96076B291D4704F100452E85 /* WebViewController.swift in Sources */,
 				967684771D45D88300EC9BD9 /* Constants.swift in Sources */,
