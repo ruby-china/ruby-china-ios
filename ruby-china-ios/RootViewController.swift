@@ -22,17 +22,19 @@ class RootViewController: UITabBarController {
         topicsController.rootPath = "/topics"
         topicsController.tabBarItem = UITabBarItem(title: "讨论", image: UIImage(named: "topic"), tag: 0)
         
+        let pagesController = ApplicationController()
+        pagesController.rootPath = "/wiki"
+        pagesController.tabBarItem = UITabBarItem(title: "Wiki", image: UIImage(named: "wiki"), tag: 1)
+        
         let favoritesController = ApplicationController()
         favoritesController.rootPath = "/topics/favorites"
-        favoritesController.tabBarItem = UITabBarItem(title: "Wiki", image: UIImage(named: "wiki"), tag: 1)
+        favoritesController.tabBarItem = UITabBarItem(title: "收藏", image: UIImage(named: "favorites"), tag: 2)
         
         let notificationsController = ApplicationController()
         notificationsController.rootPath = "/notifications"
-        notificationsController.tabBarItem = UITabBarItem(title: "收藏", image: UIImage(named: "favorites"), tag: 2)
+        notificationsController.tabBarItem = UITabBarItem(title: "通知", image: UIImage(named: "notifications"), tag: 99)
         
-        let pagesController = ApplicationController()
-        pagesController.rootPath = "/wiki"
-        pagesController.tabBarItem = UITabBarItem(title: "通知", image: UIImage(named: "notifications"), tag: 99)
+        
         
         viewControllers = [topicsController, pagesController, favoritesController, notificationsController]
     }
