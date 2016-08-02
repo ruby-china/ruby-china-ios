@@ -17,26 +17,29 @@ class RootViewController: UITabBarController {
         SideMenuManager.menuAddPanGestureToPresent(toView: view)
     }
     
+    private func createSideMenuBarButton() -> UIBarButtonItem {
+        return UIBarButtonItem(image: UIImage(named: "menu"), style: .Plain, target: self, action: #selector(displaySideMenu))
+    }
+    
     private func setupViewControllers() {
-        let topicsController = ApplicationController()
-        topicsController.rootPath = "/topics"
+        let topicsController = TopicsViewController(path: "/topics")
         topicsController.tabBarItem = UITabBarItem(title: "讨论", image: UIImage(named: "topic"), tag: 0)
         
-        let pagesController = ApplicationController()
-        pagesController.rootPath = "/wiki"
+        let pagesController = WebViewController(path: "/wiki")
         pagesController.tabBarItem = UITabBarItem(title: "Wiki", image: UIImage(named: "wiki"), tag: 1)
         
-        let favoritesController = ApplicationController()
-        favoritesController.rootPath = "/topics/favorites"
+        let favoritesController = WebViewController(path: "/topics/favorites")
         favoritesController.tabBarItem = UITabBarItem(title: "收藏", image: UIImage(named: "favorites"), tag: 2)
         
-        let notificationsController = ApplicationController()
-        notificationsController.rootPath = "/notifications"
+        let notificationsController = NotificationsViewController(path: "/notifications")
         notificationsController.tabBarItem = UITabBarItem(title: "通知", image: UIImage(named: "notifications"), tag: 99)
         
-        
-        
-        viewControllers = [topicsController, pagesController, favoritesController, notificationsController]
+        let vcs: [WebViewController] = [topicsController, pagesController, favoritesController, notificationsController]
+        viewControllers = vcs.map { (viewController) -> UINavigationController in
+            viewController.navigationItem.leftBarButtonItem = createSideMenuBarButton()
+            TurbolinksSessionLib.sharedInstance.visit(viewController)
+            return UINavigationController(rootViewController: viewController)
+        }
     }
     
     func displaySideMenu() {
