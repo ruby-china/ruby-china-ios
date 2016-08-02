@@ -87,9 +87,8 @@ class SideMenuViewController: UITableViewController {
     
     func actionWithPath(path: String) {
         navigationController?.dismissViewControllerAnimated(true, completion: {
-            NSNotificationCenter.defaultCenter().postNotificationName("menuClicked", object: self, userInfo: ["path": path])
+            NSNotificationCenter.defaultCenter().postNotificationName(NOTICE_MENU_CLICKED, object: self, userInfo: [NOTICE_MENU_CLICKED_PATH: path])
         })
-        
     }
     
     func actionLogout() {

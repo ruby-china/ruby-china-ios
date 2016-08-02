@@ -12,16 +12,6 @@ class ApplicationController: UINavigationController {
     
     var filterSegment = UISegmentedControl()
     
-    lazy var mainStoryboard: UIStoryboard = {
-        return UIStoryboard.init(name: "Main", bundle: nil)
-    }()
-    lazy var sideMenuController: SideMenuNavigationController? = {
-        return self.mainStoryboard.instantiateViewControllerWithIdentifier("sideMenuController") as?SideMenuNavigationController
-    }()
-    lazy var sideMenuTableViewController: SideMenuViewController? = {
-        return self.mainStoryboard.instantiateViewControllerWithIdentifier("sideMenuTableViewController") as? SideMenuViewController
-    }()
-    
     var rootPath = "/topics"
     
     let router = Router()
@@ -64,11 +54,8 @@ class ApplicationController: UINavigationController {
         interactivePopGestureRecognizer?.delegate = self
         
         actionToPath(rootPath, withAction: .Restore)
-    }
-    
-    override func viewDidAppear(animated: Bool) {
-        super.viewDidAppear(animated)
-        initSideMenu()
+        
+        NSNotificationCenter.defaultCenter().addObserver(self, selector:#selector(ApplicationController.menuClicked(_:)), name: NOTICE_MENU_CLICKED, object: nil)
     }
     
     private func presentVisitableForSession(session: Session, path: String, withAction action: Action = .Advance) {
@@ -122,9 +109,7 @@ class ApplicationController: UINavigationController {
     }
     
     func actionSideMenu() {
-        if (sideMenuController != nil) {
-            presentViewController(sideMenuController!, animated: true, completion: nil)
-        }
+        NSNotificationCenter.defaultCenter().postNotificationName(NOTICE_DISPLAY_MENU, object: self)
     }
     
     func actionNewTopic() {
@@ -158,21 +143,10 @@ class ApplicationController: UINavigationController {
         }
     }
     
-    func initSideMenu() {
-        SideMenuManager.menuLeftNavigationController = sideMenuController
-        SideMenuManager.menuFadeStatusBar = false
-        SideMenuManager.menuAnimationBackgroundColor = UIColor.grayColor()
-        SideMenuManager.menuAddPanGestureToPresent(toView: navigationBar)
-//        SideMenuManager.menuAddScreenEdgePanGesturesToPresent(toView: view)
-        
-        NSNotificationCenter.defaultCenter().addObserver(self, selector:#selector(ApplicationController.menuClicked(_:)), name: "menuClicked", object: nil)
-    }
-    
     func menuClicked(notification: NSNotification) {
-        let userInfo = notification.userInfo as! [String: AnyObject]
-        let path = userInfo["path"] as! String
-        
-        self.actionToPath(path, withAction: .Restore)
+        if let userInfo = notification.userInfo, let path = userInfo[NOTICE_MENU_CLICKED_PATH] as? String {
+            self.actionToPath(path, withAction: .Restore)
+        }
     }
     
     private func presentLoginController() {
