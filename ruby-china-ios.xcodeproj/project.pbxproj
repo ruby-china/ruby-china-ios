@@ -7,56 +7,57 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		24742CD11D50F30300D16CA9 /* TopicsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24742CD01D50F30300D16CA9 /* TopicsViewController.swift */; };
-		24742CD31D50F33200D16CA9 /* RootViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24742CD21D50F33200D16CA9 /* RootViewController.swift */; };
-		24742CD51D50F33A00D16CA9 /* TurbolinksSessionLib.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24742CD41D50F33A00D16CA9 /* TurbolinksSessionLib.swift */; };
-		24742CD71D50F64F00D16CA9 /* NotificationsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24742CD61D50F64F00D16CA9 /* NotificationsViewController.swift */; };
-		96076B231D4704F100452E85 /* EditAccountViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96076B1B1D4704F100452E85 /* EditAccountViewController.swift */; };
-		96076B241D4704F100452E85 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96076B1C1D4704F100452E85 /* LoginViewController.swift */; };
-		96076B251D4704F100452E85 /* NewTopicViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96076B1D1D4704F100452E85 /* NewTopicViewController.swift */; };
-		96076B261D4704F100452E85 /* SideMenuNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96076B1E1D4704F100452E85 /* SideMenuNavigationController.swift */; };
-		96076B271D4704F100452E85 /* SideMenuViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96076B1F1D4704F100452E85 /* SideMenuViewController.swift */; };
-		96076B281D4704F100452E85 /* SignInViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96076B201D4704F100452E85 /* SignInViewController.swift */; };
-		96076B291D4704F100452E85 /* WebViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96076B211D4704F100452E85 /* WebViewController.swift */; };
-		96076B2E1D47050500452E85 /* Error.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96076B2B1D47050500452E85 /* Error.swift */; };
-		96076B2F1D47050500452E85 /* ErrorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96076B2C1D47050500452E85 /* ErrorView.swift */; };
-		9615809E1D4745F200B32BDA /* RBTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9615809D1D4745F200B32BDA /* RBTextField.swift */; };
-		961580A31D47543600B32BDA /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 961580A21D47543600B32BDA /* User.swift */; };
-		961580A51D4755EA00B32BDA /* APIRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 961580A41D4755EA00B32BDA /* APIRequest.swift */; };
+		24742CEF1D50FE2E00D16CA9 /* EditAccountViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24742CD91D50FE2E00D16CA9 /* EditAccountViewController.swift */; };
+		24742CF01D50FE2E00D16CA9 /* EditReplyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24742CDA1D50FE2E00D16CA9 /* EditReplyViewController.swift */; };
+		24742CF11D50FE2E00D16CA9 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24742CDB1D50FE2E00D16CA9 /* LoginViewController.swift */; };
+		24742CF21D50FE2E00D16CA9 /* NewTopicViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24742CDC1D50FE2E00D16CA9 /* NewTopicViewController.swift */; };
+		24742CF31D50FE2E00D16CA9 /* NotificationsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24742CDD1D50FE2E00D16CA9 /* NotificationsViewController.swift */; };
+		24742CF41D50FE2E00D16CA9 /* RootViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24742CDE1D50FE2E00D16CA9 /* RootViewController.swift */; };
+		24742CF51D50FE2E00D16CA9 /* SideMenuNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24742CDF1D50FE2E00D16CA9 /* SideMenuNavigationController.swift */; };
+		24742CF61D50FE2E00D16CA9 /* SideMenuViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24742CE01D50FE2E00D16CA9 /* SideMenuViewController.swift */; };
+		24742CF71D50FE2E00D16CA9 /* SignInViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24742CE11D50FE2E00D16CA9 /* SignInViewController.swift */; };
+		24742CF81D50FE2E00D16CA9 /* TopicsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24742CE21D50FE2E00D16CA9 /* TopicsViewController.swift */; };
+		24742CF91D50FE2E00D16CA9 /* WebViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24742CE31D50FE2E00D16CA9 /* WebViewController.swift */; };
+		24742CFA1D50FE2E00D16CA9 /* APIRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24742CE51D50FE2E00D16CA9 /* APIRequest.swift */; };
+		24742CFB1D50FE2E00D16CA9 /* DeviceService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24742CE61D50FE2E00D16CA9 /* DeviceService.swift */; };
+		24742CFC1D50FE2E00D16CA9 /* OAuth2.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24742CE71D50FE2E00D16CA9 /* OAuth2.swift */; };
+		24742CFD1D50FE2E00D16CA9 /* TurbolinksSessionLib.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24742CE81D50FE2E00D16CA9 /* TurbolinksSessionLib.swift */; };
+		24742CFE1D50FE2E00D16CA9 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24742CEA1D50FE2E00D16CA9 /* User.swift */; };
+		24742CFF1D50FE2E00D16CA9 /* Error.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24742CEC1D50FE2E00D16CA9 /* Error.swift */; };
+		24742D001D50FE2E00D16CA9 /* ErrorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24742CED1D50FE2E00D16CA9 /* ErrorView.swift */; };
+		24742D011D50FE2E00D16CA9 /* RBTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24742CEE1D50FE2E00D16CA9 /* RBTextField.swift */; };
 		961580A71D477A7600B32BDA /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 961580A61D477A7600B32BDA /* Assets.xcassets */; };
-		961580A91D47836600B32BDA /* DeviceService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 961580A81D47836600B32BDA /* DeviceService.swift */; };
-		966C8F431D47183800270E0C /* OAuth2.swift in Sources */ = {isa = PBXBuildFile; fileRef = 966C8F421D47183800270E0C /* OAuth2.swift */; };
 		9670F1901D4235D200128F8A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9670F18F1D4235D200128F8A /* AppDelegate.swift */; };
 		9670F1951D4235D200128F8A /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9670F1931D4235D200128F8A /* Main.storyboard */; };
 		9670F19A1D4235D200128F8A /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9670F1981D4235D200128F8A /* LaunchScreen.storyboard */; };
 		967684771D45D88300EC9BD9 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 967684761D45D88300EC9BD9 /* Constants.swift */; };
 		969E3CE21D448676004D7403 /* ErrorView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 969E3CE11D448676004D7403 /* ErrorView.xib */; };
-		96BF50CB1D4EF9010018FD9C /* EditReplyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96BF50CA1D4EF9010018FD9C /* EditReplyViewController.swift */; };
 		E8009FD8B1AB73F4FB8C336F /* Pods_ruby_china_ios.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3D8873230E620CCF5BBCEE42 /* Pods_ruby_china_ios.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		24742CD01D50F30300D16CA9 /* TopicsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TopicsViewController.swift; path = Controllers/TopicsViewController.swift; sourceTree = "<group>"; };
-		24742CD21D50F33200D16CA9 /* RootViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = RootViewController.swift; path = Controllers/RootViewController.swift; sourceTree = "<group>"; };
-		24742CD41D50F33A00D16CA9 /* TurbolinksSessionLib.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TurbolinksSessionLib.swift; path = Libraries/TurbolinksSessionLib.swift; sourceTree = "<group>"; };
-		24742CD61D50F64F00D16CA9 /* NotificationsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = NotificationsViewController.swift; path = Controllers/NotificationsViewController.swift; sourceTree = "<group>"; };
+		24742CD91D50FE2E00D16CA9 /* EditAccountViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditAccountViewController.swift; sourceTree = "<group>"; };
+		24742CDA1D50FE2E00D16CA9 /* EditReplyViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditReplyViewController.swift; sourceTree = "<group>"; };
+		24742CDB1D50FE2E00D16CA9 /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
+		24742CDC1D50FE2E00D16CA9 /* NewTopicViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewTopicViewController.swift; sourceTree = "<group>"; };
+		24742CDD1D50FE2E00D16CA9 /* NotificationsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NotificationsViewController.swift; sourceTree = "<group>"; };
+		24742CDE1D50FE2E00D16CA9 /* RootViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RootViewController.swift; sourceTree = "<group>"; };
+		24742CDF1D50FE2E00D16CA9 /* SideMenuNavigationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SideMenuNavigationController.swift; sourceTree = "<group>"; };
+		24742CE01D50FE2E00D16CA9 /* SideMenuViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SideMenuViewController.swift; sourceTree = "<group>"; };
+		24742CE11D50FE2E00D16CA9 /* SignInViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignInViewController.swift; sourceTree = "<group>"; };
+		24742CE21D50FE2E00D16CA9 /* TopicsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TopicsViewController.swift; sourceTree = "<group>"; };
+		24742CE31D50FE2E00D16CA9 /* WebViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WebViewController.swift; sourceTree = "<group>"; };
+		24742CE51D50FE2E00D16CA9 /* APIRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = APIRequest.swift; sourceTree = "<group>"; };
+		24742CE61D50FE2E00D16CA9 /* DeviceService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DeviceService.swift; sourceTree = "<group>"; };
+		24742CE71D50FE2E00D16CA9 /* OAuth2.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OAuth2.swift; sourceTree = "<group>"; };
+		24742CE81D50FE2E00D16CA9 /* TurbolinksSessionLib.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TurbolinksSessionLib.swift; sourceTree = "<group>"; };
+		24742CEA1D50FE2E00D16CA9 /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
+		24742CEC1D50FE2E00D16CA9 /* Error.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Error.swift; sourceTree = "<group>"; };
+		24742CED1D50FE2E00D16CA9 /* ErrorView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ErrorView.swift; sourceTree = "<group>"; };
+		24742CEE1D50FE2E00D16CA9 /* RBTextField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RBTextField.swift; sourceTree = "<group>"; };
 		27849C620AD961F60F073D43 /* Pods-ruby-china-ios.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ruby-china-ios.release.xcconfig"; path = "Pods/Target Support Files/Pods-ruby-china-ios/Pods-ruby-china-ios.release.xcconfig"; sourceTree = "<group>"; };
 		3D8873230E620CCF5BBCEE42 /* Pods_ruby_china_ios.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ruby_china_ios.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		96076B1B1D4704F100452E85 /* EditAccountViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = EditAccountViewController.swift; path = Controllers/EditAccountViewController.swift; sourceTree = "<group>"; };
-		96076B1C1D4704F100452E85 /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LoginViewController.swift; path = Controllers/LoginViewController.swift; sourceTree = "<group>"; };
-		96076B1D1D4704F100452E85 /* NewTopicViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = NewTopicViewController.swift; path = Controllers/NewTopicViewController.swift; sourceTree = "<group>"; };
-		96076B1E1D4704F100452E85 /* SideMenuNavigationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SideMenuNavigationController.swift; path = Controllers/SideMenuNavigationController.swift; sourceTree = "<group>"; };
-		96076B1F1D4704F100452E85 /* SideMenuViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SideMenuViewController.swift; path = Controllers/SideMenuViewController.swift; sourceTree = "<group>"; };
-		96076B201D4704F100452E85 /* SignInViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SignInViewController.swift; path = Controllers/SignInViewController.swift; sourceTree = "<group>"; };
-		96076B211D4704F100452E85 /* WebViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = WebViewController.swift; path = Controllers/WebViewController.swift; sourceTree = "<group>"; };
-		96076B2B1D47050500452E85 /* Error.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Error.swift; path = Views/Error.swift; sourceTree = "<group>"; };
-		96076B2C1D47050500452E85 /* ErrorView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ErrorView.swift; path = Views/ErrorView.swift; sourceTree = "<group>"; };
-		9615809D1D4745F200B32BDA /* RBTextField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = RBTextField.swift; path = Views/RBTextField.swift; sourceTree = "<group>"; };
-		961580A21D47543600B32BDA /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = User.swift; path = Models/User.swift; sourceTree = "<group>"; };
-		961580A41D4755EA00B32BDA /* APIRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = APIRequest.swift; path = Libraries/APIRequest.swift; sourceTree = "<group>"; };
 		961580A61D477A7600B32BDA /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		961580A81D47836600B32BDA /* DeviceService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DeviceService.swift; path = Libraries/DeviceService.swift; sourceTree = "<group>"; };
-		966C8F421D47183800270E0C /* OAuth2.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = OAuth2.swift; path = Libraries/OAuth2.swift; sourceTree = "<group>"; };
 		9670F18C1D4235D200128F8A /* Ruby China.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Ruby China.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		9670F18F1D4235D200128F8A /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		9670F1941D4235D200128F8A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -64,7 +65,6 @@
 		9670F19B1D4235D200128F8A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		967684761D45D88300EC9BD9 /* Constants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		969E3CE11D448676004D7403 /* ErrorView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ErrorView.xib; sourceTree = "<group>"; };
-		96BF50CA1D4EF9010018FD9C /* EditReplyViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = EditReplyViewController.swift; path = Controllers/EditReplyViewController.swift; sourceTree = "<group>"; };
 		C095BB2F4502B2B10DA854CC /* Pods-ruby-china-ios.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ruby-china-ios.debug.xcconfig"; path = "Pods/Target Support Files/Pods-ruby-china-ios/Pods-ruby-china-ios.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -80,59 +80,59 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		24742CD81D50FE2E00D16CA9 /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				24742CD91D50FE2E00D16CA9 /* EditAccountViewController.swift */,
+				24742CDA1D50FE2E00D16CA9 /* EditReplyViewController.swift */,
+				24742CDB1D50FE2E00D16CA9 /* LoginViewController.swift */,
+				24742CDC1D50FE2E00D16CA9 /* NewTopicViewController.swift */,
+				24742CDD1D50FE2E00D16CA9 /* NotificationsViewController.swift */,
+				24742CDE1D50FE2E00D16CA9 /* RootViewController.swift */,
+				24742CDF1D50FE2E00D16CA9 /* SideMenuNavigationController.swift */,
+				24742CE01D50FE2E00D16CA9 /* SideMenuViewController.swift */,
+				24742CE11D50FE2E00D16CA9 /* SignInViewController.swift */,
+				24742CE21D50FE2E00D16CA9 /* TopicsViewController.swift */,
+				24742CE31D50FE2E00D16CA9 /* WebViewController.swift */,
+			);
+			path = Controllers;
+			sourceTree = "<group>";
+		};
+		24742CE41D50FE2E00D16CA9 /* Libraries */ = {
+			isa = PBXGroup;
+			children = (
+				24742CE51D50FE2E00D16CA9 /* APIRequest.swift */,
+				24742CE61D50FE2E00D16CA9 /* DeviceService.swift */,
+				24742CE71D50FE2E00D16CA9 /* OAuth2.swift */,
+				24742CE81D50FE2E00D16CA9 /* TurbolinksSessionLib.swift */,
+			);
+			path = Libraries;
+			sourceTree = "<group>";
+		};
+		24742CE91D50FE2E00D16CA9 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				24742CEA1D50FE2E00D16CA9 /* User.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		24742CEB1D50FE2E00D16CA9 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				24742CEC1D50FE2E00D16CA9 /* Error.swift */,
+				24742CED1D50FE2E00D16CA9 /* ErrorView.swift */,
+				24742CEE1D50FE2E00D16CA9 /* RBTextField.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
 		697FC324893655A09B22EB35 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
 				3D8873230E620CCF5BBCEE42 /* Pods_ruby_china_ios.framework */,
 			);
 			name = Frameworks;
-			sourceTree = "<group>";
-		};
-		96076B191D4704E000452E85 /* Controllers */ = {
-			isa = PBXGroup;
-			children = (
-				24742CD21D50F33200D16CA9 /* RootViewController.swift */,
-				96076B1B1D4704F100452E85 /* EditAccountViewController.swift */,
-				96076B1C1D4704F100452E85 /* LoginViewController.swift */,
-				96076B1D1D4704F100452E85 /* NewTopicViewController.swift */,
-				96076B1E1D4704F100452E85 /* SideMenuNavigationController.swift */,
-				96076B1F1D4704F100452E85 /* SideMenuViewController.swift */,
-				96076B201D4704F100452E85 /* SignInViewController.swift */,
-				96076B211D4704F100452E85 /* WebViewController.swift */,
-				24742CD01D50F30300D16CA9 /* TopicsViewController.swift */,
-				24742CD61D50F64F00D16CA9 /* NotificationsViewController.swift */,
-				96BF50CA1D4EF9010018FD9C /* EditReplyViewController.swift */,
-			);
-			name = Controllers;
-			sourceTree = "<group>";
-		};
-		96076B2A1D4704FD00452E85 /* Views */ = {
-			isa = PBXGroup;
-			children = (
-				96076B2B1D47050500452E85 /* Error.swift */,
-				96076B2C1D47050500452E85 /* ErrorView.swift */,
-				9615809D1D4745F200B32BDA /* RBTextField.swift */,
-			);
-			name = Views;
-			sourceTree = "<group>";
-		};
-		961580A11D47542300B32BDA /* Models */ = {
-			isa = PBXGroup;
-			children = (
-				961580A21D47543600B32BDA /* User.swift */,
-			);
-			name = Models;
-			sourceTree = "<group>";
-		};
-		966C8F441D4719FB00270E0C /* Libraries */ = {
-			isa = PBXGroup;
-			children = (
-				966C8F421D47183800270E0C /* OAuth2.swift */,
-				961580A41D4755EA00B32BDA /* APIRequest.swift */,
-				961580A81D47836600B32BDA /* DeviceService.swift */,
-				24742CD41D50F33A00D16CA9 /* TurbolinksSessionLib.swift */,
-			);
-			name = Libraries;
 			sourceTree = "<group>";
 		};
 		966D84CA1D449901007CFFDB /* Supporting Files */ = {
@@ -168,12 +168,12 @@
 		9670F18E1D4235D200128F8A /* ruby-china-ios */ = {
 			isa = PBXGroup;
 			children = (
-				961580A11D47542300B32BDA /* Models */,
-				966C8F441D4719FB00270E0C /* Libraries */,
-				96076B2A1D4704FD00452E85 /* Views */,
-				96076B191D4704E000452E85 /* Controllers */,
 				967684761D45D88300EC9BD9 /* Constants.swift */,
 				9670F18F1D4235D200128F8A /* AppDelegate.swift */,
+				24742CE91D50FE2E00D16CA9 /* Models */,
+				24742CEB1D50FE2E00D16CA9 /* Views */,
+				24742CD81D50FE2E00D16CA9 /* Controllers */,
+				24742CE41D50FE2E00D16CA9 /* Libraries */,
 				966D84CA1D449901007CFFDB /* Supporting Files */,
 			);
 			path = "ruby-china-ios";
@@ -320,27 +320,27 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				96076B271D4704F100452E85 /* SideMenuViewController.swift in Sources */,
-				961580A51D4755EA00B32BDA /* APIRequest.swift in Sources */,
-				96076B231D4704F100452E85 /* EditAccountViewController.swift in Sources */,
-				96076B2E1D47050500452E85 /* Error.swift in Sources */,
-				96076B291D4704F100452E85 /* WebViewController.swift in Sources */,
+				24742CF71D50FE2E00D16CA9 /* SignInViewController.swift in Sources */,
+				24742CEF1D50FE2E00D16CA9 /* EditAccountViewController.swift in Sources */,
+				24742CF81D50FE2E00D16CA9 /* TopicsViewController.swift in Sources */,
+				24742CF51D50FE2E00D16CA9 /* SideMenuNavigationController.swift in Sources */,
+				24742CF01D50FE2E00D16CA9 /* EditReplyViewController.swift in Sources */,
 				967684771D45D88300EC9BD9 /* Constants.swift in Sources */,
-				96BF50CB1D4EF9010018FD9C /* EditReplyViewController.swift in Sources */,
-				96076B241D4704F100452E85 /* LoginViewController.swift in Sources */,
-				96076B2F1D47050500452E85 /* ErrorView.swift in Sources */,
-				24742CD31D50F33200D16CA9 /* RootViewController.swift in Sources */,
-				961580A91D47836600B32BDA /* DeviceService.swift in Sources */,
-				961580A31D47543600B32BDA /* User.swift in Sources */,
-				24742CD11D50F30300D16CA9 /* TopicsViewController.swift in Sources */,
-				96076B281D4704F100452E85 /* SignInViewController.swift in Sources */,
+				24742D011D50FE2E00D16CA9 /* RBTextField.swift in Sources */,
+				24742CF11D50FE2E00D16CA9 /* LoginViewController.swift in Sources */,
 				9670F1901D4235D200128F8A /* AppDelegate.swift in Sources */,
-				96076B261D4704F100452E85 /* SideMenuNavigationController.swift in Sources */,
-				96076B251D4704F100452E85 /* NewTopicViewController.swift in Sources */,
-				24742CD51D50F33A00D16CA9 /* TurbolinksSessionLib.swift in Sources */,
-				24742CD71D50F64F00D16CA9 /* NotificationsViewController.swift in Sources */,
-				966C8F431D47183800270E0C /* OAuth2.swift in Sources */,
-				9615809E1D4745F200B32BDA /* RBTextField.swift in Sources */,
+				24742CFA1D50FE2E00D16CA9 /* APIRequest.swift in Sources */,
+				24742CF31D50FE2E00D16CA9 /* NotificationsViewController.swift in Sources */,
+				24742CFC1D50FE2E00D16CA9 /* OAuth2.swift in Sources */,
+				24742CFD1D50FE2E00D16CA9 /* TurbolinksSessionLib.swift in Sources */,
+				24742CF41D50FE2E00D16CA9 /* RootViewController.swift in Sources */,
+				24742CF61D50FE2E00D16CA9 /* SideMenuViewController.swift in Sources */,
+				24742CFE1D50FE2E00D16CA9 /* User.swift in Sources */,
+				24742D001D50FE2E00D16CA9 /* ErrorView.swift in Sources */,
+				24742CF91D50FE2E00D16CA9 /* WebViewController.swift in Sources */,
+				24742CF21D50FE2E00D16CA9 /* NewTopicViewController.swift in Sources */,
+				24742CFB1D50FE2E00D16CA9 /* DeviceService.swift in Sources */,
+				24742CFF1D50FE2E00D16CA9 /* Error.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
