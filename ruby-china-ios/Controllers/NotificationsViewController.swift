@@ -16,9 +16,10 @@ class NotificationsViewController: WebViewController {
     }
     
     func cleanNotificationsAction() {
-        visitableView.webView?.evaluateJavaScript("$('#btn-remove-all').click();", completionHandler: { (obj, err) in
+        visitableView.webView?.evaluateJavaScript("$('#btn-remove-all').click();") { (obj, err) in
             self.visitableView.webView?.reload()
-            OAuth2.shared.refreshUnreadNotifications()
-        })
+            OAuth2.shared.refreshUnreadNotifications({ (count) in
+            })
+        }
     }
 }
