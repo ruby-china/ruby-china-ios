@@ -9,17 +9,26 @@
 import UIKit
 
 class NotificationsViewController: WebViewController {
+    var lastUnreadCount = 0
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
         navigationItem.rightBarButtonItem = UIBarButtonItem.init(image: UIImage.init(named: "trash"), style: .Plain, target: self, action: #selector(cleanNotificationsAction))
     }
     
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated);
+//        OAuth2.shared.refreshUnreadNotifications({ count in
+//            if (count != count) {
+//                self.lastUnreadCount = count
+//            }
+//        })
+    }
+    
     func cleanNotificationsAction() {
         visitableView.webView?.evaluateJavaScript("$('#btn-remove-all').click();") { (obj, err) in
             self.visitableView.webView?.reload()
-            OAuth2.shared.refreshUnreadNotifications({ (count) in
-            })
         }
     }
 }

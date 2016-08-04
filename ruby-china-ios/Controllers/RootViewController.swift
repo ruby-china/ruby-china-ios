@@ -13,12 +13,14 @@ class RootViewController: UITabBarController {
     private func setupSideMenu() {
         SideMenuManager.menuLeftNavigationController = UIStoryboard.init(name: "Main", bundle: nil).instantiateViewControllerWithIdentifier("sideMenuController") as? UISideMenuNavigationController
         SideMenuManager.menuFadeStatusBar = false
+        SideMenuManager.menuPresentMode = .ViewSlideOut
         SideMenuManager.menuAnimationBackgroundColor = UIColor.grayColor()
-        SideMenuManager.menuAddPanGestureToPresent(toView: view)
+        // SideMenu 不要手势，用处不大
+        // SideMenuManager.menuAddPanGestureToPresent(toView: )
     }
     
     private func createSideMenuBarButton() -> UIBarButtonItem {
-        return UIBarButtonItem(image: UIImage(named: "menu"), style: .Plain, target: self, action: #selector(displaySideMenu))
+        return UIBarButtonItem(image: UIImage(named: "profile"), style: .Plain, target: self, action: #selector(displaySideMenu))
     }
     
     private func setupViewControllers() {
@@ -48,12 +50,18 @@ class RootViewController: UITabBarController {
         }
     }
     
+    func actionMenuClicked(note: NSNotification) {
+        let path = note.userInfo![NOTICE_MENU_CLICKED_PATH] as! String;
+        TurbolinksSessionLib.sharedInstance.actionToPath(path, withAction: .Advance)
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         setupSideMenu()
         setupViewControllers()
         
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(displaySideMenu), name: NOTICE_DISPLAY_MENU, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(actionMenuClicked), name: NOTICE_MENU_CLICKED, object: nil);
     }
 }
 
