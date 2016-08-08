@@ -47,7 +47,8 @@ class WebViewController: VisitableViewController {
     func showTopicContextMenu() {
         let sheet = UIAlertController(title: "操作", message: "", preferredStyle: .ActionSheet)
         let shareAction = UIAlertAction(title: "分享", style: .Default, handler: { action in
-            self.share((self.visitableView.webView?.title)!, url: (self.visitableView.webView?.URL?.absoluteString)!, image: UIImage.init(), sourceView: self.visitableView)
+            let shareURL = "\(ROOT_URL)\(self.visitableView.webView?.URL?.path)"
+            self.share((self.visitableView.webView?.title)!, url: shareURL, image: UIImage.init(), sourceView: self.visitableView)
         })
         sheet.addAction(shareAction)
     
