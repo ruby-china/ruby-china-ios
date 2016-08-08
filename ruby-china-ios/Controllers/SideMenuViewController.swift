@@ -13,6 +13,9 @@ class SideMenuViewController: UITableViewController {
     let menuItemIcons = ["profile", "notes"]
     let menuItemPaths = ["/account/edit", "/notes"]
     
+    let version = NSBundle.mainBundle().infoDictionary!["CFBundleShortVersionString"] as! String
+    let build = NSBundle.mainBundle().infoDictionary!["CFBundleVersion"] as! String
+    
     var loginButton = UIBarButtonItem()
     var logoutButton = UIBarButtonItem()
     var profileButton = UIBarButtonItem()
@@ -44,9 +47,12 @@ class SideMenuViewController: UITableViewController {
         imageView.contentMode = .ScaleAspectFit
         imageView.backgroundColor = UIColor.blackColor().colorWithAlphaComponent(0.01)
         tableView.backgroundView = imageView
+
+        let versionBarItem = UIBarButtonItem(title: "Version: \(version).\(build)", style: .Plain, target: self, action: nil);
+        toolbarItems = [versionBarItem];
         
-        tableView.delegate = self;
-        tableView.dataSource = self;
+        tableView.delegate = self
+        tableView.dataSource = self
     }
     
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
