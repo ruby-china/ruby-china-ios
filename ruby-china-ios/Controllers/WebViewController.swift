@@ -5,7 +5,7 @@ import Router
 class WebViewController: VisitableViewController {
     var currentPath = ""
     lazy var router = Router()
-
+    
     convenience init(path: String) {
         var urlString = "\(ROOT_URL)\(path)"
         if (OAuth2.shared.isLogined) {
@@ -55,7 +55,6 @@ class WebViewController: VisitableViewController {
         }
     }
 
-
     func showTopicContextMenu() {
         let sheet = UIAlertController(title: "操作", message: "", preferredStyle: .ActionSheet)
         let shareAction = UIAlertAction(title: "分享", style: .Default, handler: { action in
@@ -67,7 +66,6 @@ class WebViewController: VisitableViewController {
         sheet.addAction(cancelAction)
         self.presentViewController(sheet, animated: true, completion: nil)
     }
-
 
     lazy var errorView: ErrorView = {
         let view = NSBundle.mainBundle().loadNibNamed("ErrorView", owner: self, options: nil).first as! ErrorView
@@ -109,6 +107,5 @@ class WebViewController: VisitableViewController {
 
 
         self.presentViewController(activityViewController, animated: true, completion: nil)
-
     }
 }
