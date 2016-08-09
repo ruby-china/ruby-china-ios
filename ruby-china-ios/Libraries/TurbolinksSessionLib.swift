@@ -221,15 +221,18 @@ extension TurbolinksSessionLib: SignInViewControllerDelegate {
     }
 }
 
-extension TurbolinksSessionLib: NewTopicViewControllerDelegate {
-    func newTopicViewDidFinished(controller: NewTopicViewController, toURL url: NSURL) {
-        actionToPath(url.path!, withAction: .Advance)
-    }
-}
-
-extension TurbolinksSessionLib: EditReplyViewControllerDelegate {
-    func editReplyViewDidFinished(controller: EditReplyViewController, toURL url: NSURL) {
-        actionToPath(url.path!, withAction: .Advance)
+extension TurbolinksSessionLib: PopupWebViewControllerDelegate {
+    func popupWebViewControllerDidFinished(controller: PopupWebViewController, toURL url: NSURL?) {
+        if (url == nil) {
+            session.reload()
+            return
+        }
+        
+        if (controller.path == "topics/new") {
+            actionToPath(url!.path!, withAction: .Advance)
+        } else {
+            session.reload()
+        }
     }
 }
 
