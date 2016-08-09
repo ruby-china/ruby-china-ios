@@ -19,6 +19,7 @@ class PopupWebViewController: UIViewController {
     var webViewConfiguration: WKWebViewConfiguration?
     weak var delegate: PopupWebViewControllerDelegate?
     var path = ""
+    var closeButton: UIBarButtonItem?
 
     lazy var webView: WKWebView = {
         let configuration = self.webViewConfiguration ?? WKWebViewConfiguration()
@@ -35,6 +36,10 @@ class PopupWebViewController: UIViewController {
         view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:|[view]|", options: [], metrics: nil, views: [ "view": webView ]))
         view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:|[view]|", options: [], metrics: nil, views: [ "view": webView ]))
         
+        closeButton = UIBarButtonItem(title: "关闭", style: .Plain, target: self, action:  #selector(actionClose))        
+        navigationItem.leftBarButtonItem = closeButton
+        
+        navigationController?.navigationBar.tintColor = UIColor.blackColor()
         
         webView.loadRequest(NSURLRequest(URL: NSURL(string: "\(ROOT_URL)\(path)?access_token=\(OAuth2.shared.accessToken)")!))
     }

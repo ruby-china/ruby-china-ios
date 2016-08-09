@@ -33,6 +33,7 @@
 		967684771D45D88300EC9BD9 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 967684761D45D88300EC9BD9 /* Constants.swift */; };
 		969E3CE21D448676004D7403 /* ErrorView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 969E3CE11D448676004D7403 /* ErrorView.xib */; };
 		96F9FD6B1D59A168004FD824 /* PopupWebViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96F9FD6A1D59A168004FD824 /* PopupWebViewController.swift */; };
+		96F9FD6D1D59A814004FD824 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96F9FD6C1D59A814004FD824 /* ProfileViewController.swift */; };
 		E8009FD8B1AB73F4FB8C336F /* Pods_ruby_china_ios.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3D8873230E620CCF5BBCEE42 /* Pods_ruby_china_ios.framework */; };
 /* End PBXBuildFile section */
 
@@ -67,6 +68,7 @@
 		967684761D45D88300EC9BD9 /* Constants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		969E3CE11D448676004D7403 /* ErrorView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ErrorView.xib; sourceTree = "<group>"; };
 		96F9FD6A1D59A168004FD824 /* PopupWebViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PopupWebViewController.swift; sourceTree = "<group>"; };
+		96F9FD6C1D59A814004FD824 /* ProfileViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
 		C095BB2F4502B2B10DA854CC /* Pods-ruby-china-ios.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ruby-china-ios.debug.xcconfig"; path = "Pods/Target Support Files/Pods-ruby-china-ios/Pods-ruby-china-ios.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -97,6 +99,7 @@
 				24742CE21D50FE2E00D16CA9 /* TopicsViewController.swift */,
 				24742CE31D50FE2E00D16CA9 /* WebViewController.swift */,
 				96F9FD6A1D59A168004FD824 /* PopupWebViewController.swift */,
+				96F9FD6C1D59A814004FD824 /* ProfileViewController.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -338,6 +341,7 @@
 				24742CFC1D50FE2E00D16CA9 /* OAuth2.swift in Sources */,
 				24742CFD1D50FE2E00D16CA9 /* TurbolinksSessionLib.swift in Sources */,
 				24742CF41D50FE2E00D16CA9 /* RootViewController.swift in Sources */,
+				96F9FD6D1D59A814004FD824 /* ProfileViewController.swift in Sources */,
 				24742CF61D50FE2E00D16CA9 /* SideMenuViewController.swift in Sources */,
 				24742CFE1D50FE2E00D16CA9 /* User.swift in Sources */,
 				24742D001D50FE2E00D16CA9 /* ErrorView.swift in Sources */,

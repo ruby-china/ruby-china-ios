@@ -3,7 +3,6 @@ import WebKit
 
 class NewTopicViewController: PopupWebViewController {
     var doneButton: UIBarButtonItem?
-    var closeButton: UIBarButtonItem?
     
     override func viewDidLoad() {
         if path == "/topics/new" {
@@ -13,12 +12,7 @@ class NewTopicViewController: PopupWebViewController {
             title = "修改话题"
         }
         
-        
         doneButton = UIBarButtonItem.init(title: "提交", style: .Plain, target: self, action: #selector(actionDone))
-        closeButton = UIBarButtonItem.init(barButtonSystemItem: .Cancel, target: self, action: #selector(actionClose))
-        
-        navigationController?.navigationBar.tintColor = UIColor.blackColor()
-        navigationItem.leftBarButtonItem = closeButton
         navigationItem.rightBarButtonItem = doneButton
         
         super.viewDidLoad()
