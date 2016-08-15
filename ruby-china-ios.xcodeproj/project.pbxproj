@@ -9,7 +9,6 @@
 /* Begin PBXBuildFile section */
 		24742CEF1D50FE2E00D16CA9 /* EditAccountViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24742CD91D50FE2E00D16CA9 /* EditAccountViewController.swift */; };
 		24742CF01D50FE2E00D16CA9 /* EditReplyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24742CDA1D50FE2E00D16CA9 /* EditReplyViewController.swift */; };
-		24742CF11D50FE2E00D16CA9 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24742CDB1D50FE2E00D16CA9 /* LoginViewController.swift */; };
 		24742CF21D50FE2E00D16CA9 /* NewTopicViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24742CDC1D50FE2E00D16CA9 /* NewTopicViewController.swift */; };
 		24742CF31D50FE2E00D16CA9 /* NotificationsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24742CDD1D50FE2E00D16CA9 /* NotificationsViewController.swift */; };
 		24742CF41D50FE2E00D16CA9 /* RootViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24742CDE1D50FE2E00D16CA9 /* RootViewController.swift */; };
@@ -38,7 +37,6 @@
 /* Begin PBXFileReference section */
 		24742CD91D50FE2E00D16CA9 /* EditAccountViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditAccountViewController.swift; sourceTree = "<group>"; };
 		24742CDA1D50FE2E00D16CA9 /* EditReplyViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditReplyViewController.swift; sourceTree = "<group>"; };
-		24742CDB1D50FE2E00D16CA9 /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		24742CDC1D50FE2E00D16CA9 /* NewTopicViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewTopicViewController.swift; sourceTree = "<group>"; };
 		24742CDD1D50FE2E00D16CA9 /* NotificationsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NotificationsViewController.swift; sourceTree = "<group>"; };
 		24742CDE1D50FE2E00D16CA9 /* RootViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RootViewController.swift; sourceTree = "<group>"; };
@@ -85,7 +83,6 @@
 			children = (
 				24742CD91D50FE2E00D16CA9 /* EditAccountViewController.swift */,
 				24742CDA1D50FE2E00D16CA9 /* EditReplyViewController.swift */,
-				24742CDB1D50FE2E00D16CA9 /* LoginViewController.swift */,
 				24742CDC1D50FE2E00D16CA9 /* NewTopicViewController.swift */,
 				24742CDD1D50FE2E00D16CA9 /* NotificationsViewController.swift */,
 				24742CDE1D50FE2E00D16CA9 /* RootViewController.swift */,
@@ -327,7 +324,6 @@
 				24742CF01D50FE2E00D16CA9 /* EditReplyViewController.swift in Sources */,
 				967684771D45D88300EC9BD9 /* Constants.swift in Sources */,
 				24742D011D50FE2E00D16CA9 /* RBTextField.swift in Sources */,
-				24742CF11D50FE2E00D16CA9 /* LoginViewController.swift in Sources */,
 				9670F1901D4235D200128F8A /* AppDelegate.swift in Sources */,
 				24742CFA1D50FE2E00D16CA9 /* APIRequest.swift in Sources */,
 				24742CF31D50FE2E00D16CA9 /* NotificationsViewController.swift in Sources */,
