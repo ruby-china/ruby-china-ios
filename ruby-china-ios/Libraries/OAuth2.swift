@@ -13,7 +13,11 @@ class OAuth2 : NSObject {
     
     dynamic var accessToken = ""
     
-    var currentUser = User.init(json: JSON.null)
+    var currentUser = User(json: JSON.null) {
+        didSet {
+            NSNotificationCenter.defaultCenter().postNotificationName(USER_CHANGED, object: nil)
+        }
+    }
     
     static private let _shared = OAuth2()
     
@@ -39,6 +43,7 @@ class OAuth2 : NSObject {
             case .Success:
                 let accessTokenString = self.accessTokenStore.retrieveAccessToken()?.accessToken
                 self.storeAccessToken(accessTokenString!)
+                self.reloadCurrentUser()
                 print("Login successed.")
                 dispatch_async(dispatch_get_main_queue(), {
                     self.delegate?.oauth2DidLoginSuccessed(accessTokenString)
@@ -71,7 +76,7 @@ class OAuth2 : NSObject {
     
     func reloadCurrentUser() {
         APIRequest.shared.get("/api/v3/users/me.json", parameters: nil, callback: { result in
-            self.currentUser = User.init(json: result!["user"])
+            self.currentUser = User(json: result!["user"])
             
             print(self.currentUser)
         })
