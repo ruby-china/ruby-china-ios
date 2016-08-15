@@ -41,17 +41,9 @@ class WebViewController: VisitableViewController {
         router.match(NSURL.init(string: self.currentPath)!)
     }
 
-    override func viewWillAppear(animated: Bool) {
-        super.viewWillAppear(animated)
-
-        visitableDelegate?.visitableViewWillAppear(self)
-    }
-
     override func visitableDidRender() {
         if navigationController?.viewControllers.count > 1 {
-            navigationItem.title = visitableView.webView?.title
-        } else {
-            navigationItem.title = ""
+            super.visitableDidRender()
         }
     }
 
@@ -95,10 +87,8 @@ class WebViewController: VisitableViewController {
     func hideTabBar(tabBarHidden hidden: Bool) {
         if hidden {
             self.hidesBottomBarWhenPushed = true
-            self.extendedLayoutIncludesOpaqueBars = true
         } else {
             self.hidesBottomBarWhenPushed = false
-            self.extendedLayoutIncludesOpaqueBars = false
         }
     }
 

@@ -40,7 +40,9 @@ class RootViewController: UITabBarController {
         viewControllers = vcs.map { (viewController) -> UINavigationController in
             viewController.navigationItem.leftBarButtonItem = createSideMenuBarButton()
             TurbolinksSessionLib.sharedInstance.visit(viewController)
-            return UINavigationController(rootViewController: viewController)
+            let nvc = UINavigationController(rootViewController: viewController)
+            nvc.view.backgroundColor = UIColor.whiteColor()
+            return nvc
         }
     }
     
