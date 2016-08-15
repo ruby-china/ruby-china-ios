@@ -216,7 +216,7 @@ extension TurbolinksSessionLib: WKNavigationDelegate {
 
 
 extension TurbolinksSessionLib: SignInViewControllerDelegate {
-    func signInViewControllerDidAuthenticate(controller: SignInViewController) {
+    func signInViewControllerDidAuthenticate(sender: SignInViewController) {
         // 重新载入之前的页面
         if (session.webView.URL?.path != nil ) {
             actionToPath((session.webView.URL?.path)!, withAction: .Restore)

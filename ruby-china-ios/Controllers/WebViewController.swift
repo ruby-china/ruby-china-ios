@@ -3,24 +3,27 @@ import Turbolinks
 import Router
 
 class WebViewController: VisitableViewController {
-    var currentPath = ""
-    lazy var router = Router()
+    private var currentPath = ""
+    private lazy var router = Router()
     
     convenience init(path: String) {
+        self.init()
+        self.visitableURL = urlWithPath(path)
+        self.currentPath = path
+        self.initRouter()
+        self.addObserver()
+    }
+
+    private func urlWithPath(path: String) -> NSURL {
         var urlString = "\(ROOT_URL)\(path)"
         if (OAuth2.shared.isLogined) {
             urlString += "?access_token=\(OAuth2.shared.accessToken)"
         }
-
-        let url = NSURL(string: urlString)!
-
-        self.init(URL: url)
-
-        self.initRouter()
-        self.currentPath = path
+        
+        return NSURL(string: urlString)!
     }
-
-    func initRouter() {
+    
+    private func initRouter() {
         self.navigationItem.rightBarButtonItem = nil
         router.bind("/topics/last") { (req) in
 
@@ -31,6 +34,18 @@ class WebViewController: VisitableViewController {
         router.bind("/topics/:id") { (req) in
             let menuButton = UIBarButtonItem(image:  UIImage(named: "dropdown"), style: .Plain, target: self, action: #selector(self.showTopicContextMenu))
             self.navigationItem.rightBarButtonItem = menuButton
+        }
+    }
+    
+    private func addObserver() {
+        NSNotificationCenter.defaultCenter().addObserverForName(NOTICE_SIGNIN_SUCCESS, object: nil, queue: nil) { [weak self] (notification) in
+            guard let `self` = self else {
+                return
+            }
+            self.visitableURL = self.urlWithPath(self.currentPath)
+            if self.isViewLoaded() {
+                self.reloadVisitable()
+            }
         }
     }
 

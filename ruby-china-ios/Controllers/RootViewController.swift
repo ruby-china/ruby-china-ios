@@ -10,6 +10,11 @@ import UIKit
 import SideMenu
 
 class RootViewController: UITabBarController {
+    private let kTopicsTag = 0
+    private let kWikiTag = 1
+    private let kFavoritesTag = 2
+    private let kNotificationsTag = 99
+
     private func setupSideMenu() {
         SideMenuManager.menuLeftNavigationController = UIStoryboard.init(name: "Main", bundle: nil).instantiateViewControllerWithIdentifier("sideMenuController") as? UISideMenuNavigationController
         SideMenuManager.menuFadeStatusBar = false
@@ -47,8 +52,16 @@ class RootViewController: UITabBarController {
     }
     
     func displaySideMenu() {
-        if let sideMenuController = SideMenuManager.menuLeftNavigationController {
-            presentViewController(sideMenuController, animated: true, completion: nil)
+        let presentSideMenuController = {
+            if let sideMenuController = SideMenuManager.menuLeftNavigationController {
+                self.presentViewController(sideMenuController, animated: true, completion: nil)
+            }
+        }
+        
+        if (!OAuth2.shared.isLogined) {
+            presentSignInViewController(presentSideMenuController)
+        } else {
+            presentSideMenuController()
         }
     }
     
@@ -59,16 +72,33 @@ class RootViewController: UITabBarController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        delegate = self
         setupSideMenu()
         setupViewControllers()
         
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(displaySideMenu), name: NOTICE_DISPLAY_MENU, object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(actionMenuClicked), name: NOTICE_MENU_CLICKED, object: nil);
     }
+    
+    private func presentSignInViewController(onDidAuthenticate: () -> Void) {
+        let controller = SignInViewController()
+        controller.onDidAuthenticate = { sender in
+            onDidAuthenticate()
+        }
+        let navController = UINavigationController(rootViewController: controller)
+        presentViewController(navController, animated: true, completion: nil)
+    }
 }
 
 extension RootViewController: UITabBarControllerDelegate {
-    func tabBarController(tabBarController: UITabBarController, didSelectViewController viewController: UIViewController) {
-        
+    func tabBarController(tabBarController: UITabBarController, shouldSelectViewController viewController: UIViewController) -> Bool {
+        let tag = viewController.tabBarItem.tag
+        if (tag == kFavoritesTag || tag == kNotificationsTag) && !OAuth2.shared.isLogined {
+            presentSignInViewController() {
+                self.selectedViewController = viewController
+            }
+            return false
+        }
+        return true
     }
 }
