@@ -9,26 +9,18 @@
 import UIKit
 
 class SideMenuViewController: UITableViewController {
-    let menuItems = ["个人资料设置", "记事本"]
-    let menuItemIcons = ["profile", "notes"]
-    let menuItemPaths = ["/account/edit", "/notes"]
+    private var menuItems = ["", "个人资料设置", "记事本"]
+    private let menuItemIcons = ["profile", "edit-user", "notes"]
+    private var menuItemPaths = ["", "/account/edit", "/notes"]
     
-    let version = NSBundle.mainBundle().infoDictionary!["CFBundleShortVersionString"] as! String
-    let build = NSBundle.mainBundle().infoDictionary!["CFBundleVersion"] as! String
+    private let version = NSBundle.mainBundle().infoDictionary!["CFBundleShortVersionString"] as! String
+    private let build = NSBundle.mainBundle().infoDictionary!["CFBundleVersion"] as! String
     
-    var loginButton = UIBarButtonItem()
-    var logoutButton = UIBarButtonItem()
-    var profileButton = UIBarButtonItem()
-    let blankButton = UIBarButtonItem()
-    
-    deinit {
-        OAuth2.shared.removeObserver(self, forKeyPath: "accessToken")
-    }
+    private var loginButton: UIBarButtonItem!
+    private var logoutButton: UIBarButtonItem!
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        OAuth2.shared.addObserver(self, forKeyPath: "accessToken", options: .New, context: nil)
         
         loginButton = UIBarButtonItem.init(image: UIImage.init(named: "login"), style: .Plain, target: self, action: #selector(actionLogin))
         loginButton.tintColor = UIColor.blackColor()
@@ -38,50 +30,51 @@ class SideMenuViewController: UITableViewController {
         
         uploadLoginState()
         
-        guard tableView.backgroundView == nil else {
-            return
-        }
-        
-        // Set up a cool background image for demo purposes
-        let imageView = UIImageView(image: UIImage(named: "Appicon"))
-        imageView.contentMode = .ScaleAspectFit
-        imageView.backgroundColor = UIColor.blackColor().colorWithAlphaComponent(0.01)
-        tableView.backgroundView = imageView
-
-        let versionBarItem = UIBarButtonItem(title: "Version: \(version).\(build)", style: .Plain, target: self, action: nil);
-        toolbarItems = [versionBarItem];
-        
         tableView.delegate = self
         tableView.dataSource = self
     }
     
-    override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return menuItems.count
+    override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+        return 2
     }
     
-    override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-        return 1
+    override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return section == 0 ? menuItems.count : 1
     }
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier("Cell", forIndexPath: indexPath) as UITableViewCell
+        let cell = tableView.dequeueReusableCellWithIdentifier("Cell", forIndexPath: indexPath)
         
-        // Configure the cell...
-        cell.textLabel!.text = menuItems[indexPath.row]
-        cell.imageView?.image = UIImage.init(named: menuItemIcons[indexPath.row])
+        switch indexPath.section {
+        case 0:
+            cell.textLabel!.text = menuItems[indexPath.row]
+            cell.imageView?.image = UIImage.init(named: menuItemIcons[indexPath.row])
+        case 1:
+            cell.textLabel!.text = "Version: \(version).\(build)"
+        default: break;
+        }
         
         return cell
     }
     
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        let path = menuItemPaths[indexPath.row]
-        uploadLoginState()
-        actionWithPath(path)
+        switch indexPath.section {
+        case 0:
+            let path = menuItemPaths[indexPath.row]
+            actionWithPath(path)
+        case 1:
+            UIApplication.sharedApplication().openURL(NSURL(string: PROJECT_URL)!)
+        default: break;
+        }
     }
     
     func uploadLoginState() {
         if OAuth2.shared.isLogined {
-            title = OAuth2.shared.currentUser?.name
+            if let user = OAuth2.shared.currentUser {
+                title = user.name
+                menuItems[0] = user.login
+                menuItemPaths[0] = "/\(user.login)"
+            }
             
             navigationItem.rightBarButtonItem = logoutButton
         } else {
@@ -113,12 +106,4 @@ class SideMenuViewController: UITableViewController {
     func actionLogin() {
         actionWithPath("/account/sign_in")
     }
-    
-    override func observeValueForKeyPath(keyPath: String?, ofObject object: AnyObject?, change: [String : AnyObject]?, context: UnsafeMutablePointer<Void>) {
-        if keyPath == "accessToken" {
-            uploadLoginState()
-        }
-    }
-    
-    
 }

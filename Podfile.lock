@@ -1,20 +1,20 @@
 PODS:
   - Alamofire (3.4.1)
-  - Argo (3.0.1)
-  - Heimdallr (3.3.0):
-    - Heimdallr/Core (= 3.3.0)
-  - Heimdallr/Core (3.3.0):
-    - Argo (~> 3.0)
+  - Heimdallr (3.3.1):
+    - Heimdallr/Core (= 3.3.1)
+  - Heimdallr/Core (3.3.1):
     - Result (~> 2.0)
-  - Result (2.1.2)
+  - PKHUD (3.2.1)
+  - Result (2.1.3)
   - Router (1.0.0)
-  - SideMenu (1.1.7)
+  - SideMenu (1.1.9)
   - SwiftyJSON (2.3.2)
   - Turbolinks (1.0.2)
 
 DEPENDENCIES:
   - Alamofire
   - Heimdallr
+  - PKHUD
   - Router
   - SideMenu
   - SwiftyJSON
@@ -31,14 +31,14 @@ CHECKOUT OPTIONS:
 
 SPEC CHECKSUMS:
   Alamofire: 01a82e2f6c0f860ade35534c8dd88be61bdef40c
-  Argo: 22c5d62b7967020a641468c91dc9488bea9523b8
-  Heimdallr: 47da8957bd089006ab14b3f8fcedd5d570035183
-  Result: 6e722d4a66b1408680dbfcdf51c0b1c4b706316a
+  Heimdallr: db5f669f3666cb0dc5ad326538fee3f6f8044417
+  PKHUD: 001c11518f125a273ddf026bcc64918423744ea2
+  Result: 18e1a7597fbcca5923c565b40a25a98afafdee02
   Router: 6088d6d321e097070d5ea4bd792cb015dfa0fbb4
-  SideMenu: 7b420772e1aa7a2b3a0b0e191566e7e8e0868f53
+  SideMenu: e4ecb0f1061e19230e53079edb2b300081446f80
   SwiftyJSON: 04ccea08915aa0109039157c7974cf0298da292a
   Turbolinks: d8209bab43803adae8c06d434368e16479023407
 
-PODFILE CHECKSUM: 0ea73d7ea1e92344024db17dc36df48a6d707247
+PODFILE CHECKSUM: 612c78231de48b84ac01268cd293fb11453ac38f
 
 COCOAPODS: 1.0.1

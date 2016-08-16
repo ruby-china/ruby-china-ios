@@ -10,6 +10,8 @@ let OAUTH_CLIENT_ID = "1b034acf"
 let OAUTH_SECRET = "2d44bae75daaa88f2b8226a0205318b6ccf79b09e80fbfb461d191001d7b3c7b"
 #endif
 
+let PROJECT_URL = "https://github.com/ruby-china/ruby-china-turbolinks"
+
 let USER_AGENT = "turbolinks-app, ruby-china, official"
 
 let BLACK = UIColor(red:0.20, green:0.20, blue:0.20, alpha:1.0)

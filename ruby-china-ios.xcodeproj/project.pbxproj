@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		244667CB1D6349EF00F76B10 /* MYHUD.swift in Sources */ = {isa = PBXBuildFile; fileRef = 244667CA1D6349EF00F76B10 /* MYHUD.swift */; };
 		24742CEF1D50FE2E00D16CA9 /* EditAccountViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24742CD91D50FE2E00D16CA9 /* EditAccountViewController.swift */; };
 		24742CF01D50FE2E00D16CA9 /* EditReplyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24742CDA1D50FE2E00D16CA9 /* EditReplyViewController.swift */; };
 		24742CF21D50FE2E00D16CA9 /* NewTopicViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24742CDC1D50FE2E00D16CA9 /* NewTopicViewController.swift */; };
@@ -38,6 +39,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		244667CA1D6349EF00F76B10 /* MYHUD.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MYHUD.swift; sourceTree = "<group>"; };
 		24742CD91D50FE2E00D16CA9 /* EditAccountViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditAccountViewController.swift; sourceTree = "<group>"; };
 		24742CDA1D50FE2E00D16CA9 /* EditReplyViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditReplyViewController.swift; sourceTree = "<group>"; };
 		24742CDC1D50FE2E00D16CA9 /* NewTopicViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewTopicViewController.swift; sourceTree = "<group>"; };
@@ -128,6 +130,7 @@
 				24742CEC1D50FE2E00D16CA9 /* Error.swift */,
 				24742CED1D50FE2E00D16CA9 /* ErrorView.swift */,
 				24742CEE1D50FE2E00D16CA9 /* RBTextField.swift */,
+				244667CA1D6349EF00F76B10 /* MYHUD.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -353,6 +356,7 @@
 				24742CF61D50FE2E00D16CA9 /* SideMenuViewController.swift in Sources */,
 				24742CFE1D50FE2E00D16CA9 /* User.swift in Sources */,
 				24742D001D50FE2E00D16CA9 /* ErrorView.swift in Sources */,
+				244667CB1D6349EF00F76B10 /* MYHUD.swift in Sources */,
 				24742CF91D50FE2E00D16CA9 /* WebViewController.swift in Sources */,
 				24742CF21D50FE2E00D16CA9 /* NewTopicViewController.swift in Sources */,
 				24742CFB1D50FE2E00D16CA9 /* DeviceService.swift in Sources */,
