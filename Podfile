@@ -6,4 +6,5 @@ target 'ruby-china-ios' do
   pod 'Alamofire'
   pod 'Heimdallr'
   pod 'Router'
+  pod 'PKHUD'
 end

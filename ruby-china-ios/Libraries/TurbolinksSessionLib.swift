@@ -45,10 +45,12 @@ class TurbolinksSessionLib: NSObject {
     private var application: UIApplication {
         return UIApplication.sharedApplication()
     }
-
+    
+    private let kMessageHandlerName = "NativeApp"
+    
     private lazy var webViewConfiguration: WKWebViewConfiguration = {
         let configuration = WKWebViewConfiguration()
-        configuration.userContentController.addScriptMessageHandler(self, name: "ruby-china-turbolinks")
+        configuration.userContentController.addScriptMessageHandler(self, name: self.kMessageHandlerName)
         configuration.applicationNameForUserAgent = USER_AGENT
         configuration.processPool = WKProcessPool()
         return configuration
@@ -242,10 +244,19 @@ extension TurbolinksSessionLib: EditReplyViewControllerDelegate {
 
 extension TurbolinksSessionLib: WKScriptMessageHandler {
     func userContentController(userContentController: WKUserContentController, didReceiveScriptMessage message: WKScriptMessage) {
-        if let message = message.body as? String {
-            let alertController = UIAlertController(title: "Ruby China", message: message, preferredStyle: .Alert)
-            alertController.addAction(UIAlertAction(title: "OK", style: .Default, handler: nil))
-            topNavigationController?.presentViewController(alertController, animated: true, completion: nil)
+        if message.name != kMessageHandlerName {
+            return
+        }
+        guard let dic = message.body as? [String: AnyObject] else {
+            return
+        }
+        // window.webkit.messageHandlers.NativeApp.postMessage({func: "alert_success", message: "成功"})
+        if let funcName = dic["func"] as? String, message = dic["message"] as? String {
+            if funcName == "alert_success" {
+                MYHUD.success(message)
+            } else {
+                MYHUD.error(message)
+            }
         }
     }
 }
