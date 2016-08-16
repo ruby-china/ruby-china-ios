@@ -9,9 +9,9 @@
 import UIKit
 
 class SideMenuViewController: UITableViewController {
-    private let menuItems = ["个人资料设置", "记事本"]
-    private let menuItemIcons = ["profile", "notes"]
-    private let menuItemPaths = ["/account/edit", "/notes"]
+    private var menuItems = ["", "个人资料设置", "记事本"]
+    private let menuItemIcons = ["profile", "edit-user", "notes"]
+    private var menuItemPaths = ["", "/account/edit", "/notes"]
     
     private let version = NSBundle.mainBundle().infoDictionary!["CFBundleShortVersionString"] as! String
     private let build = NSBundle.mainBundle().infoDictionary!["CFBundleVersion"] as! String
@@ -70,7 +70,11 @@ class SideMenuViewController: UITableViewController {
     
     func uploadLoginState() {
         if OAuth2.shared.isLogined {
-            title = OAuth2.shared.currentUser?.name
+            if let user = OAuth2.shared.currentUser {
+                title = user.name
+                menuItems[0] = user.login
+                menuItemPaths[0] = "/\(user.login)"
+            }
             
             navigationItem.rightBarButtonItem = logoutButton
         } else {
