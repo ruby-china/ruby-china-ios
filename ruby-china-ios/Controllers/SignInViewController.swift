@@ -2,17 +2,18 @@ import UIKit
 import WebKit
 
 protocol SignInViewControllerDelegate: class {
-    func signInViewControllerDidAuthenticate(controller: SignInViewController)
+    func signInViewControllerDidAuthenticate(sender: SignInViewController)
 }
 
 class SignInViewController: UIViewController {
     weak var delegate: SignInViewControllerDelegate?
+    var onDidAuthenticate: ((sender: SignInViewController) -> Void)?
     
-    var closeButton: UIBarButtonItem?
+    private var closeButton: UIBarButtonItem?
     
-    var loginField = RBTextField()
-    var passwordField = RBTextField()
-    var loginButton = UIButton()
+    private var loginField: RBTextField!
+    private var passwordField: RBTextField!
+    private var loginButton: UIButton!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -84,6 +85,8 @@ extension SignInViewController: OAuth2Delegate {
         print("Login successed", OAuth2.shared.accessToken)
         self.navigationController?.dismissViewControllerAnimated(false, completion: {
             self.delegate?.signInViewControllerDidAuthenticate(self)
+            self.onDidAuthenticate?(sender: self)
+            NSNotificationCenter.defaultCenter().postNotificationName(NOTICE_SIGNIN_SUCCESS, object: nil)
         })
     }
     

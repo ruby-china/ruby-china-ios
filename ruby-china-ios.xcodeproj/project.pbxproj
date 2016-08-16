@@ -9,7 +9,6 @@
 /* Begin PBXBuildFile section */
 		24742CEF1D50FE2E00D16CA9 /* EditAccountViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24742CD91D50FE2E00D16CA9 /* EditAccountViewController.swift */; };
 		24742CF01D50FE2E00D16CA9 /* EditReplyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24742CDA1D50FE2E00D16CA9 /* EditReplyViewController.swift */; };
-		24742CF11D50FE2E00D16CA9 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24742CDB1D50FE2E00D16CA9 /* LoginViewController.swift */; };
 		24742CF21D50FE2E00D16CA9 /* NewTopicViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24742CDC1D50FE2E00D16CA9 /* NewTopicViewController.swift */; };
 		24742CF31D50FE2E00D16CA9 /* NotificationsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24742CDD1D50FE2E00D16CA9 /* NotificationsViewController.swift */; };
 		24742CF41D50FE2E00D16CA9 /* RootViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24742CDE1D50FE2E00D16CA9 /* RootViewController.swift */; };
@@ -26,6 +25,7 @@
 		24742CFF1D50FE2E00D16CA9 /* Error.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24742CEC1D50FE2E00D16CA9 /* Error.swift */; };
 		24742D001D50FE2E00D16CA9 /* ErrorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24742CED1D50FE2E00D16CA9 /* ErrorView.swift */; };
 		24742D011D50FE2E00D16CA9 /* RBTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24742CEE1D50FE2E00D16CA9 /* RBTextField.swift */; };
+		24758CEB1D620FFA00D8C743 /* UIImage+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24758CEA1D620FFA00D8C743 /* UIImage+Ext.swift */; };
 		961580A71D477A7600B32BDA /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 961580A61D477A7600B32BDA /* Assets.xcassets */; };
 		9670F1901D4235D200128F8A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9670F18F1D4235D200128F8A /* AppDelegate.swift */; };
 		9670F1951D4235D200128F8A /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9670F1931D4235D200128F8A /* Main.storyboard */; };
@@ -40,7 +40,6 @@
 /* Begin PBXFileReference section */
 		24742CD91D50FE2E00D16CA9 /* EditAccountViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditAccountViewController.swift; sourceTree = "<group>"; };
 		24742CDA1D50FE2E00D16CA9 /* EditReplyViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditReplyViewController.swift; sourceTree = "<group>"; };
-		24742CDB1D50FE2E00D16CA9 /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		24742CDC1D50FE2E00D16CA9 /* NewTopicViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewTopicViewController.swift; sourceTree = "<group>"; };
 		24742CDD1D50FE2E00D16CA9 /* NotificationsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NotificationsViewController.swift; sourceTree = "<group>"; };
 		24742CDE1D50FE2E00D16CA9 /* RootViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RootViewController.swift; sourceTree = "<group>"; };
@@ -57,6 +56,7 @@
 		24742CEC1D50FE2E00D16CA9 /* Error.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Error.swift; sourceTree = "<group>"; };
 		24742CED1D50FE2E00D16CA9 /* ErrorView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ErrorView.swift; sourceTree = "<group>"; };
 		24742CEE1D50FE2E00D16CA9 /* RBTextField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RBTextField.swift; sourceTree = "<group>"; };
+		24758CEA1D620FFA00D8C743 /* UIImage+Ext.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIImage+Ext.swift"; sourceTree = "<group>"; };
 		27849C620AD961F60F073D43 /* Pods-ruby-china-ios.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ruby-china-ios.release.xcconfig"; path = "Pods/Target Support Files/Pods-ruby-china-ios/Pods-ruby-china-ios.release.xcconfig"; sourceTree = "<group>"; };
 		3D8873230E620CCF5BBCEE42 /* Pods_ruby_china_ios.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ruby_china_ios.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		961580A61D477A7600B32BDA /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -89,7 +89,6 @@
 			children = (
 				24742CD91D50FE2E00D16CA9 /* EditAccountViewController.swift */,
 				24742CDA1D50FE2E00D16CA9 /* EditReplyViewController.swift */,
-				24742CDB1D50FE2E00D16CA9 /* LoginViewController.swift */,
 				24742CDC1D50FE2E00D16CA9 /* NewTopicViewController.swift */,
 				24742CDD1D50FE2E00D16CA9 /* NotificationsViewController.swift */,
 				24742CDE1D50FE2E00D16CA9 /* RootViewController.swift */,
@@ -131,6 +130,14 @@
 				24742CEE1D50FE2E00D16CA9 /* RBTextField.swift */,
 			);
 			path = Views;
+			sourceTree = "<group>";
+		};
+		24758CE91D620FF000D8C743 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				24758CEA1D620FFA00D8C743 /* UIImage+Ext.swift */,
+			);
+			path = Extensions;
 			sourceTree = "<group>";
 		};
 		697FC324893655A09B22EB35 /* Frameworks */ = {
@@ -180,6 +187,7 @@
 				24742CEB1D50FE2E00D16CA9 /* Views */,
 				24742CD81D50FE2E00D16CA9 /* Controllers */,
 				24742CE41D50FE2E00D16CA9 /* Libraries */,
+				24758CE91D620FF000D8C743 /* Extensions */,
 				966D84CA1D449901007CFFDB /* Supporting Files */,
 			);
 			path = "ruby-china-ios";
@@ -326,6 +334,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				24758CEB1D620FFA00D8C743 /* UIImage+Ext.swift in Sources */,
 				24742CF71D50FE2E00D16CA9 /* SignInViewController.swift in Sources */,
 				24742CEF1D50FE2E00D16CA9 /* EditAccountViewController.swift in Sources */,
 				24742CF81D50FE2E00D16CA9 /* TopicsViewController.swift in Sources */,
@@ -334,7 +343,6 @@
 				967684771D45D88300EC9BD9 /* Constants.swift in Sources */,
 				96F9FD6B1D59A168004FD824 /* PopupWebViewController.swift in Sources */,
 				24742D011D50FE2E00D16CA9 /* RBTextField.swift in Sources */,
-				24742CF11D50FE2E00D16CA9 /* LoginViewController.swift in Sources */,
 				9670F1901D4235D200128F8A /* AppDelegate.swift in Sources */,
 				24742CFA1D50FE2E00D16CA9 /* APIRequest.swift in Sources */,
 				24742CF31D50FE2E00D16CA9 /* NotificationsViewController.swift in Sources */,
