@@ -96,6 +96,7 @@ class OAuth2 : NSObject {
     
     func logout() {
         self.accessToken = ""
+        self.currentUser = nil
         NSUserDefaults.standardUserDefaults().removeObjectForKey("accessToken")
         NSUserDefaults.standardUserDefaults().synchronize()
     }

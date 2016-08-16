@@ -8,7 +8,7 @@
 
 import PKHUD
 
-class MYHUD {
+class RBHUD {
     static func success(message: String?) {
         HUD.allowsInteraction = true
         HUD.flash(.LabeledSuccess(title: nil, subtitle: message), delay: 2.0)

@@ -83,27 +83,6 @@ class RootViewController: UITabBarController {
         TurbolinksSessionLib.sharedInstance.actionToPath(path, withAction: .Advance)
     }
     
-    func resetSideMenuBarButton() {
-        guard let _ = OAuth2.shared.currentUser else {
-            return
-        }
-        downloadUserAvatar({ [weak self] (avatar) in
-            guard let `self` = self else {
-                return
-            }
-            let image = avatar.drawRectWithRoundedCorner(radius: 11, CGSizeMake(22, 22)).imageWithRenderingMode(UIImageRenderingMode.AlwaysOriginal)
-
-            dispatch_async(dispatch_get_main_queue(), {
-                self.viewControllers?.forEach({ (navigationController) in
-                    guard let nc = navigationController as? UINavigationController else {
-                        return
-                    }
-                    nc.viewControllers.first?.navigationItem.leftBarButtonItem = self.createSideMenuBarButton(image)
-                })
-            })
-        })
-    }
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         delegate = self
@@ -112,9 +91,9 @@ class RootViewController: UITabBarController {
         
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(displaySideMenu), name: NOTICE_DISPLAY_MENU, object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(actionMenuClicked), name: NOTICE_MENU_CLICKED, object: nil);
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(resetSideMenuBarButton), name: USER_CHANGED, object: nil);
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(updateLoginState), name: USER_CHANGED, object: nil);
         
-        resetSideMenuBarButton()
+        updateLoginState()
     }
     
     private func presentSignInViewController(onDidAuthenticate: () -> Void) {
@@ -124,6 +103,33 @@ class RootViewController: UITabBarController {
         }
         let navController = UINavigationController(rootViewController: controller)
         presentViewController(navController, animated: true, completion: nil)
+    }
+    
+    func updateLoginState() {
+        var avatarImage = UIImage(named: "profile")
+        if OAuth2.shared.isLogined {
+            downloadUserAvatar({ [weak self] (avatar) in
+                guard let `self` = self else {
+                    return
+                }
+                avatarImage = avatar.drawRectWithRoundedCorner(radius: 11, CGSizeMake(24, 24)).imageWithRenderingMode(UIImageRenderingMode.AlwaysOriginal)
+                
+                self.updateUserAvatarImage(avatarImage!)
+            })
+        } else {
+            self.updateUserAvatarImage(avatarImage!)
+        }
+    }
+    
+    func updateUserAvatarImage(image: UIImage) {
+        dispatch_async(dispatch_get_main_queue(), {
+            self.viewControllers?.forEach({ (navigationController) in
+                guard let nc = navigationController as? UINavigationController else {
+                    return
+                }
+                nc.viewControllers.first?.navigationItem.leftBarButtonItem = self.createSideMenuBarButton(image)
+            })
+        })
     }
 }
 

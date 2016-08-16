@@ -262,9 +262,9 @@ extension TurbolinksSessionLib: WKScriptMessageHandler {
         // window.webkit.messageHandlers.NativeApp.postMessage({func: "alert_success", message: "成功"})
         if let funcName = dic["func"] as? String, message = dic["message"] as? String {
             if funcName == "alert_success" {
-                MYHUD.success(message)
+                RBHUD.success(message)
             } else {
-                MYHUD.error(message)
+                RBHUD.error(message)
             }
         }
     }
