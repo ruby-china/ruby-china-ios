@@ -22,13 +22,17 @@ class SideMenuViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        title = "Ruby China"
+    
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(updateLoginState), name: USER_CHANGED, object: nil);
+        
         loginButton = UIBarButtonItem.init(image: UIImage.init(named: "login"), style: .Plain, target: self, action: #selector(actionLogin))
         loginButton.tintColor = UIColor.blackColor()
         
         logoutButton = UIBarButtonItem.init(image: UIImage.init(named: "logout"), style: .Plain, target: self, action: #selector(actionLogout))
         logoutButton.tintColor = UIColor.blackColor()
         
-        uploadLoginState()
+        updateLoginState()
         
         tableView.delegate = self
         tableView.dataSource = self
@@ -39,7 +43,16 @@ class SideMenuViewController: UITableViewController {
     }
     
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return section == 0 ? menuItems.count : 1
+        switch section {
+        case 1:
+            return 1;
+        default:
+            if OAuth2.shared.isLogined {
+                return menuItems.count;
+            } else {
+                return 0;
+            }
+        }
     }
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
@@ -68,20 +81,20 @@ class SideMenuViewController: UITableViewController {
         }
     }
     
-    func uploadLoginState() {
+    func updateLoginState() {
         if OAuth2.shared.isLogined {
             if let user = OAuth2.shared.currentUser {
-                title = user.name
                 menuItems[0] = user.login
                 menuItemPaths[0] = "/\(user.login)"
             }
             
             navigationItem.rightBarButtonItem = logoutButton
-        } else {
-            title = "Ruby China"
             
+        } else {
             navigationItem.rightBarButtonItem = loginButton
         }
+        
+        self.tableView.reloadData()
     }
     
     func actionWithPath(path: String) {
@@ -92,7 +105,7 @@ class SideMenuViewController: UITableViewController {
     
     func actionLogout() {
         OAuth2.shared.logout()
-        uploadLoginState()
+        updateLoginState()
     }
     
     func actionProfile() {

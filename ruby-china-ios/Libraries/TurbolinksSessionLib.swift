@@ -230,11 +230,7 @@ extension TurbolinksSessionLib: WKNavigationDelegate {
 extension TurbolinksSessionLib: SignInViewControllerDelegate {
     func signInViewControllerDidAuthenticate(sender: SignInViewController) {
         // 重新载入之前的页面
-        if (session.webView.URL?.path != nil ) {
-            actionToPath((session.webView.URL?.path)!, withAction: .Restore)
-        } else {
-            session.reload()
-        }
+        session.reload()
     }
 }
 
