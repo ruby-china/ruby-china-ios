@@ -107,12 +107,12 @@ class RootViewController: UITabBarController {
     
     func updateLoginState() {
         var avatarImage = UIImage(named: "profile")
-        if OAuth2.shared.isLogined {
+        if OAuth2.shared.currentUser != nil {
             downloadUserAvatar({ [weak self] (avatar) in
                 guard let `self` = self else {
                     return
                 }
-                avatarImage = avatar.drawRectWithRoundedCorner(radius: 11, CGSizeMake(24, 24)).imageWithRenderingMode(UIImageRenderingMode.AlwaysOriginal)
+                avatarImage = avatar.drawRectWithRoundedCorner(radius: 11, CGSizeMake(30, 30)).imageWithRenderingMode(UIImageRenderingMode.AlwaysOriginal)
                 
                 self.updateUserAvatarImage(avatarImage!)
             })
