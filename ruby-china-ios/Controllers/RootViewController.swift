@@ -112,7 +112,7 @@ class RootViewController: UITabBarController {
                 guard let `self` = self else {
                     return
                 }
-                avatarImage = avatar.drawRectWithRoundedCorner(radius: 11, CGSizeMake(30, 30)).imageWithRenderingMode(UIImageRenderingMode.AlwaysOriginal)
+                avatarImage = avatar.drawRectWithRoundedCorner(radius: 15, CGSizeMake(30, 30)).imageWithRenderingMode(UIImageRenderingMode.AlwaysOriginal)
                 
                 self.updateUserAvatarImage(avatarImage!)
             })
