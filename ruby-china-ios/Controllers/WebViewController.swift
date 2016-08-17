@@ -57,9 +57,8 @@ class WebViewController: VisitableViewController {
     }
 
     override func visitableDidRender() {
-        if navigationController?.viewControllers.count > 1 {
-            super.visitableDidRender()
-        }
+        // 不要显示 title
+        navigationController?.title = ""
     }
 
     func showTopicContextMenu() {
