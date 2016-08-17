@@ -25,7 +25,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         initAppearance()
-        window?.rootViewController = rootViewController
+        let navigationController = UINavigationController(rootViewController: rootViewController)
+        navigationController.view.backgroundColor = UIColor.whiteColor()
+        window?.rootViewController = navigationController
         
         let notificationSettings = UIUserNotificationSettings(forTypes: [.Badge, .Sound, .Alert], categories: nil)
         application.registerUserNotificationSettings(notificationSettings)
@@ -57,9 +59,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(application: UIApplication, didReceiveRemoteNotification userInfo: [NSObject : AnyObject]) {
         becomeActivePage = "notifications"
         
-        OAuth2.shared.refreshUnreadNotifications({ (count) in
-            self.setBadge(count)
-        });
+        refreshUnreadNotificationCount()
     }
     
     func applicationDidBecomeActive(application: UIApplication) {
@@ -68,20 +68,22 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             application.applicationIconBadgeNumber = 0
             rootViewController.selectedIndex = (rootViewController.viewControllers?.count)!
         } else {
-            OAuth2.shared.refreshUnreadNotifications({ (count) in
-                self.setBadge(count)
-            });
+            refreshUnreadNotificationCount()
         }
     }
     
-    func setBadge(count: Int) {
-        if (count > 0) {
-            UIApplication.sharedApplication().applicationIconBadgeNumber = count
-            self.rootViewController.tabBar.items?.last?.badgeValue = "\(count)"
+    func refreshUnreadNotificationCount() {
+        if OAuth2.shared.isLogined {
+            OAuth2.shared.refreshUnreadNotifications({ [weak self] (count) in
+                self?.setBadge(count)
+            })
         } else {
-            UIApplication.sharedApplication().applicationIconBadgeNumber = 0
-            self.rootViewController.tabBar.items?.last?.badgeValue = nil
+            setBadge(0)
         }
     }
     
+    private func setBadge(count: Int) {
+        UIApplication.sharedApplication().applicationIconBadgeNumber = count > 0 ? count : 0
+        self.rootViewController.tabBar.items?.last?.badgeValue = count > 0 ? "\(count)" : nil
+    }
 }

@@ -18,17 +18,19 @@ class NotificationsViewController: WebViewController {
     }
     
     override func viewWillAppear(animated: Bool) {
-        super.viewWillAppear(animated);
-//        OAuth2.shared.refreshUnreadNotifications({ count in
-//            if (count != count) {
-//                self.lastUnreadCount = count
-//            }
-//        })
+        super.viewWillAppear(animated)
+        if let app = UIApplication.sharedApplication().delegate as? AppDelegate {
+            app.refreshUnreadNotificationCount()
+        }
     }
     
     func cleanNotificationsAction() {
-        visitableView.webView?.evaluateJavaScript("$('#btn-remove-all').click();") { (obj, err) in
-            self.visitableView.webView?.reload()
+        visitableView.webView?.evaluateJavaScript("$('#btn-remove-all').click();") { [weak self] (obj, err) in
+            self?.visitableView.webView?.reload()
+            
+            if let app = UIApplication.sharedApplication().delegate as? AppDelegate {
+                app.refreshUnreadNotificationCount()
+            }
         }
     }
 }

@@ -54,14 +54,7 @@ class RootViewController: UITabBarController {
         let notificationsController = NotificationsViewController(path: "/notifications")
         notificationsController.tabBarItem = UITabBarItem(title: "通知", image: UIImage(named: "notifications"), tag: 99)
         
-        let vcs: [WebViewController] = [topicsController, pagesController, favoritesController, notificationsController]
-        viewControllers = vcs.map { (viewController) -> UINavigationController in
-            viewController.navigationItem.leftBarButtonItem = createSideMenuBarButton(UIImage(named: "profile"))
-            TurbolinksSessionLib.sharedInstance.visit(viewController)
-            let nvc = UINavigationController(rootViewController: viewController)
-            nvc.view.backgroundColor = UIColor.whiteColor()
-            return nvc
-        }
+        viewControllers = [topicsController, pagesController, favoritesController, notificationsController]
     }
     
     func displaySideMenu() {
@@ -85,6 +78,8 @@ class RootViewController: UITabBarController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        navigationItem.leftBarButtonItem = createSideMenuBarButton(UIImage(named: "profile"))
+        navigationItem.title = ""
         delegate = self
         setupSideMenu()
         setupViewControllers()
@@ -93,7 +88,15 @@ class RootViewController: UITabBarController {
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(actionMenuClicked), name: NOTICE_MENU_CLICKED, object: nil);
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(updateLoginState), name: USER_CHANGED, object: nil);
         
-        updateLoginState()
+        tabBarController(self, didSelectViewController: viewControllers![selectedIndex])
+    }
+    
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        if let app = UIApplication.sharedApplication().delegate as? AppDelegate {
+            app.refreshUnreadNotificationCount()
+        }
     }
     
     private func presentSignInViewController(onDidAuthenticate: () -> Void) {
@@ -106,30 +109,24 @@ class RootViewController: UITabBarController {
     }
     
     func updateLoginState() {
-        var avatarImage = UIImage(named: "profile")
         if OAuth2.shared.currentUser != nil {
             downloadUserAvatar({ [weak self] (avatar) in
                 guard let `self` = self else {
                     return
                 }
-                avatarImage = avatar.drawRectWithRoundedCorner(radius: 15, CGSizeMake(30, 30)).imageWithRenderingMode(UIImageRenderingMode.AlwaysOriginal)
-                
-                self.updateUserAvatarImage(avatarImage!)
+                let avatarImage = avatar.drawRectWithRoundedCorner(radius: 15, CGSizeMake(30, 30)).imageWithRenderingMode(UIImageRenderingMode.AlwaysOriginal)
+                dispatch_async(dispatch_get_main_queue(), {
+                    self.navigationItem.leftBarButtonItem = self.createSideMenuBarButton(avatarImage)
+                })
             })
         } else {
-            self.updateUserAvatarImage(avatarImage!)
+            let avatarImage = UIImage(named: "profile")
+            navigationItem.leftBarButtonItem = createSideMenuBarButton(avatarImage)
         }
-    }
-    
-    func updateUserAvatarImage(image: UIImage) {
-        dispatch_async(dispatch_get_main_queue(), {
-            self.viewControllers?.forEach({ (navigationController) in
-                guard let nc = navigationController as? UINavigationController else {
-                    return
-                }
-                nc.viewControllers.first?.navigationItem.leftBarButtonItem = self.createSideMenuBarButton(image)
-            })
-        })
+        
+        if let app = UIApplication.sharedApplication().delegate as? AppDelegate {
+            app.refreshUnreadNotificationCount()
+        }
     }
 }
 
@@ -143,5 +140,10 @@ extension RootViewController: UITabBarControllerDelegate {
             return false
         }
         return true
+    }
+    
+    func tabBarController(tabBarController: UITabBarController, didSelectViewController viewController: UIViewController) {
+        navigationItem.titleView = viewController.navigationItem.titleView
+        navigationItem.rightBarButtonItem = viewController.navigationItem.rightBarButtonItem
     }
 }
