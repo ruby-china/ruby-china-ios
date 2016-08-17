@@ -75,8 +75,6 @@ class TurbolinksSessionLib: NSObject {
             return
         }
 
-
-
         if (action == .Restore) {
             var urlString = "\(ROOT_URL)\(path)"
             if (OAuth2.shared.isLogined) {
@@ -106,8 +104,8 @@ class TurbolinksSessionLib: NSObject {
 
         if ((matched == nil)) {
             if (session.webView.URL?.path == path) {
-                // 如果要访问的地址是相同的，直接 Replace，而不是创建新的页面
-                realAction = .Replace
+                // 如果要访问的地址是相同的，直接 Restore，而不是创建新的页面
+                realAction = .Restore
             }
 
             presentVisitableForSession(path, withAction: realAction)
