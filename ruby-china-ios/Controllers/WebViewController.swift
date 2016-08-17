@@ -52,6 +52,7 @@ class WebViewController: VisitableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .Plain, target: nil, action: nil)
         TurbolinksSessionLib.sharedInstance.visit(self)
         router.match(NSURL.init(string: self.currentPath)!)
     }
