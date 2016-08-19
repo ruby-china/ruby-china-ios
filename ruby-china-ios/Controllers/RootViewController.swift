@@ -88,7 +88,7 @@ class RootViewController: UITabBarController {
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(actionMenuClicked), name: NOTICE_MENU_CLICKED, object: nil);
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(updateLoginState), name: USER_CHANGED, object: nil);
         
-        tabBarController(self, didSelectViewController: viewControllers![selectedIndex])
+        resetNavigationItem(viewControllers![selectedIndex])
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -106,6 +106,11 @@ class RootViewController: UITabBarController {
         }
         let navController = UINavigationController(rootViewController: controller)
         presentViewController(navController, animated: true, completion: nil)
+    }
+    
+    private func resetNavigationItem(viewController: UIViewController) {
+        navigationItem.titleView = viewController.navigationItem.titleView
+        navigationItem.rightBarButtonItem = viewController.navigationItem.rightBarButtonItem
     }
     
     func updateLoginState() {
@@ -136,6 +141,7 @@ extension RootViewController: UITabBarControllerDelegate {
         if (tag == kFavoritesTag || tag == kNotificationsTag) && !OAuth2.shared.isLogined {
             presentSignInViewController() {
                 self.selectedViewController = viewController
+                self.resetNavigationItem(viewController)
             }
             return false
         }
@@ -143,7 +149,6 @@ extension RootViewController: UITabBarControllerDelegate {
     }
     
     func tabBarController(tabBarController: UITabBarController, didSelectViewController viewController: UIViewController) {
-        navigationItem.titleView = viewController.navigationItem.titleView
-        navigationItem.rightBarButtonItem = viewController.navigationItem.rightBarButtonItem
+        resetNavigationItem(viewController)
     }
 }
