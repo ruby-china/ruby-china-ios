@@ -4,8 +4,8 @@ Ruby China iOS 官方客户端，基于 Turbolinks + Native 的方式实现。�
 
 ## 主要开发者
 
-- [@klaus01](/klaus01)
-- [@huacnlee](/huacnlee)
+- [@klaus01](https://github.com/klaus01)
+- [@huacnlee](https://github.com/huacnlee)
 
 以及更多的贡献者: [contributors](/ruby-china/ruby-china-turbolinks/graphs/contributors)
 
