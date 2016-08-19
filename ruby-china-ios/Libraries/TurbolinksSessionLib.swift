@@ -21,6 +21,10 @@ class TurbolinksSessionLib: NSObject {
         visitable.visitableView.webView?.UIDelegate = self
     }
 
+    func visitableDidRequestRefresh(visitable: Visitable) {
+        session.visitableDidRequestRefresh(visitable)
+    }
+    
     private lazy var router: Router = {
         let router = Router()
         router.bind("/account/edit") { _ in

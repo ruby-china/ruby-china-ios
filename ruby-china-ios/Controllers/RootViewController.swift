@@ -145,6 +145,10 @@ extension RootViewController: UITabBarControllerDelegate {
             }
             return false
         }
+        
+        if let webViewController = viewController as? WebViewController where webViewController == selectedViewController {
+            TurbolinksSessionLib.sharedInstance.visitableDidRequestRefresh(webViewController)
+        }
         return true
     }
     
