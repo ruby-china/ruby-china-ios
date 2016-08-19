@@ -81,7 +81,7 @@ extension SignInViewController: UITextFieldDelegate {
 }
 
 extension SignInViewController: OAuth2Delegate {
-    func oauth2DidLoginSuccessed(accessToken: String?) {
+    func oauth2DidLoginSuccessed(accessToken: String) {
         print("Login successed", OAuth2.shared.accessToken)
         self.navigationController?.dismissViewControllerAnimated(false, completion: {
             self.delegate?.signInViewControllerDidAuthenticate(self)

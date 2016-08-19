@@ -2,7 +2,7 @@ import Heimdallr
 import SwiftyJSON
 
 protocol OAuth2Delegate: class {
-    func oauth2DidLoginSuccessed(accessToken: String?)
+    func oauth2DidLoginSuccessed(accessToken: String)
     func oauth2DidLoginFailed(error: NSError)
 }
 
@@ -12,11 +12,7 @@ class OAuth2 : NSObject {
     private let client = OAuthClientCredentials(id: OAUTH_CLIENT_ID, secret: OAUTH_SECRET)
     private let accessTokenStore = OAuthAccessTokenKeychainStore()
     
-    private(set) var accessToken: String? {
-        didSet {
-            APIRequest.shared.accessToken = accessToken
-        }
-    }
+    private(set) var accessToken: String?
     
     private(set) var currentUser: User? {
         didSet {
@@ -33,6 +29,7 @@ class OAuth2 : NSObject {
     override init() {
         super.init()
         accessToken = NSUserDefaults.standardUserDefaults().valueForKey("accessToken") as? String
+        APIRequest.shared.accessToken = accessToken
         if (isLogined) {
             reloadCurrentUser()
         }
@@ -48,7 +45,7 @@ class OAuth2 : NSObject {
                 self.reloadCurrentUser()
                 print("Login successed.")
                 dispatch_async(dispatch_get_main_queue(), {
-                    self.delegate?.oauth2DidLoginSuccessed(accessTokenString)
+                    self.delegate?.oauth2DidLoginSuccessed(accessTokenString!)
                 })
             case .Failure(let err):
                 print("Login failed: ", err)
@@ -61,6 +58,7 @@ class OAuth2 : NSObject {
     
     private func storeAccessToken(token: String) {
         accessToken = token
+        APIRequest.shared.accessToken = token
         NSUserDefaults.standardUserDefaults().setValue(token, forKey: "accessToken")
         NSUserDefaults.standardUserDefaults().synchronize()
         
@@ -104,6 +102,7 @@ class OAuth2 : NSObject {
     func logout() {
         if accessToken != nil {
             accessToken = nil
+            APIRequest.shared.accessToken = nil
             NSUserDefaults.standardUserDefaults().removeObjectForKey("accessToken")
             NSUserDefaults.standardUserDefaults().synchronize()
         }
