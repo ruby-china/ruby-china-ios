@@ -19,6 +19,7 @@ class NotificationsViewController: WebViewController {
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
+        reloadVisitable()
         if let app = UIApplication.sharedApplication().delegate as? AppDelegate {
             app.refreshUnreadNotificationCount()
         }
