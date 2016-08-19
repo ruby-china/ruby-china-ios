@@ -8,7 +8,10 @@
 import Alamofire
 import SwiftyJSON
 
+typealias APIRequestCallback = (statusCode: Int?, result: JSON?) -> Void
+
 class APIRequest {
+    
     static private var _shared = APIRequest()
     
     static var shared : APIRequest {
@@ -17,43 +20,29 @@ class APIRequest {
         }
     }
     
+    private var headers: [String : String]?
     
-    init() {
-    }
-    
-    func headers() -> [String : String] {
-        let token = NSUserDefaults.standardUserDefaults().valueForKey("accessToken")
-        
-        if token == nil {
-            return [ "Authorization": "" ]
-        }
-        
-        return [
-            "Authorization": "Bearer \(token!)"
-        ]
-
-    }
-    
-    func _request(method: Alamofire.Method, path: String, parameters: [String: AnyObject]?, callback: (JSON? -> Void)) {
-        print("headers", headers())
-        Alamofire.request(method, "\(ROOT_URL)\(path)", parameters: parameters, encoding: .URL, headers: headers())
-                 .responseJSON { response in
-                    print(method, path, response.response?.statusCode)
-                    let result = JSON.init(data: response.data!)
-                    callback(result)
+    var accessToken: String? {
+        didSet {
+            headers = accessToken == nil ? nil : ["Authorization": "Bearer \(accessToken!)"]
         }
     }
     
-    func post(path: String, parameters: [String : AnyObject]?, callback: (JSON? -> Void)) {
-        return _request(.POST, path: path, parameters: parameters, callback: { result in
-            callback(result)
-        })
+    func _request(method: Alamofire.Method, path: String, parameters: [String: AnyObject]?, callback: APIRequestCallback) {
+        print("headers", headers)
+        Alamofire.request(method, "\(ROOT_URL)\(path)", parameters: parameters, encoding: .URL, headers: headers).responseJSON { response in
+            print(method, path, response.response?.statusCode)
+            let result = response.data == nil ? nil : JSON(data: response.data!)
+            callback(statusCode: response.response?.statusCode, result: result)
+        }
+    }
+    
+    func post(path: String, parameters: [String : AnyObject]?, callback: APIRequestCallback) {
+        return _request(.POST, path: path, parameters: parameters, callback: callback)
     }
     
     
-    func get(path: String, parameters: [String : AnyObject]?, callback: (JSON? -> Void)) {
-        return _request(.GET, path: path, parameters: parameters, callback: { result in
-            callback(result)
-        })
+    func get(path: String, parameters: [String : AnyObject]?, callback: APIRequestCallback) {
+        return _request(.GET, path: path, parameters: parameters, callback: callback)
     }
 }

@@ -8,8 +8,8 @@
 
 class DeviseService {
     static func create(token: String) {
-        APIRequest.shared.post("/api/v3/devices.json", parameters: ["platform": "ios", "token": token]) { json in
-            if json!["ok"] == 1 {
+        APIRequest.shared.post("/api/v3/devices.json", parameters: ["platform": "ios", "token": token]) { (statusCode, result) in
+            if result!["ok"] == 1 {
                 print("Submit token successed.")
             }
         }
