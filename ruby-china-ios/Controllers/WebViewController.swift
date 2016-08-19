@@ -15,9 +15,9 @@ class WebViewController: VisitableViewController {
     }
 
     private func urlWithPath(path: String) -> NSURL {
-        var urlString = "\(ROOT_URL)\(path)"
-        if (OAuth2.shared.isLogined) {
-            urlString += "?access_token=\(OAuth2.shared.accessToken)"
+        var urlString = ROOT_URL + path
+        if let accessToken = OAuth2.shared.accessToken {
+            urlString += "?access_token=" + accessToken
         }
         
         return NSURL(string: urlString)!

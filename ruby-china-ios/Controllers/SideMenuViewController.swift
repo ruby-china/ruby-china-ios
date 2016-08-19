@@ -105,7 +105,6 @@ class SideMenuViewController: UITableViewController {
     
     func actionLogout() {
         OAuth2.shared.logout()
-        updateLoginState()
     }
     
     func actionProfile() {

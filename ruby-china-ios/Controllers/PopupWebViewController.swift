@@ -41,7 +41,11 @@ class PopupWebViewController: UIViewController {
         
         navigationController?.navigationBar.tintColor = UIColor.blackColor()
         
-        webView.loadRequest(NSURLRequest(URL: NSURL(string: "\(ROOT_URL)\(path)?access_token=\(OAuth2.shared.accessToken)")!))
+        var urlString = ROOT_URL + path
+        if let accessToken = OAuth2.shared.accessToken {
+            urlString += "?access_token=" + accessToken
+        }
+        webView.loadRequest(NSURLRequest(URL: NSURL(string: urlString)!))
     }
     
     func  actionClose() {

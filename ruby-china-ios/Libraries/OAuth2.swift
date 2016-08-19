@@ -8,12 +8,17 @@ protocol OAuth2Delegate: class {
 
 class OAuth2 : NSObject {
     weak var delegate: OAuth2Delegate?
-    let client = OAuthClientCredentials(id: OAUTH_CLIENT_ID, secret: OAUTH_SECRET)
-    let accessTokenStore = OAuthAccessTokenKeychainStore()
     
-    dynamic var accessToken = ""
+    private let client = OAuthClientCredentials(id: OAUTH_CLIENT_ID, secret: OAUTH_SECRET)
+    private let accessTokenStore = OAuthAccessTokenKeychainStore()
     
-    var currentUser = User(json: JSON.null) {
+    private(set) var accessToken: String? {
+        didSet {
+            APIRequest.shared.accessToken = accessToken
+        }
+    }
+    
+    private(set) var currentUser: User? {
         didSet {
             NSNotificationCenter.defaultCenter().postNotificationName(USER_CHANGED, object: nil)
         }
@@ -22,18 +27,15 @@ class OAuth2 : NSObject {
     static private let _shared = OAuth2()
     
     static var shared : OAuth2 {
-        get {
-            return _shared
-        }
+        return _shared
     }
     
     override init() {
         super.init()
-        let token = NSUserDefaults.standardUserDefaults().valueForKey("accessToken") as? String
-        if (token != nil) {
-            self.accessToken = token!
+        accessToken = NSUserDefaults.standardUserDefaults().valueForKey("accessToken") as? String
+        if (isLogined) {
+            reloadCurrentUser()
         }
-        reloadCurrentUser()
     }
     
     func login(username: String, password: String) {
@@ -57,8 +59,8 @@ class OAuth2 : NSObject {
         }
     }
     
-    func storeAccessToken(token: String) {
-        self.accessToken = token
+    private func storeAccessToken(token: String) {
+        accessToken = token
         NSUserDefaults.standardUserDefaults().setValue(token, forKey: "accessToken")
         NSUserDefaults.standardUserDefaults().synchronize()
         
@@ -68,26 +70,31 @@ class OAuth2 : NSObject {
         }
     }
     
-    var isLogined : Bool {
-        get {
-            return self.accessToken != ""
-        }
+    var isLogined: Bool {
+            return accessToken != nil
     }
     
     func reloadCurrentUser() {
-        APIRequest.shared.get("/api/v3/users/me.json", parameters: nil, callback: { result in
-            self.currentUser = User(json: result!["user"])
+        APIRequest.shared.get("/api/v3/users/me.json", parameters: nil, callback: { (statusCode, result) in
+            if let statusCode = statusCode where statusCode == 401 {
+                self.logout()
+                return
+            }
             
+            self.currentUser = User(json: result!["user"])
             print(self.currentUser)
         })
     }
     
     func refreshUnreadNotifications(callback: (Int -> Void)) {
-        APIRequest.shared.get("/api/v3/notifications/unread_count", parameters: nil) { (result) in
+        APIRequest.shared.get("/api/v3/notifications/unread_count", parameters: nil) { (statusCode, result) in
+            if let statusCode = statusCode where statusCode == 401 {
+                self.logout()
+                return
+            }
+            
             let unreadCount = (result!["count"] as JSON).intValue
             print("Unread notification count", unreadCount)
-            UIApplication.sharedApplication().applicationIconBadgeNumber = unreadCount;
-            
             dispatch_async(dispatch_get_main_queue(), {
                 callback(unreadCount)
             })
@@ -95,9 +102,11 @@ class OAuth2 : NSObject {
     }
     
     func logout() {
-        self.accessToken = ""
-        self.currentUser = nil
-        NSUserDefaults.standardUserDefaults().removeObjectForKey("accessToken")
-        NSUserDefaults.standardUserDefaults().synchronize()
+        if accessToken != nil {
+            accessToken = nil
+            NSUserDefaults.standardUserDefaults().removeObjectForKey("accessToken")
+            NSUserDefaults.standardUserDefaults().synchronize()
+        }
+        currentUser = nil
     }
 }

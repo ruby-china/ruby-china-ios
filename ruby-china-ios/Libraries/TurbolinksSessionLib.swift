@@ -76,9 +76,9 @@ class TurbolinksSessionLib: NSObject {
         }
 
         if (action == .Restore) {
-            var urlString = "\(ROOT_URL)\(path)"
-            if (OAuth2.shared.isLogined) {
-                urlString += "?access_token=\(OAuth2.shared.accessToken)"
+            var urlString = ROOT_URL + path
+            if let accessToken = OAuth2.shared.accessToken {
+                urlString += "?access_token=" + accessToken
             }
             topWebViewController.visitableURL = NSURL(string: urlString)!
             session.reload()
@@ -183,9 +183,8 @@ extension TurbolinksSessionLib: SessionDelegate {
         case .HTTPFailure:
             let statusCode = error.userInfo["statusCode"] as! Int
             switch statusCode {
-            case 401:
-                presentLoginController()
-            case 302:
+            case 302, 401:
+                OAuth2.shared.logout()
                 presentLoginController()
             case 404:
                 viewController.presentError(.HTTPNotFoundError)
