@@ -103,7 +103,7 @@ extension UINavigationBar {
             self.barTintColor = RED
             
             self.layer.shadowOffset = CGSizeMake(0, 1)
-            self.layer.shadowRadius = 1.0
+            self.layer.shadowRadius = 2.0
             self.layer.shadowColor = UIColor.blackColor().CGColor
             self.layer.shadowOpacity = 0.20
         }
@@ -114,7 +114,7 @@ extension UISegmentedControl {
     var theme : Bool {
         get { return false }
         set {
-            self.tintColor = RED_DARK
+            self.tintColor = UIColor(red:0.35, green:0.05, blue:0.05, alpha:0.75)
         }
     }
 }
