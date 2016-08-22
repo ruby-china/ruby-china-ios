@@ -120,7 +120,7 @@ class TurbolinksSessionLib: NSObject {
         let controller = SignInViewController()
         controller.delegate = self
 
-        let navController = UINavigationController(rootViewController: controller)
+        let navController = ThemeNavigationController(rootViewController: controller)
         topNavigationController?.presentViewController(navController, animated: true, completion: nil)
     }
 
@@ -135,7 +135,7 @@ class TurbolinksSessionLib: NSObject {
         controller.webViewConfiguration = webViewConfiguration
         controller.path = path
 
-        let navController = UINavigationController(rootViewController: controller)
+        let navController = ThemeNavigationController(rootViewController: controller)
         topNavigationController?.presentViewController(navController, animated: true, completion: nil)
     }
 
@@ -145,7 +145,7 @@ class TurbolinksSessionLib: NSObject {
         controller.webViewConfiguration = webViewConfiguration
         controller.path = path
 
-        let navController = UINavigationController(rootViewController: controller)
+        let navController = ThemeNavigationController(rootViewController: controller)
         topNavigationController?.presentViewController(navController, animated: true, completion: nil)
     }
 
@@ -160,7 +160,7 @@ class TurbolinksSessionLib: NSObject {
         controller.webViewConfiguration = webViewConfiguration
         controller.path = path
 
-        let navController = UINavigationController(rootViewController: controller)
+        let navController = ThemeNavigationController(rootViewController: controller)
         topNavigationController?.presentViewController(navController, animated: true, completion: nil)
     }
 
@@ -168,7 +168,7 @@ class TurbolinksSessionLib: NSObject {
         let controller = EditAccountViewController()
         controller.webViewConfiguration = webViewConfiguration
 
-        let navController = UINavigationController(rootViewController: controller)
+        let navController = ThemeNavigationController(rootViewController: controller)
         topNavigationController?.presentViewController(navController, animated: true, completion: nil)
     }
 }

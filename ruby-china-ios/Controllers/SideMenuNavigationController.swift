@@ -12,6 +12,7 @@ class SideMenuNavigationController: UISideMenuNavigationController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.navigationBar.backgroundColor = UIColor.whiteColor()
+        navigationBar.tintColor = BLACK
+        navigationBar.backgroundColor = UIColor.whiteColor()
     }
 }

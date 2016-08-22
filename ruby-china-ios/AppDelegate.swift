@@ -23,7 +23,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         initAppearance()
-        let navigationController = UINavigationController(rootViewController: rootViewController)
+        let navigationController = ThemeNavigationController(rootViewController: rootViewController)
         navigationController.view.backgroundColor = UIColor.whiteColor()
         window?.rootViewController = navigationController
         

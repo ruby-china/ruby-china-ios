@@ -10,7 +10,7 @@ import UIKit
 
 class SideMenuViewController: UITableViewController {
     private var menuItems = ["", "个人资料设置", "记事本"]
-    private let menuItemIcons = ["profile", "edit-user", "notes"]
+    private var menuItemIcons = [UIImage(named: "profile"), UIImage(named: "edit-user"), UIImage(named: "notes")]
     private var menuItemPaths = ["", "/account/edit", "/notes"]
     
     private let version = NSBundle.mainBundle().infoDictionary!["CFBundleShortVersionString"] as! String
@@ -26,9 +26,9 @@ class SideMenuViewController: UITableViewController {
     
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(updateLoginState), name: USER_CHANGED, object: nil);
         
-        loginButton = UIBarButtonItem.init(image: UIImage.init(named: "login"), style: .Plain, target: self, action: #selector(actionLogin))
+        loginButton = UIBarButtonItem(image: UIImage(named: "login"), style: .Plain, target: self, action: #selector(actionLogin))
         
-        logoutButton = UIBarButtonItem.init(image: UIImage.init(named: "logout"), style: .Plain, target: self, action: #selector(actionLogout))
+        logoutButton = UIBarButtonItem(image: UIImage(named: "logout"), style: .Plain, target: self, action: #selector(actionLogout))
         
         updateLoginState()
         
@@ -59,9 +59,10 @@ class SideMenuViewController: UITableViewController {
         switch indexPath.section {
         case 0:
             cell.textLabel!.text = menuItems[indexPath.row]
-            cell.imageView?.image = UIImage.init(named: menuItemIcons[indexPath.row])
+            cell.imageView?.image = menuItemIcons[indexPath.row]
         case 1:
             cell.textLabel!.text = "Version: \(version).\(build)"
+            cell.imageView?.image = nil
         default: break;
         }
         
@@ -84,11 +85,19 @@ class SideMenuViewController: UITableViewController {
             if let user = OAuth2.shared.currentUser {
                 menuItems[0] = user.login
                 menuItemPaths[0] = "/\(user.login)"
+                downloadUserAvatar({ [weak self] (avatar) in
+                    guard let `self` = self else {
+                        return
+                    }
+                    let avatarImage = avatar.drawRectWithRoundedCorner(radius: 11, CGSizeMake(22, 22)).imageWithRenderingMode(UIImageRenderingMode.AlwaysOriginal)
+                    self.menuItemIcons[0] = avatarImage
+                    self.tableView.reloadData()
+                })
             }
             
             navigationItem.rightBarButtonItem = logoutButton
-            
         } else {
+            menuItemIcons[0] = UIImage(named: "profile")
             navigationItem.rightBarButtonItem = loginButton
         }
         
@@ -115,5 +124,18 @@ class SideMenuViewController: UITableViewController {
     
     func actionLogin() {
         actionWithPath("/account/sign_in")
+    }
+    
+    private func downloadUserAvatar(onComplate: (avatar: UIImage) -> Void) {
+        let downloadTask = NSURLSession.sharedSession().dataTaskWithURL(OAuth2.shared.currentUser!.avatarUrl) { (data, response, error) in
+            if let error = error {
+                print(error)
+                return
+            }
+            if let data = data {
+                onComplate(avatar: UIImage(data: data)!)
+            }
+        }
+        downloadTask.resume()
     }
 }
