@@ -80,6 +80,10 @@ class SignInViewController: UIViewController {
     
     func actionLogin() {
         if loginButton.enabled {
+            loginField.resignFirstResponder()
+            passwordField.resignFirstResponder()
+            
+            RBHUD.progress(nil)
             OAuth2.shared.login(loginField.text!, password: passwordField.text!)
         }
     }
@@ -112,6 +116,7 @@ extension SignInViewController: UITextFieldDelegate {
 
 extension SignInViewController: OAuth2Delegate {
     func oauth2DidLoginSuccessed(accessToken: String) {
+        RBHUD.progressHidden()
         print("Login successed", OAuth2.shared.accessToken)
         self.navigationController?.dismissViewControllerAnimated(false, completion: {
             self.delegate?.signInViewControllerDidAuthenticate(self)
@@ -127,8 +132,7 @@ extension SignInViewController: OAuth2Delegate {
         if (error.localizedFailureReason != nil) {
             errorMessage += "\n" + error.localizedFailureReason!
         }
-        let alert = UIAlertController(title: "登录失败", message: errorMessage, preferredStyle: .Alert)
-        alert.addAction(UIAlertAction(title: "确定", style: .Cancel, handler: nil))
-        self.presentViewController(alert, animated: true, completion: nil)
+        
+        RBHUD.error(errorMessage)
     }
 }
