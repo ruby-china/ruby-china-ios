@@ -91,8 +91,13 @@ extension SignInViewController: OAuth2Delegate {
     }
     
     func oauth2DidLoginFailed(error: NSError) {
-        print("Login failed", error)
-        let alert = UIAlertController(title: "登录失败", message: error.localizedDescription, preferredStyle: .Alert)
+        print("Login failed", error.localizedFailureReason)
+        var errorMessage = ""
+        errorMessage += error.localizedDescription
+        if (error.localizedFailureReason != nil) {
+            errorMessage += "\n" + error.localizedFailureReason!
+        }
+        let alert = UIAlertController(title: "登录失败", message: errorMessage, preferredStyle: .Alert)
         alert.addAction(UIAlertAction(title: "确定", style: .Cancel, handler: nil))
         self.presentViewController(alert, animated: true, completion: nil)
     }

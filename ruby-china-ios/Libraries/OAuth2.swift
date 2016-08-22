@@ -11,6 +11,7 @@ class OAuth2 : NSObject {
     
     private let client = OAuthClientCredentials(id: OAUTH_CLIENT_ID, secret: OAUTH_SECRET)
     private let accessTokenStore = OAuthAccessTokenKeychainStore()
+    private let heimdallr = Heimdallr(tokenURL: NSURL(string: "\(ROOT_URL)/oauth/token")!)
     
     private(set) var accessToken: String?
     
@@ -36,11 +37,11 @@ class OAuth2 : NSObject {
     }
     
     func login(username: String, password: String) {
-        let heimdallr = Heimdallr(tokenURL: NSURL(string: "\(ROOT_URL)/oauth/token")!)
         heimdallr.requestAccessToken(username: username, password: password) { result in
             switch result {
             case .Success:
                 let accessTokenString = self.accessTokenStore.retrieveAccessToken()?.accessToken
+                print("accessToken", accessTokenString)
                 self.storeAccessToken(accessTokenString!)
                 self.reloadCurrentUser()
                 print("Login successed.")
@@ -48,7 +49,6 @@ class OAuth2 : NSObject {
                     self.delegate?.oauth2DidLoginSuccessed(accessTokenString!)
                 })
             case .Failure(let err):
-                print("Login failed: ", err)
                 dispatch_async(dispatch_get_main_queue(), {
                     self.delegate?.oauth2DidLoginFailed(err)
                 })
@@ -102,10 +102,11 @@ class OAuth2 : NSObject {
     func logout() {
         if accessToken != nil {
             accessToken = nil
-            APIRequest.shared.accessToken = nil
-            NSUserDefaults.standardUserDefaults().removeObjectForKey("accessToken")
-            NSUserDefaults.standardUserDefaults().synchronize()
         }
+        APIRequest.shared.accessToken = nil
+        heimdallr.clearAccessToken()
+        NSUserDefaults.standardUserDefaults().removeObjectForKey("accessToken")
+        NSUserDefaults.standardUserDefaults().synchronize()
         currentUser = nil
     }
 }
