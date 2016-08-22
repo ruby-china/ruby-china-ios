@@ -100,12 +100,19 @@ extension UINavigationBar {
             self.barStyle = .Black
             self.translucent = false
             self.tintColor = UIColor.whiteColor()
-            self.barTintColor = RED
+            // #F44336
+            self.barTintColor = UIColor(red:0.96, green:0.26, blue:0.21, alpha:1.0)
+
+            // Border bottom line
+            let navBorder = UIView(frame: CGRectMake(0,self.frame.size.height-1, self.frame.size.width, 1))
+            navBorder.backgroundColor = UIColor(red:0.86, green:0.26, blue:0.21, alpha:1.0)
+            self.addSubview(navBorder)
             
+            // Shadow
             self.layer.shadowOffset = CGSizeMake(0, 1)
-            self.layer.shadowRadius = 2.0
+            self.layer.shadowRadius = 1
             self.layer.shadowColor = UIColor.blackColor().CGColor
-            self.layer.shadowOpacity = 0.20
+            self.layer.shadowOpacity = 0.15
         }
     }
 }
@@ -114,7 +121,7 @@ extension UISegmentedControl {
     var theme : Bool {
         get { return false }
         set {
-            self.tintColor = UIColor(red:0.35, green:0.05, blue:0.05, alpha:0.75)
+            self.tintColor = UIColor(red:0.30, green:0.05, blue:0.05, alpha:0.85)
         }
     }
 }

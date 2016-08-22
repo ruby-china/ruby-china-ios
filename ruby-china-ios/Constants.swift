@@ -16,7 +16,7 @@ let USER_AGENT = "turbolinks-app, ruby-china, official"
 
 let BLACK = UIColor(red:0.20, green:0.20, blue:0.20, alpha:1.0)
 let BLACK_LIGHT = UIColor.grayColor()
-let RED = UIColor(red:0.89, green:0.30, blue:0.26, alpha:1.0)
+let RED = UIColor(red:0.96, green:0.26, blue:0.21, alpha:1.0)
 
 // - 消息定义
 /// 显示侧栏
