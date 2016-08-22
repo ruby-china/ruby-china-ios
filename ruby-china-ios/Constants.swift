@@ -16,7 +16,8 @@ let USER_AGENT = "turbolinks-app, ruby-china, official"
 
 let BLACK = UIColor(red:0.20, green:0.20, blue:0.20, alpha:1.0)
 let BLACK_LIGHT = UIColor.grayColor()
-let RED = UIColor(red:0.92, green:0.33, blue:0.14, alpha:1.0)
+let RED = UIColor(red:0.89, green:0.30, blue:0.26, alpha:1.0)
+let RED_DARK = UIColor(red:0.62, green:0.15, blue:0.14, alpha:1.0)
 
 
 // - 消息定义

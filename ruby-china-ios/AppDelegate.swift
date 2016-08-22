@@ -14,9 +14,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }()
     
     private func initAppearance() {
-        UINavigationBar.appearance().barStyle = .Black
-        UINavigationBar.appearance().tintColor = UIColor.whiteColor()
-        UINavigationBar.appearance().barTintColor = RED
+        UINavigationBar.appearance().theme = true
+        UISegmentedControl.appearance().theme = true
         
         UITabBarItem.appearance().setTitleTextAttributes([NSForegroundColorAttributeName: BLACK_LIGHT], forState: .Normal)
         UITabBarItem.appearance().setTitleTextAttributes([NSForegroundColorAttributeName: BLACK], forState: .Selected)
@@ -94,5 +93,31 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     private func setBadge(count: Int) {
         UIApplication.sharedApplication().applicationIconBadgeNumber = count > 0 ? count : 0
         self.rootViewController.tabBar.items?.last?.badgeValue = count > 0 ? "\(count)" : nil
+    }
+}
+
+extension UINavigationBar {
+    var theme : Bool {
+        get { return false }
+        set {
+            self.barStyle = .Black
+            self.translucent = false
+            self.tintColor = UIColor.whiteColor()
+            self.barTintColor = RED
+            
+            self.layer.shadowOffset = CGSizeMake(0, 1)
+            self.layer.shadowRadius = 1.0
+            self.layer.shadowColor = UIColor.blackColor().CGColor
+            self.layer.shadowOpacity = 0.20
+        }
+    }
+}
+
+extension UISegmentedControl {
+    var theme : Bool {
+        get { return false }
+        set {
+            self.tintColor = RED_DARK
+        }
     }
 }
