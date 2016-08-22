@@ -92,12 +92,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
 }
 
-let NAVBAR_BG_COLOR = UIColor(red:0.25, green:0.32, blue:0.71, alpha:1.0)
-let NAVBAR_BORDER_COLOR = UIColor(red:0.25, green:0.32, blue:0.61, alpha:1.0)
-let NAVBAR_TINT_COLOR = UIColor(red:1.00, green:1.00, blue:0.93, alpha:1.0)
-let SEGMENT_BG_COLOR = UIColor(red:0.10, green:0.14, blue:0.39, alpha:1.0)
-let TABBAR_BG_COLOR = UIColor(red:0.88, green:0.96, blue:1.00, alpha:1.0)
-
 extension UINavigationBar {
     var theme : Bool {
         get { return false }
@@ -114,10 +108,10 @@ extension UINavigationBar {
             self.addSubview(navBorder)
             
             // Shadow
-//            self.layer.shadowOffset = CGSizeMake(0, 1)
-//            self.layer.shadowRadius = 1
-//            self.layer.shadowColor = UIColor.blackColor().CGColor
-//            self.layer.shadowOpacity = 0.15
+            self.layer.shadowOffset = CGSizeMake(0, 1)
+            self.layer.shadowRadius = 1
+            self.layer.shadowColor = UIColor.blackColor().CGColor
+            self.layer.shadowOpacity = 0.15
         }
     }
 }
