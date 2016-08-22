@@ -32,11 +32,15 @@ class SignInViewController: UIViewController {
         loginField.autocapitalizationType = .None
         loginField.placeholder = "用户名 / Email"
         loginField.delegate = self
+        loginField.returnKeyType = .Next
+        loginField.addTarget(self, action: #selector(textFieldDidChanged), forControlEvents: UIControlEvents.EditingChanged)
         
         passwordField = RBTextField.init(frame: CGRectMake(15, loginField.frame.maxY + 15, self.view.frame.width - 30, 40))
         passwordField.placeholder = "密码"
         passwordField.secureTextEntry = true
         passwordField.delegate = self
+        passwordField.returnKeyType = .Done
+        passwordField.addTarget(self, action: #selector(textFieldDidChanged), forControlEvents: UIControlEvents.EditingChanged)
         
         loginButton = UIButton.init(frame: CGRectMake(15, passwordField.frame.maxY + 25, self.view.frame.width - 30, 40))
         loginButton.setTitle("登录", forState: .Normal)
@@ -56,14 +60,37 @@ class SignInViewController: UIViewController {
         view.addSubview(loginButton)
         
         OAuth2.shared.delegate = self
+        
+        textFieldDidChanged()
+    }
+    
+    override func viewDidAppear(animated: Bool) {
+        super.viewDidAppear(animated)
+        loginField.becomeFirstResponder()
+    }
+    
+    override func viewWillDisappear(animated: Bool) {
+        super.viewWillDisappear(animated)
+        loginField.resignFirstResponder()
+        passwordField.resignFirstResponder()
     }
     
     func actionLogin() {
-        OAuth2.shared.login(loginField.text!, password: passwordField.text!)
+        if loginButton.enabled {
+            OAuth2.shared.login(loginField.text!, password: passwordField.text!)
+        }
     }
     
     func actionClose() {
         navigationController?.dismissViewControllerAnimated(true, completion: nil)
+    }
+    
+    func textFieldDidChanged() {
+        if let username = loginField.text, let password = passwordField.text where username != "" && password != "" {
+            loginButton.enabled = true
+        } else {
+            loginButton.enabled = false
+        }
     }
 }
 
