@@ -14,7 +14,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }()
     
     private func initAppearance() {
-        UINavigationBar.appearance().tintColor = BLACK
+        UINavigationBar.appearance().barStyle = .Black
+        UINavigationBar.appearance().tintColor = UIColor.whiteColor()
+        UINavigationBar.appearance().barTintColor = RED
+        
         UITabBarItem.appearance().setTitleTextAttributes([NSForegroundColorAttributeName: BLACK_LIGHT], forState: .Normal)
         UITabBarItem.appearance().setTitleTextAttributes([NSForegroundColorAttributeName: BLACK], forState: .Selected)
         UITabBar.appearance().tintColor = BLACK
@@ -48,12 +51,18 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         print("DeviceToken \(deviceTokenString)")
         
         NSUserDefaults.standardUserDefaults().setValue(deviceTokenString, forKey: "deviceToken")
+        NSUserDefaults.standardUserDefaults().synchronize()
         
-        DeviseService.create(deviceTokenString)
+        if OAuth2.shared.isLogined {
+            DeviseService.create(deviceTokenString)
+        }
     }
     
     func application(application: UIApplication, didFailToRegisterForRemoteNotificationsWithError error: NSError) {
         print("didFailToRegisterForRemoteNotificationsWithError", error)
+        
+        NSUserDefaults.standardUserDefaults().removeObjectForKey("deviceToken")
+        NSUserDefaults.standardUserDefaults().synchronize()
     }
     
     func application(application: UIApplication, didReceiveRemoteNotification userInfo: [NSObject : AnyObject]) {

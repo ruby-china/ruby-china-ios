@@ -27,10 +27,8 @@ class SideMenuViewController: UITableViewController {
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(updateLoginState), name: USER_CHANGED, object: nil);
         
         loginButton = UIBarButtonItem.init(image: UIImage.init(named: "login"), style: .Plain, target: self, action: #selector(actionLogin))
-        loginButton.tintColor = UIColor.blackColor()
         
         logoutButton = UIBarButtonItem.init(image: UIImage.init(named: "logout"), style: .Plain, target: self, action: #selector(actionLogout))
-        logoutButton.tintColor = UIColor.blackColor()
         
         updateLoginState()
         
