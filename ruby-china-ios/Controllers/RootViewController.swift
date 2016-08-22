@@ -51,11 +51,7 @@ class RootViewController: UITabBarController {
             }
         }
         
-        if (!OAuth2.shared.isLogined) {
-            presentSignInViewController(presentSideMenuController)
-        } else {
-            presentSideMenuController()
-        }
+        presentSideMenuController()
     }
     
     func actionMenuClicked(note: NSNotification) {
