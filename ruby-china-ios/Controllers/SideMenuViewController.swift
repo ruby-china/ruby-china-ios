@@ -97,6 +97,7 @@ class SideMenuViewController: UITableViewController {
             
             navigationItem.rightBarButtonItem = logoutButton
         } else {
+            menuItemIcons[0] = UIImage(named: "profile")
             navigationItem.rightBarButtonItem = loginButton
         }
         
