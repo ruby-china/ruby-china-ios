@@ -14,7 +14,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }()
     
     private func initAppearance() {
-        UINavigationBar.appearance().theme = true
         UISegmentedControl.appearance().theme = true
         
         UITabBar.appearance().tintColor = BLACK
@@ -24,7 +23,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         initAppearance()
-        let navigationController = UINavigationController(rootViewController: rootViewController)
+        let navigationController = ThemeNavigationController(rootViewController: rootViewController)
         navigationController.view.backgroundColor = UIColor.whiteColor()
         window?.rootViewController = navigationController
         
@@ -90,23 +89,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     private func setBadge(count: Int) {
         UIApplication.sharedApplication().applicationIconBadgeNumber = count > 0 ? count : 0
         self.rootViewController.tabBar.items?.last?.badgeValue = count > 0 ? "\(count)" : nil
-    }
-}
-
-extension UINavigationBar {
-    var theme : Bool {
-        get { return false }
-        set {
-            self.barStyle = .Black
-            self.translucent = false
-            self.tintColor = UIColor.whiteColor()
-            self.barTintColor = RED
-            
-            self.layer.shadowOffset = CGSizeMake(0, 1)
-            self.layer.shadowRadius = 2.0
-            self.layer.shadowColor = UIColor.blackColor().CGColor
-            self.layer.shadowOpacity = 0.20
-        }
     }
 }
 

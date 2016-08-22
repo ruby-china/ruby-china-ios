@@ -104,7 +104,7 @@ class RootViewController: UITabBarController {
         controller.onDidAuthenticate = { sender in
             onDidAuthenticate()
         }
-        let navController = UINavigationController(rootViewController: controller)
+        let navController = ThemeNavigationController(rootViewController: controller)
         presentViewController(navController, animated: true, completion: nil)
     }
     
