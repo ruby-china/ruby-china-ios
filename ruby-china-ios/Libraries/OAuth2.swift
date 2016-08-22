@@ -6,14 +6,17 @@ protocol OAuth2Delegate: class {
     func oauth2DidLoginFailed(error: NSError)
 }
 
-class OAuth2 : NSObject {
+class OAuth2 {
     weak var delegate: OAuth2Delegate?
     
-    private let client = OAuthClientCredentials(id: OAUTH_CLIENT_ID, secret: OAUTH_SECRET)
-    private let accessTokenStore = OAuthAccessTokenKeychainStore()
-    private let heimdallr = Heimdallr(tokenURL: NSURL(string: "\(ROOT_URL)/oauth/token")!)
+    private let accessTokenStore: OAuthAccessTokenKeychainStore
     
-    private(set) var accessToken: String?
+    private let heimdallr: Heimdallr
+    
+    private(set) var accessToken: String? {
+        get { return APIRequest.shared.accessToken }
+        set { APIRequest.shared.accessToken = newValue }
+    }
     
     private(set) var currentUser: User? {
         didSet {
@@ -27,12 +30,27 @@ class OAuth2 : NSObject {
         return _shared
     }
     
-    override init() {
-        super.init()
-        accessToken = NSUserDefaults.standardUserDefaults().valueForKey("accessToken") as? String
-        APIRequest.shared.accessToken = accessToken
+    init() {
+        accessTokenStore = OAuthAccessTokenKeychainStore(service: "org.ruby-china.turbolinks-app.oauth")
+        heimdallr = Heimdallr(tokenURL: NSURL(string: "\(ROOT_URL)/oauth/token")!, credentials: OAuthClientCredentials(id: OAUTH_CLIENT_ID, secret: OAUTH_SECRET), accessTokenStore: accessTokenStore)
+        
+        accessToken = accessTokenStore.retrieveAccessToken()?.accessToken
         if (isLogined) {
-            reloadCurrentUser()
+            if let expiresAt = accessTokenStore.retrieveAccessToken()?.expiresAt where expiresAt < NSDate() {
+                // 授权过期，刷新AccessToken
+                heimdallr.authenticateRequest(NSURLRequest(URL: NSURL(string: "\(ROOT_URL)/api/v3/users/me.json")!), completion: { (result) in
+                    switch result {
+                    case .Success:
+                        self.accessToken = self.accessTokenStore.retrieveAccessToken()?.accessToken
+                        print("refresh accessToken", self.accessToken)
+                        self.reloadCurrentUser()
+                    case .Failure(let err):
+                        print("refresh accessToken failure", err)
+                    }
+                })
+            } else {
+                reloadCurrentUser()
+            }
         }
     }
     
@@ -40,13 +58,17 @@ class OAuth2 : NSObject {
         heimdallr.requestAccessToken(username: username, password: password) { result in
             switch result {
             case .Success:
-                let accessTokenString = self.accessTokenStore.retrieveAccessToken()?.accessToken
-                print("accessToken", accessTokenString)
-                self.storeAccessToken(accessTokenString!)
+                self.accessToken = self.accessTokenStore.retrieveAccessToken()?.accessToken
+                print("accessToken", self.accessToken)
+                let deviceToken = NSUserDefaults.standardUserDefaults().valueForKey("deviceToken") as? String
+                if (deviceToken != nil) {
+                    DeviseService.create(deviceToken!)
+                }
+                
                 self.reloadCurrentUser()
                 print("Login successed.")
                 dispatch_async(dispatch_get_main_queue(), {
-                    self.delegate?.oauth2DidLoginSuccessed(accessTokenString!)
+                    self.delegate?.oauth2DidLoginSuccessed(self.accessToken!)
                 })
             case .Failure(let err):
                 dispatch_async(dispatch_get_main_queue(), {
@@ -56,20 +78,8 @@ class OAuth2 : NSObject {
         }
     }
     
-    private func storeAccessToken(token: String) {
-        accessToken = token
-        APIRequest.shared.accessToken = token
-        NSUserDefaults.standardUserDefaults().setValue(token, forKey: "accessToken")
-        NSUserDefaults.standardUserDefaults().synchronize()
-        
-        let deviceToken = NSUserDefaults.standardUserDefaults().valueForKey("deviceToken") as? String
-        if (deviceToken != nil) {
-            DeviseService.create(deviceToken!)
-        }
-    }
-    
     var isLogined: Bool {
-            return accessToken != nil
+        return accessToken != nil
     }
     
     func reloadCurrentUser() {
@@ -100,13 +110,8 @@ class OAuth2 : NSObject {
     }
     
     func logout() {
-        if accessToken != nil {
-            accessToken = nil
-        }
-        APIRequest.shared.accessToken = nil
         heimdallr.clearAccessToken()
-        NSUserDefaults.standardUserDefaults().removeObjectForKey("accessToken")
-        NSUserDefaults.standardUserDefaults().synchronize()
+        accessToken = nil
         currentUser = nil
     }
 }
