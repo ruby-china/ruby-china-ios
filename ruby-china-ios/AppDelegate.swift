@@ -17,10 +17,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         UINavigationBar.appearance().theme = true
         UISegmentedControl.appearance().theme = true
         
-        UITabBarItem.appearance().setTitleTextAttributes([NSForegroundColorAttributeName: BLACK_LIGHT], forState: .Normal)
-        UITabBarItem.appearance().setTitleTextAttributes([NSForegroundColorAttributeName: BLACK], forState: .Selected)
         UITabBar.appearance().tintColor = BLACK
-        UIBarButtonItem.appearance().setTitleTextAttributes([NSForegroundColorAttributeName: BLACK], forState: .Normal)
     }
     
     private var becomeActivePage = String()
