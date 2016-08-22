@@ -48,12 +48,18 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         print("DeviceToken \(deviceTokenString)")
         
         NSUserDefaults.standardUserDefaults().setValue(deviceTokenString, forKey: "deviceToken")
+        NSUserDefaults.standardUserDefaults().synchronize()
         
-        DeviseService.create(deviceTokenString)
+        if OAuth2.shared.isLogined {
+            DeviseService.create(deviceTokenString)
+        }
     }
     
     func application(application: UIApplication, didFailToRegisterForRemoteNotificationsWithError error: NSError) {
         print("didFailToRegisterForRemoteNotificationsWithError", error)
+        
+        NSUserDefaults.standardUserDefaults().removeObjectForKey("deviceToken")
+        NSUserDefaults.standardUserDefaults().synchronize()
     }
     
     func application(application: UIApplication, didReceiveRemoteNotification userInfo: [NSObject : AnyObject]) {
