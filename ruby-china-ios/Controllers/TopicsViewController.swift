@@ -17,7 +17,7 @@ class TopicsViewController: WebViewController {
         filterSegment.addTarget(self, action: #selector(filterChangedAction), forControlEvents: .ValueChanged)
         navigationItem.titleView = filterSegment
         
-        navigationItem.rightBarButtonItem = UIBarButtonItem.init(image: UIImage.init(named: "send"), style: .Plain, target: self, action: #selector(newTopicAction))
+        navigationItem.rightBarButtonItem = UIBarButtonItem.init(image: UIImage.init(named: "new"), style: .Plain, target: self, action: #selector(newTopicAction))
     }
     
     func filterChangedAction(sender: UISegmentedControl) {

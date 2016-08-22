@@ -12,7 +12,10 @@ class SideMenuNavigationController: UISideMenuNavigationController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        navigationBar.tintColor = BLACK
-        navigationBar.backgroundColor = UIColor.whiteColor()
+        let bgFrame = CGRectMake(0, -24, navigationBar.frame.width, navigationBar.frame.height + 24)
+        let bgView = UIView(frame: bgFrame);
+        
+        bgView.backgroundColor = SEGMENT_BG_COLOR
+        navigationBar.addSubview(bgView)
     }
 }
