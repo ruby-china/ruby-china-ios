@@ -39,8 +39,6 @@ class PopupWebViewController: UIViewController {
         closeButton = UIBarButtonItem(title: "关闭", style: .Plain, target: self, action:  #selector(actionClose))        
         navigationItem.leftBarButtonItem = closeButton
         
-        navigationController?.navigationBar.tintColor = UIColor.blackColor()
-        
         var urlString = ROOT_URL + path
         if let accessToken = OAuth2.shared.accessToken {
             urlString += "?access_token=" + accessToken

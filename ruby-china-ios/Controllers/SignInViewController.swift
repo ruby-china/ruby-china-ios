@@ -22,7 +22,6 @@ class SignInViewController: UIViewController {
         
         closeButton = UIBarButtonItem.init(barButtonSystemItem: .Cancel, target: self, action: #selector(actionClose))
         
-        navigationController?.navigationBar.tintColor = UIColor.blackColor()
         navigationItem.leftBarButtonItem = closeButton
         
         let boxTop = CGFloat(120)
