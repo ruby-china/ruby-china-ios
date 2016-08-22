@@ -24,8 +24,11 @@ class SignInViewController: UIViewController {
         
         navigationController?.navigationBar.tintColor = UIColor.blackColor()
         navigationItem.leftBarButtonItem = closeButton
+        
+        let boxTop = CGFloat(120)
+        let margin = CGFloat(20)
 
-        loginField = RBTextField.init(frame: CGRectMake(15, 100, self.view.frame.width - 30, 40))
+        loginField = RBTextField.init(frame: CGRectMake(margin, boxTop, self.view.frame.width - margin * 2, 44))
         loginField.clearButtonMode = .WhileEditing
         loginField.autocorrectionType = .No
         loginField.keyboardType = .EmailAddress
@@ -35,14 +38,14 @@ class SignInViewController: UIViewController {
         loginField.returnKeyType = .Next
         loginField.addTarget(self, action: #selector(textFieldDidChanged), forControlEvents: UIControlEvents.EditingChanged)
         
-        passwordField = RBTextField.init(frame: CGRectMake(15, loginField.frame.maxY + 15, self.view.frame.width - 30, 40))
+        passwordField = RBTextField.init(frame: CGRectMake(margin, loginField.frame.maxY + margin, self.view.frame.width - margin * 2, 44))
         passwordField.placeholder = "密码"
         passwordField.secureTextEntry = true
         passwordField.delegate = self
         passwordField.returnKeyType = .Done
         passwordField.addTarget(self, action: #selector(textFieldDidChanged), forControlEvents: UIControlEvents.EditingChanged)
         
-        loginButton = UIButton.init(frame: CGRectMake(15, passwordField.frame.maxY + 25, self.view.frame.width - 30, 40))
+        loginButton = UIButton.init(frame: CGRectMake(margin, passwordField.frame.maxY + margin, self.view.frame.width - margin * 2, 44))
         loginButton.setTitle("登录", forState: .Normal)
         loginButton.setBackgroundImage(UIImage.init(named: "button-normal"), forState: .Normal)
         loginButton.setBackgroundImage(UIImage.init(named: "button-down"), forState: .Highlighted)
