@@ -16,8 +16,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     private func initAppearance() {
         UINavigationBar.appearance().theme = true
         UISegmentedControl.appearance().theme = true
-        
-        UITabBar.appearance().tintColor = BLACK
+        UITabBar.appearance().theme = true
     }
     
     private var becomeActivePage = String()
@@ -93,26 +92,32 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
 }
 
+let NAVBAR_BG_COLOR = UIColor(red:0.25, green:0.32, blue:0.71, alpha:1.0)
+let NAVBAR_BORDER_COLOR = UIColor(red:0.25, green:0.32, blue:0.61, alpha:1.0)
+let NAVBAR_TINT_COLOR = UIColor(red:1.00, green:1.00, blue:0.93, alpha:1.0)
+let SEGMENT_BG_COLOR = UIColor(red:0.10, green:0.14, blue:0.39, alpha:1.0)
+let TABBAR_BG_COLOR = UIColor(red:0.88, green:0.96, blue:1.00, alpha:1.0)
+
 extension UINavigationBar {
     var theme : Bool {
         get { return false }
         set {
             self.barStyle = .Black
             self.translucent = false
-            self.tintColor = UIColor.whiteColor()
+            self.tintColor = NAVBAR_TINT_COLOR
             // #F44336
-            self.barTintColor = UIColor(red:0.96, green:0.26, blue:0.21, alpha:1.0)
+            self.barTintColor = NAVBAR_BG_COLOR
 
             // Border bottom line
             let navBorder = UIView(frame: CGRectMake(0,self.frame.size.height-1, self.frame.size.width, 1))
-            navBorder.backgroundColor = UIColor(red:0.86, green:0.26, blue:0.21, alpha:1.0)
+            navBorder.backgroundColor = NAVBAR_BORDER_COLOR
             self.addSubview(navBorder)
             
             // Shadow
-            self.layer.shadowOffset = CGSizeMake(0, 1)
-            self.layer.shadowRadius = 1
-            self.layer.shadowColor = UIColor.blackColor().CGColor
-            self.layer.shadowOpacity = 0.15
+//            self.layer.shadowOffset = CGSizeMake(0, 1)
+//            self.layer.shadowRadius = 1
+//            self.layer.shadowColor = UIColor.blackColor().CGColor
+//            self.layer.shadowOpacity = 0.15
         }
     }
 }
@@ -121,7 +126,31 @@ extension UISegmentedControl {
     var theme : Bool {
         get { return false }
         set {
-            self.tintColor = UIColor(red:0.30, green:0.05, blue:0.05, alpha:0.85)
+            self.tintColor = SEGMENT_BG_COLOR
+        }
+    }
+}
+
+extension UITabBar {
+    var theme : Bool {
+        get { return false }
+        set {
+            self.barStyle = .Black
+            self.translucent = false
+            
+            self.tintColor = NAVBAR_BG_COLOR
+            self.barTintColor = TABBAR_BG_COLOR
+            
+            // Border top line
+            let navBorder = UIView(frame: CGRectMake(0, 0, self.frame.size.width, 1))
+            navBorder.backgroundColor = UIColor(red:0, green:0, blue:0, alpha:0.03)
+            self.addSubview(navBorder)
+            
+            // Shadow
+//            self.layer.shadowOffset = CGSizeMake(0, -1)
+//            self.layer.shadowRadius = 2
+//            self.layer.shadowColor = UIColor.blackColor().CGColor
+//            self.layer.shadowOpacity = 0.05
         }
     }
 }
