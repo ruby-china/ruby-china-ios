@@ -24,19 +24,6 @@ class RootViewController: UITabBarController {
         // SideMenuManager.menuAddPanGestureToPresent(toView: )
     }
     
-    private func downloadUserAvatar(onComplate: (avatar: UIImage) -> Void) {
-        let downloadTask = NSURLSession.sharedSession().dataTaskWithURL(OAuth2.shared.currentUser!.avatarUrl) { (data, response, error) in
-            if let error = error {
-                print(error)
-                return
-            }
-            if let data = data {
-                onComplate(avatar: UIImage(data: data)!)
-            }
-        }
-        downloadTask.resume()
-    }
-    
     private func createSideMenuBarButton(image: UIImage?) -> UIBarButtonItem {
         return UIBarButtonItem(image: image, style: .Plain, target: self, action: #selector(displaySideMenu))
     }
@@ -78,7 +65,7 @@ class RootViewController: UITabBarController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        navigationItem.leftBarButtonItem = createSideMenuBarButton(UIImage(named: "profile"))
+        navigationItem.leftBarButtonItem = createSideMenuBarButton(UIImage(named: "menu"))
         navigationItem.title = ""
         delegate = self
         setupSideMenu()
@@ -114,21 +101,6 @@ class RootViewController: UITabBarController {
     }
     
     func updateLoginState() {
-        if OAuth2.shared.currentUser != nil {
-            downloadUserAvatar({ [weak self] (avatar) in
-                guard let `self` = self else {
-                    return
-                }
-                let avatarImage = avatar.drawRectWithRoundedCorner(radius: 15, CGSizeMake(30, 30)).imageWithRenderingMode(UIImageRenderingMode.AlwaysOriginal)
-                dispatch_async(dispatch_get_main_queue(), {
-                    self.navigationItem.leftBarButtonItem = self.createSideMenuBarButton(avatarImage)
-                })
-            })
-        } else {
-            let avatarImage = UIImage(named: "profile")
-            navigationItem.leftBarButtonItem = createSideMenuBarButton(avatarImage)
-        }
-        
         if let app = UIApplication.sharedApplication().delegate as? AppDelegate {
             app.refreshUnreadNotificationCount()
         }
