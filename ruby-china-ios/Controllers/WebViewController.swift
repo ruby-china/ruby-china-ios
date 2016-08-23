@@ -32,9 +32,20 @@ class WebViewController: VisitableViewController {
 
         }
         router.bind("/topics/:id") { (req) in
-            let menuButton = UIBarButtonItem(image:  UIImage(named: "dropdown"), style: .Plain, target: self, action: #selector(self.showTopicContextMenu))
-            self.navigationItem.rightBarButtonItem = menuButton
+            self.addPopupMenuButton()
         }
+        
+        router.bind("/wiki/index") { (req) in
+        }
+        
+        router.bind("/wiki/:id") { (req) in
+            self.addPopupMenuButton()
+        }
+    }
+    
+    private func addPopupMenuButton() {
+        let menuButton = UIBarButtonItem(image:  UIImage(named: "dropdown"), style: .Plain, target: self, action: #selector(self.showTopicContextMenu))
+        self.navigationItem.rightBarButtonItem = menuButton
     }
     
     private func addObserver() {
