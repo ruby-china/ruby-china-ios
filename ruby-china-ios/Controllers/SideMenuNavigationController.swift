@@ -15,7 +15,7 @@ class SideMenuNavigationController: UISideMenuNavigationController {
         let bgFrame = CGRectMake(0, -24, navigationBar.frame.width, navigationBar.frame.height + 24)
         let bgView = UIView(frame: bgFrame);
         
-        bgView.backgroundColor = NAVBAR_BORDER_COLOR
+        bgView.backgroundColor = SIDEMENU_NAVBAR_BG_COLOR
         navigationBar.addSubview(bgView)
     }
 }

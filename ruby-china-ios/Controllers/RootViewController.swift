@@ -61,6 +61,7 @@ class RootViewController: UITabBarController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         navigationItem.leftBarButtonItem = createSideMenuBarButton(UIImage(named: "menu"))
         navigationItem.title = ""
         delegate = self

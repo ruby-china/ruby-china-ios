@@ -101,18 +101,22 @@ extension UINavigationBar {
             self.tintColor = NAVBAR_TINT_COLOR
             // #F44336
             self.barTintColor = NAVBAR_BG_COLOR
-
+        }
+    }
+    
+    var bottomBorder : Bool {
+        get { return false }
+        set {
             // Border bottom line
             let navBorder = UIView(frame: CGRectMake(0,self.frame.size.height-1, self.frame.size.width, 1))
             navBorder.backgroundColor = NAVBAR_BORDER_COLOR
             self.addSubview(navBorder)
             
             // Shadow
-            self.layer.shadowOffset = CGSizeMake(0, 0)
-            self.layer.shadowRadius = 0
+            self.layer.shadowOffset = CGSizeMake(0, 0.5)
+            self.layer.shadowRadius = 1
             self.layer.shadowColor = UIColor.blackColor().CGColor
             self.layer.shadowOpacity = 0.05
-            
         }
     }
 }
@@ -138,14 +142,8 @@ extension UITabBar {
             
             // Border top line
             let navBorder = UIView(frame: CGRectMake(0, 0, self.frame.size.width, 1))
-            navBorder.backgroundColor = UIColor(red:0, green:0, blue:0, alpha:0.02)
+            navBorder.backgroundColor = UIColor(red:0, green:0, blue:0, alpha:0.01)
             self.addSubview(navBorder)
-            
-            // Shadow
-//            self.layer.shadowOffset = CGSizeMake(0, -1)
-//            self.layer.shadowRadius = 2
-//            self.layer.shadowColor = UIColor.blackColor().CGColor
-//            self.layer.shadowOpacity = 0.05
         }
     }
 }

@@ -17,6 +17,7 @@ class TopicsViewController: WebViewController {
         let filterSegment = UISegmentedControl(items: ["默认","精选", "最新", "招聘"])
         filterSegment.selectedSegmentIndex = 0
         filterSegment.addTarget(self, action: #selector(filterChangedAction), forControlEvents: .ValueChanged)
+        
         navigationItem.titleView = filterSegment
         
         navigationItem.rightBarButtonItem = UIBarButtonItem.init(image: UIImage.init(named: "new"), style: .Plain, target: self, action: #selector(newTopicAction))
