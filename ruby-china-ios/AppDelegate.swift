@@ -101,6 +101,9 @@ extension UINavigationBar {
             self.tintColor = NAVBAR_TINT_COLOR
             // #F44336
             self.barTintColor = NAVBAR_BG_COLOR
+            
+            self.backIndicatorImage = UIImage(named: "back")
+            self.backIndicatorTransitionMaskImage = UIImage(named: "back")
         }
     }
     
