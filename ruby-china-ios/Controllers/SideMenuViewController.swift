@@ -13,8 +13,14 @@ class SideMenuViewController: UITableViewController {
     private lazy var router = Router()
     
     private var menuItems: [String]!
-    private var menuItemIcons: [UIImage]!
     private var menuItemPaths: [String]!
+    private var menuItemIcons: [UIImage]!
+    private var menuItemIconColors = [
+        UIColor(red: 94 / 255.0, green: 151 / 255.0, blue: 246 / 255.0, alpha: 1),
+        UIColor(red: 156 / 255.0, green: 204 / 255.0, blue: 101 / 255.0, alpha: 1),
+        UIColor(red: 224 / 255.0, green: 96 / 255.0, blue: 85 / 255.0, alpha: 1),
+        UIColor(red: 79 / 255.0, green: 195 / 255.0, blue: 247 / 255.0, alpha: 1),
+    ]
     
     private let version = NSBundle.mainBundle().infoDictionary!["CFBundleShortVersionString"] as! String
     private let build = NSBundle.mainBundle().infoDictionary!["CFBundleVersion"] as! String
@@ -67,13 +73,16 @@ class SideMenuViewController: UITableViewController {
         case 0:
             cell.textLabel!.text = menuItems[indexPath.row]
             cell.imageView?.image = menuItemIcons[indexPath.row]
+            cell.imageView?.tintColor = menuItemIconColors[indexPath.row]
         case 1:
             if indexPath.row == 0 {
                 cell.textLabel!.text = "Copyright"
-                cell.imageView?.image = UIImage(named: "copyright")
+                cell.imageView?.image = UIImage(named: "copyright")!.imageWithRenderingMode(.AlwaysTemplate)
+                cell.imageView?.tintColor = UIColor(red: 246 / 255.0, green: 191 / 255.0, blue: 50 / 255.0, alpha: 1)
             } else {
                 cell.textLabel!.text = "Version \(version).\(build)"
-                cell.imageView?.image = UIImage(named: "versions")
+                cell.imageView?.image = UIImage(named: "versions")!.imageWithRenderingMode(.AlwaysTemplate)
+                cell.imageView?.tintColor = UIColor(red: 87 / 255.0, green: 187 / 255.0, blue: 138 / 255.0, alpha: 1)
             }
         default: break;
         }
@@ -100,7 +109,12 @@ class SideMenuViewController: UITableViewController {
         if OAuth2.shared.isLogined {
             if let user = OAuth2.shared.currentUser {
                 menuItems = [user.login, "个人资料设置", "记事本", "登出"]
-                menuItemIcons = [UIImage(named: "profile")!, UIImage(named: "edit-user")!, UIImage(named: "notes")!, UIImage(named: "logout")!]
+                menuItemIcons = [
+                    UIImage(named: "profile")!.imageWithRenderingMode(.AlwaysTemplate),
+                    UIImage(named: "edit-user")!.imageWithRenderingMode(.AlwaysTemplate),
+                    UIImage(named: "notes")!.imageWithRenderingMode(.AlwaysTemplate),
+                    UIImage(named: "logout")!.imageWithRenderingMode(.AlwaysTemplate),
+                ]
                 menuItemPaths = ["/\(user.login)", "/account/edit", "/notes", "/logout"]
                 
                 downloadUserAvatar({ [weak self] (avatar) in
@@ -114,7 +128,10 @@ class SideMenuViewController: UITableViewController {
             }
         } else {
             menuItems = ["登录", "注册新账号"]
-            menuItemIcons = [UIImage(named: "login")!, UIImage(named: "profile")!]
+            menuItemIcons = [
+                UIImage(named: "login")!.imageWithRenderingMode(.AlwaysTemplate),
+                UIImage(named: "profile")!.imageWithRenderingMode(.AlwaysTemplate),
+            ]
             menuItemPaths = ["/account/sign_in", "/account/sign_up"]
         }
         
