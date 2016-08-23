@@ -114,6 +114,11 @@ class TurbolinksSessionLib: NSObject {
         }
     }
 
+    func safariOpen(url: NSURL) {
+        let safariViewController = SFSafariViewController(URL: url)
+        topNavigationController?.presentViewController(safariViewController, animated: true, completion: nil)
+    }
+    
     private func presentLoginController() {
         let controller = SignInViewController()
         controller.delegate = self
@@ -213,13 +218,13 @@ extension TurbolinksSessionLib: SessionDelegate {
 
 extension TurbolinksSessionLib: WKNavigationDelegate {
     func webView(webView: WKWebView, decidePolicyForNavigationAction navigationAction: WKNavigationAction, decisionHandler: (WKNavigationActionPolicy) -> ()) {
-        let url = navigationAction.request.URL
-        if (url?.host != NSURL(string: ROOT_URL)?.host) {
-            // 外部网站, open in SafariView
-            let safariViewController = SFSafariViewController(URL: url!)
-            topNavigationController?.presentViewController(safariViewController, animated: true, completion: nil)
-        } else {
-            actionToPath((url?.path)!, withAction: .Advance)
+        if let url = navigationAction.request.URL {
+            if (url.host != NSURL(string: ROOT_URL)!.host) {
+                // 外部网站, open in SafariView
+                safariOpen(url)
+            } else if let path = url.path {
+                actionToPath(path, withAction: .Advance)
+            }
         }
         decisionHandler(.Cancel)
     }
