@@ -9,6 +9,8 @@
 import UIKit
 
 class TopicsViewController: WebViewController {
+    private var disappearTime: NSDate?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -18,6 +20,18 @@ class TopicsViewController: WebViewController {
         navigationItem.titleView = filterSegment
         
         navigationItem.rightBarButtonItem = UIBarButtonItem.init(image: UIImage.init(named: "new"), style: .Plain, target: self, action: #selector(newTopicAction))
+        
+        addObserver()
+    }
+    
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+        autoRefreshContent()
+    }
+    
+    override func viewDidDisappear(animated: Bool) {
+        super.viewDidDisappear(animated)
+        resetDisappearTime()
     }
     
     func filterChangedAction(sender: UISegmentedControl) {
@@ -35,5 +49,28 @@ class TopicsViewController: WebViewController {
     
     func newTopicAction() {
         TurbolinksSessionLib.sharedInstance.actionToPath("/topics/new", withAction: .Replace)
+    }
+    
+    private func addObserver() {
+        NSNotificationCenter.defaultCenter().addObserverForName(UIApplicationDidBecomeActiveNotification, object: nil, queue: nil) { [weak self] (notification) in
+            self?.autoRefreshContent()
+        }
+        NSNotificationCenter.defaultCenter().addObserverForName(UIApplicationWillResignActiveNotification, object: nil, queue: nil) { [weak self] (notification) in
+            self?.resetDisappearTime()
+        }
+    }
+    
+    private func resetDisappearTime() {
+        disappearTime = NSDate()
+    }
+    
+    private func autoRefreshContent() {
+        guard let disappearTime = disappearTime else {
+            return
+        }
+        if -disappearTime.timeIntervalSinceNow > (60 * 60 * 2.0) {
+            TurbolinksSessionLib.sharedInstance.visitableDidRequestRefresh(self)
+        }
+        self.disappearTime = nil
     }
 }
