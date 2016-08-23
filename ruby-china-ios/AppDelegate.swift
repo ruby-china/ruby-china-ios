@@ -142,7 +142,7 @@ extension UITabBar {
             
             // Border top line
             let navBorder = UIView(frame: CGRectMake(0, 0, self.frame.size.width, 1))
-            navBorder.backgroundColor = UIColor(red:0, green:0, blue:0, alpha:0.01)
+            navBorder.backgroundColor = UIColor(red: 0.95, green: 0.92, blue: 0.92, alpha: 1.0)
             self.addSubview(navBorder)
         }
     }

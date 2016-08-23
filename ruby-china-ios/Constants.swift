@@ -31,7 +31,7 @@ let SIDEMENU_NAVBAR_BG_COLOR = UIColor(red: 0.76, green: 0.13, blue: 0.17, alpha
 let NAVBAR_BORDER_COLOR = UIColor(red:0.72, green:0.30, blue:0.26, alpha:1.0)
 let NAVBAR_TINT_COLOR = UIColor(red:1.00, green:1.00, blue:0.98, alpha:1.0)
 let SEGMENT_BG_COLOR = UIColor(red:0.23, green:0.05, blue:0.02, alpha:1.0)
-let TABBAR_BG_COLOR = UIColor(red:1.00, green:0.97, blue:0.97, alpha:1.0)
+let TABBAR_BG_COLOR = UIColor(red: 1.00, green: 0.98, blue: 0.96, alpha: 1.0)
 
 // - 消息定义
 /// 显示侧栏
