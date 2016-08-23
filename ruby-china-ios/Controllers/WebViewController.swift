@@ -101,15 +101,6 @@ class WebViewController: VisitableViewController {
         reloadVisitable()
     }
 
-
-    func hideTabBar(tabBarHidden hidden: Bool) {
-        if hidden {
-            self.hidesBottomBarWhenPushed = true
-        } else {
-            self.hidesBottomBarWhenPushed = false
-        }
-    }
-
     private func share(textToShare: String, url: NSURL) {
         let objectsToShare = [textToShare, url]
         let activityViewController = UIActivityViewController(activityItems: objectsToShare, applicationActivities: nil)

@@ -90,13 +90,11 @@ class TurbolinksSessionLib: NSObject {
             let visitable = WebViewController(path: path)
 
             if action == .Advance {
-                visitable.hideTabBar(tabBarHidden: topNavigationController?.viewControllers.count >= 1)
                 topWebViewController.navigationController?.pushViewController(visitable, animated: true)
             } else if action == .Replace {
                 topWebViewController.navigationController?.popViewControllerAnimated(false)
                 topWebViewController.navigationController?.pushViewController(visitable, animated: false)
             } else {
-                visitable.hideTabBar(tabBarHidden: topNavigationController?.viewControllers.count >= 1)
                 topWebViewController.navigationController?.pushViewController(visitable, animated: false)
             }
         }
