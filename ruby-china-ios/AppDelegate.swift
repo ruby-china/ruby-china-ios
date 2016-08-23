@@ -108,10 +108,11 @@ extension UINavigationBar {
             self.addSubview(navBorder)
             
             // Shadow
-            self.layer.shadowOffset = CGSizeMake(0, 1)
-            self.layer.shadowRadius = 1
+            self.layer.shadowOffset = CGSizeMake(0, 0)
+            self.layer.shadowRadius = 0
             self.layer.shadowColor = UIColor.blackColor().CGColor
-            self.layer.shadowOpacity = 0.15
+            self.layer.shadowOpacity = 0.05
+            
         }
     }
 }
@@ -137,7 +138,7 @@ extension UITabBar {
             
             // Border top line
             let navBorder = UIView(frame: CGRectMake(0, 0, self.frame.size.width, 1))
-            navBorder.backgroundColor = UIColor(red:0, green:0, blue:0, alpha:0.03)
+            navBorder.backgroundColor = UIColor(red:0, green:0, blue:0, alpha:0.02)
             self.addSubview(navBorder)
             
             // Shadow

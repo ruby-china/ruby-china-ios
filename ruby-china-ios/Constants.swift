@@ -27,9 +27,9 @@ let RED = UIColor(red:0.96, green:0.26, blue:0.21, alpha:1.0)
 
 // Red Theme
 let NAVBAR_BG_COLOR = UIColor(red:0.89, green:0.30, blue:0.26, alpha:1.0)
-let NAVBAR_BORDER_COLOR = UIColor(red:0.79, green:0.30, blue:0.26, alpha:1.0)
+let NAVBAR_BORDER_COLOR = UIColor(red:0.72, green:0.30, blue:0.26, alpha:1.0)
 let NAVBAR_TINT_COLOR = UIColor(red:1.00, green:1.00, blue:0.98, alpha:1.0)
-let SEGMENT_BG_COLOR = UIColor(red:0.49, green:0.11, blue:0.11, alpha:1.0)
+let SEGMENT_BG_COLOR = UIColor(red:0.40, green:0.11, blue:0.11, alpha:1.0)
 let TABBAR_BG_COLOR = UIColor(red:1.00, green:0.97, blue:0.97, alpha:1.0)
 
 // - 消息定义
