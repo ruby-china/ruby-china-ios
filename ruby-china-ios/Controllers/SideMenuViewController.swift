@@ -12,13 +12,9 @@ import Router
 class SideMenuViewController: UITableViewController {
     private lazy var router = Router()
     
-    private var menuItems = ["", "个人资料设置", "记事本", "登出"]
-    private var menuItemIcons = [UIImage(named: "profile"), UIImage(named: "edit-user"), UIImage(named: "notes"), UIImage(named: "logout")]
-    private var menuItemPaths = ["", "/account/edit", "/notes", "/logout"]
-    
-    private var menuItemsWithoutLogin = ["登录", "注册新账号"]
-    private var menuItemPathsWithoutLogin = ["/account/sign_in", "/account/sign_up"]
-    private var menuItemIconsWithoutLogin = [UIImage(named: "login"), UIImage(named: "profile")]
+    private var menuItems: [String]!
+    private var menuItemIcons: [UIImage]!
+    private var menuItemPaths: [String]!
     
     private let version = NSBundle.mainBundle().infoDictionary!["CFBundleShortVersionString"] as! String
     private let build = NSBundle.mainBundle().infoDictionary!["CFBundleVersion"] as! String
@@ -55,34 +51,30 @@ class SideMenuViewController: UITableViewController {
     
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         switch section {
+        case 0:
+            return menuItems.count
         case 1:
-            return 1;
+            return 2
         default:
-            if OAuth2.shared.isLogined {
-                return menuItems.count;
-            } else {
-                return menuItemsWithoutLogin.count;
-            }
+            return 0
         }
     }
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("Cell", forIndexPath: indexPath)
         
-        var items = menuItemsWithoutLogin
-        var itemIcons = menuItemIconsWithoutLogin
-        if OAuth2.shared.isLogined {
-            items = menuItems
-            itemIcons = menuItemIcons
-        }
-        
         switch indexPath.section {
         case 0:
-            cell.textLabel!.text = items[indexPath.row]
-            cell.imageView?.image = itemIcons[indexPath.row]
+            cell.textLabel!.text = menuItems[indexPath.row]
+            cell.imageView?.image = menuItemIcons[indexPath.row]
         case 1:
-            cell.textLabel!.text = "Version: \(version).\(build)"
-            cell.imageView?.image = nil
+            if indexPath.row == 0 {
+                cell.textLabel!.text = "Copyright"
+                cell.imageView?.image = UIImage(named: "copyright")
+            } else {
+                cell.textLabel!.text = "Version \(version).\(build)"
+                cell.imageView?.image = UIImage(named: "versions")
+            }
         default: break;
         }
         
@@ -92,14 +84,14 @@ class SideMenuViewController: UITableViewController {
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         switch indexPath.section {
         case 0:
-            var itemPaths = menuItemPathsWithoutLogin
-            if OAuth2.shared.isLogined {
-                itemPaths = menuItemPaths
-            }
-            let path = itemPaths[indexPath.row]
+            let path = menuItemPaths[indexPath.row]
             actionWithPath(path)
         case 1:
-            UIApplication.sharedApplication().openURL(NSURL(string: PROJECT_URL)!)
+            if indexPath.row == 0 {
+                actionWithPath(COPYRIGHT_URL)
+            } else {
+                UIApplication.sharedApplication().openURL(NSURL(string: PROJECT_URL)!)
+            }
         default: break;
         }
     }
@@ -107,8 +99,10 @@ class SideMenuViewController: UITableViewController {
     func updateLoginState() {
         if OAuth2.shared.isLogined {
             if let user = OAuth2.shared.currentUser {
-                menuItems[0] = user.login
-                menuItemPaths[0] = "/\(user.login)"
+                menuItems = [user.login, "个人资料设置", "记事本", "登出"]
+                menuItemIcons = [UIImage(named: "profile")!, UIImage(named: "edit-user")!, UIImage(named: "notes")!, UIImage(named: "logout")!]
+                menuItemPaths = ["/\(user.login)", "/account/edit", "/notes", "/logout"]
+                
                 downloadUserAvatar({ [weak self] (avatar) in
                     guard let `self` = self else {
                         return
@@ -119,7 +113,9 @@ class SideMenuViewController: UITableViewController {
                 })
             }
         } else {
-            menuItemIcons[0] = UIImage(named: "profile")
+            menuItems = ["登录", "注册新账号"]
+            menuItemIcons = [UIImage(named: "login")!, UIImage(named: "profile")!]
+            menuItemPaths = ["/account/sign_in", "/account/sign_up"]
         }
         
         self.tableView.reloadData()
@@ -132,18 +128,6 @@ class SideMenuViewController: UITableViewController {
                 NSNotificationCenter.defaultCenter().postNotificationName(NOTICE_MENU_CLICKED, object: self, userInfo: [NOTICE_MENU_CLICKED_PATH: path])
             })
         }
-    }
-    
-    func actionProfile() {
-        actionWithPath("/account/edit")
-    }
-    
-    func actionNewTopic() {
-        actionWithPath("/topics/new")
-    }
-    
-    func actionLogin() {
-        actionWithPath("/account/sign_in")
     }
     
     private func downloadUserAvatar(onComplate: (avatar: UIImage) -> Void) {

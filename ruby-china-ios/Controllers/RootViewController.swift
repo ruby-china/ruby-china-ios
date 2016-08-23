@@ -56,7 +56,12 @@ class RootViewController: UITabBarController {
     
     func actionMenuClicked(note: NSNotification) {
         let path = note.userInfo![NOTICE_MENU_CLICKED_PATH] as! String;
-        TurbolinksSessionLib.sharedInstance.actionToPath(path, withAction: .Advance)
+        
+        if let url = NSURL(string: path), host = url.host where host != NSURL(string: ROOT_URL)!.host! {
+            TurbolinksSessionLib.sharedInstance.safariOpen(url)
+        } else {
+            TurbolinksSessionLib.sharedInstance.actionToPath(path, withAction: .Advance)
+        }
     }
     
     override func viewDidLoad() {

@@ -219,7 +219,7 @@ extension TurbolinksSessionLib: SessionDelegate {
 extension TurbolinksSessionLib: WKNavigationDelegate {
     func webView(webView: WKWebView, decidePolicyForNavigationAction navigationAction: WKNavigationAction, decisionHandler: (WKNavigationActionPolicy) -> ()) {
         if let url = navigationAction.request.URL {
-            if (url.host != NSURL(string: ROOT_URL)!.host) {
+            if let host = url.host where host != NSURL(string: ROOT_URL)!.host! {
                 // 外部网站, open in SafariView
                 safariOpen(url)
             } else if let path = url.path {

@@ -10,6 +10,7 @@ let OAUTH_CLIENT_ID = "1b034acf"
 let OAUTH_SECRET = "2d44bae75daaa88f2b8226a0205318b6ccf79b09e80fbfb461d191001d7b3c7b"
 #endif
 
+let COPYRIGHT_URL = "https://github.com/ruby-china/ruby-china-ios/blob/master/copyright.md"
 let PROJECT_URL = "https://github.com/ruby-china/ruby-china-ios"
 
 let USER_AGENT = "turbolinks-app, ruby-china, official"
