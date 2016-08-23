@@ -126,10 +126,15 @@ extension SignInViewController: OAuth2Delegate {
     
     func oauth2DidLoginFailed(error: NSError) {
         print("Login failed", error.localizedFailureReason)
+        
         var errorMessage = ""
-        errorMessage += error.localizedDescription
-        if (error.localizedFailureReason != nil) {
-            errorMessage += "\n" + error.localizedFailureReason!
+        if error.code == 3 {
+            errorMessage = "帐号或密码错误，请重试"
+        } else {
+            errorMessage = error.localizedDescription
+            if let failureReason = error.localizedFailureReason {
+                errorMessage += "\n" + failureReason
+            }
         }
         
         RBHUD.error(errorMessage)
