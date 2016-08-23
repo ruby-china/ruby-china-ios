@@ -46,8 +46,8 @@ class SignInViewController: UIViewController {
         
         loginButton = UIButton.init(frame: CGRectMake(margin, passwordField.frame.maxY + margin, self.view.frame.width - margin * 2, 44))
         loginButton.setTitle("登录", forState: .Normal)
-        loginButton.setBackgroundImage(UIImage.init(named: "button-normal"), forState: .Normal)
-        loginButton.setBackgroundImage(UIImage.init(named: "button-down"), forState: .Highlighted)
+        loginButton.setBackgroundImage(UIImage.fromColor(NAVBAR_BG_COLOR), forState: .Normal)
+        loginButton.setBackgroundImage(UIImage.fromColor(NAVBAR_BORDER_COLOR), forState: .Highlighted)
         loginButton.setTitleColor(UIColor.whiteColor(), forState: .Normal)
         loginButton.layer.cornerRadius = 6
         loginButton.addTarget(self, action: #selector(actionLogin), forControlEvents: .TouchDown)
