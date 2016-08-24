@@ -30,16 +30,16 @@ class RootViewController: UITabBarController {
     
     private func setupViewControllers() {
         let topicsController = TopicsViewController(path: "/topics")
-        topicsController.tabBarItem = UITabBarItem(title: "讨论", image: UIImage(named: "topic"), tag: 0)
+        topicsController.tabBarItem = UITabBarItem(title: "讨论", image: UIImage(named: "topic"), tag: kTopicsTag)
         
         let pagesController = WebViewController(path: "/wiki")
-        pagesController.tabBarItem = UITabBarItem(title: "Wiki", image: UIImage(named: "wiki"), tag: 1)
+        pagesController.tabBarItem = UITabBarItem(title: "Wiki", image: UIImage(named: "wiki"), tag: kWikiTag)
         
         let favoritesController = WebViewController(path: "/topics/favorites")
-        favoritesController.tabBarItem = UITabBarItem(title: "收藏", image: UIImage(named: "favorites"), tag: 2)
+        favoritesController.tabBarItem = UITabBarItem(title: "收藏", image: UIImage(named: "favorites"), tag: kFavoritesTag)
         
         let notificationsController = NotificationsViewController(path: "/notifications")
-        notificationsController.tabBarItem = UITabBarItem(title: "通知", image: UIImage(named: "notifications"), tag: 99)
+        notificationsController.tabBarItem = UITabBarItem(title: "通知", image: UIImage(named: "notifications"), tag: kNotificationsTag)
         
         viewControllers = [topicsController, pagesController, favoritesController, notificationsController]
     }
@@ -103,6 +103,14 @@ class RootViewController: UITabBarController {
     }
     
     func updateLoginState() {
+        if let viewController = selectedViewController where OAuth2.shared.currentUser == nil {
+            switch viewController.tabBarItem.tag {
+            case kFavoritesTag, kNotificationsTag:
+                selectedIndex = 0
+            default: break
+            }
+        }
+        
         if let app = UIApplication.sharedApplication().delegate as? AppDelegate {
             app.refreshUnreadNotificationCount()
         }
