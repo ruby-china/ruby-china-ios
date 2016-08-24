@@ -3,7 +3,7 @@ import Turbolinks
 import Router
 
 class WebViewController: VisitableViewController {
-    private var currentPath = ""
+    private(set) var currentPath = ""
     private lazy var router = Router()
     
     convenience init(path: String) {

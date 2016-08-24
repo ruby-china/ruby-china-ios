@@ -27,11 +27,11 @@ class TurbolinksSessionLib: NSObject {
     
     private lazy var router: Router = {
         let router = Router()
-        router.bind("/account/edit") { _ in
-            self.presentEditAccountController()
+        router.bind("/account/edit") { req in
+            self.presentEditAccountController(req.route.route)
         }
-        router.bind("/topics/new") { _ in
-            self.presentEditTopicController("/topics/new")
+        router.bind("/topics/new") { req in
+            self.presentEditTopicController(req.route.route)
         }
         router.bind("/topics/:id/edit") { req in
             self.presentEditTopicController("/topics/\(req.param("id")!)/edit")
@@ -133,20 +133,16 @@ class TurbolinksSessionLib: NSObject {
             return
         }
 
-        let controller = NewTopicViewController()
+        let controller = NewTopicViewController(path: path)
         controller.delegate = self
-        controller.webViewConfiguration = webViewConfiguration
-        controller.path = path
 
         let navController = ThemeNavigationController(rootViewController: controller)
         topNavigationController?.presentViewController(navController, animated: true, completion: nil)
     }
 
     private func presentProfileController(path: String) {
-        let controller = ProfileViewController()
+        let controller = ProfileViewController(path: path)
         controller.delegate = self
-        controller.webViewConfiguration = webViewConfiguration
-        controller.path = path
 
         let navController = ThemeNavigationController(rootViewController: controller)
         topNavigationController?.presentViewController(navController, animated: true, completion: nil)
@@ -158,19 +154,15 @@ class TurbolinksSessionLib: NSObject {
             return
         }
 
-        let controller = EditReplyViewController()
+        let controller = EditReplyViewController(path: path)
         controller.delegate = self
-        controller.webViewConfiguration = webViewConfiguration
-        controller.path = path
-
         let navController = ThemeNavigationController(rootViewController: controller)
         topNavigationController?.presentViewController(navController, animated: true, completion: nil)
     }
 
-    private func presentEditAccountController() {
-        let controller = EditAccountViewController()
-        controller.webViewConfiguration = webViewConfiguration
-
+    private func presentEditAccountController(path: String) {
+        let controller = EditAccountViewController(path: path)
+        controller.delegate = self
         let navController = ThemeNavigationController(rootViewController: controller)
         topNavigationController?.presentViewController(navController, animated: true, completion: nil)
     }
@@ -218,6 +210,12 @@ extension TurbolinksSessionLib: SessionDelegate {
 
 extension TurbolinksSessionLib: WKNavigationDelegate {
     func webView(webView: WKWebView, decidePolicyForNavigationAction navigationAction: WKNavigationAction, decisionHandler: (WKNavigationActionPolicy) -> ()) {
+        
+        if let popupWebViewController = session.topmostVisitable as? PopupWebViewController {
+            popupWebViewController.webView(webView, decidePolicyForNavigationAction: navigationAction, decisionHandler: decisionHandler)
+            return
+        }
+        
         if let url = navigationAction.request.URL {
             if let host = url.host where host != NSURL(string: ROOT_URL)!.host! {
                 // 外部网站, open in SafariView
@@ -245,7 +243,7 @@ extension TurbolinksSessionLib: PopupWebViewControllerDelegate {
             return
         }
 
-        if (controller.path == "topics/new") {
+        if (controller.currentPath == "topics/new") {
             actionToPath(url!.path!, withAction: .Advance)
         } else {
             session.reload()
