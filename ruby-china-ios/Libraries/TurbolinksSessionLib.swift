@@ -189,8 +189,15 @@ extension TurbolinksSessionLib: SessionDelegate {
             let statusCode = error.userInfo["statusCode"] as! Int
             switch statusCode {
             case 302, 401:
-                OAuth2.shared.logout()
-                presentLoginController()
+                if OAuth2.shared.isLogined {
+                    OAuth2.shared.refreshAccessToken(success: {
+                        session.reload()
+                    }, failure: {
+                        self.presentLoginController()
+                    })
+                } else {
+                    presentLoginController()
+                }
             case 404:
                 viewController.presentError(.HTTPNotFoundError)
             default:
