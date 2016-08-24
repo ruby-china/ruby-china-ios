@@ -171,6 +171,12 @@ class TurbolinksSessionLib: NSObject {
 extension TurbolinksSessionLib: SessionDelegate {
     func session(session: Session, didProposeVisitToURL URL: NSURL, withAction action: Action) {
         let path = URL.path
+        
+        if let popupWebViewController = session.topmostVisitable as? PopupWebViewController {
+            popupWebViewController.session(session, didProposeVisitToURL: URL, withAction: action)
+            return
+        }
+        
         actionToPath(path!, withAction: action)
     }
 
@@ -211,8 +217,9 @@ extension TurbolinksSessionLib: SessionDelegate {
 extension TurbolinksSessionLib: WKNavigationDelegate {
     func webView(webView: WKWebView, decidePolicyForNavigationAction navigationAction: WKNavigationAction, decisionHandler: (WKNavigationActionPolicy) -> ()) {
         
+        // PopupViewController
         if let popupWebViewController = session.topmostVisitable as? PopupWebViewController {
-            popupWebViewController.webView(webView, decidePolicyForNavigationAction: navigationAction, decisionHandler: decisionHandler)
+            popupWebViewController.webView(webView, decidePolicyForNavigationAction: navigationAction, decisionHandler: decisionHandler);
             return
         }
         

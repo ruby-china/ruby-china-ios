@@ -10,6 +10,7 @@ import Foundation
 
 import UIKit
 import WebKit
+import Turbolinks
 
 protocol PopupWebViewControllerDelegate: class {
     func popupWebViewControllerDidFinished(controller: PopupWebViewController, toURL url: NSURL?)
@@ -25,6 +26,14 @@ class PopupWebViewController: WebViewController {
     
     func  actionClose() {
         dismissViewControllerAnimated(true, completion: nil)
+    }
+    
+    func session(session: Session, didProposeVisitToURL URL: NSURL, withAction action: Action) {
+        if URL.path != self.currentPath {
+            dismissViewControllerAnimated(true, completion: nil)
+            delegate?.popupWebViewControllerDidFinished(self, toURL: URL)
+            return
+        }
     }
 }
 
