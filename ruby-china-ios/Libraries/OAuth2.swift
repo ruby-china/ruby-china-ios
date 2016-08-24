@@ -101,8 +101,18 @@ class OAuth2 {
                 return
             }
             
-            self.currentUser = User(json: result!["user"])
-            print(self.currentUser)
+            if let result = result where !result.isEmpty {
+                let userJSON = result["user"]
+                self.currentUser = User(json: userJSON)
+                print(self.currentUser)
+                
+                NSUserDefaults.standardUserDefaults().setValue(userJSON.rawString(), forKey: "loginUserJSON")
+                NSUserDefaults.standardUserDefaults().synchronize()
+            } else if let loginUserJSON = NSUserDefaults.standardUserDefaults().stringForKey("loginUserJSON"), dataFromString = loginUserJSON.dataUsingEncoding(NSUTF8StringEncoding, allowLossyConversion: false) {
+                let jsonObject = JSON(data: dataFromString)
+                self.currentUser = User(json: jsonObject)
+                print(self.currentUser)
+            }
         })
     }
     
@@ -113,11 +123,13 @@ class OAuth2 {
                 return
             }
             
-            let unreadCount = (result!["count"] as JSON).intValue
-            print("Unread notification count", unreadCount)
-            dispatch_async(dispatch_get_main_queue(), {
-                callback(unreadCount)
-            })
+            if let result = result where !result.isEmpty {
+                let unreadCount = result["count"].intValue
+                print("Unread notification count", unreadCount)
+                dispatch_async(dispatch_get_main_queue(), {
+                    callback(unreadCount)
+                })
+            }
         }
     }
     
@@ -125,5 +137,7 @@ class OAuth2 {
         heimdallr.clearAccessToken()
         accessToken = nil
         currentUser = nil
+        NSUserDefaults.standardUserDefaults().removeObjectForKey("loginUserJSON")
+        NSUserDefaults.standardUserDefaults().synchronize()
     }
 }
