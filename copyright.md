@@ -25,3 +25,6 @@ A micro routing library written in swift, primarily for deep linking use cases.
 
 ### [PKHUD](https://github.com/pkluz/PKHUD)
 A Swift based reimplementation of the Apple HUD (Volume, Ringer, Rotation,…) for iOS 8.
+
+### [YYKeyboardManager](https://github.com/ibireme/YYKeyboardManager)
+iOS utility class allows you to access keyboard view and track keyboard animation.
