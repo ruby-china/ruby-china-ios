@@ -15,9 +15,7 @@ class APIRequest {
     static private var _shared = APIRequest()
     
     static var shared: APIRequest {
-        get {
-            return _shared
-        }
+        return _shared
     }
     
     private var headers: [String: String]?
@@ -28,7 +26,7 @@ class APIRequest {
         }
     }
     
-    func _request(method: Alamofire.Method, path: String, parameters: [String: AnyObject]?, callback: APIRequestCallback) {
+    private func _request(method: Alamofire.Method, path: String, parameters: [String: AnyObject]?, callback: APIRequestCallback) {
         print("headers", headers)
         Alamofire.request(method, "\(ROOT_URL)\(path)", parameters: parameters, encoding: .URL, headers: headers).responseJSON { response in
             print(method, path, response.response?.statusCode)
