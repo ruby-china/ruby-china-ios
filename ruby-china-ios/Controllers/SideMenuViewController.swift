@@ -106,26 +106,24 @@ class SideMenuViewController: UITableViewController {
     }
     
     func updateLoginState() {
-        if OAuth2.shared.isLogined {
-            if let user = OAuth2.shared.currentUser {
-                menuItems = [user.login, "个人资料设置", "记事本", "登出"]
-                menuItemIcons = [
-                    UIImage(named: "profile")!.imageWithRenderingMode(.AlwaysTemplate),
-                    UIImage(named: "edit-user")!.imageWithRenderingMode(.AlwaysTemplate),
-                    UIImage(named: "notes")!.imageWithRenderingMode(.AlwaysTemplate),
-                    UIImage(named: "logout")!.imageWithRenderingMode(.AlwaysTemplate),
-                ]
-                menuItemPaths = ["/\(user.login)", "/account/edit", "/notes", "/logout"]
-                
-                downloadUserAvatar({ [weak self] (avatar) in
-                    guard let `self` = self else {
-                        return
-                    }
-                    let avatarImage = avatar.drawRectWithRoundedCorner(radius: 11, CGSizeMake(22, 22)).imageWithRenderingMode(UIImageRenderingMode.AlwaysOriginal)
-                    self.menuItemIcons[0] = avatarImage
-                    self.tableView.reloadData()
-                })
-            }
+        if let user = OAuth2.shared.currentUser where OAuth2.shared.isLogined {
+            menuItems = [user.login, "个人资料设置", "记事本", "登出"]
+            menuItemIcons = [
+                UIImage(named: "profile")!.imageWithRenderingMode(.AlwaysTemplate),
+                UIImage(named: "edit-user")!.imageWithRenderingMode(.AlwaysTemplate),
+                UIImage(named: "notes")!.imageWithRenderingMode(.AlwaysTemplate),
+                UIImage(named: "logout")!.imageWithRenderingMode(.AlwaysTemplate),
+            ]
+            menuItemPaths = ["/\(user.login)", "/account/edit", "/notes", "/logout"]
+            
+            downloadUserAvatar({ [weak self] (avatar) in
+                guard let `self` = self else {
+                    return
+                }
+                let avatarImage = avatar.drawRectWithRoundedCorner(radius: 11, CGSizeMake(22, 22)).imageWithRenderingMode(UIImageRenderingMode.AlwaysOriginal)
+                self.menuItemIcons[0] = avatarImage
+                self.tableView.reloadData()
+            })
         } else {
             menuItems = ["登录", "注册新账号"]
             menuItemIcons = [
