@@ -7,4 +7,5 @@ target 'ruby-china-ios' do
   pod 'Heimdallr'
   pod 'Router'
   pod 'PKHUD'
+  pod 'YYKeyboardManager'
 end

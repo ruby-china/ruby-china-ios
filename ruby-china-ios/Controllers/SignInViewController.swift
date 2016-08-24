@@ -1,5 +1,6 @@
 import UIKit
 import WebKit
+import YYKeyboardManager
 
 protocol SignInViewControllerDelegate: class {
     func signInViewControllerDidAuthenticate(sender: SignInViewController)
@@ -9,25 +10,15 @@ class SignInViewController: UIViewController {
     weak var delegate: SignInViewControllerDelegate?
     var onDidAuthenticate: ((sender: SignInViewController) -> Void)?
     
-    private var closeButton: UIBarButtonItem?
-    
+    private var contentView: UIView!
     private var loginField: RBTextField!
     private var passwordField: RBTextField!
     private var loginButton: UIButton!
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        
-        title = "登录"
-        
-        closeButton = UIBarButtonItem.init(barButtonSystemItem: .Cancel, target: self, action: #selector(actionClose))
-        
-        navigationItem.leftBarButtonItem = closeButton
-        
-        let boxTop = CGFloat(120)
+    private func setupViews() {
         let margin = CGFloat(20)
         
-        loginField = RBTextField.init(frame: CGRectMake(margin, boxTop, self.view.frame.width - margin * 2, 44))
+        loginField = RBTextField(frame: CGRectMake(margin, 0, view.frame.width - margin * 2, 44))
         loginField.clearButtonMode = .WhileEditing
         loginField.autocorrectionType = .No
         loginField.keyboardType = .EmailAddress
@@ -37,33 +28,44 @@ class SignInViewController: UIViewController {
         loginField.returnKeyType = .Next
         loginField.addTarget(self, action: #selector(textFieldDidChanged), forControlEvents: UIControlEvents.EditingChanged)
         
-        passwordField = RBTextField.init(frame: CGRectMake(margin, loginField.frame.maxY + margin, self.view.frame.width - margin * 2, 44))
+        passwordField = RBTextField(frame: CGRectMake(margin, loginField.frame.maxY + margin, view.frame.width - margin * 2, 44))
         passwordField.placeholder = "密码"
         passwordField.secureTextEntry = true
         passwordField.delegate = self
         passwordField.returnKeyType = .Done
         passwordField.addTarget(self, action: #selector(textFieldDidChanged), forControlEvents: UIControlEvents.EditingChanged)
         
-        loginButton = UIButton.init(frame: CGRectMake(margin, passwordField.frame.maxY + margin, self.view.frame.width - margin * 2, 44))
+        loginButton = UIButton(frame: CGRectMake(margin, passwordField.frame.maxY + margin, view.frame.width - margin * 2, 44))
         loginButton.setTitle("登录", forState: .Normal)
         loginButton.setBackgroundImage(UIImage.fromColor(NAVBAR_BG_COLOR), forState: .Normal)
         loginButton.setBackgroundImage(UIImage.fromColor(NAVBAR_BORDER_COLOR), forState: .Highlighted)
         loginButton.setTitleColor(UIColor.whiteColor(), forState: .Normal)
-        loginButton.layer.cornerRadius = 6
         loginButton.addTarget(self, action: #selector(actionLogin), forControlEvents: .TouchDown)
         
-        loginField.layer.cornerRadius = 0
-        passwordField.layer.cornerRadius = 0
+        contentView = UIView(frame: CGRectMake(0, 0, view.frame.width, loginButton.frame.maxY))
+        contentView.center = view.center
+        contentView.autoresizingMask = [.FlexibleTopMargin, .FlexibleBottomMargin]
         
+        contentView.addSubview(loginField)
+        contentView.addSubview(passwordField)
+        contentView.addSubview(loginButton)
+        view.addSubview(contentView)
+    }
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        title = "登录"
+        navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .Cancel, target: self, action: #selector(actionClose))
         view.backgroundColor = UIColor.whiteColor()
         
-        view.addSubview(loginField)
-        view.addSubview(passwordField)
-        view.addSubview(loginButton)
+        setupViews()
         
         OAuth2.shared.delegate = self
         
         textFieldDidChanged()
+        
+        YYKeyboardManager.defaultManager().addObserver(self)
     }
     
     override func viewDidAppear(animated: Bool) {
@@ -97,6 +99,20 @@ class SignInViewController: UIViewController {
         } else {
             loginButton.enabled = false
         }
+    }
+}
+
+extension SignInViewController: YYKeyboardObserver {
+    func keyboardChangedWithTransition(transition: YYKeyboardTransition) {
+        UIView.animateWithDuration(transition.animationDuration, delay: 0, options: transition.animationOption, animations: {
+            var y: CGFloat = 0
+            if transition.toVisible {
+                y = (self.view.frame.height - transition.toFrame.height) * 0.5
+            } else {
+                y = self.view.frame.height * 0.5
+            }
+            self.contentView.center = CGPoint(x: self.view.frame.width * 0.5, y: y)
+        }, completion: nil)
     }
 }
 

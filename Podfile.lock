@@ -10,6 +10,7 @@ PODS:
   - SideMenu (1.1.9)
   - SwiftyJSON (2.3.2)
   - Turbolinks (1.0.2)
+  - YYKeyboardManager (1.0.1)
 
 DEPENDENCIES:
   - Alamofire
@@ -19,6 +20,7 @@ DEPENDENCIES:
   - SideMenu
   - SwiftyJSON
   - Turbolinks (from `https://github.com/turbolinks/turbolinks-ios.git`)
+  - YYKeyboardManager
 
 EXTERNAL SOURCES:
   Turbolinks:
@@ -38,7 +40,8 @@ SPEC CHECKSUMS:
   SideMenu: e4ecb0f1061e19230e53079edb2b300081446f80
   SwiftyJSON: 04ccea08915aa0109039157c7974cf0298da292a
   Turbolinks: d8209bab43803adae8c06d434368e16479023407
+  YYKeyboardManager: ff53d2e80d1808567a7f004028bd200d9469a89f
 
-PODFILE CHECKSUM: 612c78231de48b84ac01268cd293fb11453ac38f
+PODFILE CHECKSUM: 60fa3209794e9fabd0cf6b737e3cf51c7fca9966
 
 COCOAPODS: 1.0.1
