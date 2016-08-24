@@ -219,7 +219,7 @@ extension TurbolinksSessionLib: WKNavigationDelegate {
         
         // PopupViewController
         if let popupWebViewController = session.topmostVisitable as? PopupWebViewController {
-            popupWebViewController.webView(webView, decidePolicyForNavigationAction: navigationAction, decisionHandler: decisionHandler);
+            popupWebViewController.webView(webView, decidePolicyForNavigationAction: navigationAction, decisionHandler: decisionHandler)
             return
         }
         

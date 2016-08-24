@@ -47,8 +47,8 @@ extension UIImage {
         
         self.drawInRect(rect)
         CGContextDrawPath(UIGraphicsGetCurrentContext(), .FillStroke)
-        let output = UIGraphicsGetImageFromCurrentImageContext();
-        UIGraphicsEndImageContext();
+        let output = UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsEndImageContext()
         
         return output
     }

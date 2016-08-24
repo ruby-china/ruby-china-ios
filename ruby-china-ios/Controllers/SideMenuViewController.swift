@@ -31,7 +31,7 @@ class SideMenuViewController: UITableViewController {
         
         title = "Ruby China"
     
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(updateLoginState), name: USER_CHANGED, object: nil);
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(updateLoginState), name: USER_CHANGED, object: nil)
         updateLoginState()
         
         tableView.delegate = self
@@ -84,7 +84,7 @@ class SideMenuViewController: UITableViewController {
                 cell.imageView?.image = UIImage(named: "versions")!.imageWithRenderingMode(.AlwaysTemplate)
                 cell.imageView?.tintColor = UIColor(red: 87 / 255.0, green: 187 / 255.0, blue: 138 / 255.0, alpha: 1)
             }
-        default: break;
+        default: break
         }
         
         return cell
@@ -101,7 +101,7 @@ class SideMenuViewController: UITableViewController {
             } else {
                 UIApplication.sharedApplication().openURL(NSURL(string: PROJECT_URL)!)
             }
-        default: break;
+        default: break
         }
     }
     
