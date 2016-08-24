@@ -1,7 +1,6 @@
 import UIKit
 import WebKit
 
-
 class EditAccountViewController: PopupWebViewController {
     var doneButton: UIBarButtonItem?
     

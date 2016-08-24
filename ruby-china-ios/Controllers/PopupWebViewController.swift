@@ -21,10 +21,10 @@ class PopupWebViewController: WebViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        navigationItem.leftBarButtonItem = UIBarButtonItem(title: "关闭", style: .Plain, target: self, action:  #selector(actionClose))
+        navigationItem.leftBarButtonItem = UIBarButtonItem(title: "关闭", style: .Plain, target: self, action: #selector(actionClose))
     }
     
-    func  actionClose() {
+    func actionClose() {
         dismissViewControllerAnimated(true, completion: nil)
     }
     

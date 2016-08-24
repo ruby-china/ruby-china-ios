@@ -4,7 +4,6 @@ import SafariServices
 import WebKit
 import SideMenu
 
-
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
     var window: UIWindow?
@@ -41,7 +40,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         let deviceTokenString: String = (deviceToken.description as NSString)
             .stringByTrimmingCharactersInSet(characterSet)
-            .stringByReplacingOccurrencesOfString( " ", withString: "") as String
+            .stringByReplacingOccurrencesOfString(" ", withString: "") as String
         
         print("DeviceToken \(deviceTokenString)")
         
@@ -60,7 +59,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         NSUserDefaults.standardUserDefaults().synchronize()
     }
     
-    func application(application: UIApplication, didReceiveRemoteNotification userInfo: [NSObject : AnyObject]) {
+    func application(application: UIApplication, didReceiveRemoteNotification userInfo: [NSObject: AnyObject]) {
         becomeActivePage = "notifications"
         
         refreshUnreadNotificationCount()
@@ -78,7 +77,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     func refreshUnreadNotificationCount() {
         if OAuth2.shared.isLogined {
-            OAuth2.shared.refreshUnreadNotifications({ [weak self] (count) in
+            OAuth2.shared.refreshUnreadNotifications({ [weak self](count) in
                 self?.setBadge(count)
             })
         } else {
@@ -93,7 +92,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 }
 
 extension UINavigationBar {
-    var theme : Bool {
+    var theme: Bool {
         get { return false }
         set {
             self.barStyle = .Black
@@ -107,11 +106,11 @@ extension UINavigationBar {
         }
     }
     
-    var bottomBorder : Bool {
+    var bottomBorder: Bool {
         get { return false }
         set {
             // Border bottom line
-            let navBorder = UIView(frame: CGRectMake(0,self.frame.size.height-1, self.frame.size.width, 1))
+            let navBorder = UIView(frame: CGRectMake(0, self.frame.size.height - 1, self.frame.size.width, 1))
             navBorder.backgroundColor = NAVBAR_BORDER_COLOR
             self.addSubview(navBorder)
             
@@ -125,7 +124,7 @@ extension UINavigationBar {
 }
 
 extension UISegmentedControl {
-    var theme : Bool {
+    var theme: Bool {
         get { return false }
         set {
             self.tintColor = SEGMENT_BG_COLOR
@@ -134,7 +133,7 @@ extension UISegmentedControl {
 }
 
 extension UITabBar {
-    var theme : Bool {
+    var theme: Bool {
         get { return false }
         set {
             self.barStyle = .Black

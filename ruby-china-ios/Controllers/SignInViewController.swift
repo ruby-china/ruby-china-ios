@@ -26,7 +26,7 @@ class SignInViewController: UIViewController {
         
         let boxTop = CGFloat(120)
         let margin = CGFloat(20)
-
+        
         loginField = RBTextField.init(frame: CGRectMake(margin, boxTop, self.view.frame.width - margin * 2, 44))
         loginField.clearButtonMode = .WhileEditing
         loginField.autocorrectionType = .No

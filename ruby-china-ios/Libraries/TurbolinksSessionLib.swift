@@ -15,12 +15,12 @@ class TurbolinksSessionLib: NSObject {
     static let sharedInstance: TurbolinksSessionLib = {
         return TurbolinksSessionLib()
     }()
-
+    
     func visit(visitable: Visitable) {
         session.visit(visitable)
         visitable.visitableView.webView?.UIDelegate = self
     }
-
+    
     func visitableDidRequestRefresh(visitable: Visitable) {
         session.visitableDidRequestRefresh(visitable)
     }
@@ -45,7 +45,7 @@ class TurbolinksSessionLib: NSObject {
         }
         return router
     }()
-
+    
     private var application: UIApplication {
         return UIApplication.sharedApplication()
     }
@@ -59,26 +59,26 @@ class TurbolinksSessionLib: NSObject {
         configuration.processPool = WKProcessPool()
         return configuration
     }()
-
+    
     private lazy var session: Session = {
         let session = Session(webViewConfiguration: self.webViewConfiguration)
         session.delegate = self
         return session
     }()
-
+    
     private var topNavigationController: UINavigationController? {
         if let topWebViewController = session.topmostVisitable as? WebViewController {
             return topWebViewController.navigationController
         }
         return nil
     }
-
+    
     private func presentVisitableForSession(path: String, withAction action: Action = .Advance) {
-
+        
         guard let topWebViewController = session.topmostVisitable as? WebViewController else {
             return
         }
-
+        
         if (action == .Restore) {
             var urlString = ROOT_URL + path
             if let accessToken = OAuth2.shared.accessToken {
@@ -88,7 +88,7 @@ class TurbolinksSessionLib: NSObject {
             session.reload()
         } else {
             let visitable = WebViewController(path: path)
-
+            
             if action == .Advance {
                 topWebViewController.navigationController?.pushViewController(visitable, animated: true)
             } else if action == .Replace {
@@ -99,21 +99,21 @@ class TurbolinksSessionLib: NSObject {
             }
         }
     }
-
+    
     func actionToPath(path: String, withAction action: Action) {
         let matched = router.match(NSURL.init(string: path)!)
         var realAction = action
-
+        
         if ((matched == nil)) {
             if (session.webView.URL?.path == path) {
                 // 如果要访问的地址是相同的，直接 Restore，而不是创建新的页面
                 realAction = .Restore
             }
-
+            
             presentVisitableForSession(path, withAction: realAction)
         }
     }
-
+    
     func safariOpen(url: NSURL) {
         let safariViewController = SFSafariViewController(URL: url)
         topNavigationController?.presentViewController(safariViewController, animated: true, completion: nil)
@@ -122,44 +122,44 @@ class TurbolinksSessionLib: NSObject {
     private func presentLoginController() {
         let controller = SignInViewController()
         controller.delegate = self
-
+        
         let navController = ThemeNavigationController(rootViewController: controller)
         topNavigationController?.presentViewController(navController, animated: true, completion: nil)
     }
-
+    
     private func presentEditTopicController(path: String) {
         if (!OAuth2.shared.isLogined) {
             presentLoginController()
             return
         }
-
+        
         let controller = NewTopicViewController(path: path)
         controller.delegate = self
-
+        
         let navController = ThemeNavigationController(rootViewController: controller)
         topNavigationController?.presentViewController(navController, animated: true, completion: nil)
     }
-
+    
     private func presentProfileController(path: String) {
         let controller = ProfileViewController(path: path)
         controller.delegate = self
-
+        
         let navController = ThemeNavigationController(rootViewController: controller)
         topNavigationController?.presentViewController(navController, animated: true, completion: nil)
     }
-
+    
     private func presentEditReplyController(path: String) {
         if (!OAuth2.shared.isLogined) {
             presentLoginController()
             return
         }
-
+        
         let controller = EditReplyViewController(path: path)
         controller.delegate = self
         let navController = ThemeNavigationController(rootViewController: controller)
         topNavigationController?.presentViewController(navController, animated: true, completion: nil)
     }
-
+    
     private func presentEditAccountController(path: String) {
         let controller = EditAccountViewController(path: path)
         controller.delegate = self
@@ -179,11 +179,11 @@ extension TurbolinksSessionLib: SessionDelegate {
         
         actionToPath(path!, withAction: action)
     }
-
+    
     func session(session: Session, didFailRequestForVisitable visitable: Visitable, withError error: NSError) {
         NSLog("ERROR: %@", error)
         guard let viewController = visitable as? WebViewController, errorCode = ErrorCode(rawValue: error.code) else { return }
-
+        
         switch errorCode {
         case .HTTPFailure:
             let statusCode = error.userInfo["statusCode"] as! Int
@@ -200,15 +200,15 @@ extension TurbolinksSessionLib: SessionDelegate {
             viewController.presentError(.NetworkError)
         }
     }
-
+    
     func sessionDidStartRequest(session: Session) {
         application.networkActivityIndicatorVisible = true
     }
-
+    
     func sessionDidFinishRequest(session: Session) {
         application.networkActivityIndicatorVisible = false
     }
-
+    
     func sessionDidLoadWebView(session: Session) {
         session.webView.navigationDelegate = self
     }
@@ -235,7 +235,6 @@ extension TurbolinksSessionLib: WKNavigationDelegate {
     }
 }
 
-
 extension TurbolinksSessionLib: SignInViewControllerDelegate {
     func signInViewControllerDidAuthenticate(sender: SignInViewController) {
         // 重新载入之前的页面
@@ -249,7 +248,7 @@ extension TurbolinksSessionLib: PopupWebViewControllerDelegate {
             session.reload()
             return
         }
-
+        
         if (controller.currentPath == "topics/new") {
             actionToPath(url!.path!, withAction: .Advance)
         } else {
@@ -292,7 +291,7 @@ extension TurbolinksSessionLib: WKUIDelegate {
         }))
         topNavigationController?.presentViewController(alert, animated: true, completion: nil)
     }
-
+    
     func webView(webView: WKWebView, runJavaScriptConfirmPanelWithMessage message: String, initiatedByFrame frame: WKFrameInfo, completionHandler: (Bool) -> Void) {
         let alert = UIAlertController(title: "Ruby China", message: message, preferredStyle: .Alert)
         alert.addAction(UIAlertAction(title: "确定", style: .Default, handler: { _ in
@@ -303,7 +302,7 @@ extension TurbolinksSessionLib: WKUIDelegate {
         }))
         topNavigationController?.presentViewController(alert, animated: true, completion: nil)
     }
-
+    
     func webView(webView: WKWebView, runJavaScriptTextInputPanelWithPrompt prompt: String, defaultText: String?, initiatedByFrame frame: WKFrameInfo, completionHandler: (String?) -> Void) {
         let alert = UIAlertController(title: prompt, message: defaultText, preferredStyle: .Alert)
         alert.addTextFieldWithConfigurationHandler { (textField: UITextField) -> Void in

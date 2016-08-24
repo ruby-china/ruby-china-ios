@@ -14,13 +14,13 @@ class APIRequest {
     
     static private var _shared = APIRequest()
     
-    static var shared : APIRequest {
+    static var shared: APIRequest {
         get {
             return _shared
         }
     }
     
-    private var headers: [String : String]?
+    private var headers: [String: String]?
     
     var accessToken: String? {
         didSet {
@@ -37,12 +37,11 @@ class APIRequest {
         }
     }
     
-    func post(path: String, parameters: [String : AnyObject]?, callback: APIRequestCallback) {
+    func post(path: String, parameters: [String: AnyObject]?, callback: APIRequestCallback) {
         return _request(.POST, path: path, parameters: parameters, callback: callback)
     }
     
-    
-    func get(path: String, parameters: [String : AnyObject]?, callback: APIRequestCallback) {
+    func get(path: String, parameters: [String: AnyObject]?, callback: APIRequestCallback) {
         return _request(.GET, path: path, parameters: parameters, callback: callback)
     }
 }

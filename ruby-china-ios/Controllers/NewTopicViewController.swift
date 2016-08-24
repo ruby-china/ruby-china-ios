@@ -8,8 +8,7 @@ class NewTopicViewController: PopupWebViewController {
         super.viewDidLoad()
         if currentPath == "/topics/new" {
             title = "创建新话题"
-        }
-        else {
+        } else {
             title = "修改话题"
         }
         

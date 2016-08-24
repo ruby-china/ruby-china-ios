@@ -25,12 +25,11 @@ class SideMenuViewController: UITableViewController {
     private let version = NSBundle.mainBundle().infoDictionary!["CFBundleShortVersionString"] as! String
     private let build = NSBundle.mainBundle().infoDictionary!["CFBundleVersion"] as! String
     
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         
         title = "Ruby China"
-    
+        
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(updateLoginState), name: USER_CHANGED, object: nil)
         updateLoginState()
         
@@ -47,7 +46,6 @@ class SideMenuViewController: UITableViewController {
         router.bind("/register") { (req) in
             
         }
-        
         
     }
     
@@ -116,7 +114,7 @@ class SideMenuViewController: UITableViewController {
             ]
             menuItemPaths = ["/\(user.login)", "/account/edit", "/notes", "/logout"]
             
-            downloadUserAvatar({ [weak self] (avatar) in
+            downloadUserAvatar({ [weak self](avatar) in
                 guard let `self` = self else {
                     return
                 }

@@ -14,7 +14,7 @@ class RootViewController: UITabBarController {
     private let kWikiTag = 1
     private let kFavoritesTag = 2
     private let kNotificationsTag = 99
-
+    
     private func setupSideMenu() {
         SideMenuManager.menuLeftNavigationController = UIStoryboard.init(name: "Main", bundle: nil).instantiateViewControllerWithIdentifier("sideMenuController") as? UISideMenuNavigationController
         SideMenuManager.menuFadeStatusBar = false

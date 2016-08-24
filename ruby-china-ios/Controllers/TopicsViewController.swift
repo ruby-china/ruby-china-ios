@@ -14,7 +14,7 @@ class TopicsViewController: WebViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        let filterSegment = UISegmentedControl(items: ["默认","精选", "最新", "招聘"])
+        let filterSegment = UISegmentedControl(items: ["默认", "精选", "最新", "招聘"])
         filterSegment.selectedSegmentIndex = 0
         filterSegment.addTarget(self, action: #selector(filterChangedAction), forControlEvents: .ValueChanged)
         
@@ -53,10 +53,10 @@ class TopicsViewController: WebViewController {
     }
     
     private func addObserver() {
-        NSNotificationCenter.defaultCenter().addObserverForName(UIApplicationDidBecomeActiveNotification, object: nil, queue: nil) { [weak self] (notification) in
+        NSNotificationCenter.defaultCenter().addObserverForName(UIApplicationDidBecomeActiveNotification, object: nil, queue: nil) { [weak self](notification) in
             self?.autoRefreshContent()
         }
-        NSNotificationCenter.defaultCenter().addObserverForName(UIApplicationWillResignActiveNotification, object: nil, queue: nil) { [weak self] (notification) in
+        NSNotificationCenter.defaultCenter().addObserverForName(UIApplicationWillResignActiveNotification, object: nil, queue: nil) { [weak self](notification) in
             self?.resetDisappearTime()
         }
     }

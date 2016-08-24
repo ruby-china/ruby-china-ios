@@ -26,7 +26,7 @@ class OAuth2 {
     
     static private let _shared = OAuth2()
     
-    static var shared : OAuth2 {
+    static var shared: OAuth2 {
         return _shared
     }
     

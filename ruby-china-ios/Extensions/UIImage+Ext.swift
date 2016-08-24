@@ -41,8 +41,8 @@ extension UIImage {
         
         UIGraphicsBeginImageContextWithOptions(rect.size, false, UIScreen.mainScreen().scale)
         CGContextAddPath(UIGraphicsGetCurrentContext(),
-                         UIBezierPath(roundedRect: rect, byRoundingCorners: UIRectCorner.AllCorners,
-                            cornerRadii: CGSize(width: radius, height: radius)).CGPath)
+            UIBezierPath(roundedRect: rect, byRoundingCorners: UIRectCorner.AllCorners,
+                cornerRadii: CGSize(width: radius, height: radius)).CGPath)
         CGContextClip(UIGraphicsGetCurrentContext())
         
         self.drawInRect(rect)

@@ -8,7 +8,7 @@
 import UIKit
 
 @IBDesignable
-class RBTextField : UITextField {
+class RBTextField: UITextField {
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
         
@@ -21,7 +21,7 @@ class RBTextField : UITextField {
         setupView()
     }
     
-    func setupView(){
+    func setupView() {
         
         self.borderStyle = UITextBorderStyle.None
         let border = CALayer()
