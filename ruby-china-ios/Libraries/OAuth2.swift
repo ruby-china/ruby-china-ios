@@ -37,21 +37,33 @@ class OAuth2 {
         accessToken = accessTokenStore.retrieveAccessToken()?.accessToken
         if (isLogined) {
             if let expiresAt = accessTokenStore.retrieveAccessToken()?.expiresAt where expiresAt < NSDate() {
-                // 授权过期，刷新AccessToken
-                heimdallr.authenticateRequest(NSURLRequest(URL: NSURL(string: "\(ROOT_URL)/api/v3/users/me.json")!), completion: { (result) in
-                    switch result {
-                    case .Success:
-                        self.accessToken = self.accessTokenStore.retrieveAccessToken()?.accessToken
-                        print("refresh accessToken", self.accessToken)
-                        self.reloadCurrentUser()
-                    case .Failure(let err):
-                        print("refresh accessToken failure", err)
-                    }
-                })
+                refreshAccessTokenErrorCount = 0
+                refreshAccessToken()
             } else {
                 reloadCurrentUser()
             }
         }
+    }
+    
+    private var refreshAccessTokenErrorCount = 0
+    /// 授权过期，刷新AccessToken
+    private func refreshAccessToken() {
+        heimdallr.authenticateRequest(NSURLRequest(URL: NSURL(string: "\(ROOT_URL)/api/v3/users/me.json")!), completion: { (result) in
+            switch result {
+            case .Success:
+                self.accessToken = self.accessTokenStore.retrieveAccessToken()?.accessToken
+                NSNotificationCenter.defaultCenter().postNotificationName(NOTICE_SIGNIN_SUCCESS, object: nil)
+                print("refresh accessToken", self.accessToken)
+                self.reloadCurrentUser()
+            case .Failure(let err):
+                print("refresh accessToken failure", err)
+                // 这里出错了再调用一次，是因为 ruby-china.org 的第一次 OAuth 认证老是拒绝连接，导致认证失败。
+                self.refreshAccessTokenErrorCount += 1
+                if self.refreshAccessTokenErrorCount < 2 {
+                    self.refreshAccessToken()
+                }
+            }
+        })
     }
     
     func login(username: String, password: String) {
