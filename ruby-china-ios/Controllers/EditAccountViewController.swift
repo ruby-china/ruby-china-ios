@@ -6,7 +6,6 @@ class EditAccountViewController: PopupWebViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        title = "个人设置"
         
         doneButton = UIBarButtonItem.init(title: "保存", style: .Plain, target: self, action: #selector(actionSubmit))
         navigationItem.rightBarButtonItem = doneButton

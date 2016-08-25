@@ -5,6 +5,7 @@ import Router
 class WebViewController: VisitableViewController {
     private(set) var currentPath = ""
     private lazy var router = Router()
+    private var pageTitle = ""
     
     convenience init(path: String) {
         self.init()
@@ -25,20 +26,56 @@ class WebViewController: VisitableViewController {
     
     private func initRouter() {
         self.navigationItem.rightBarButtonItem = nil
+        router.bind("/topics") { (req) in
+            self.pageTitle = "话题列表"
+        }
+        router.bind("/topics/node:id") { (req) in
+            self.pageTitle = "节点"
+        }
         router.bind("/topics/last") { (req) in
-            
+            self.pageTitle = "最新话题"
+        }
+        router.bind("/topics/popular") { (req) in
+            self.pageTitle = "话题精选"
+        }
+        router.bind("/jobs") { (req) in
+            self.pageTitle = "招聘"
+        }
+        router.bind("/account/edit") { (req) in
+            self.pageTitle = "个人设置"
+        }
+        router.bind("/notifications") { (req) in
+            self.pageTitle = "通知中心"
+        }
+        router.bind("/notes") { (req) in
+            self.pageTitle = "记事本"
+        }
+        router.bind("/notes/:id") { (req) in
+            self.pageTitle = "记事本"
         }
         router.bind("/topics/favorites") { (req) in
-            
+            self.pageTitle = "我的收藏"
+        }
+        router.bind("/topics/new") { (req) in
+            self.pageTitle = "创建新话题"
         }
         router.bind("/topics/:id") { (req) in
+            self.pageTitle = "阅读话题"
             self.addPopupMenuButton()
         }
+        router.bind("/topics/:id/edit") { (req) in
+            self.pageTitle = "编辑话题"
+        }
+        router.bind("/topics/:topic_id/replies/:id/edit") { (req) in
+            self.pageTitle = "修改回帖"
+        }
         
-        router.bind("/wiki/index") { (req) in
+        router.bind("/wiki") { (req) in
+            self.pageTitle = "Wiki"
         }
         
         router.bind("/wiki/:id") { (req) in
+            self.pageTitle = "阅读 Wiki"
             self.addPopupMenuButton()
         }
     }
@@ -62,15 +99,15 @@ class WebViewController: VisitableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .Plain, target: nil, action: nil)
         TurbolinksSessionLib.sharedInstance.visit(self)
         router.match(NSURL.init(string: self.currentPath)!)
+        navigationController?.topViewController?.title = pageTitle
     }
     
     override func visitableDidRender() {
-        // 不要显示 title
-        navigationController?.title = ""
+        router.match(NSURL.init(string: (self.visitableView?.webView?.URL?.path)!)!)
+        // 覆盖 visitableDidRender，避免设置 title
+        navigationController?.topViewController?.title = pageTitle
     }
     
     func showTopicContextMenu() {

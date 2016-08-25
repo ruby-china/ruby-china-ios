@@ -30,7 +30,7 @@ class RootViewController: UITabBarController {
     
     private func setupViewControllers() {
         let topicsController = TopicsViewController(path: "/topics")
-        topicsController.tabBarItem = UITabBarItem(title: "讨论", image: UIImage(named: "topic"), tag: kTopicsTag)
+        topicsController.tabBarItem = UITabBarItem(title: "话题", image: UIImage(named: "topic"), tag: kTopicsTag)
         
         let pagesController = WebViewController(path: "/wiki")
         pagesController.tabBarItem = UITabBarItem(title: "Wiki", image: UIImage(named: "wiki"), tag: kWikiTag)
@@ -68,7 +68,6 @@ class RootViewController: UITabBarController {
         super.viewDidLoad()
         
         navigationItem.leftBarButtonItem = createSideMenuBarButton(UIImage(named: "menu"))
-        navigationItem.title = ""
         delegate = self
         setupSideMenu()
         setupViewControllers()
