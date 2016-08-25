@@ -16,6 +16,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         UINavigationBar.appearance().theme = true
         UISegmentedControl.appearance().theme = true
         UITabBar.appearance().theme = true
+        
+//        UITabBarItem.appearance().setTitleTextAttributes([NSForegroundColorAttributeName: BLACK_COLOR], forState: .Normal)
+        UITabBarItem.appearance().setTitleTextAttributes([NSForegroundColorAttributeName: PRIMARY_COLOR], forState: .Selected)
     }
     
     private var becomeActivePage = String()
@@ -98,7 +101,6 @@ extension UINavigationBar {
             self.barStyle = .Black
             self.translucent = false
             self.tintColor = NAVBAR_TINT_COLOR
-            // #F44336
             self.barTintColor = NAVBAR_BG_COLOR
             
             self.backIndicatorImage = UIImage(named: "back")
@@ -139,12 +141,12 @@ extension UITabBar {
             self.barStyle = .Black
             self.translucent = false
             
-            self.tintColor = NAVBAR_BG_COLOR
+            self.tintColor = PRIMARY_COLOR
             self.barTintColor = TABBAR_BG_COLOR
             
             // Border top line
             let navBorder = UIView(frame: CGRectMake(0, 0, self.frame.size.width, 1))
-            navBorder.backgroundColor = UIColor(red: 0.95, green: 0.92, blue: 0.92, alpha: 1.0)
+            navBorder.backgroundColor = UIColor(red: 0.92, green: 0.88, blue: 0.88, alpha: 1.0)
             self.addSubview(navBorder)
         }
     }

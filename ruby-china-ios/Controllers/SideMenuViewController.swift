@@ -33,6 +33,8 @@ class SideMenuViewController: UITableViewController {
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(updateLoginState), name: USER_CHANGED, object: nil)
         updateLoginState()
         
+        tableView.backgroundColor = SIDEMENU_BG_COLOR
+        
         tableView.delegate = self
         tableView.dataSource = self
         
@@ -74,7 +76,7 @@ class SideMenuViewController: UITableViewController {
             cell.imageView?.tintColor = menuItemIconColors[indexPath.row]
         case 1:
             if indexPath.row == 0 {
-                cell.textLabel!.text = "Copyright"
+                cell.textLabel!.text = "版权声明"
                 cell.imageView?.image = UIImage(named: "copyright")!.imageWithRenderingMode(.AlwaysTemplate)
                 cell.imageView?.tintColor = UIColor(red: 246 / 255.0, green: 191 / 255.0, blue: 50 / 255.0, alpha: 1)
             } else {
