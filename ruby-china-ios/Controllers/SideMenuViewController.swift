@@ -116,11 +116,11 @@ class SideMenuViewController: UITableViewController {
             ]
             menuItemPaths = ["/\(user.login)", "/account/edit", "/notes", "/logout"]
             
-            downloadUserAvatar({ [weak self](avatar) in
+            downloadUserAvatar({ [weak self] (avatar) in
                 guard let `self` = self else {
                     return
                 }
-                let avatarImage = avatar.drawRectWithRoundedCorner(radius: 11, CGSizeMake(22, 22)).imageWithRenderingMode(UIImageRenderingMode.AlwaysOriginal)
+                let avatarImage = avatar.drawRectWithRoundedCorner(radius: 11, CGSizeMake(22, 22))
                 self.menuItemIcons[0] = avatarImage
                 self.tableView.reloadData()
             })
