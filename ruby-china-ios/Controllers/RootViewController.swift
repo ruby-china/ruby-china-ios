@@ -42,6 +42,10 @@ class RootViewController: UITabBarController {
         notificationsController.tabBarItem = UITabBarItem(title: "通知", image: UIImage(named: "notifications"), tag: kNotificationsTag)
         
         viewControllers = [topicsController, pagesController, favoritesController, notificationsController]
+        viewControllers?.forEach({ (viewController) in
+            let oldImage = viewController.tabBarItem.image
+            viewController.tabBarItem.image = oldImage?.imageWithColor(SEGMENT_BG_COLOR).imageWithRenderingMode(.AlwaysOriginal)
+        })
     }
     
     func displaySideMenu() {

@@ -17,7 +17,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         UISegmentedControl.appearance().theme = true
         UITabBar.appearance().theme = true
         
-//        UITabBarItem.appearance().setTitleTextAttributes([NSForegroundColorAttributeName: BLACK_COLOR], forState: .Normal)
+        UITabBarItem.appearance().setTitleTextAttributes([NSForegroundColorAttributeName: SEGMENT_BG_COLOR], forState: .Normal)
         UITabBarItem.appearance().setTitleTextAttributes([NSForegroundColorAttributeName: PRIMARY_COLOR], forState: .Selected)
     }
     

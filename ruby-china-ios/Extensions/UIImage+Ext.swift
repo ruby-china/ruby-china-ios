@@ -53,4 +53,25 @@ extension UIImage {
         return output
     }
     
+    /**
+     为当前图片用指定颜色填充后取得新的图片
+     
+     - parameter color: 填充色
+     
+     - returns: 新图片
+     */
+    func imageWithColor(color: UIColor) -> UIImage {
+        UIGraphicsBeginImageContextWithOptions(size, false, scale)
+        let context = UIGraphicsGetCurrentContext()
+        CGContextTranslateCTM(context, 0, size.height)
+        CGContextScaleCTM(context, 1.0, -1.0)
+        CGContextSetBlendMode(context, .Normal)
+        let rect = CGRectMake(0, 0, size.width, size.height)
+        CGContextClipToMask(context, rect, CGImage)
+        color.setFill()
+        CGContextFillRect(context, rect)
+        let newImage = UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsEndImageContext()
+        return newImage
+    }
 }
