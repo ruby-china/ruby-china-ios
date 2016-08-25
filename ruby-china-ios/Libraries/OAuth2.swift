@@ -50,9 +50,10 @@ class OAuth2 {
         heimdallr.authenticateRequest(NSURLRequest(URL: NSURL(string: "\(ROOT_URL)/api/v3/users/me.json")!), completion: { (result) in
             switch result {
             case .Success:
-                self.accessToken = self.accessTokenStore.retrieveAccessToken()?.accessToken
+                let newAccessToken = self.accessTokenStore.retrieveAccessToken()?.accessToken
+                print("refresh accessToken success", newAccessToken)
+                self.accessToken = newAccessToken
                 NSNotificationCenter.defaultCenter().postNotificationName(NOTICE_SIGNIN_SUCCESS, object: nil)
-                print("refresh accessToken", self.accessToken)
                 self.reloadCurrentUser()
                 success?()
             case .Failure(let err):

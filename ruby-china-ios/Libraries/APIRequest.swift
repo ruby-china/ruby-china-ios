@@ -20,9 +20,14 @@ class APIRequest {
     
     private var headers: [String: String]?
     
+    private var _accessToken:  String?
     var accessToken: String? {
-        didSet {
-            headers = accessToken == nil ? nil : ["Authorization": "Bearer \(accessToken!)"]
+        get {
+            return _accessToken
+        }
+        set {
+            _accessToken = newValue
+            headers = newValue == nil ? nil : ["Authorization": "Bearer \(newValue!)"]
         }
     }
     
