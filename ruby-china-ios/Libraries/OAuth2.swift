@@ -14,10 +14,7 @@ class OAuth2 {
     private let heimdallr: Heimdallr
     
     private(set) var accessToken: String? {
-        get {
-            tryToRrefreshToken()
-            return APIRequest.shared.accessToken
-        }
+        get { return APIRequest.shared.accessToken }
         set { APIRequest.shared.accessToken = newValue }
     }
     
@@ -37,45 +34,10 @@ class OAuth2 {
         accessTokenStore = OAuthAccessTokenKeychainStore(service: "org.ruby-china.turbolinks-app.oauth")
         heimdallr = Heimdallr(tokenURL: NSURL(string: "\(ROOT_URL)/oauth/token")!, credentials: OAuthClientCredentials(id: OAUTH_CLIENT_ID, secret: OAUTH_SECRET), accessTokenStore: accessTokenStore)
         
-        tryToRrefreshToken()
-        
         accessToken = accessTokenStore.retrieveAccessToken()?.accessToken
         if (isLogined) {
             reloadCurrentUser()
         }
-    }
-    
-    let lockRefreshToken = dispatch_queue_create("org.ruby-china.oauth2.lock-refresh-token", nil)
-    private func tryToRrefreshToken() {
-        dispatch_sync(lockRefreshToken) {
-            // 需要一个全局锁，确保只会有一个执行
-            if let expiresAt = self.accessTokenStore.retrieveAccessToken()?.expiresAt where expiresAt < NSDate() {
-                // 确保这个函数是同步执行
-                self.refreshAccessToken(success: nil, failure: nil)
-            }
-        }
-    }
-    
-    private var refreshAccessTokenErrorCount = 0
-    /// 授权过期，刷新AccessToken
-    func refreshAccessToken(success success: (() -> Void)?, failure: (() -> Void)?) {
-        heimdallr.authenticateRequest(NSURLRequest(URL: NSURL(string: "\(ROOT_URL)/api/v3/users/me.json")!), completion: { (result) in
-            switch result {
-            case .Success:
-                self.refreshAccessTokenErrorCount = 0
-                
-                let newAccessToken = self.accessTokenStore.retrieveAccessToken()?.accessToken
-                print("refresh accessToken success", newAccessToken)
-                self.accessToken = newAccessToken
-                NSNotificationCenter.defaultCenter().postNotificationName(NOTICE_SIGNIN_SUCCESS, object: nil)
-                self.reloadCurrentUser()
-                success?()
-            case .Failure(let err):
-                print("refresh accessToken failure", err)
-                self.logout()
-                failure?()
-            }
-        })
     }
     
     func login(username: String, password: String) {
