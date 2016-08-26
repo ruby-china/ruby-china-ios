@@ -17,7 +17,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         UISegmentedControl.appearance().theme = true
         UITabBar.appearance().theme = true
         
-        UITabBarItem.appearance().setTitleTextAttributes([NSForegroundColorAttributeName: SEGMENT_BG_COLOR], forState: .Normal)
+        UITabBarItem.appearance().setTitleTextAttributes([NSForegroundColorAttributeName: BLACK_COLOR], forState: .Normal)
         UITabBarItem.appearance().setTitleTextAttributes([NSForegroundColorAttributeName: PRIMARY_COLOR], forState: .Selected)
     }
     
@@ -146,7 +146,7 @@ extension UITabBar {
             
             // Border top line
             let navBorder = UIView(frame: CGRectMake(0, 0, self.frame.size.width, 1))
-            navBorder.backgroundColor = UIColor(red: 0.92, green: 0.88, blue: 0.88, alpha: 1.0)
+            navBorder.backgroundColor = UIColor(red:0.93, green:0.92, blue:0.91, alpha:1.0)
             self.addSubview(navBorder)
         }
     }
