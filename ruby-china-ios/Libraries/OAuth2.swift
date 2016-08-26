@@ -14,7 +14,10 @@ class OAuth2 {
     private let heimdallr: Heimdallr
     
     private(set) var accessToken: String? {
-        get { return APIRequest.shared.accessToken }
+        get {
+            tryToRrefreshToken()
+            return APIRequest.shared.accessToken
+        }
         set { APIRequest.shared.accessToken = newValue }
     }
     
@@ -34,12 +37,21 @@ class OAuth2 {
         accessTokenStore = OAuthAccessTokenKeychainStore(service: "org.ruby-china.turbolinks-app.oauth")
         heimdallr = Heimdallr(tokenURL: NSURL(string: "\(ROOT_URL)/oauth/token")!, credentials: OAuthClientCredentials(id: OAUTH_CLIENT_ID, secret: OAUTH_SECRET), accessTokenStore: accessTokenStore)
         
-        if let expiresAt = accessTokenStore.retrieveAccessToken()?.expiresAt where expiresAt < NSDate() {
-            refreshAccessToken(success: nil, failure: nil)
-        } else {
-            accessToken = accessTokenStore.retrieveAccessToken()?.accessToken
-            if (isLogined) {
-                reloadCurrentUser()
+        tryToRrefreshToken()
+        
+        accessToken = accessTokenStore.retrieveAccessToken()?.accessToken
+        if (isLogined) {
+            reloadCurrentUser()
+        }
+    }
+    
+    let lockRefreshToken = dispatch_queue_create("org.ruby-china.oauth2.lock-refresh-token", nil)
+    private func tryToRrefreshToken() {
+        dispatch_sync(lockRefreshToken) {
+            // 需要一个全局锁，确保只会有一个执行
+            if let expiresAt = self.accessTokenStore.retrieveAccessToken()?.expiresAt where expiresAt < NSDate() {
+                // 确保这个函数是同步执行
+                self.refreshAccessToken(success: nil, failure: nil)
             }
         }
     }
@@ -60,15 +72,8 @@ class OAuth2 {
                 success?()
             case .Failure(let err):
                 print("refresh accessToken failure", err)
-                // 这里出错了再调用一次，是因为 ruby-china.org 的第一次 OAuth 认证老是拒绝连接，导致认证失败。
-                self.refreshAccessTokenErrorCount += 1
-                if self.refreshAccessTokenErrorCount < 2 {
-                    self.refreshAccessToken(success: success, failure: failure)
-                } else {
-                    self.refreshAccessTokenErrorCount = 0
-                    self.logout()
-                    failure?()
-                }
+                self.logout()
+                failure?()
             }
         })
     }
@@ -103,19 +108,6 @@ class OAuth2 {
     
     private func reloadCurrentUser() {
         APIRequest.shared.get("/api/v3/users/me.json", parameters: nil, callback: { (statusCode, result) in
-            if let statusCode = statusCode where statusCode == 401 {
-                if self.isLogined {
-                    self.refreshAccessToken(success: {
-                        self.reloadCurrentUser()
-                    }, failure: {
-                        self.logout()
-                    })
-                } else {
-                    self.logout()
-                }
-                return
-            }
-            
             if let result = result where !result.isEmpty {
                 let userJSON = result["user"]
                 self.currentUser = User(json: userJSON)
@@ -133,19 +125,6 @@ class OAuth2 {
     
     func refreshUnreadNotifications(callback: (Int -> Void)) {
         APIRequest.shared.get("/api/v3/notifications/unread_count", parameters: nil) { (statusCode, result) in
-            if let statusCode = statusCode where statusCode == 401 {
-                if self.isLogined {
-                    self.refreshAccessToken(success: {
-                        self.reloadCurrentUser()
-                    }, failure: {
-                        self.logout()
-                    })
-                } else {
-                    self.logout()
-                }
-                return
-            }
-            
             if let result = result where !result.isEmpty {
                 let unreadCount = result["count"].intValue
                 print("Unread notification count", unreadCount)

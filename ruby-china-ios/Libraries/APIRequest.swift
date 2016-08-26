@@ -32,11 +32,16 @@ class APIRequest {
     }
     
     private func _request(method: Alamofire.Method, path: String, parameters: [String: AnyObject]?, callback: APIRequestCallback) {
-        print("headers", headers)
+        // print("headers", headers)
         Alamofire.request(method, "\(ROOT_URL)\(path)", parameters: parameters, encoding: .URL, headers: headers).responseJSON { response in
             print(method, path, response.response?.statusCode)
             let result = response.data == nil ? nil : JSON(data: response.data!)
-            callback(statusCode: response.response?.statusCode, result: result)
+            let statusCode = response.response?.statusCode
+            if (statusCode == 401) {
+                OAuth2.shared.logout()
+                return
+            }
+            callback(statusCode: statusCode, result: result)
         }
     }
     
