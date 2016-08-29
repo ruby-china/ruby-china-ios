@@ -103,5 +103,7 @@ class OAuth2 {
         currentUser = nil
         NSUserDefaults.standardUserDefaults().removeObjectForKey("loginUserJSON")
         NSUserDefaults.standardUserDefaults().synchronize()
+        
+        NSNotificationCenter.defaultCenter().postNotificationName(NOTICE_SIGNOUT, object: nil)
     }
 }

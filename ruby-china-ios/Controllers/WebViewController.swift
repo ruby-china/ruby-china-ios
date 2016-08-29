@@ -86,14 +86,14 @@ class WebViewController: VisitableViewController {
     }
     
     private func addObserver() {
-        NSNotificationCenter.defaultCenter().addObserverForName(NOTICE_SIGNIN_SUCCESS, object: nil, queue: nil) { [weak self](notification) in
-            guard let `self` = self else {
-                return
-            }
-            self.visitableURL = self.urlWithPath(self.currentPath)
-            if self.isViewLoaded() {
-                self.reloadVisitable()
-            }
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(reloadByLoginStatusChanged), name: NOTICE_SIGNIN_SUCCESS, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(reloadByLoginStatusChanged), name: NOTICE_SIGNOUT, object: nil)
+    }
+    
+    func reloadByLoginStatusChanged() {
+        visitableURL = urlWithPath(currentPath)
+        if isViewLoaded() {
+            reloadVisitable()
         }
     }
     
