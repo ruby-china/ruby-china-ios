@@ -52,4 +52,8 @@ class APIRequest {
     func get(path: String, parameters: [String: AnyObject]?, callback: APIRequestCallback) {
         return _request(.GET, path: path, parameters: parameters, callback: callback)
     }
+    
+    func delete(path: String, parameters: [String: AnyObject]?, callback: APIRequestCallback) {
+        return _request(.DELETE, path: path, parameters: parameters, callback: callback)
+    }
 }
