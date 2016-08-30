@@ -7,8 +7,13 @@
 //
 
 class DeviseService {
+    static private let PATH = "/api/v3/devices.json"
+    static private func parameters(token: String) -> [String: AnyObject] {
+        return ["platform": "ios", "token": token]
+    }
+    
     static func create(token: String) {
-        APIRequest.shared.post("/api/v3/devices.json", parameters: ["platform": "ios", "token": token]) { (statusCode, result) in
+        APIRequest.shared.post(PATH, parameters: parameters(token)) { (statusCode, result) in
             if result!["ok"] == 1 {
                 print("Submit token successed.")
             }
@@ -16,7 +21,7 @@ class DeviseService {
     }
     
     static func destroy(token: String) {
-        APIRequest.shared.post("/api/v3/destroy.json", parameters: ["platform": "ios", "token": token]) { (statusCode, result) in
+        APIRequest.shared.delete(PATH, parameters: parameters(token)) { (statusCode, result) in
             if result!["ok"] == 1 {
                 print("Destroy token successed.")
             }
