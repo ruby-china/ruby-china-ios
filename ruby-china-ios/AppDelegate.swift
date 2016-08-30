@@ -33,6 +33,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         application.registerUserNotificationSettings(notificationSettings)
         application.registerForRemoteNotifications()
         
+        if let launchOptions = launchOptions, _ = launchOptions[UIApplicationLaunchOptionsRemoteNotificationKey] {
+            // 点击推送消息启动的应用
+            rootViewController.displayNotifications()
+        }
+        
         return true
     }
     
@@ -55,19 +60,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     func application(application: UIApplication, didReceiveRemoteNotification userInfo: [NSObject: AnyObject]) {
-        becomeActivePage = "notifications"
-        
-        refreshUnreadNotificationCount()
-    }
-    
-    func applicationDidBecomeActive(application: UIApplication) {
-        if (becomeActivePage == "notifications") {
-            becomeActivePage = ""
-            application.applicationIconBadgeNumber = 0
-            rootViewController.selectedIndex = (rootViewController.viewControllers?.count)!
+        if application.applicationState == .Inactive {
+            // 应用在后台时，点击系推送消息启动应用
+            rootViewController.displayNotifications()
         } else {
             refreshUnreadNotificationCount()
         }
+    }
+    
+    func applicationDidBecomeActive(application: UIApplication) {
+        refreshUnreadNotificationCount()
     }
     
     func refreshUnreadNotificationCount() {

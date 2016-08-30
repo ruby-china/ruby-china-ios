@@ -14,6 +14,8 @@ class RootViewController: UITabBarController {
     private let kWikiTag = 1
     private let kFavoritesTag = 2
     private let kNotificationsTag = 99
+    private var isDidAppear = false
+    private var needDisplayNotifications = false
     
     private func setupSideMenu() {
         SideMenuManager.menuLeftNavigationController = UIStoryboard.init(name: "Main", bundle: nil).instantiateViewControllerWithIdentifier("sideMenuController") as? UISideMenuNavigationController
@@ -83,11 +85,17 @@ class RootViewController: UITabBarController {
         resetNavigationItem(viewControllers![selectedIndex])
     }
     
-    override func viewWillAppear(animated: Bool) {
-        super.viewWillAppear(animated)
+    override func viewDidAppear(animated: Bool) {
+        super.viewDidAppear(animated)
+        isDidAppear = true
         
         if let app = UIApplication.sharedApplication().delegate as? AppDelegate {
             app.refreshUnreadNotificationCount()
+        }
+        
+        if needDisplayNotifications {
+            needDisplayNotifications = false
+            displayNotifications()
         }
     }
     
@@ -126,6 +134,31 @@ class RootViewController: UITabBarController {
         
         if let app = UIApplication.sharedApplication().delegate as? AppDelegate {
             app.refreshUnreadNotificationCount()
+        }
+    }
+    
+    func displayNotifications() {
+        if !isDidAppear {
+            needDisplayNotifications = true
+            return
+        }
+        
+        if presentedViewController != nil {
+            dismissViewControllerAnimated(false, completion: nil)
+        }
+        if let viewController = navigationController?.viewControllers.last where viewController != self {
+            navigationController?.popToViewController(self, animated: false)
+        }
+        
+        guard let notificationsController = viewControllers!.last as? NotificationsViewController else {
+            return
+        }
+        if selectedViewController == notificationsController {
+            return
+        }
+        if tabBarController(self, shouldSelectViewController: notificationsController) {
+            selectedViewController = notificationsController
+            resetNavigationItem(notificationsController)
         }
     }
 }
