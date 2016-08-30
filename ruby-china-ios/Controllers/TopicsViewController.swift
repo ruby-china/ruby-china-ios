@@ -20,7 +20,7 @@ class TopicsViewController: WebViewController {
         
         navigationItem.titleView = filterSegment
         
-        navigationItem.rightBarButtonItem = UIBarButtonItem.init(image: UIImage.init(named: "new"), style: .Plain, target: self, action: #selector(newTopicAction))
+        navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(named: "new"), style: .Plain, target: self, action: #selector(newTopicAction))
         
         addObserver()
     }

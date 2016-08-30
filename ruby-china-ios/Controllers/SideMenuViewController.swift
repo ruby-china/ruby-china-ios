@@ -137,7 +137,7 @@ class SideMenuViewController: UITableViewController {
     }
     
     func actionWithPath(path: String) {
-        let matchedRoute = router.match(NSURL.init(string: path)!)
+        let matchedRoute = router.match(NSURL(string: path)!)
         if (matchedRoute == nil) {
             dismissViewControllerAnimated(true, completion: {
                 NSNotificationCenter.defaultCenter().postNotificationName(NOTICE_MENU_CLICKED, object: self, userInfo: [NOTICE_MENU_CLICKED_PATH: path])

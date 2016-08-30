@@ -101,7 +101,7 @@ class TurbolinksSessionLib: NSObject {
     }
     
     func actionToPath(path: String, withAction action: Action) {
-        let matched = router.match(NSURL.init(string: path)!)
+        let matched = router.match(NSURL(string: path)!)
         var realAction = action
         
         if ((matched == nil)) {

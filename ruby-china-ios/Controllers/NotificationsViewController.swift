@@ -9,12 +9,10 @@
 import UIKit
 
 class NotificationsViewController: WebViewController {
-    var lastUnreadCount = 0
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        navigationItem.rightBarButtonItem = UIBarButtonItem.init(image: UIImage.init(named: "trash"), style: .Plain, target: self, action: #selector(cleanNotificationsAction))
+        navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(named: "trash"), style: .Plain, target: self, action: #selector(cleanNotificationsAction))
     }
     
     override func viewWillAppear(animated: Bool) {

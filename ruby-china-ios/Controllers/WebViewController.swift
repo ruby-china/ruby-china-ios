@@ -107,12 +107,12 @@ class WebViewController: VisitableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         TurbolinksSessionLib.sharedInstance.visit(self)
-        router.match(NSURL.init(string: self.currentPath)!)
+        router.match(NSURL(string: self.currentPath)!)
         navigationController?.topViewController?.title = pageTitle
     }
     
     override func visitableDidRender() {
-        router.match(NSURL.init(string: (self.visitableView?.webView?.URL?.path)!)!)
+        router.match(NSURL(string: (self.visitableView?.webView?.URL?.path)!)!)
         // 覆盖 visitableDidRender，避免设置 title
         navigationController?.topViewController?.title = pageTitle
     }
