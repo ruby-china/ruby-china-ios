@@ -5,7 +5,7 @@ class NewTopicViewController: PopupWebViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "提交", style: .Plain, target: self, action: #selector(actionDone))
+        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "submit".localized, style: .Plain, target: self, action: #selector(actionDone))
     }
     
     func actionDone() {

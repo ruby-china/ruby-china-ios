@@ -23,20 +23,20 @@ class SignInViewController: UIViewController {
         loginField.autocorrectionType = .No
         loginField.keyboardType = .EmailAddress
         loginField.autocapitalizationType = .None
-        loginField.placeholder = "用户名 / Email"
+        loginField.placeholder = "login name".localized
         loginField.delegate = self
         loginField.returnKeyType = .Next
         loginField.addTarget(self, action: #selector(textFieldDidChanged), forControlEvents: UIControlEvents.EditingChanged)
         
         passwordField = RBTextField(frame: CGRectMake(margin, loginField.frame.maxY + margin, view.frame.width - margin * 2, 44))
-        passwordField.placeholder = "密码"
+        passwordField.placeholder = "password".localized
         passwordField.secureTextEntry = true
         passwordField.delegate = self
         passwordField.returnKeyType = .Done
         passwordField.addTarget(self, action: #selector(textFieldDidChanged), forControlEvents: UIControlEvents.EditingChanged)
         
         loginButton = UIButton(frame: CGRectMake(margin, passwordField.frame.maxY + margin, view.frame.width - margin * 2, 44))
-        loginButton.setTitle("登录", forState: .Normal)
+        loginButton.setTitle("sign in".localized, forState: .Normal)
         loginButton.setBackgroundImage(UIImage.fromColor(NAVBAR_BG_COLOR), forState: .Normal)
         loginButton.setBackgroundImage(UIImage.fromColor(NAVBAR_BORDER_COLOR), forState: .Highlighted)
         loginButton.setTitleColor(UIColor.whiteColor(), forState: .Normal)
@@ -55,7 +55,7 @@ class SignInViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        title = "登录"
+        title = "sign in".localized
         navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .Cancel, target: self, action: #selector(actionClose))
         view.backgroundColor = UIColor.whiteColor()
         
@@ -145,7 +145,7 @@ extension SignInViewController: OAuth2Delegate {
         
         var errorMessage = ""
         if error.code == 3 {
-            errorMessage = "帐号或密码错误，请重试"
+            errorMessage = "login error message".localized
         } else {
             errorMessage = error.localizedDescription
             if let failureReason = error.localizedFailureReason {

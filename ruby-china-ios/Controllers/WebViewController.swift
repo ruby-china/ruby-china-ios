@@ -27,55 +27,55 @@ class WebViewController: VisitableViewController {
     private func initRouter() {
         self.navigationItem.rightBarButtonItem = nil
         router.bind("/topics") { (req) in
-            self.pageTitle = "话题列表"
+            self.pageTitle = "title topics".localized
         }
         router.bind("/topics/node:id") { (req) in
-            self.pageTitle = "节点"
+            self.pageTitle = "title node".localized
         }
         router.bind("/topics/last") { (req) in
-            self.pageTitle = "最新话题"
+            self.pageTitle = "title last topices".localized
         }
         router.bind("/topics/popular") { (req) in
-            self.pageTitle = "话题精选"
+            self.pageTitle = "title popular topices".localized
         }
         router.bind("/jobs") { (req) in
-            self.pageTitle = "招聘"
+            self.pageTitle = "title jobs".localized
         }
         router.bind("/account/edit") { (req) in
-            self.pageTitle = "个人设置"
+            self.pageTitle = "title edit account".localized
         }
         router.bind("/notifications") { (req) in
-            self.pageTitle = "通知中心"
+            self.pageTitle = "title notifications".localized
         }
         router.bind("/notes") { (req) in
-            self.pageTitle = "记事本"
+            self.pageTitle = "title notes".localized
         }
         router.bind("/notes/:id") { (req) in
-            self.pageTitle = "记事本"
+            self.pageTitle = "title note details".localized
         }
         router.bind("/topics/favorites") { (req) in
-            self.pageTitle = "我的收藏"
+            self.pageTitle = "title favorites".localized
         }
         router.bind("/topics/new") { (req) in
-            self.pageTitle = "创建新话题"
+            self.pageTitle = "title new topic".localized
         }
         router.bind("/topics/:id") { (req) in
-            self.pageTitle = "阅读话题"
+            self.pageTitle = "title topic details".localized
             self.addPopupMenuButton()
         }
         router.bind("/topics/:id/edit") { (req) in
-            self.pageTitle = "编辑话题"
+            self.pageTitle = "title edit topic".localized
         }
         router.bind("/topics/:topic_id/replies/:id/edit") { (req) in
-            self.pageTitle = "修改回帖"
+            self.pageTitle = "title edit replie".localized
         }
         
         router.bind("/wiki") { (req) in
-            self.pageTitle = "Wiki"
+            self.pageTitle = "title wiki".localized
         }
         
         router.bind("/wiki/:id") { (req) in
-            self.pageTitle = "阅读 Wiki"
+            self.pageTitle = "title wiki details".localized
             self.addPopupMenuButton()
         }
     }
@@ -122,13 +122,13 @@ class WebViewController: VisitableViewController {
             return
         }
         
-        let sheet = UIAlertController(title: "操作", message: "", preferredStyle: .ActionSheet)
-        let shareAction = UIAlertAction(title: "分享", style: .Default, handler: { action in
+        let sheet = UIAlertController(title: nil, message: nil, preferredStyle: .ActionSheet)
+        let shareAction = UIAlertAction(title: "share".localized, style: .Default, handler: { action in
             self.share(title, url: url)
         })
         sheet.addAction(shareAction)
         
-        let cancelAction = UIAlertAction(title: "取消", style: .Cancel, handler: nil)
+        let cancelAction = UIAlertAction(title: "cancel".localized, style: .Cancel, handler: nil)
         sheet.addAction(cancelAction)
         self.presentViewController(sheet, animated: true, completion: nil)
     }

@@ -76,7 +76,7 @@ class SideMenuViewController: UITableViewController {
             cell.imageView?.tintColor = menuItemIconColors[indexPath.row]
         case 1:
             if indexPath.row == 0 {
-                cell.textLabel!.text = "版权声明"
+                cell.textLabel!.text = "copyright".localized
                 cell.imageView?.image = UIImage(named: "copyright")!.imageWithRenderingMode(.AlwaysTemplate)
                 cell.imageView?.tintColor = UIColor(red: 246 / 255.0, green: 191 / 255.0, blue: 50 / 255.0, alpha: 1)
             } else {
@@ -107,7 +107,7 @@ class SideMenuViewController: UITableViewController {
     
     func updateLoginState() {
         if let user = OAuth2.shared.currentUser where OAuth2.shared.isLogined {
-            menuItems = [user.login, "个人资料设置", "记事本", "登出"]
+            menuItems = [user.login, "edit account".localized, "notes".localized, "sign out".localized]
             menuItemIcons = [
                 UIImage(named: "profile")!.imageWithRenderingMode(.AlwaysTemplate),
                 UIImage(named: "edit-user")!.imageWithRenderingMode(.AlwaysTemplate),
@@ -125,7 +125,7 @@ class SideMenuViewController: UITableViewController {
                 self.tableView.reloadData()
             })
         } else {
-            menuItems = ["登录", "注册新账号"]
+            menuItems = ["sign in".localized, "sing up".localized]
             menuItemIcons = [
                 UIImage(named: "login")!.imageWithRenderingMode(.AlwaysTemplate),
                 UIImage(named: "profile")!.imageWithRenderingMode(.AlwaysTemplate),

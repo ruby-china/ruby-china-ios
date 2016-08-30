@@ -32,16 +32,16 @@ class RootViewController: UITabBarController {
     
     private func setupViewControllers() {
         let topicsController = TopicsViewController(path: "/topics")
-        topicsController.tabBarItem = UITabBarItem(title: "话题", image: UIImage(named: "topic"), tag: kTopicsTag)
+        topicsController.tabBarItem = UITabBarItem(title: "topics".localized, image: UIImage(named: "topic"), tag: kTopicsTag)
         
         let pagesController = WebViewController(path: "/wiki")
-        pagesController.tabBarItem = UITabBarItem(title: "Wiki", image: UIImage(named: "wiki"), tag: kWikiTag)
+        pagesController.tabBarItem = UITabBarItem(title: "wiki".localized, image: UIImage(named: "wiki"), tag: kWikiTag)
         
         let favoritesController = WebViewController(path: "/topics/favorites")
-        favoritesController.tabBarItem = UITabBarItem(title: "收藏", image: UIImage(named: "favorites"), tag: kFavoritesTag)
+        favoritesController.tabBarItem = UITabBarItem(title: "favorites".localized, image: UIImage(named: "favorites"), tag: kFavoritesTag)
         
         let notificationsController = NotificationsViewController(path: "/notifications")
-        notificationsController.tabBarItem = UITabBarItem(title: "通知", image: UIImage(named: "notifications"), tag: kNotificationsTag)
+        notificationsController.tabBarItem = UITabBarItem(title: "notifications".localized, image: UIImage(named: "notifications"), tag: kNotificationsTag)
         
         viewControllers = [topicsController, pagesController, favoritesController, notificationsController]
         viewControllers?.forEach({ (viewController) in
