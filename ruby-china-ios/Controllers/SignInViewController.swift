@@ -27,6 +27,7 @@ class SignInViewController: UIViewController {
         loginField.delegate = self
         loginField.returnKeyType = .Next
         loginField.addTarget(self, action: #selector(textFieldDidChanged), forControlEvents: UIControlEvents.EditingChanged)
+        loginField.text = NSUserDefaults.standardUserDefaults().stringForKey("loginName")
         
         passwordField = RBTextField(frame: CGRectMake(margin, loginField.frame.maxY + margin, view.frame.width - margin * 2, 44))
         passwordField.placeholder = "password".localized
@@ -70,7 +71,11 @@ class SignInViewController: UIViewController {
     
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
-        loginField.becomeFirstResponder()
+        if let text = loginField.text where text != "" {
+            passwordField.becomeFirstResponder()
+        } else {
+            loginField.becomeFirstResponder()
+        }
     }
     
     override func viewWillDisappear(animated: Bool) {
@@ -132,6 +137,9 @@ extension SignInViewController: UITextFieldDelegate {
 extension SignInViewController: OAuth2Delegate {
     func oauth2DidLoginSuccessed(accessToken: String) {
         RBHUD.progressHidden()
+        NSUserDefaults.standardUserDefaults().setValue(loginField.text, forKey: "loginName")
+        NSUserDefaults.standardUserDefaults().synchronize()
+        
         print("Login successed", OAuth2.shared.accessToken)
         dismissViewControllerAnimated(false, completion: {
             self.delegate?.signInViewControllerDidAuthenticate(self)
