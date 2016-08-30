@@ -87,7 +87,14 @@ class WebViewController: VisitableViewController {
     
     private func addObserver() {
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(reloadByLoginStatusChanged), name: NOTICE_SIGNIN_SUCCESS, object: nil)
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(reloadByLoginStatusChanged), name: NOTICE_SIGNOUT, object: nil)
+        NSNotificationCenter.defaultCenter().addObserverForName(NOTICE_SIGNOUT, object: nil, queue: nil) { [weak self] (notification) in
+            guard let `self` = self else {
+                return
+            }
+            let js = "document.cookie = '_homeland_session=; Path=/; Expires=Thu, 01 Jan 1970 00:00:01 GMT;';";
+            self.visitableView.webView?.evaluateJavaScript(js, completionHandler: nil)
+            self.reloadByLoginStatusChanged()
+        }
     }
     
     func reloadByLoginStatusChanged() {
