@@ -9,6 +9,12 @@ protocol OAuth2Delegate: class {
 class OAuth2 {
     weak var delegate: OAuth2Delegate?
     
+    var deviceToken: String? {
+        didSet {
+            submitDeviceToken()
+        }
+    }
+    
     private let accessTokenStore: OAuthAccessTokenKeychainStore
     
     private let heimdallr: Heimdallr
@@ -46,10 +52,7 @@ class OAuth2 {
             case .Success:
                 self.accessToken = self.accessTokenStore.retrieveAccessToken()?.accessToken
                 print("accessToken", self.accessToken)
-                let deviceToken = NSUserDefaults.standardUserDefaults().valueForKey("deviceToken") as? String
-                if (deviceToken != nil) {
-                    DeviseService.create(deviceToken!)
-                }
+                self.submitDeviceToken()
                 
                 self.reloadCurrentUser()
                 print("Login successed.")
@@ -66,6 +69,12 @@ class OAuth2 {
     
     var isLogined: Bool {
         return accessToken != nil
+    }
+    
+    private func submitDeviceToken() {
+        if let deviceToken = deviceToken where isLogined {
+            DeviseService.create(deviceToken)
+        }
     }
     
     private func reloadCurrentUser() {
@@ -98,6 +107,10 @@ class OAuth2 {
     }
     
     func logout() {
+        if let deviceToken = deviceToken where isLogined {
+            DeviseService.destroy(deviceToken)
+        }
+        
         heimdallr.clearAccessToken()
         accessToken = nil
         currentUser = nil

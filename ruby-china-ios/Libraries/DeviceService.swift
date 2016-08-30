@@ -14,4 +14,12 @@ class DeviseService {
             }
         }
     }
+    
+    static func destroy(token: String) {
+        APIRequest.shared.post("/api/v3/destroy.json", parameters: ["platform": "ios", "token": token]) { (statusCode, result) in
+            if result!["ok"] == 1 {
+                print("Destroy token successed.")
+            }
+        }
+    }
 }
