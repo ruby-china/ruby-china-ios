@@ -109,7 +109,17 @@ class RootViewController: UITabBarController {
         if let viewController = selectedViewController where OAuth2.shared.currentUser == nil {
             switch viewController.tabBarItem.tag {
             case kFavoritesTag, kNotificationsTag:
-                selectedIndex = 0
+                let topicsController = viewControllers![0] as! TopicsViewController;
+                selectedViewController = topicsController
+                resetNavigationItem(topicsController)
+                
+                // 在通知界面退出登录切换到话题界面，这时界面没有显示 WebView，只显示了截图，不能操作界面。
+                // 虽然设置 selectedViewController 的代码已经走了遍 willAppear 和 didAppear，但 Turbolinks 没有激活话题界面的 WebView。
+                // 先用下面的代码解决一下。
+                dispatch_async(dispatch_get_main_queue(), {
+                    topicsController.viewWillAppear(false)
+                    topicsController.viewDidAppear(false)
+                })
             default: break
             }
         }
