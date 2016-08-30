@@ -19,19 +19,20 @@ class NotificationsViewController: WebViewController {
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
+        self.cleanBadge()
         reloadVisitable()
-        if let app = UIApplication.sharedApplication().delegate as? AppDelegate {
-            app.refreshUnreadNotificationCount()
-        }
     }
     
     func cleanNotificationsAction() {
         visitableView.webView?.evaluateJavaScript("$('#btn-remove-all').click();") { [weak self](obj, err) in
+            self?.cleanBadge()
             self?.visitableView.webView?.reload()
-            
-            if let app = UIApplication.sharedApplication().delegate as? AppDelegate {
-                app.refreshUnreadNotificationCount()
-            }
+        }
+    }
+    
+    func cleanBadge() {
+        if let app = UIApplication.sharedApplication().delegate as? AppDelegate {
+            app.setBadge(0)
         }
     }
 }

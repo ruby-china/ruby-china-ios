@@ -88,7 +88,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
     }
     
-    private func setBadge(count: Int) {
+    func setBadge(count: Int) {
         UIApplication.sharedApplication().applicationIconBadgeNumber = count > 0 ? count : 0
         self.rootViewController.tabBar.items?.last?.badgeValue = count > 0 ? "\(count)" : nil
     }

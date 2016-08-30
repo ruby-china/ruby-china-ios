@@ -1,3 +1,9 @@
+Copyright (c) 2011-2016 Ruby China
+
+Released under the MIT license:
+
+http://www.opensource.org/licenses/MIT
+
 ## Image Resources
 
 ### [Icons8](https://icons8.com/)

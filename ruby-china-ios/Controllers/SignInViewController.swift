@@ -90,7 +90,7 @@ class SignInViewController: UIViewController {
     }
     
     func actionClose() {
-        navigationController?.dismissViewControllerAnimated(true, completion: nil)
+        dismissViewControllerAnimated(true, completion: nil)
     }
     
     func textFieldDidChanged() {
@@ -133,7 +133,7 @@ extension SignInViewController: OAuth2Delegate {
     func oauth2DidLoginSuccessed(accessToken: String) {
         RBHUD.progressHidden()
         print("Login successed", OAuth2.shared.accessToken)
-        self.navigationController?.dismissViewControllerAnimated(false, completion: {
+        dismissViewControllerAnimated(false, completion: {
             self.delegate?.signInViewControllerDidAuthenticate(self)
             self.onDidAuthenticate?(sender: self)
             NSNotificationCenter.defaultCenter().postNotificationName(NOTICE_SIGNIN_SUCCESS, object: nil)

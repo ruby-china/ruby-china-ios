@@ -10,7 +10,7 @@ import UIKit
     let OAUTH_SECRET = "6d2c9cbef3e4baa56e1cf1d0db41d213105221aeff01281ac7009d21af810c58"
 #endif
 
-let COPYRIGHT_URL = "https://github.com/ruby-china/ruby-china-ios/blob/master/copyright.md"
+let COPYRIGHT_URL = "https://github.com/ruby-china/ruby-china-ios/blob/master/LICENSE.md"
 let PROJECT_URL = "https://github.com/ruby-china/ruby-china-ios"
 
 let USER_AGENT = "turbolinks-app, ruby-china, official"
