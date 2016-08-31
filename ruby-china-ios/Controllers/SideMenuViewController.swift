@@ -125,7 +125,7 @@ class SideMenuViewController: UITableViewController {
                 self.tableView.reloadData()
             })
         } else {
-            menuItems = ["sign in".localized, "sing up".localized]
+            menuItems = ["sign in".localized, "sign up".localized]
             menuItemIcons = [
                 UIImage(named: "login")!.imageWithRenderingMode(.AlwaysTemplate),
                 UIImage(named: "profile")!.imageWithRenderingMode(.AlwaysTemplate),
