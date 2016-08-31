@@ -33,7 +33,6 @@
 		961F70FA1D6AB0440079212C /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 961F70FC1D6AB0440079212C /* Localizable.strings */; };
 		9670F1901D4235D200128F8A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9670F18F1D4235D200128F8A /* AppDelegate.swift */; };
 		9670F1951D4235D200128F8A /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9670F1931D4235D200128F8A /* Main.storyboard */; };
-		9670F19A1D4235D200128F8A /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9670F1981D4235D200128F8A /* LaunchScreen.storyboard */; };
 		967684771D45D88300EC9BD9 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 967684761D45D88300EC9BD9 /* Constants.swift */; };
 		969E3CE21D448676004D7403 /* ErrorView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 969E3CE11D448676004D7403 /* ErrorView.xib */; };
 		96F9FD6B1D59A168004FD824 /* PopupWebViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96F9FD6A1D59A168004FD824 /* PopupWebViewController.swift */; };
@@ -72,7 +71,6 @@
 		9670F18C1D4235D200128F8A /* Ruby China.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Ruby China.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		9670F18F1D4235D200128F8A /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		9670F1941D4235D200128F8A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
-		9670F1991D4235D200128F8A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		9670F19B1D4235D200128F8A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		967684761D45D88300EC9BD9 /* Constants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		969E3CE11D448676004D7403 /* ErrorView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ErrorView.xib; sourceTree = "<group>"; };
@@ -165,7 +163,6 @@
 			children = (
 				961580A61D477A7600B32BDA /* Assets.xcassets */,
 				969E3CE11D448676004D7403 /* ErrorView.xib */,
-				9670F1981D4235D200128F8A /* LaunchScreen.storyboard */,
 				9670F1931D4235D200128F8A /* Main.storyboard */,
 				9670F19B1D4235D200128F8A /* Info.plist */,
 				961F70FC1D6AB0440079212C /* Localizable.strings */,
@@ -287,7 +284,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				961F70FA1D6AB0440079212C /* Localizable.strings in Resources */,
-				9670F19A1D4235D200128F8A /* LaunchScreen.storyboard in Resources */,
 				9670F1951D4235D200128F8A /* Main.storyboard in Resources */,
 				961580A71D477A7600B32BDA /* Assets.xcassets in Resources */,
 				969E3CE21D448676004D7403 /* ErrorView.xib in Resources */,
@@ -398,14 +394,6 @@
 			name = Main.storyboard;
 			sourceTree = "<group>";
 		};
-		9670F1981D4235D200128F8A /* LaunchScreen.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				9670F1991D4235D200128F8A /* Base */,
-			);
-			name = LaunchScreen.storyboard;
-			sourceTree = "<group>";
-		};
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
@@ -498,6 +486,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				INFOPLIST_FILE = "ruby-china-ios/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -514,6 +503,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				INFOPLIST_FILE = "ruby-china-ios/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
