@@ -58,6 +58,7 @@ class SignInViewController: UIViewController {
         
         title = "sign in".localized
         navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .Cancel, target: self, action: #selector(actionClose))
+        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "sign up".localized, style: .Plain, target: self, action: #selector(actionSignup))
         view.backgroundColor = UIColor.whiteColor()
         
         setupViews()
@@ -104,6 +105,11 @@ class SignInViewController: UIViewController {
         } else {
             loginButton.enabled = false
         }
+    }
+    
+    func actionSignup() {
+        let url = NSURL(string: "\(ROOT_URL)/account/sign_up")!
+        UIApplication.sharedApplication().openURL(url)
     }
 }
 
