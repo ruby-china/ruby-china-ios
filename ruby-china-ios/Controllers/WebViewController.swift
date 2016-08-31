@@ -124,7 +124,11 @@ class WebViewController: VisitableViewController {
         
         let sheet = UIAlertController(title: nil, message: nil, preferredStyle: .ActionSheet)
         let shareAction = UIAlertAction(title: "share".localized, style: .Default, handler: { action in
-            self.share(title, url: url)
+            let components = NSURLComponents(URL: url, resolvingAgainstBaseURL: false)
+            components?.query = nil
+            components?.fragment = nil
+            print(components?.URL)
+            self.share(title, url: (components?.URL)!)
         })
         sheet.addAction(shareAction)
         
