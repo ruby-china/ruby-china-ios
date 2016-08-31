@@ -45,10 +45,10 @@ class SideMenuViewController: UITableViewController {
         router.bind("/logout") { (req) in
             OAuth2.shared.logout()
         }
-        router.bind("/register") { (req) in
-            
+        router.bind("/account/sign_up") { (req) in
+            let url = NSURL(string: "\(ROOT_URL)/account/sign_up")!
+            UIApplication.sharedApplication().openURL(url)
         }
-        
     }
     
     override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
