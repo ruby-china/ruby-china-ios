@@ -33,10 +33,10 @@ class WebViewController: VisitableViewController {
             self.pageTitle = "title node".localized
         }
         router.bind("/topics/last") { (req) in
-            self.pageTitle = "title last topices".localized
+            self.pageTitle = "title last topics".localized
         }
         router.bind("/topics/popular") { (req) in
-            self.pageTitle = "title popular topices".localized
+            self.pageTitle = "title popular topics".localized
         }
         router.bind("/jobs") { (req) in
             self.pageTitle = "title jobs".localized
@@ -67,7 +67,7 @@ class WebViewController: VisitableViewController {
             self.pageTitle = "title edit topic".localized
         }
         router.bind("/topics/:topic_id/replies/:id/edit") { (req) in
-            self.pageTitle = "title edit replie".localized
+            self.pageTitle = "title edit reply".localized
         }
         
         router.bind("/wiki") { (req) in
