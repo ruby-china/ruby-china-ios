@@ -23,13 +23,13 @@
     {
       "size" : "60x60",
       "idiom" : "iphone",
-      "filename" : "icon@2x.png",
+      "filename" : "iTunesArtwork.png",
       "scale" : "2x"
     },
     {
       "size" : "60x60",
       "idiom" : "iphone",
-      "filename" : "icon@3x.png",
+      "filename" : "iTunesArtwork@2x.png",
       "scale" : "3x"
     }
   ],
