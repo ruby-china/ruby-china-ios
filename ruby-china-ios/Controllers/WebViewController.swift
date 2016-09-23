@@ -112,7 +112,9 @@ class WebViewController: VisitableViewController {
     }
     
     override func visitableDidRender() {
-        router.match(NSURL(string: (self.visitableView?.webView?.URL?.path)!)!)
+        if let urlPath = self.visitableView?.webView?.URL?.path, url = NSURL(string: urlPath) {
+            router.match(url)
+        }
         // 覆盖 visitableDidRender，避免设置 title
         navigationController?.topViewController?.title = pageTitle
     }
