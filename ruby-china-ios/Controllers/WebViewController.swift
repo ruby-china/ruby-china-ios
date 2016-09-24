@@ -140,7 +140,7 @@ class WebViewController: VisitableViewController {
     }
     
     lazy var errorView: ErrorView = {
-        let view = NSBundle.mainBundle().loadNibNamed("ErrorView", owner: self, options: nil).first as! ErrorView
+        let view = NSBundle.mainBundle().loadNibNamed("ErrorView", owner: self, options: nil)!.first as! ErrorView
         view.translatesAutoresizingMaskIntoConstraints = false
         view.retryButton.addTarget(self, action: #selector(retry(_:)), forControlEvents: .TouchUpInside)
         return view

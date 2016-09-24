@@ -46,7 +46,7 @@ class RootViewController: UITabBarController {
         viewControllers = [topicsController, pagesController, favoritesController, notificationsController]
         viewControllers?.forEach({ (viewController) in
             let oldImage = viewController.tabBarItem.image
-            viewController.tabBarItem.image = oldImage?.imageWithColor(BLACK_COLOR).imageWithRenderingMode(.AlwaysOriginal)
+            viewController.tabBarItem.image = oldImage?.imageWithColor(BLACK_COLOR)?.imageWithRenderingMode(.AlwaysOriginal)
         })
     }
     
