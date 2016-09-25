@@ -50,14 +50,20 @@ class OAuth2 {
         heimdallr.requestAccessToken(username: username, password: password) { result in
             switch result {
             case .Success:
-                self.accessToken = self.accessTokenStore.retrieveAccessToken()?.accessToken
-                print("accessToken", self.accessToken)
+                guard let accessToken = self.accessTokenStore.retrieveAccessToken()?.accessToken else {
+                    print("Login is successful but the access_Token is missing")
+                    let err = NSError(domain: "customize", code: -1, userInfo: [NSLocalizedDescriptionKey: "get accessToken failed".localized])
+                    dispatch_async(dispatch_get_main_queue(), {
+                        self.delegate?.oauth2DidLoginFailed(err)
+                    })
+                    return
+                }
+                print("Login successed. accessToken=\(accessToken)")
+                self.accessToken = accessToken
                 self.submitDeviceToken()
-                
                 self.reloadCurrentUser()
-                print("Login successed.")
                 dispatch_async(dispatch_get_main_queue(), {
-                    self.delegate?.oauth2DidLoginSuccessed(self.accessToken!)
+                    self.delegate?.oauth2DidLoginSuccessed(accessToken)
                 })
             case .Failure(let err):
                 dispatch_async(dispatch_get_main_queue(), {
