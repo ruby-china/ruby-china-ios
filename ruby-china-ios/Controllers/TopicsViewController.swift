@@ -14,6 +14,8 @@ class TopicsViewController: WebViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        UISegmentedControl.appearance().tintColor = UIColor.whiteColor()
+
         let filterSegment = UISegmentedControl(items: ["default".localized, "popular".localized, "latest".localized, "jobs".localized])
         filterSegment.selectedSegmentIndex = 0
         filterSegment.addTarget(self, action: #selector(filterChangedAction), forControlEvents: .ValueChanged)
