@@ -154,7 +154,9 @@ class SideMenuViewController: UITableViewController {
                 return
             }
             if let data = data {
-                onComplate(avatar: UIImage(data: data)!)
+                if let avatar = UIImage(data: data) {
+                    onComplate(avatar: avatar)
+                }
             }
         }
         downloadTask.resume()
