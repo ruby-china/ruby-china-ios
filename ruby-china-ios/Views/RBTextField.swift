@@ -22,14 +22,11 @@ class RBTextField: UITextField {
     }
     
     func setupView() {
-        
         self.borderStyle = UITextBorderStyle.None
         let border = CALayer()
         let borderWidth: CGFloat = 1
-        border.borderColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0.15).CGColor
-        border.frame = CGRectMake(0, self.frame.size.height - borderWidth, self.frame.size.width, self.frame.size.height)
-        border.borderWidth = borderWidth
+        border.backgroundColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0.15).CGColor
+        border.frame = CGRectMake(0, self.frame.size.height - borderWidth, self.frame.size.width, borderWidth)
         self.layer.addSublayer(border)
-        
     }
 }

@@ -155,7 +155,7 @@ extension SignInViewController: OAuth2Delegate {
     }
     
     func oauth2DidLoginFailed(error: NSError) {
-        print("Login failed", error.localizedFailureReason)
+        print("Login failed", error)
         
         var errorMessage = ""
         if error.code == 3 {

@@ -36,3 +36,4 @@
 "share" = "Share";
 "cancel" = "Cancel";
 "close" = "Close";
+"get accessToken failed" = "Get accessToken failed, Please try again!";

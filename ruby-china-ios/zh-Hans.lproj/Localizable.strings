@@ -36,3 +36,4 @@
 "share" = "分享";
 "cancel" = "取消";
 "close" = "关闭";
+"get accessToken failed" = "获取 accessToken 失败，请重试！";

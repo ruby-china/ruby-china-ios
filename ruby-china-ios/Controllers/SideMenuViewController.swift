@@ -120,7 +120,9 @@ class SideMenuViewController: UITableViewController {
                 guard let `self` = self else {
                     return
                 }
-                let avatarImage = avatar.drawRectWithRoundedCorner(radius: 11, CGSizeMake(22, 22))
+                guard let avatarImage = avatar.drawRectWithRoundedCorner(radius: 11, CGSizeMake(22, 22)) else {
+                    return
+                }
                 self.menuItemIcons[0] = avatarImage
                 self.tableView.reloadData()
             })
