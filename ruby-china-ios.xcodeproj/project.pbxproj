@@ -68,6 +68,7 @@
 		27849C620AD961F60F073D43 /* Pods-ruby-china-ios.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ruby-china-ios.release.xcconfig"; path = "Pods/Target Support Files/Pods-ruby-china-ios/Pods-ruby-china-ios.release.xcconfig"; sourceTree = "<group>"; };
 		3D8873230E620CCF5BBCEE42 /* Pods_ruby_china_ios.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ruby_china_ios.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		961580A61D477A7600B32BDA /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		964D990A1DA9457100539868 /* Ruby China.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Ruby China.entitlements"; sourceTree = "<group>"; };
 		9670F18C1D4235D200128F8A /* Ruby China.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Ruby China.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		9670F18F1D4235D200128F8A /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		9670F1941D4235D200128F8A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -191,6 +192,7 @@
 		9670F18E1D4235D200128F8A /* ruby-china-ios */ = {
 			isa = PBXGroup;
 			children = (
+				964D990A1DA9457100539868 /* Ruby China.entitlements */,
 				967684761D45D88300EC9BD9 /* Constants.swift */,
 				9670F18F1D4235D200128F8A /* AppDelegate.swift */,
 				24742CE91D50FE2E00D16CA9 /* Models */,
@@ -250,6 +252,9 @@
 						DevelopmentTeam = A38T799N53;
 						LastSwiftMigration = 0800;
 						SystemCapabilities = {
+							com.apple.Keychain = {
+								enabled = 1;
+							};
 							com.apple.Push = {
 								enabled = 1;
 							};
@@ -487,6 +492,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CODE_SIGN_ENTITLEMENTS = "ruby-china-ios/Ruby China.entitlements";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				INFOPLIST_FILE = "ruby-china-ios/Info.plist";
@@ -505,6 +511,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CODE_SIGN_ENTITLEMENTS = "ruby-china-ios/Ruby China.entitlements";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				INFOPLIST_FILE = "ruby-china-ios/Info.plist";
