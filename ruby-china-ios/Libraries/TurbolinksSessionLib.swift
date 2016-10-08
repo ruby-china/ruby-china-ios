@@ -224,6 +224,15 @@ extension TurbolinksSessionLib: WKNavigationDelegate {
             return
         }
         
+        // kelei 2016-10-08
+        // 帖子中有 Youtube 视频时，会触发此方法。
+        // po navigationAction 返回 <WKNavigationAction: 0x7fd0f9422eb0; navigationType = -1; syntheticClickType = 0; request = <NSMutableURLRequest: 0x61800001e700> { URL: https://www.youtube.com/embed/xMFs9DTympQ }; sourceFrame = (null); targetFrame = <WKFrameInfo: 0x7fd0f9401030; isMainFrame = NO; request = (null)>>
+        // 所有这里判断一下 navigationType 值来修复进入帖子自动打开 Youtube 网页的问题
+        if navigationAction.navigationType.rawValue < 0 {
+            decisionHandler(.Allow)
+            return
+        }
+        
         if let url = navigationAction.request.URL {
             if let host = url.host where host != NSURL(string: ROOT_URL)!.host! {
                 // 外部网站, open in SafariView
