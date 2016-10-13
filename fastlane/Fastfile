@@ -6,7 +6,7 @@ lane :beta do
       clean: false,
       workspace: "ruby-china-ios.xcworkspace")
   changelog_from_git_commits
-  testflight(username: 'huacnlee@gmail.com')
+  testflight(username: 'huacnlee@gmail.com', skip_waiting_for_build_processing: true)
 end
 
 lane :appstore do
