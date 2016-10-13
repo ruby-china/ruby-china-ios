@@ -1,0 +1,5 @@
+git_url "git@github.com:huacnlee/ruby-china-ios-certs.git"
+type "appstore"
+app_identifier "org.ruby-china.app"
+username "huacnlee@gmail.com"
+team_id 'A38T799N53'

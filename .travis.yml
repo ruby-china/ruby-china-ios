@@ -1,0 +1,4 @@
+language: swift
+before_script:
+  - bundle
+script: bundle exec fastlane beta
