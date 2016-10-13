@@ -4,7 +4,7 @@ lane :beta do
   gym(scheme: "Ruby China",
       workspace: "ruby-china-ios.xcworkspace")
   changelog_from_git_commits
-  testflight(username: 'huacnlee@gmail.com', itc_team_id: '118076100')
+  testflight(username: 'huacnlee@gmail.com', itc_provider: '118076100')
 end
 
 lane :appstore do
