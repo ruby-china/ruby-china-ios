@@ -123,7 +123,7 @@ extension UISegmentedControl {
     var theme: Bool {
         get { return false }
         set {
-            self.tintColor = UIColor.whiteColor()
+            self.tintColor = NAVBAR_TINT_COLOR
         }
     }
 }
