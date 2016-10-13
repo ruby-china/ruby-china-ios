@@ -103,12 +103,13 @@ class TopicCell: UITableViewCell {
             make.centerY.equalTo(nodeButton)
         }
     }
-//     func
     
     private lazy var avatarImageView: UIImageView = {
         let view = UIImageView()
         view.contentMode = .ScaleAspectFill
         view.clipsToBounds = true
+        view.backgroundColor = UIColor(white: 0.1, alpha: 1)
+        view.layer.cornerRadius = kAvatarSize.width * 0.5
         return view
     }()
     private lazy var titleLabel: UILabel = {
