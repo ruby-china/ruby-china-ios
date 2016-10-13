@@ -7,31 +7,48 @@
 //
 
 import UIKit
+import DGElasticPullToRefresh
 
 class TopicsTableViewController: UITableViewController {
 
     private let kCellReuseIdentifier = "TOPIC_CELL"
     private var topicList: [Topic]? {
         didSet {
+            self.tableView.dg_stopLoading()
             self.tableView.reloadData()
         }
     }
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        
+    private lazy var filterSegment: UISegmentedControl = {
         let filterSegment = UISegmentedControl(items: ["default".localized, "popular".localized, "latest".localized, "jobs".localized])
         filterSegment.selectedSegmentIndex = 0
         filterSegment.addTarget(self, action: #selector(filterChangedAction), forControlEvents: .ValueChanged)
+        return filterSegment
+    }()
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
         navigationItem.titleView = filterSegment
         navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(named: "new"), style: .Plain, target: self, action: #selector(newTopicAction))
         
-        self.clearsSelectionOnViewWillAppear = true
+        clearsSelectionOnViewWillAppear = true
         
-        self.tableView.registerClass(TopicCell.self, forCellReuseIdentifier: kCellReuseIdentifier)
-        self.tableView.separatorColor = UIColor(white: 0.94, alpha: 1)
-        self.tableView.tableFooterView = UIView()
-        self.tableView.separatorInset = UIEdgeInsetsZero
+        tableView.registerClass(TopicCell.self, forCellReuseIdentifier: kCellReuseIdentifier)
+        tableView.separatorColor = UIColor(white: 0.94, alpha: 1)
+        tableView.tableFooterView = UIView()
+        tableView.separatorInset = UIEdgeInsetsZero
+        
+        let loadingView = DGElasticPullToRefreshLoadingViewCircle()
+        loadingView.tintColor = NAVBAR_TINT_COLOR
+        tableView.dg_addPullToRefreshWithActionHandler({ [weak self] () -> Void in
+            guard let `self` = self else {
+                return
+            }
+            self.filterChangedAction(self.filterSegment)
+        }, loadingView: loadingView)
+        tableView.dg_setPullToRefreshFillColor(NAVBAR_BG_COLOR)
+        tableView.dg_setPullToRefreshBackgroundColor(tableView.backgroundColor!)
         
         filterChangedAction(filterSegment)
     }
