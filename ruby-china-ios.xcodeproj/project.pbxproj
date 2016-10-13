@@ -8,6 +8,9 @@
 
 /* Begin PBXBuildFile section */
 		244667CB1D6349EF00F76B10 /* RBHUD.swift in Sources */ = {isa = PBXBuildFile; fileRef = 244667CA1D6349EF00F76B10 /* RBHUD.swift */; };
+		2463030E1DAE7BEF00EF26AB /* TopicCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2463030D1DAE7BEF00EF26AB /* TopicCell.swift */; };
+		24654AE21DAFCE3800BF912B /* TopicsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24654AE11DAFCE3800BF912B /* TopicsTableViewController.swift */; };
+		24654AE41DAFDA1600BF912B /* UIApplication+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24654AE31DAFDA1600BF912B /* UIApplication+Ext.swift */; };
 		24742CEF1D50FE2E00D16CA9 /* EditAccountViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24742CD91D50FE2E00D16CA9 /* EditAccountViewController.swift */; };
 		24742CF01D50FE2E00D16CA9 /* EditReplyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24742CDA1D50FE2E00D16CA9 /* EditReplyViewController.swift */; };
 		24742CF21D50FE2E00D16CA9 /* NewTopicViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24742CDC1D50FE2E00D16CA9 /* NewTopicViewController.swift */; };
@@ -45,6 +48,9 @@
 
 /* Begin PBXFileReference section */
 		244667CA1D6349EF00F76B10 /* RBHUD.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RBHUD.swift; sourceTree = "<group>"; };
+		2463030D1DAE7BEF00EF26AB /* TopicCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TopicCell.swift; sourceTree = "<group>"; };
+		24654AE11DAFCE3800BF912B /* TopicsTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TopicsTableViewController.swift; sourceTree = "<group>"; };
+		24654AE31DAFDA1600BF912B /* UIApplication+Ext.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIApplication+Ext.swift"; sourceTree = "<group>"; };
 		24742CD91D50FE2E00D16CA9 /* EditAccountViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditAccountViewController.swift; sourceTree = "<group>"; };
 		24742CDA1D50FE2E00D16CA9 /* EditReplyViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditReplyViewController.swift; sourceTree = "<group>"; };
 		24742CDC1D50FE2E00D16CA9 /* NewTopicViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewTopicViewController.swift; sourceTree = "<group>"; };
@@ -110,6 +116,7 @@
 				24742CE01D50FE2E00D16CA9 /* SideMenuViewController.swift */,
 				24742CE11D50FE2E00D16CA9 /* SignInViewController.swift */,
 				24742CE21D50FE2E00D16CA9 /* TopicsViewController.swift */,
+				24654AE11DAFCE3800BF912B /* TopicsTableViewController.swift */,
 				24742CE31D50FE2E00D16CA9 /* WebViewController.swift */,
 				96F9FD6A1D59A168004FD824 /* PopupWebViewController.swift */,
 				96F9FD6C1D59A814004FD824 /* ProfileViewController.swift */,
@@ -146,6 +153,7 @@
 				24742CED1D50FE2E00D16CA9 /* ErrorView.swift */,
 				24742CEE1D50FE2E00D16CA9 /* RBTextField.swift */,
 				244667CA1D6349EF00F76B10 /* RBHUD.swift */,
+				2463030D1DAE7BEF00EF26AB /* TopicCell.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -153,6 +161,7 @@
 		24758CE91D620FF000D8C743 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
+				24654AE31DAFDA1600BF912B /* UIApplication+Ext.swift */,
 				24758CEA1D620FFA00D8C743 /* UIImage+Ext.swift */,
 				249C0A7E1D75C1E600097458 /* String+Localize.swift */,
 				24B228F21DAA972500DEC44D /* String+Ext.swift */,
@@ -360,6 +369,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				24654AE41DAFDA1600BF912B /* UIApplication+Ext.swift in Sources */,
 				24758CEB1D620FFA00D8C743 /* UIImage+Ext.swift in Sources */,
 				24742CF71D50FE2E00D16CA9 /* SignInViewController.swift in Sources */,
 				24B228ED1DAA877600DEC44D /* TopicsService.swift in Sources */,
@@ -368,11 +378,13 @@
 				24742CF51D50FE2E00D16CA9 /* SideMenuNavigationController.swift in Sources */,
 				24742CF01D50FE2E00D16CA9 /* EditReplyViewController.swift in Sources */,
 				967684771D45D88300EC9BD9 /* Constants.swift in Sources */,
+				24654AE21DAFCE3800BF912B /* TopicsTableViewController.swift in Sources */,
 				96F9FD6B1D59A168004FD824 /* PopupWebViewController.swift in Sources */,
 				24742D011D50FE2E00D16CA9 /* RBTextField.swift in Sources */,
 				9670F1901D4235D200128F8A /* AppDelegate.swift in Sources */,
 				24742CFA1D50FE2E00D16CA9 /* APIRequest.swift in Sources */,
 				24742CF31D50FE2E00D16CA9 /* NotificationsViewController.swift in Sources */,
+				2463030E1DAE7BEF00EF26AB /* TopicCell.swift in Sources */,
 				24B228EF1DAA8B1600DEC44D /* Topic.swift in Sources */,
 				24742CFC1D50FE2E00D16CA9 /* OAuth2.swift in Sources */,
 				249C0A7F1D75C1E600097458 /* String+Localize.swift in Sources */,

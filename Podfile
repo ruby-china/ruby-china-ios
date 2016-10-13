@@ -5,7 +5,11 @@ target 'ruby-china-ios' do
   pod 'SwiftyJSON', '~> 2.0'
   pod 'Alamofire', '~> 3.0'
   pod 'Heimdallr', '~> 3.0'
-  pod 'Router'
-  pod 'PKHUD'
+  pod 'Router', '~> 1.0'
+  pod 'PKHUD', '~> 3.2'
+  pod 'Kingfisher', '~> 2.4'
+  pod 'DGElasticPullToRefresh', '1.0.3'
+  pod 'SnapKit', '~> 0.22'
+  
   pod 'YYKeyboardManager'
 end

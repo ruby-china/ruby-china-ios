@@ -74,12 +74,11 @@ class TurbolinksSessionLib: NSObject {
     }
     
     private func presentVisitableForSession(path: String, withAction action: Action = .Advance) {
-        
-        guard let topWebViewController = session.topmostVisitable as? WebViewController else {
-            return
-        }
-        
         if (action == .Restore) {
+            guard let topWebViewController = session.topmostVisitable as? WebViewController else {
+                return
+            }
+            
             var urlString = ROOT_URL + path
             if let accessToken = OAuth2.shared.accessToken {
                 urlString += "?access_token=" + accessToken
@@ -87,15 +86,19 @@ class TurbolinksSessionLib: NSObject {
             topWebViewController.visitableURL = NSURL(string: urlString)!
             session.reload()
         } else {
-            let visitable = WebViewController(path: path)
+            var navigationController = (session.topmostVisitable as? WebViewController)?.navigationController
+            if navigationController == nil {
+                navigationController = UIApplication.appNavigationController
+            }
             
+            let visitable = WebViewController(path: path)
             if action == .Advance {
-                topWebViewController.navigationController?.pushViewController(visitable, animated: true)
+                navigationController!.pushViewController(visitable, animated: true)
             } else if action == .Replace {
-                topWebViewController.navigationController?.popViewControllerAnimated(false)
-                topWebViewController.navigationController?.pushViewController(visitable, animated: false)
+                navigationController!.popViewControllerAnimated(false)
+                navigationController!.pushViewController(visitable, animated: false)
             } else {
-                topWebViewController.navigationController?.pushViewController(visitable, animated: false)
+                navigationController!.pushViewController(visitable, animated: false)
             }
         }
     }
@@ -104,7 +107,7 @@ class TurbolinksSessionLib: NSObject {
         let matched = router.match(NSURL(string: path)!)
         var realAction = action
         
-        if ((matched == nil)) {
+        if matched == nil {
             if (session.webView.URL?.path == path) {
                 // 如果要访问的地址是相同的，直接 Restore，而不是创建新的页面
                 realAction = .Restore

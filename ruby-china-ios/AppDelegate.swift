@@ -123,7 +123,7 @@ extension UISegmentedControl {
     var theme: Bool {
         get { return false }
         set {
-            self.tintColor = SEGMENT_BG_COLOR
+            self.tintColor = UIColor.whiteColor()
         }
     }
 }

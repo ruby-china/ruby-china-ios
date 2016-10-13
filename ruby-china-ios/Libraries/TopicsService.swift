@@ -8,25 +8,28 @@
 
 class TopicsService {
 
+    /// list接口排序类型
+    ///
+    /// - last_actived: 活跃的
+    /// - recent:       最近的
+    /// - no_reply:     无回复的
+    /// - popular:      受欢迎的
+    /// - excellent:    精华
     enum ListType: String {
-        /// 活跃的
         case last_actived
-        /// 最近的
         case recent
-        /// 无回复的
         case no_reply
-        /// 受欢迎的
         case popular
-        /// 精华
         case excellent
     }
     
     /// 获取帖子列表
     ///
-    /// - parameter type:    排序类型
-    /// - parameter node_id: 节点编号，传大于 0 时返回该节点的帖子
-    /// - parameter offset:  分页起始位置
-    /// - parameter limit:   分页大小，范围 1..150
+    /// - parameter type:     排序类型
+    /// - parameter node_id:  节点编号，传大于 0 时返回该节点的帖子
+    /// - parameter offset:   分页起始位置
+    /// - parameter limit:    分页大小，范围 1..150
+    /// - parameter callback: 完成时回调
     static func list(type: ListType = .last_actived, node_id: Int = 0, offset: Int = 0, limit: Int = 20, callback: (statusCode: Int?, result: [Topic]?) -> ()) {
         
         var parameters = [String: AnyObject]()
