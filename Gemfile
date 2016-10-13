@@ -4,4 +4,5 @@ else
   source 'https://gems.ruby-china.org'
 end
 
+gem 'cocoapods'
 gem 'fastlane'
