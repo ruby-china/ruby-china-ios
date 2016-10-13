@@ -60,7 +60,10 @@ class TopicCell: UITableViewCell {
     var data: Topic? {
         didSet {
             if let data = data {
-                avatarImageView.kf_setImageWithURL(data.user.avatarUrl)
+                avatarImageView.kf_setImageWithURL(data.user.avatarUrl, optionsInfo: [
+                    .BackgroundDecode,
+                    .Transition(ImageTransition.Fade(1))
+                ])
                 titleLabel.attributedText = TopicCell.titleAttributedText(data)
                 repliesCountLabel.text = data.repliesCount > 0 ? "\(data.repliesCount)" : nil
                 nodeButton.setTitle(data.nodeName, forState: .Normal)
@@ -108,7 +111,7 @@ class TopicCell: UITableViewCell {
         let view = UIImageView()
         view.contentMode = .ScaleAspectFill
         view.clipsToBounds = true
-        view.backgroundColor = UIColor(white: 0.1, alpha: 1)
+        view.backgroundColor = UIColor(white: 0.85, alpha: 1)
         view.layer.cornerRadius = kAvatarSize.width * 0.5
         return view
     }()
