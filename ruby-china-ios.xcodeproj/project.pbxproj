@@ -19,7 +19,6 @@
 		24742CF51D50FE2E00D16CA9 /* SideMenuNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24742CDF1D50FE2E00D16CA9 /* SideMenuNavigationController.swift */; };
 		24742CF61D50FE2E00D16CA9 /* SideMenuViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24742CE01D50FE2E00D16CA9 /* SideMenuViewController.swift */; };
 		24742CF71D50FE2E00D16CA9 /* SignInViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24742CE11D50FE2E00D16CA9 /* SignInViewController.swift */; };
-		24742CF81D50FE2E00D16CA9 /* TopicsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24742CE21D50FE2E00D16CA9 /* TopicsViewController.swift */; };
 		24742CF91D50FE2E00D16CA9 /* WebViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24742CE31D50FE2E00D16CA9 /* WebViewController.swift */; };
 		24742CFA1D50FE2E00D16CA9 /* APIRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24742CE51D50FE2E00D16CA9 /* APIRequest.swift */; };
 		24742CFB1D50FE2E00D16CA9 /* DeviceService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24742CE61D50FE2E00D16CA9 /* DeviceService.swift */; };
@@ -59,7 +58,6 @@
 		24742CDF1D50FE2E00D16CA9 /* SideMenuNavigationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SideMenuNavigationController.swift; sourceTree = "<group>"; };
 		24742CE01D50FE2E00D16CA9 /* SideMenuViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SideMenuViewController.swift; sourceTree = "<group>"; };
 		24742CE11D50FE2E00D16CA9 /* SignInViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignInViewController.swift; sourceTree = "<group>"; };
-		24742CE21D50FE2E00D16CA9 /* TopicsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TopicsViewController.swift; sourceTree = "<group>"; };
 		24742CE31D50FE2E00D16CA9 /* WebViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WebViewController.swift; sourceTree = "<group>"; };
 		24742CE51D50FE2E00D16CA9 /* APIRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = APIRequest.swift; sourceTree = "<group>"; };
 		24742CE61D50FE2E00D16CA9 /* DeviceService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DeviceService.swift; sourceTree = "<group>"; };
@@ -115,7 +113,6 @@
 				24742CDF1D50FE2E00D16CA9 /* SideMenuNavigationController.swift */,
 				24742CE01D50FE2E00D16CA9 /* SideMenuViewController.swift */,
 				24742CE11D50FE2E00D16CA9 /* SignInViewController.swift */,
-				24742CE21D50FE2E00D16CA9 /* TopicsViewController.swift */,
 				24654AE11DAFCE3800BF912B /* TopicsTableViewController.swift */,
 				24742CE31D50FE2E00D16CA9 /* WebViewController.swift */,
 				96F9FD6A1D59A168004FD824 /* PopupWebViewController.swift */,
@@ -374,7 +371,6 @@
 				24742CF71D50FE2E00D16CA9 /* SignInViewController.swift in Sources */,
 				24B228ED1DAA877600DEC44D /* TopicsService.swift in Sources */,
 				24742CEF1D50FE2E00D16CA9 /* EditAccountViewController.swift in Sources */,
-				24742CF81D50FE2E00D16CA9 /* TopicsViewController.swift in Sources */,
 				24742CF51D50FE2E00D16CA9 /* SideMenuNavigationController.swift in Sources */,
 				24742CF01D50FE2E00D16CA9 /* EditReplyViewController.swift in Sources */,
 				967684771D45D88300EC9BD9 /* Constants.swift in Sources */,
