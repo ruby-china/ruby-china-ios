@@ -33,7 +33,7 @@ extension UIApplication {
             return findBestViewController(vc)
         }
         // Unknown view controller type, return last child view controller
-        return viewController;
+        return viewController
     }
     
 }

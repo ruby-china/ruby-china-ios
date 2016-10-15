@@ -16,6 +16,6 @@ extension String {
     }
     
     func dateValueFromISO8601() -> NSDate? {
-        return self.dateValue("yyyy-MM-dd'T'HH:mm:ss.SSSZ");
+        return self.dateValue("yyyy-MM-dd'T'HH:mm:ss.SSSZ")
     }
 }
