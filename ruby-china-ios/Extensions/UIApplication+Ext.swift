@@ -36,8 +36,4 @@ extension UIApplication {
         return viewController;
     }
     
-    /// 获取应用主UINavigationController(hlios项目特有的)
-    static var appNavigationController: UINavigationController {
-        return UIApplication.sharedApplication().keyWindow!.rootViewController as! UINavigationController
-    }
 }

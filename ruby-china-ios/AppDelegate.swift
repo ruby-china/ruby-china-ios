@@ -145,3 +145,10 @@ extension UITabBar {
         }
     }
 }
+
+extension UIApplication {
+    /// 获取应用主UINavigationController
+    static var appNavigationController: UINavigationController {
+        return UIApplication.sharedApplication().keyWindow!.rootViewController as! UINavigationController
+    }
+}
