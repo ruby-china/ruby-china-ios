@@ -56,6 +56,21 @@ class TopicCell: UITableViewCell {
         }
     }
     
+    var onUserClick: ((data: Topic?) -> ())?
+    var onNodeClick: ((data: Topic?) -> ())?
+    
+    func userAction() {
+        if let action = onUserClick {
+            action(data: data)
+        }
+    }
+    
+    func nodeAction() {
+        if let action = onNodeClick {
+            action(data: data)
+        }
+    }
+    
     private func setupConstraints() {
         avatarImageView.snp_makeConstraints { (make) in
             make.left.top.equalToSuperview().inset(kContentPadding)
@@ -104,6 +119,8 @@ class TopicCell: UITableViewCell {
         view.clipsToBounds = true
         view.backgroundColor = UIColor(white: 0.85, alpha: 1)
         view.layer.cornerRadius = kAvatarSize.width * 0.5
+        view.userInteractionEnabled = true
+        view.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(userAction)))
         return view
     }()
     private lazy var titleLabel: UILabel = {
@@ -123,6 +140,7 @@ class TopicCell: UITableViewCell {
         let view = UIButton()
         view.titleLabel?.font = kTextFont
         view.setTitleColor(kButtonTitleColor, forState: .Normal)
+        view.addTarget(self, action: #selector(nodeAction), forControlEvents: .TouchUpInside)
         return view
     }()
     private lazy var separateLabel: UILabel = {
@@ -136,6 +154,7 @@ class TopicCell: UITableViewCell {
         let view = UIButton()
         view.titleLabel?.font = kTextFont
         view.setTitleColor(kButtonTitleColor, forState: .Normal)
+        view.addTarget(self, action: #selector(userAction), forControlEvents: .TouchUpInside)
         return view
     }()
     

@@ -72,6 +72,18 @@ class TopicsTableViewController: UITableViewController {
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier(kCellReuseIdentifier, forIndexPath: indexPath) as! TopicCell
         cell.data = topicList![indexPath.row]
+        cell.onUserClick = { (data) in
+            guard let topic = data else {
+                return
+            }
+            TurbolinksSessionLib.sharedInstance.actionToPath("/\(topic.user.login)", withAction: .Advance)
+        }
+        cell.onNodeClick = { (data) in
+            guard let topic = data else {
+                return
+            }
+            TurbolinksSessionLib.sharedInstance.actionToPath("/topics/node\(topic.nodeID)", withAction: .Advance)
+        }
         return cell
     }
 
