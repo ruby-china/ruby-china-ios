@@ -9,9 +9,11 @@
 import UIKit
 import SnapKit
 import Kingfisher
+import FontAwesome_swift
 
 private let kContentPadding = UIEdgeInsetsMake(10, 15, 10, 15)
-private let kTextFont = UIFont.systemFontOfSize(14)
+private let kTextSize: CGFloat = 14
+private let kTextFont = UIFont.systemFontOfSize(kTextSize)
 private let kAvatarSize = CGSize(width: 32, height: 32)
 private let kButtonTitleColor = UIColor(red: 171.0 / 255.0, green: 168.0 / 255.0, blue: 166.0 / 255.0, alpha: 1)
 
@@ -84,13 +86,14 @@ class TopicCell: UITableViewCell {
     }
     
     private func titleAttributedText(data: Topic) -> NSAttributedString {
-        let attributes: [String : AnyObject] = [NSFontAttributeName : kTextFont]
+        let attributes = [NSFontAttributeName : kTextFont]
         let attributedString = NSMutableAttributedString(string: data.title, attributes: attributes)
-        let attach = NSTextAttachment()
         if data.excellent {
-            attach.image = UIImage(named: "diamond");
-            attach.bounds = CGRect(x: 0, y: 0, width: 10, height: 10)
-            attributedString.appendAttributedString(NSAttributedString(attachment: attach))
+            let attributes = [NSFontAttributeName : UIFont.fontAwesomeOfSize(kTextSize),
+                              NSForegroundColorAttributeName : PRIMARY_COLOR]
+            let diamondString = " \(String.fontAwesomeIconWithName(.Diamond))"
+            let diamondAttributed = NSAttributedString(string: diamondString, attributes: attributes)
+            attributedString.appendAttributedString(diamondAttributed)
         }
         return attributedString
     }

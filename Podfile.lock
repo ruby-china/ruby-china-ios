@@ -1,6 +1,7 @@
 PODS:
   - Alamofire (3.5.1)
   - DGElasticPullToRefresh (1.0.3)
+  - FontAwesome.swift (0.9.0)
   - Heimdallr (3.5.0):
     - Heimdallr/Core (= 3.5.0)
   - Heimdallr/Core (3.5.0):
@@ -19,6 +20,7 @@ PODS:
 DEPENDENCIES:
   - Alamofire (~> 3.0)
   - DGElasticPullToRefresh (= 1.0.3)
+  - FontAwesome.swift (~> 0.9)
   - Heimdallr (~> 3.0)
   - Kingfisher (~> 2.4)
   - PKHUD (~> 3.2)
@@ -42,6 +44,7 @@ CHECKOUT OPTIONS:
 SPEC CHECKSUMS:
   Alamofire: 0dfba1184a543e2aa160f4e39cac4e8aba48d223
   DGElasticPullToRefresh: 040f39ae69840b3261d163fe6735c5901bf851e9
+  FontAwesome.swift: 8744c24147e925c61e68d313a2837c7298e2a43f
   Heimdallr: 5451a68028a6dc02f009fb6b73923d7f88b702c7
   Kingfisher: 7e5515bf6c4f2acad91f6400955d2257549cab7b
   PKHUD: 001c11518f125a273ddf026bcc64918423744ea2
@@ -54,6 +57,6 @@ SPEC CHECKSUMS:
   UITableView+FDTemplateLayoutCell: 234e1582bcc4e18461af91155123bb96538ed030
   YYKeyboardManager: ff53d2e80d1808567a7f004028bd200d9469a89f
 
-PODFILE CHECKSUM: 2f8123cff4a4c9c51499767ecc55f1f259b12785
+PODFILE CHECKSUM: cabce228bbf143a36d17c4c1d6ee6a4bf630b8df
 
 COCOAPODS: 1.1.0.rc.2

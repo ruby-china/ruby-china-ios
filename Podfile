@@ -10,6 +10,7 @@ target 'ruby-china-ios' do
   pod 'Kingfisher', '~> 2.4'
   pod 'DGElasticPullToRefresh', '1.0.3'
   pod 'SnapKit', '~> 0.22'
+  pod 'FontAwesome.swift', '~> 0.9'
   
   pod 'YYKeyboardManager'
   pod 'UITableView+FDTemplateLayoutCell'
