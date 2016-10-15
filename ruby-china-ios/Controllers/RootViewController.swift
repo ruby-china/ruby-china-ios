@@ -31,7 +31,7 @@ class RootViewController: UITabBarController {
     }
     
     private func setupViewControllers() {
-        let topicsController = TopicsTableViewController(style: UITableViewStyle.Plain)
+        let topicsController = RootTopicsViewController()
         topicsController.tabBarItem = UITabBarItem(title: "topics".localized, image: UIImage(named: "topic"), tag: kTopicsTag)
         
         let pagesController = WebViewController(path: "/wiki")
@@ -117,7 +117,7 @@ class RootViewController: UITabBarController {
         if let viewController = selectedViewController where OAuth2.shared.currentUser == nil {
             switch viewController.tabBarItem.tag {
             case kFavoritesTag, kNotificationsTag:
-                let topicsController = viewControllers![0] as! TopicsTableViewController;
+                let topicsController = viewControllers![0]
                 selectedViewController = topicsController
                 resetNavigationItem(topicsController)
             default: break

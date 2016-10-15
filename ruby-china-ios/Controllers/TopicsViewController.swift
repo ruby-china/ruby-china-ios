@@ -7,10 +7,10 @@
 //
 
 import UIKit
-import DGElasticPullToRefresh
+//import DGElasticPullToRefresh
 import UITableView_FDTemplateLayoutCell
 
-class TopicsTableViewController: UITableViewController {
+class TopicsViewController: UITableViewController {
 
     private let kCellReuseIdentifier = "TOPIC_CELL"
     
@@ -20,18 +20,8 @@ class TopicsTableViewController: UITableViewController {
     private var nodeID = 0
     private var topicList: [Topic]?
     
-    private lazy var filterSegment: UISegmentedControl = {
-        let filterSegment = UISegmentedControl(items: ["default".localized, "popular".localized, "latest".localized, "jobs".localized])
-        filterSegment.selectedSegmentIndex = 0
-        filterSegment.addTarget(self, action: #selector(filterChangedAction), forControlEvents: .ValueChanged)
-        return filterSegment
-    }()
-    
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        navigationItem.titleView = filterSegment
-        navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(named: "new"), style: .Plain, target: self, action: #selector(newTopicAction))
         
         clearsSelectionOnViewWillAppear = true
         
@@ -40,18 +30,13 @@ class TopicsTableViewController: UITableViewController {
         tableView.tableFooterView = UIView()
         tableView.separatorInset = UIEdgeInsetsZero
         
-        let loadingView = DGElasticPullToRefreshLoadingViewCircle()
-        loadingView.tintColor = NAVBAR_TINT_COLOR
-        tableView.dg_addPullToRefreshWithActionHandler({ [weak self] () -> Void in
-            guard let `self` = self else {
-                return
-            }
-            self.filterChangedAction(self.filterSegment)
-        }, loadingView: loadingView)
-        tableView.dg_setPullToRefreshFillColor(NAVBAR_BG_COLOR)
-        tableView.dg_setPullToRefreshBackgroundColor(tableView.backgroundColor!)
-        
-        filterChangedAction(filterSegment)
+//        let loadingView = DGElasticPullToRefreshLoadingViewCircle()
+//        loadingView.tintColor = NAVBAR_TINT_COLOR
+//        tableView.dg_addPullToRefreshWithActionHandler({ [weak self] () -> Void in
+//            self?.load(offset: 0)
+//        }, loadingView: loadingView)
+//        tableView.dg_setPullToRefreshFillColor(NAVBAR_BG_COLOR)
+//        tableView.dg_setPullToRefreshBackgroundColor(tableView.backgroundColor!)
     }
 
     // MARK: - Table view data source
@@ -98,28 +83,18 @@ class TopicsTableViewController: UITableViewController {
         }
     }
     
-    func filterChangedAction(sender: UISegmentedControl) {
-        nodeID = 0
-        switch sender.selectedSegmentIndex {
-        case 1:
-            listType = TopicsService.ListType.excellent
-        case 2:
-            listType = TopicsService.ListType.last_actived
-        case 3:
-            listType = TopicsService.ListType.last_actived
-            nodeID = 25
-        default:
-            listType = TopicsService.ListType.popular
-        }
-        load(offset: 0)
-    }
+}
+
+extension TopicsViewController {
     
-    func newTopicAction() {
-        TurbolinksSessionLib.sharedInstance.actionToPath("/topics/new", withAction: .Replace)
+    func load(listType listType: TopicsService.ListType, nodeID: Int, offset: Int) {
+        self.listType = listType
+        self.nodeID = nodeID
+        load(offset: offset)
     }
     
     private func load(offset offset: Int) {
-        if !hasNext { return}
+        if !hasNext && offset > 0 { return }
         if isLoading { return }
         isLoading = true
         
@@ -136,8 +111,7 @@ class TopicsTableViewController: UITableViewController {
                 self.topicList! += topics
             }
             self.tableView.reloadData()
-            self.tableView.dg_stopLoading()
+//            self.tableView.dg_stopLoading()
         })
     }
-    
 }
