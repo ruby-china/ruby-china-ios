@@ -57,11 +57,11 @@ class TopicsTableViewController: UITableViewController {
     // MARK: - Table view data source
 
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return self.topicList == nil ? 0 : self.topicList!.count
+        return topicList == nil ? 0 : topicList!.count
     }
     
     override func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
-        let data = self.topicList![indexPath.row]
+        let data = topicList![indexPath.row]
         return tableView.fd_heightForCellWithIdentifier(kCellReuseIdentifier, configuration: { (cell) in
             if let cell = cell as? TopicCell {
                 cell.data = data
@@ -71,12 +71,12 @@ class TopicsTableViewController: UITableViewController {
 
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier(kCellReuseIdentifier, forIndexPath: indexPath) as! TopicCell
-        cell.data = self.topicList![indexPath.row]
+        cell.data = topicList![indexPath.row]
         return cell
     }
 
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        let data = self.topicList![indexPath.row]
+        let data = topicList![indexPath.row]
         TurbolinksSessionLib.sharedInstance.actionToPath("/topics/\(data.id)", withAction: .Advance)
     }
     
