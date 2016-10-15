@@ -70,7 +70,7 @@ class TurbolinksSessionLib: NSObject {
         if let topWebViewController = session.topmostVisitable as? WebViewController {
             return topWebViewController.navigationController
         }
-        return nil
+        return UIApplication.appNavigationController
     }
     
     private func presentVisitableForSession(path: String, withAction action: Action = .Advance) {
