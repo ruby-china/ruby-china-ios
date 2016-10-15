@@ -18,12 +18,7 @@ class TopicsTableViewController: UITableViewController {
     private var hasNext = true
     private var listType = TopicsService.ListType.popular
     private var nodeID = 0
-    private var topicList: [Topic]? {
-        didSet {
-            self.tableView.dg_stopLoading()
-            self.tableView.reloadData()
-        }
-    }
+    private var topicList: [Topic]?
     
     private lazy var filterSegment: UISegmentedControl = {
         let filterSegment = UISegmentedControl(items: ["default".localized, "popular".localized, "latest".localized, "jobs".localized])
@@ -87,7 +82,7 @@ class TopicsTableViewController: UITableViewController {
     
     override func tableView(tableView: UITableView, willDisplayCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath) {
         if indexPath.row == topicList!.count - 1 {
-            load()
+            load(offset: topicList!.count)
         }
     }
     
@@ -104,20 +99,18 @@ class TopicsTableViewController: UITableViewController {
         default:
             listType = TopicsService.ListType.popular
         }
-        topicList = nil
-        load()
+        load(offset: 0)
     }
     
     func newTopicAction() {
         TurbolinksSessionLib.sharedInstance.actionToPath("/topics/new", withAction: .Replace)
     }
     
-    private func load() {
+    private func load(offset offset: Int) {
         if !hasNext { return}
         if isLoading { return }
         isLoading = true
         
-        let offset = topicList == nil ? 0 : topicList!.count
         let limit = 20
         TopicsService.list(listType, node_id: nodeID, offset: offset, limit: limit, callback: { [weak self] (statusCode, result) in
             guard let `self` = self else {
@@ -125,11 +118,13 @@ class TopicsTableViewController: UITableViewController {
             }
             self.isLoading = false
             self.hasNext = result == nil ? false : result!.count >= limit
-            if self.topicList == nil {
+            if self.topicList == nil || offset == 0 {
                 self.topicList = result
             } else if let topics = result {
                 self.topicList! += topics
             }
+            self.tableView.reloadData()
+            self.tableView.dg_stopLoading()
         })
     }
     
