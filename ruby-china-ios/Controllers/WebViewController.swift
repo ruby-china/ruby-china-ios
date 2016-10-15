@@ -26,57 +26,57 @@ class WebViewController: VisitableViewController {
     
     private func initRouter() {
         self.navigationItem.rightBarButtonItem = nil
-        router.bind("/topics") { (req) in
-            self.pageTitle = "title topics".localized
+        router.bind("/topics") { [weak self] (req) in
+            self?.pageTitle = "title topics".localized
         }
-        router.bind("/topics/node:id") { (req) in
-            self.pageTitle = "title node".localized
+        router.bind("/topics/node:id") { [weak self] (req) in
+            self?.pageTitle = "title node".localized
         }
-        router.bind("/topics/last") { (req) in
-            self.pageTitle = "title last topics".localized
+        router.bind("/topics/last") { [weak self] (req) in
+            self?.pageTitle = "title last topics".localized
         }
-        router.bind("/topics/popular") { (req) in
-            self.pageTitle = "title popular topics".localized
+        router.bind("/topics/popular") { [weak self] (req) in
+            self?.pageTitle = "title popular topics".localized
         }
-        router.bind("/jobs") { (req) in
-            self.pageTitle = "title jobs".localized
+        router.bind("/jobs") { [weak self] (req) in
+            self?.pageTitle = "title jobs".localized
         }
-        router.bind("/account/edit") { (req) in
-            self.pageTitle = "title edit account".localized
+        router.bind("/account/edit") { [weak self] (req) in
+            self?.pageTitle = "title edit account".localized
         }
-        router.bind("/notifications") { (req) in
-            self.pageTitle = "title notifications".localized
+        router.bind("/notifications") { [weak self] (req) in
+            self?.pageTitle = "title notifications".localized
         }
-        router.bind("/notes") { (req) in
-            self.pageTitle = "title notes".localized
+        router.bind("/notes") { [weak self] (req) in
+            self?.pageTitle = "title notes".localized
         }
-        router.bind("/notes/:id") { (req) in
-            self.pageTitle = "title note details".localized
+        router.bind("/notes/:id") { [weak self] (req) in
+            self?.pageTitle = "title note details".localized
         }
-        router.bind("/topics/favorites") { (req) in
-            self.pageTitle = "title favorites".localized
+        router.bind("/topics/favorites") { [weak self] (req) in
+            self?.pageTitle = "title favorites".localized
         }
-        router.bind("/topics/new") { (req) in
-            self.pageTitle = "title new topic".localized
+        router.bind("/topics/new") { [weak self] (req) in
+            self?.pageTitle = "title new topic".localized
         }
-        router.bind("/topics/:id") { (req) in
-            self.pageTitle = "title topic details".localized
-            self.addPopupMenuButton()
+        router.bind("/topics/:id") { [weak self] (req) in
+            self?.pageTitle = "title topic details".localized
+            self?.addPopupMenuButton()
         }
-        router.bind("/topics/:id/edit") { (req) in
-            self.pageTitle = "title edit topic".localized
+        router.bind("/topics/:id/edit") { [weak self] (req) in
+            self?.pageTitle = "title edit topic".localized
         }
-        router.bind("/topics/:topic_id/replies/:id/edit") { (req) in
-            self.pageTitle = "title edit reply".localized
-        }
-        
-        router.bind("/wiki") { (req) in
-            self.pageTitle = "title wiki".localized
+        router.bind("/topics/:topic_id/replies/:id/edit") { [weak self] (req) in
+            self?.pageTitle = "title edit reply".localized
         }
         
-        router.bind("/wiki/:id") { (req) in
-            self.pageTitle = "title wiki details".localized
-            self.addPopupMenuButton()
+        router.bind("/wiki") { [weak self] (req) in
+            self?.pageTitle = "title wiki".localized
+        }
+        
+        router.bind("/wiki/:id") { [weak self] (req) in
+            self?.pageTitle = "title wiki details".localized
+            self?.addPopupMenuButton()
         }
     }
     
@@ -125,12 +125,12 @@ class WebViewController: VisitableViewController {
         }
         
         let sheet = UIAlertController(title: nil, message: nil, preferredStyle: .ActionSheet)
-        let shareAction = UIAlertAction(title: "share".localized, style: .Default, handler: { action in
+        let shareAction = UIAlertAction(title: "share".localized, style: .Default, handler: { [weak self] action in
             let components = NSURLComponents(URL: url, resolvingAgainstBaseURL: false)
             components?.query = nil
             components?.fragment = nil
             print(components?.URL)
-            self.share(title, url: (components?.URL)!)
+            self?.share(title, url: (components?.URL)!)
         })
         sheet.addAction(shareAction)
         
