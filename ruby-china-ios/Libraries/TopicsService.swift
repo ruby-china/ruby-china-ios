@@ -41,16 +41,14 @@ class TopicsService {
         }
         
         APIRequest.shared.get("/api/v3/topics.json", parameters: parameters) { (statusCode, result) in
-            var topics: [Topic]? = nil
-            
             guard let _ = result, topicList = result!["topics"].array where topicList.count > 0 else {
-                callback(statusCode: statusCode, result: topics)
+                callback(statusCode: statusCode, result: nil)
                 return
             }
             
-            topics = [Topic]()
+            var topics = [Topic]()
             for topicJSON in topicList {
-                topics!.append(Topic(json: topicJSON))
+                topics.append(Topic(json: topicJSON))
             }
             
             callback(statusCode: statusCode, result: topics)
