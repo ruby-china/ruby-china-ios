@@ -9,6 +9,7 @@
 import UIKit
 
 class RootTopicsViewController: TopicsViewController {
+    private var disappearTime: NSDate?
     
     private lazy var filterSegment: UISegmentedControl = {
         let filterSegment = UISegmentedControl(items: ["default".localized, "popular".localized, "latest".localized, "jobs".localized])
@@ -23,8 +24,26 @@ class RootTopicsViewController: TopicsViewController {
         navigationItem.titleView = filterSegment
         navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(named: "new"), style: .Plain, target: self, action: #selector(newTopicAction))
         
+        addObserver()
+        
         filterChangedAction(filterSegment)
     }
+    
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+        checkRefreshContent()
+    }
+    
+    override func viewDidDisappear(animated: Bool) {
+        super.viewDidDisappear(animated)
+        resetDisappearTime()
+    }
+    
+}
+
+// MARK: - action methods
+
+extension RootTopicsViewController {
     
     func filterChangedAction(sender: UISegmentedControl) {
         var listType: TopicsService.ListType
@@ -47,4 +66,32 @@ class RootTopicsViewController: TopicsViewController {
         TurbolinksSessionLib.sharedInstance.actionToPath("/topics/new", withAction: .Replace)
     }
     
+}
+
+// MARK: - private methods
+
+extension RootTopicsViewController {
+    private func addObserver() {
+        NSNotificationCenter.defaultCenter().addObserverForName(UIApplicationDidBecomeActiveNotification, object: nil, queue: nil) { [weak self](notification) in
+            self?.checkRefreshContent()
+        }
+        NSNotificationCenter.defaultCenter().addObserverForName(UIApplicationWillResignActiveNotification, object: nil, queue: nil) { [weak self](notification) in
+            self?.resetDisappearTime()
+        }
+    }
+    
+    private func resetDisappearTime() {
+        disappearTime = NSDate()
+    }
+    
+    private func checkRefreshContent() {
+        guard let time = disappearTime else {
+            return
+        }
+        disappearTime = nil
+        
+        if -time.timeIntervalSinceNow > (60 * 60 * 2.0) {
+            filterChangedAction(filterSegment)
+        }
+    }
 }
