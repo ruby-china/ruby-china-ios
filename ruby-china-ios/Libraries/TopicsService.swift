@@ -10,7 +10,7 @@ class TopicsService {
 
     /// list接口排序类型
     ///
-    /// - last_actived: 活跃的
+    /// - last_actived: 最近回复
     /// - recent:       最近的
     /// - no_reply:     无回复的
     /// - popular:      受欢迎的

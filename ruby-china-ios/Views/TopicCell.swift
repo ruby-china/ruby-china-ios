@@ -13,34 +13,9 @@ import Kingfisher
 private let kContentPadding = UIEdgeInsetsMake(10, 15, 10, 15)
 private let kTextFont = UIFont.systemFontOfSize(14)
 private let kAvatarSize = CGSize(width: 32, height: 32)
-private let kTitleLeftMargin: CGFloat = 10
-private let kRepliesCountWidth: CGFloat = 30
 private let kButtonTitleColor = UIColor(red: 171.0 / 255.0, green: 168.0 / 255.0, blue: 166.0 / 255.0, alpha: 1)
 
 class TopicCell: UITableViewCell {
-    
-    static private func titleAttributedText(data: Topic) -> NSAttributedString {
-        let attributes: [String : AnyObject] = [NSFontAttributeName : kTextFont]
-        let attributedString = NSMutableAttributedString(string: data.title, attributes: attributes)
-        let attach = NSTextAttachment()
-        if data.excellent {
-            attach.image = UIImage(named: "diamond");
-            attach.bounds = CGRect(x: 0, y: 0, width: 10, height: 10)
-            attributedString.appendAttributedString(NSAttributedString(attachment: attach))
-        }
-        return attributedString
-    }
-    
-    static func cellHeight(data: Topic) -> CGFloat {
-        let titleWidth = UIScreen.mainScreen().bounds.size.width
-            - kContentPadding.left - kContentPadding.right
-            - kAvatarSize.width - kTitleLeftMargin - kRepliesCountWidth
-        let title = self.titleAttributedText(data)
-        let titleHeight = title.boundingRectWithSize(CGSize(width: titleWidth, height: CGFloat.max), options: .UsesLineFragmentOrigin, context: nil).height
-        
-        let ret = kContentPadding.top + titleHeight + kTextFont.lineHeight + kContentPadding.bottom
-        return ceil(ret)
-    }
     
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -64,7 +39,7 @@ class TopicCell: UITableViewCell {
                     .BackgroundDecode,
                     .Transition(ImageTransition.Fade(1))
                 ])
-                titleLabel.attributedText = TopicCell.titleAttributedText(data)
+                titleLabel.attributedText = titleAttributedText(data)
                 repliesCountLabel.text = data.repliesCount > 0 ? "\(data.repliesCount)" : nil
                 nodeButton.setTitle(data.nodeName, forState: .Normal)
                 let userName = data.user.name == nil || data.user.name!.characters.count <= 0 ? data.user.login : data.user.name
@@ -86,16 +61,17 @@ class TopicCell: UITableViewCell {
         }
         repliesCountLabel.snp_makeConstraints { (make) in
             make.top.right.equalToSuperview().inset(kContentPadding)
-            make.width.equalTo(kRepliesCountWidth)
+            make.width.equalTo(30)
         }
         titleLabel.snp_makeConstraints { (make) in
-            make.left.equalTo(avatarImageView.snp_right).offset(kTitleLeftMargin)
+            make.left.equalTo(avatarImageView.snp_right).offset(10)
             make.top.equalToSuperview().inset(kContentPadding)
             make.right.equalTo(repliesCountLabel.snp_left)
         }
         nodeButton.snp_makeConstraints { (make) in
             make.left.equalTo(titleLabel)
             make.top.equalTo(titleLabel.snp_bottom)
+            make.bottom.equalToSuperview()
         }
         separateLabel.snp_makeConstraints { (make) in
             make.left.equalTo(nodeButton.snp_right)
@@ -105,6 +81,18 @@ class TopicCell: UITableViewCell {
             make.left.equalTo(separateLabel.snp_right)
             make.centerY.equalTo(nodeButton)
         }
+    }
+    
+    private func titleAttributedText(data: Topic) -> NSAttributedString {
+        let attributes: [String : AnyObject] = [NSFontAttributeName : kTextFont]
+        let attributedString = NSMutableAttributedString(string: data.title, attributes: attributes)
+        let attach = NSTextAttachment()
+        if data.excellent {
+            attach.image = UIImage(named: "diamond");
+            attach.bounds = CGRect(x: 0, y: 0, width: 10, height: 10)
+            attributedString.appendAttributedString(NSAttributedString(attachment: attach))
+        }
+        return attributedString
     }
     
     private lazy var avatarImageView: UIImageView = {

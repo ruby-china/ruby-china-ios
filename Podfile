@@ -12,4 +12,5 @@ target 'ruby-china-ios' do
   pod 'SnapKit', '~> 0.22'
   
   pod 'YYKeyboardManager'
+  pod 'UITableView+FDTemplateLayoutCell'
 end
