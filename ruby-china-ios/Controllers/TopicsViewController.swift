@@ -30,6 +30,10 @@ class TopicsViewController: UITableViewController {
         tableView.tableFooterView = UIView()
         tableView.separatorInset = UIEdgeInsetsZero
         
+        if (nodeID > 0) {
+            loadNodeInfo()
+        }
+        
 //        let loadingView = DGElasticPullToRefreshLoadingViewCircle()
 //        loadingView.tintColor = NAVBAR_TINT_COLOR
 //        tableView.dg_addPullToRefreshWithActionHandler({ [weak self] () -> Void in
@@ -63,11 +67,17 @@ class TopicsViewController: UITableViewController {
             }
             TurbolinksSessionLib.sharedInstance.actionToPath("/\(topic.user.login)", withAction: .Advance)
         }
-        cell.onNodeClick = { (data) in
-            guard let topic = data else {
+        cell.onNodeClick = { [weak self] (data) in
+            guard let `self` = self, topic = data else {
                 return
             }
-            TurbolinksSessionLib.sharedInstance.actionToPath("/topics/node\(topic.nodeID)", withAction: .Advance)
+            
+            if (self.nodeID > 0) {
+                // 已经在节点帖子列表界面，再点击节点，则不再打开节点帖子界面，而直接进入帖子
+                TurbolinksSessionLib.sharedInstance.actionToPath("/topics/\(topic.id)", withAction: .Advance)
+            } else {
+                TurbolinksSessionLib.sharedInstance.actionToPath("/topics/node\(topic.nodeID)", withAction: .Advance)
+            }
         }
         return cell
     }
@@ -113,5 +123,11 @@ extension TopicsViewController {
             self.tableView.reloadData()
 //            self.tableView.dg_stopLoading()
         })
+    }
+    
+    private func loadNodeInfo() {
+        NodesService.info(nodeID) { [weak self] (statusCode, result) in
+            self?.title = result == nil ? "title node".localized : result!.name;
+        }
     }
 }

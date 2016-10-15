@@ -29,9 +29,6 @@ class WebViewController: VisitableViewController {
         router.bind("/topics") { [weak self] (req) in
             self?.pageTitle = "title topics".localized
         }
-        router.bind("/topics/node:id") { [weak self] (req) in
-            self?.pageTitle = "title node".localized
-        }
         router.bind("/topics/last") { [weak self] (req) in
             self?.pageTitle = "title last topics".localized
         }
