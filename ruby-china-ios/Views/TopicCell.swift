@@ -12,8 +12,10 @@ import Kingfisher
 import FontAwesome_swift
 
 private let kContentPadding = UIEdgeInsetsMake(10, 15, 10, 15)
-private let kTextSize: CGFloat = 14
+private let kTitleTextSize: CGFloat = 14
+private let kTextSize: CGFloat = 12
 private let kTextFont = UIFont.systemFontOfSize(kTextSize)
+private let kTitleTextFont = UIFont.systemFontOfSize(kTitleTextSize)
 private let kAvatarSize = CGSize(width: 32, height: 32)
 private let kButtonTitleColor = UIColor(red: 171.0 / 255.0, green: 168.0 / 255.0, blue: 166.0 / 255.0, alpha: 1)
 
@@ -44,8 +46,7 @@ class TopicCell: UITableViewCell {
                 titleLabel.attributedText = titleAttributedText(data)
                 repliesCountLabel.text = data.repliesCount > 0 ? "\(data.repliesCount)" : nil
                 nodeButton.setTitle(data.nodeName, forState: .Normal)
-                let userName = data.user.name == nil || data.user.name!.characters.count <= 0 ? data.user.login : data.user.name
-                userNameButton.setTitle(userName, forState: .Normal)
+                userNameButton.setTitle(data.user.login, forState: .Normal)
             } else {
                 avatarImageView.kf_setImageWithURL(nil)
                 titleLabel.attributedText = nil
@@ -101,10 +102,10 @@ class TopicCell: UITableViewCell {
     }
     
     private func titleAttributedText(data: Topic) -> NSAttributedString {
-        let attributes = [NSFontAttributeName : kTextFont]
+        let attributes = [NSFontAttributeName : kTitleTextFont]
         let attributedString = NSMutableAttributedString(string: data.title, attributes: attributes)
         if data.excellent {
-            let attributes = [NSFontAttributeName : UIFont.fontAwesomeOfSize(kTextSize),
+            let attributes = [NSFontAttributeName : UIFont.fontAwesomeOfSize(kTitleTextSize),
                               NSForegroundColorAttributeName : PRIMARY_COLOR]
             let diamondString = " \(String.fontAwesomeIconWithName(.Diamond))"
             let diamondAttributed = NSAttributedString(string: diamondString, attributes: attributes)
