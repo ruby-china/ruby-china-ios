@@ -113,7 +113,7 @@ class WebViewController: VisitableViewController {
             router.match(url)
         }
         // 覆盖 visitableDidRender，避免设置 title
-        navigationController?.topViewController?.title = pageTitle
+        navigationController?.topViewController?.title = ""
     }
     
     func showTopicContextMenu() {
