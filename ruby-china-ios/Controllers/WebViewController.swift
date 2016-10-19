@@ -191,19 +191,17 @@ class WebViewController: VisitableViewController {
 extension WebViewController {
     
     private func addTopicActionButton() {
-        var rightBarButtonItems = self.navigationItem.rightBarButtonItems ?? [UIBarButtonItem]()
-        
-        if OAuth2.shared.isLogined {
-            topicFavoriteButton = UIBarButtonItem(image: UIImage(named: "bookmark"), style: .Plain, target: self, action: #selector(self.topicFavoriteAction))
-            rightBarButtonItems.append(topicFavoriteButton!)
-            
-            topicFollowButton = UIBarButtonItem(image: UIImage(named: "invisible"), style: .Plain, target: self, action: #selector(self.topicFollowAction))
-            rightBarButtonItems.append(topicFollowButton!)
+        if !OAuth2.shared.isLogined {
+            return
         }
         
+        var rightBarButtonItems = self.navigationItem.rightBarButtonItems ?? [UIBarButtonItem]()
+        topicFavoriteButton = UIBarButtonItem(image: UIImage(named: "bookmark"), style: .Plain, target: self, action: #selector(self.topicFavoriteAction))
+        rightBarButtonItems.append(topicFavoriteButton!)
+        topicFollowButton = UIBarButtonItem(image: UIImage(named: "invisible"), style: .Plain, target: self, action: #selector(self.topicFollowAction))
+        rightBarButtonItems.append(topicFollowButton!)
         topicLikeButton = UIBarButtonItem(image: UIImage(named: "like"), style: .Plain, target: self, action: #selector(self.topicLikeAction))
         rightBarButtonItems.append(topicLikeButton!)
-        
         self.navigationItem.rightBarButtonItems = rightBarButtonItems
     }
     
@@ -220,9 +218,9 @@ extension WebViewController {
             guard let code = statusCode where code == 200 else {
                 return
             }
-            button.tag = button.tag == 0 ? 1 : 0;
-            button.image = UIImage(named: button.tag == 0 ? "bookmark-filled" : "bookmark")
             RBHUD.success((button.tag == 0 ? "favorited" : "cancelled").localized)
+            button.image = UIImage(named: button.tag == 0 ? "bookmark-filled" : "bookmark")
+            button.tag = button.tag == 0 ? 1 : 0;
         }
         
         if button.tag == 0 {
@@ -241,9 +239,9 @@ extension WebViewController {
             guard let code = statusCode where code == 200 else {
                 return
             }
-            button.tag = button.tag == 0 ? 1 : 0;
-            button.image = UIImage(named: button.tag == 0 ? "invisible-filled" : "invisible")
             RBHUD.success((button.tag == 0 ? "followed" : "cancelled").localized)
+            button.image = UIImage(named: button.tag == 0 ? "invisible-filled" : "invisible")
+            button.tag = button.tag == 0 ? 1 : 0;
         }
         
         if button.tag == 0 {
@@ -254,7 +252,24 @@ extension WebViewController {
     }
     
     func topicLikeAction() {
+        guard let button = topicLikeButton, id = topicID else {
+            return
+        }
         
+        func callback(statusCode: Int?, count: Int?) {
+            guard let code = statusCode where code == 200 else {
+                return
+            }
+            RBHUD.success((button.tag == 0 ? "liked" : "cancelled").localized)
+            button.image = UIImage(named: button.tag == 0 ? "like-filled" : "like")
+            button.tag = button.tag == 0 ? 1 : 0;
+        }
+        
+        if button.tag == 0 {
+            LikesService.like(.topic, id: id, callback: callback)
+        } else {
+            LikesService.unlike(.topic, id: id, callback: callback)
+        }
     }
     
 }
