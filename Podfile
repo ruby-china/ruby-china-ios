@@ -8,10 +8,9 @@ target 'ruby-china-ios' do
   pod 'Router', '~> 1.0'
   pod 'PKHUD', '~> 3.2'
   pod 'Kingfisher', '~> 2.4'
-  pod 'DGElasticPullToRefresh', '1.0.3'
   pod 'SnapKit', '~> 0.22'
-  pod 'FontAwesome.swift', '~> 0.9'
-  
+  pod 'FontAwesome.swift', :git => 'https://github.com/thii/FontAwesome.swift.git', :branch => 'swift-2.3'
+
   pod 'YYKeyboardManager'
   pod 'UITableView+FDTemplateLayoutCell'
 end
