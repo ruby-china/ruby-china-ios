@@ -7,6 +7,11 @@ class WebViewController: VisitableViewController {
     private lazy var router = Router()
     private var pageTitle = ""
     
+    private var topicID: Int?;
+    private var topicFavoriteButton: UIBarButtonItem?
+    private var topicFollowButton: UIBarButtonItem?
+    private var topicLikeButton: UIBarButtonItem?
+    
     convenience init(path: String) {
         self.init()
         self.visitableURL = urlWithPath(path)
@@ -57,8 +62,12 @@ class WebViewController: VisitableViewController {
             self?.pageTitle = "title new topic".localized
         }
         router.bind("/topics/:id") { [weak self] (req) in
-            self?.pageTitle = "title topic details".localized
-            self?.addPopupMenuButton()
+            if let `self` = self, idString = req.param("id"), id = Int(idString) {
+                self.topicID = id
+                self.addMoreButton()
+                self.addTopicActionButton()
+                self.loadTopicActionButtonStatus()
+            }
         }
         router.bind("/topics/:id/edit") { [weak self] (req) in
             self?.pageTitle = "title edit topic".localized
@@ -73,13 +82,15 @@ class WebViewController: VisitableViewController {
         
         router.bind("/wiki/:id") { [weak self] (req) in
             self?.pageTitle = "title wiki details".localized
-            self?.addPopupMenuButton()
+            self?.addMoreButton()
         }
     }
     
-    private func addPopupMenuButton() {
+    private func addMoreButton() {
+        var rightBarButtonItems = self.navigationItem.rightBarButtonItems ?? [UIBarButtonItem]()
         let menuButton = UIBarButtonItem(image: UIImage(named: "dropdown"), style: .Plain, target: self, action: #selector(self.showTopicContextMenu))
-        self.navigationItem.rightBarButtonItem = menuButton
+        rightBarButtonItems.append(menuButton)
+        self.navigationItem.rightBarButtonItems = rightBarButtonItems
     }
     
     private func addObserver() {
@@ -105,31 +116,40 @@ class WebViewController: VisitableViewController {
         super.viewDidLoad()
         TurbolinksSessionLib.sharedInstance.visit(self)
         router.match(NSURL(string: self.currentPath)!)
-        navigationController?.topViewController?.title = pageTitle
+        navigationItem.title = pageTitle
     }
     
     override func visitableDidRender() {
-        if let urlPath = self.visitableView?.webView?.URL?.path, url = NSURL(string: urlPath) {
-            router.match(url)
-        }
         // 覆盖 visitableDidRender，避免设置 title
-        navigationController?.topViewController?.title = ""
+        navigationItem.title = pageTitle
     }
     
     func showTopicContextMenu() {
-        guard let webView = self.visitableView.webView, title = webView.title, url = webView.URL else {
-            return
-        }
-        
         let sheet = UIAlertController(title: nil, message: nil, preferredStyle: .ActionSheet)
         let shareAction = UIAlertAction(title: "share".localized, style: .Default, handler: { [weak self] action in
-            let components = NSURLComponents(URL: url, resolvingAgainstBaseURL: false)
-            components?.query = nil
-            components?.fragment = nil
-            print(components?.URL)
-            self?.share(title, url: (components?.URL)!)
+            guard let `self` = self,
+                webView = self.visitableView.webView,
+                title = webView.title,
+                url = webView.URL,
+                components = NSURLComponents(URL: url, resolvingAgainstBaseURL: false) else {
+                return
+            }
+            components.query = nil
+            components.fragment = nil
+            self.share(title, url: components.URL!)
         })
         sheet.addAction(shareAction)
+        let moveToFooterAction = UIAlertAction(title: "move to footer".localized, style: .Default, handler: { [weak self] action in
+            guard let `self` = self, scrollView = self.visitableView.webView?.scrollView else {
+                return
+            }
+            let offset = CGPoint(x: 0, y: scrollView.contentSize.height - scrollView.frame.height)
+            if offset.y < 0 {
+                return
+            }
+            scrollView.setContentOffset(offset, animated: true)
+        })
+        sheet.addAction(moveToFooterAction)
         
         let cancelAction = UIAlertAction(title: "cancel".localized, style: .Cancel, handler: nil)
         sheet.addAction(cancelAction)
@@ -164,4 +184,77 @@ class WebViewController: VisitableViewController {
         let activityViewController = UIActivityViewController(activityItems: objectsToShare, applicationActivities: nil)
         self.presentViewController(activityViewController, animated: true, completion: nil)
     }
+}
+
+// MARK: - 帖子相关功能
+
+extension WebViewController {
+    
+    private func addTopicActionButton() {
+        var rightBarButtonItems = self.navigationItem.rightBarButtonItems ?? [UIBarButtonItem]()
+        
+        if OAuth2.shared.isLogined {
+            topicFavoriteButton = UIBarButtonItem(image: UIImage(named: "bookmark"), style: .Plain, target: self, action: #selector(self.topicFavoriteAction))
+            rightBarButtonItems.append(topicFavoriteButton!)
+            
+            topicFollowButton = UIBarButtonItem(image: UIImage(named: "invisible"), style: .Plain, target: self, action: #selector(self.topicFollowAction))
+            rightBarButtonItems.append(topicFollowButton!)
+        }
+        
+        topicLikeButton = UIBarButtonItem(image: UIImage(named: "like"), style: .Plain, target: self, action: #selector(self.topicLikeAction))
+        rightBarButtonItems.append(topicLikeButton!)
+        
+        self.navigationItem.rightBarButtonItems = rightBarButtonItems
+    }
+    
+    private func loadTopicActionButtonStatus() {
+        
+    }
+    
+    func topicFavoriteAction() {
+        guard let button = topicFavoriteButton, id = topicID else {
+            return
+        }
+        
+        func callback(statusCode: Int?) {
+            guard let code = statusCode where code == 200 else {
+                return
+            }
+            button.tag = button.tag == 0 ? 1 : 0;
+            button.image = UIImage(named: button.tag == 0 ? "bookmark-filled" : "bookmark")
+            RBHUD.success((button.tag == 0 ? "favorited" : "cancelled").localized)
+        }
+        
+        if button.tag == 0 {
+            TopicsService.favorite(id, callback: callback)
+        } else {
+            TopicsService.unfavorite(id, callback: callback)
+        }
+    }
+    
+    func topicFollowAction() {
+        guard let button = topicFollowButton, id = topicID else {
+            return
+        }
+        
+        func callback(statusCode: Int?) {
+            guard let code = statusCode where code == 200 else {
+                return
+            }
+            button.tag = button.tag == 0 ? 1 : 0;
+            button.image = UIImage(named: button.tag == 0 ? "invisible-filled" : "invisible")
+            RBHUD.success((button.tag == 0 ? "followed" : "cancelled").localized)
+        }
+        
+        if button.tag == 0 {
+            TopicsService.follow(id, callback: callback)
+        } else {
+            TopicsService.unfollow(id, callback: callback)
+        }
+    }
+    
+    func topicLikeAction() {
+        
+    }
+    
 }

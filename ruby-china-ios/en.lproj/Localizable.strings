@@ -28,7 +28,6 @@
 "title note details" = "Note details";
 "title favorites" = "Bookmark";
 "title new topic" = "New topic";
-"title topic details" = "Topic details";
 "title edit topic" = "Edit topic";
 "title edit reply" = "Edit reply";
 "title wiki" = "Wiki";
@@ -37,3 +36,7 @@
 "cancel" = "Cancel";
 "close" = "Close";
 "get accessToken failed" = "Get accessToken failed, Please try again!";
+"move to footer" = "Move to footer";
+"favorited" = "Favorited";
+"followed" = "Followed";
+"cancelled" = "Cancelled";

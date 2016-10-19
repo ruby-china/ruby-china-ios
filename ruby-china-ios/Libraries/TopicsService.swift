@@ -55,4 +55,43 @@ class TopicsService {
         }
     }
     
+    /// 收藏帖子
+    ///
+    /// - parameter id:       帖子ID
+    /// - parameter callback: 完成时回调
+    static func favorite(id: Int, callback: (statusCode: Int?) -> ()) {
+        APIRequest.shared.post("/api/v3/topics/\(id)/favorite", parameters: nil) { (statusCode, result) in
+            callback(statusCode: statusCode)
+        }
+    }
+    
+    /// 取消收藏
+    ///
+    /// - parameter id:       帖子ID
+    /// - parameter callback: 完成时回调
+    static func unfavorite(id: Int, callback: (statusCode: Int?) -> ()) {
+        APIRequest.shared.post("/api/v3/topics/\(id)/unfavorite", parameters: nil) { (statusCode, result) in
+            callback(statusCode: statusCode)
+        }
+    }
+    
+    /// 关注帖子
+    ///
+    /// - parameter id:       帖子ID
+    /// - parameter callback: 完成时回调
+    static func follow(id: Int, callback: (statusCode: Int?) -> ()) {
+        APIRequest.shared.post("/api/v3/topics/\(id)/follow", parameters: nil) { (statusCode, result) in
+            callback(statusCode: statusCode)
+        }
+    }
+    
+    /// 取消关注
+    ///
+    /// - parameter id:       帖子ID
+    /// - parameter callback: 完成时回调
+    static func unfollow(id: Int, callback: (statusCode: Int?) -> ()) {
+        APIRequest.shared.post("/api/v3/topics/\(id)/unfollow", parameters: nil) { (statusCode, result) in
+            callback(statusCode: statusCode)
+        }
+    }
 }

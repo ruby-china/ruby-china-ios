@@ -21,6 +21,7 @@ class RootTopicsViewController: TopicsViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        navigationItem.title = "title topics".localized
         navigationItem.titleView = filterSegment
         navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(named: "new"), style: .Plain, target: self, action: #selector(newTopicAction))
         

@@ -28,7 +28,6 @@
 "title note details" = "记事本";
 "title favorites" = "我的收藏";
 "title new topic" = "创建新话题";
-"title topic details" = "阅读话题";
 "title edit topic" = "编辑话题";
 "title edit reply" = "修改回帖";
 "title wiki" = "Wiki";
@@ -37,3 +36,7 @@
 "cancel" = "取消";
 "close" = "关闭";
 "get accessToken failed" = "获取 accessToken 失败，请重试！";
+"move to footer" = "移到尾部";
+"favorited" = "已收藏";
+"followed" = "已关注";
+"cancelled" = "已取消";

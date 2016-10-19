@@ -109,6 +109,7 @@ class RootViewController: UITabBarController {
     }
     
     private func resetNavigationItem(viewController: UIViewController) {
+        navigationItem.title = viewController.navigationItem.title
         navigationItem.titleView = viewController.navigationItem.titleView
         navigationItem.rightBarButtonItem = viewController.navigationItem.rightBarButtonItem
     }
