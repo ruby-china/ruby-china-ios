@@ -33,6 +33,7 @@
 		248EE2031DB22C67005E61C6 /* Node.swift in Sources */ = {isa = PBXBuildFile; fileRef = 248EE2021DB22C67005E61C6 /* Node.swift */; };
 		248EE2051DB22D9C005E61C6 /* NodesService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 248EE2041DB22D9C005E61C6 /* NodesService.swift */; };
 		249C0A7F1D75C1E600097458 /* String+Localize.swift in Sources */ = {isa = PBXBuildFile; fileRef = 249C0A7E1D75C1E600097458 /* String+Localize.swift */; };
+		24A6A3EC1DB796D400EC89DB /* UIScrollView+MJRefreshDefault.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24A6A3EB1DB796D400EC89DB /* UIScrollView+MJRefreshDefault.swift */; };
 		24B228ED1DAA877600DEC44D /* TopicsService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24B228EC1DAA877600DEC44D /* TopicsService.swift */; };
 		24B228EF1DAA8B1600DEC44D /* Topic.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24B228EE1DAA8B1600DEC44D /* Topic.swift */; };
 		24B228F31DAA972500DEC44D /* String+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24B228F21DAA972500DEC44D /* String+Ext.swift */; };
@@ -77,6 +78,7 @@
 		249C0A7D1D75BFF700097458 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/Localizable.strings"; sourceTree = "<group>"; };
 		249C0A7E1D75C1E600097458 /* String+Localize.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "String+Localize.swift"; sourceTree = "<group>"; };
 		249C0A811D75D51F00097458 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
+		24A6A3EB1DB796D400EC89DB /* UIScrollView+MJRefreshDefault.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIScrollView+MJRefreshDefault.swift"; sourceTree = "<group>"; };
 		24B228EC1DAA877600DEC44D /* TopicsService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TopicsService.swift; sourceTree = "<group>"; };
 		24B228EE1DAA8B1600DEC44D /* Topic.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Topic.swift; sourceTree = "<group>"; };
 		24B228F21DAA972500DEC44D /* String+Ext.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "String+Ext.swift"; sourceTree = "<group>"; };
@@ -171,6 +173,7 @@
 				24758CEA1D620FFA00D8C743 /* UIImage+Ext.swift */,
 				249C0A7E1D75C1E600097458 /* String+Localize.swift */,
 				24B228F21DAA972500DEC44D /* String+Ext.swift */,
+				24A6A3EB1DB796D400EC89DB /* UIScrollView+MJRefreshDefault.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -390,6 +393,7 @@
 				9670F1901D4235D200128F8A /* AppDelegate.swift in Sources */,
 				24742CFA1D50FE2E00D16CA9 /* APIRequest.swift in Sources */,
 				24742CF31D50FE2E00D16CA9 /* NotificationsViewController.swift in Sources */,
+				24A6A3EC1DB796D400EC89DB /* UIScrollView+MJRefreshDefault.swift in Sources */,
 				245CCE6B1DB21A9E00428C2F /* RootTopicsViewController.swift in Sources */,
 				2463030E1DAE7BEF00EF26AB /* TopicCell.swift in Sources */,
 				24B228EF1DAA8B1600DEC44D /* Topic.swift in Sources */,
