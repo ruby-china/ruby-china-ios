@@ -7,7 +7,6 @@
 //
 
 import UIKit
-//import DGElasticPullToRefresh
 import UITableView_FDTemplateLayoutCell
 
 class TopicsViewController: UITableViewController {
@@ -15,7 +14,6 @@ class TopicsViewController: UITableViewController {
     private let kCellReuseIdentifier = "TOPIC_CELL"
     
     private var isLoading = false
-    private var hasNext = true
     private var listType = TopicsService.ListType.popular
     private var nodeID = 0
     private var topicList: [Topic]?
@@ -29,18 +27,19 @@ class TopicsViewController: UITableViewController {
         tableView.separatorColor = UIColor(white: 0.94, alpha: 1)
         tableView.tableFooterView = UIView()
         tableView.separatorInset = UIEdgeInsetsZero
+        tableView.headerWithRefreshingBlock { [weak self] in
+            self?.load(offset: 0)
+        }
+        tableView.footerWithRefreshingBlock { [weak self] in
+            guard let `self` = self else {
+                return
+            }
+            self.load(offset: self.topicList!.count)
+        }
         
         if (nodeID > 0) {
             loadNodeInfo()
         }
-        
-//        let loadingView = DGElasticPullToRefreshLoadingViewCircle()
-//        loadingView.tintColor = NAVBAR_TINT_COLOR
-//        tableView.dg_addPullToRefreshWithActionHandler({ [weak self] () -> Void in
-//            self?.load(offset: 0)
-//        }, loadingView: loadingView)
-//        tableView.dg_setPullToRefreshFillColor(NAVBAR_BG_COLOR)
-//        tableView.dg_setPullToRefreshBackgroundColor(tableView.backgroundColor!)
     }
 
     // MARK: - Table view data source
@@ -87,12 +86,6 @@ class TopicsViewController: UITableViewController {
         TurbolinksSessionLib.sharedInstance.actionToPath("/topics/\(data.id)", withAction: .Advance)
     }
     
-    override func tableView(tableView: UITableView, willDisplayCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath) {
-        if indexPath.row == topicList!.count - 1 {
-            load(offset: topicList!.count)
-        }
-    }
-    
 }
 
 extension TopicsViewController {
@@ -100,11 +93,10 @@ extension TopicsViewController {
     func load(listType listType: TopicsService.ListType, nodeID: Int, offset: Int) {
         self.listType = listType
         self.nodeID = nodeID
-        load(offset: offset)
+        self.tableView.mj_header.beginRefreshing()
     }
     
     private func load(offset offset: Int) {
-        if !hasNext && offset > 0 { return }
         if isLoading { return }
         isLoading = true
         
@@ -114,14 +106,21 @@ extension TopicsViewController {
                 return
             }
             self.isLoading = false
-            self.hasNext = result == nil ? false : result!.count >= limit
+            
+            if (self.tableView.mj_header.isRefreshing()) {
+                self.tableView.mj_header.endRefreshing()
+            }
+            if (self.tableView.mj_footer.isRefreshing()) {
+                self.tableView.mj_footer.endRefreshing()
+            }
+            self.tableView.mj_footer.hidden = result == nil ? true : (result!.count < limit)
+            
             if self.topicList == nil || offset == 0 {
                 self.topicList = result
             } else if let topics = result {
                 self.topicList! += topics
             }
             self.tableView.reloadData()
-//            self.tableView.dg_stopLoading()
         })
     }
     

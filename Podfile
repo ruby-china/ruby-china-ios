@@ -11,6 +11,7 @@ target 'ruby-china-ios' do
   pod 'SnapKit', '~> 0.22'
   pod 'FontAwesome.swift', :git => 'https://github.com/thii/FontAwesome.swift.git', :branch => 'swift-2.3'
 
+  pod 'MJRefresh'
   pod 'YYKeyboardManager'
   pod 'UITableView+FDTemplateLayoutCell'
 end
