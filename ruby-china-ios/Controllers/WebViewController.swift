@@ -195,11 +195,11 @@ extension WebViewController {
     
     private func addTopicActionButton() {
         var rightBarButtonItems = self.navigationItem.rightBarButtonItems ?? [UIBarButtonItem]()
-        topicFavoriteButton = UIBarButtonItem(image: UIImage(named: "bookmark"), style: .Plain, target: self, action: #selector(self.topicFavoriteAction))
+        topicFavoriteButton = UIBarButtonItem(image: UIImage(named: "bookmark"), style: .Plain, target: self, action: #selector(topicFavoriteAction(_:)))
         rightBarButtonItems.append(topicFavoriteButton!)
-        topicFollowButton = UIBarButtonItem(image: UIImage(named: "invisible"), style: .Plain, target: self, action: #selector(self.topicFollowAction))
+        topicFollowButton = UIBarButtonItem(image: UIImage(named: "invisible"), style: .Plain, target: self, action: #selector(topicFollowAction(_:)))
         rightBarButtonItems.append(topicFollowButton!)
-        topicLikeButton = UIBarButtonItem(image: UIImage(named: "like"), style: .Plain, target: self, action: #selector(self.topicLikeAction))
+        topicLikeButton = UIBarButtonItem(image: UIImage(named: "like"), style: .Plain, target: self, action: #selector(topicLikeAction(_:)))
         rightBarButtonItems.append(topicLikeButton!)
         self.navigationItem.rightBarButtonItems = rightBarButtonItems
         
@@ -233,11 +233,25 @@ extension WebViewController {
         }
     }
     
-    func topicFavoriteAction() {
+    func topicFavoriteAction(sender: UIBarButtonItem) {
+        self.topicAction(sender)
+    }
+    
+    func topicFollowAction(sender: UIBarButtonItem) {
+        self.topicAction(sender)
+    }
+    
+    func topicLikeAction(sender: UIBarButtonItem) {
+        self.topicAction(sender)
+    }
+    
+    private func topicAction(button: UIBarButtonItem) {
         if !OAuth2.shared.isLogined {
             SignInViewController.show()
+            return
         }
-        guard let button = topicFavoriteButton, id = topicID else {
+        
+        guard let id = topicID else {
             return
         }
         
@@ -245,63 +259,53 @@ extension WebViewController {
             guard let code = statusCode where code == 200 else {
                 return
             }
-            RBHUD.success((button.tag == uncheckedTag ? "favorited" : "cancelled").localized)
-            button.image = UIImage(named: button.tag == uncheckedTag ? "bookmark-filled" : "bookmark")
-            button.tag = button.tag == uncheckedTag ? checkedTag : uncheckedTag;
-        }
-        
-        if button.tag == uncheckedTag {
-            TopicsService.favorite(id, callback: callback)
-        } else {
-            TopicsService.unfavorite(id, callback: callback)
-        }
-    }
-    
-    func topicFollowAction() {
-        if !OAuth2.shared.isLogined {
-            SignInViewController.show()
-        }
-        guard let button = topicFollowButton, id = topicID else {
-            return
-        }
-        
-        func callback(statusCode: Int?) {
-            guard let code = statusCode where code == 200 else {
+            
+            var successMessage = ""
+            var checkedImageNamed = ""
+            var uncheckedImageNamed = ""
+            if button == topicFavoriteButton {
+                successMessage = "favorited".localized
+                checkedImageNamed = "bookmark-filled"
+                uncheckedImageNamed = "bookmark"
+            } else if button == topicFollowButton {
+                successMessage = "followed".localized
+                checkedImageNamed = "invisible-filled"
+                uncheckedImageNamed = "invisible"
+            } else if button == topicLikeButton {
+                successMessage = "liked".localized
+                checkedImageNamed = "like-filled"
+                uncheckedImageNamed = "like"
+            } else {
                 return
             }
-            RBHUD.success((button.tag == uncheckedTag ? "followed" : "cancelled").localized)
-            button.image = UIImage(named: button.tag == uncheckedTag ? "invisible-filled" : "invisible")
+            
+            RBHUD.success(button.tag == uncheckedTag ? successMessage : "cancelled".localized)
+            button.image = UIImage(named: button.tag == uncheckedTag ? checkedImageNamed : uncheckedImageNamed)
             button.tag = button.tag == uncheckedTag ? checkedTag : uncheckedTag;
         }
         
-        if button.tag == uncheckedTag {
-            TopicsService.follow(id, callback: callback)
-        } else {
-            TopicsService.unfollow(id, callback: callback)
-        }
-    }
-    
-    func topicLikeAction() {
-        if !OAuth2.shared.isLogined {
-            SignInViewController.show()
-        }
-        guard let button = topicLikeButton, id = topicID else {
-            return
-        }
-        
-        func callback(statusCode: Int?, count: Int?) {
-            guard let code = statusCode where code == 200 else {
-                return
+        if button == topicFavoriteButton {
+            if button.tag == uncheckedTag {
+                TopicsService.favorite(id, callback: callback)
+            } else {
+                TopicsService.unfavorite(id, callback: callback)
             }
-            RBHUD.success((button.tag == uncheckedTag ? "liked" : "cancelled").localized)
-            button.image = UIImage(named: button.tag == uncheckedTag ? "like-filled" : "like")
-            button.tag = button.tag == uncheckedTag ? checkedTag : uncheckedTag;
-        }
-        
-        if button.tag == uncheckedTag {
-            LikesService.like(.topic, id: id, callback: callback)
-        } else {
-            LikesService.unlike(.topic, id: id, callback: callback)
+        } else if button == topicFollowButton {
+            if button.tag == uncheckedTag {
+                TopicsService.follow(id, callback: callback)
+            } else {
+                TopicsService.unfollow(id, callback: callback)
+            }
+        } else if button == topicLikeButton {
+            if button.tag == uncheckedTag {
+                LikesService.like(.topic, id: id, callback: { (statusCode, count) in
+                    callback(statusCode)
+                })
+            } else {
+                LikesService.unlike(.topic, id: id, callback:{ (statusCode, count) in
+                    callback(statusCode)
+                })
+            }
         }
     }
     
