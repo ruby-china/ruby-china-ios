@@ -66,7 +66,6 @@ class WebViewController: VisitableViewController {
                 self.topicID = id
                 self.addMoreButton()
                 self.addTopicActionButton()
-                self.loadTopicActionButtonStatus()
             }
         }
         router.bind("/topics/:id/edit") { [weak self] (req) in
@@ -188,6 +187,9 @@ class WebViewController: VisitableViewController {
 
 // MARK: - 帖子相关功能
 
+private let uncheckedTag = 0;
+private let checkedTag = 1;
+
 extension WebViewController {
     
     private func addTopicActionButton() {
@@ -203,10 +205,35 @@ extension WebViewController {
         topicLikeButton = UIBarButtonItem(image: UIImage(named: "like"), style: .Plain, target: self, action: #selector(self.topicLikeAction))
         rightBarButtonItems.append(topicLikeButton!)
         self.navigationItem.rightBarButtonItems = rightBarButtonItems
+        
+        self.loadTopicActionButtonStatus()
     }
     
     private func loadTopicActionButtonStatus() {
-        
+        guard let id = topicID else {
+            return
+        }
+        TopicsService.detail(id) { [weak self] (statusCode, topic, topicMeta) in
+            guard let code = statusCode where code == 200 else {
+                return
+            }
+            guard let meta = topicMeta else {
+                return
+            }
+            
+            if let button = self?.topicFavoriteButton {
+                button.tag = meta.favorited ? checkedTag : uncheckedTag;
+                button.image = UIImage(named: meta.favorited ? "bookmark-filled" : "bookmark")
+            }
+            if let button = self?.topicFollowButton {
+                button.tag = meta.followed ? checkedTag : uncheckedTag;
+                button.image = UIImage(named: meta.followed ? "invisible-filled" : "invisible")
+            }
+            if let button = self?.topicLikeButton {
+                button.tag = meta.liked ? checkedTag : uncheckedTag;
+                button.image = UIImage(named: meta.liked ? "like-filled" : "like")
+            }
+        }
     }
     
     func topicFavoriteAction() {
@@ -218,12 +245,12 @@ extension WebViewController {
             guard let code = statusCode where code == 200 else {
                 return
             }
-            RBHUD.success((button.tag == 0 ? "favorited" : "cancelled").localized)
-            button.image = UIImage(named: button.tag == 0 ? "bookmark-filled" : "bookmark")
-            button.tag = button.tag == 0 ? 1 : 0;
+            RBHUD.success((button.tag == uncheckedTag ? "favorited" : "cancelled").localized)
+            button.image = UIImage(named: button.tag == uncheckedTag ? "bookmark-filled" : "bookmark")
+            button.tag = button.tag == uncheckedTag ? checkedTag : uncheckedTag;
         }
         
-        if button.tag == 0 {
+        if button.tag == uncheckedTag {
             TopicsService.favorite(id, callback: callback)
         } else {
             TopicsService.unfavorite(id, callback: callback)
@@ -239,12 +266,12 @@ extension WebViewController {
             guard let code = statusCode where code == 200 else {
                 return
             }
-            RBHUD.success((button.tag == 0 ? "followed" : "cancelled").localized)
-            button.image = UIImage(named: button.tag == 0 ? "invisible-filled" : "invisible")
-            button.tag = button.tag == 0 ? 1 : 0;
+            RBHUD.success((button.tag == uncheckedTag ? "followed" : "cancelled").localized)
+            button.image = UIImage(named: button.tag == uncheckedTag ? "invisible-filled" : "invisible")
+            button.tag = button.tag == uncheckedTag ? checkedTag : uncheckedTag;
         }
         
-        if button.tag == 0 {
+        if button.tag == uncheckedTag {
             TopicsService.follow(id, callback: callback)
         } else {
             TopicsService.unfollow(id, callback: callback)
@@ -260,12 +287,12 @@ extension WebViewController {
             guard let code = statusCode where code == 200 else {
                 return
             }
-            RBHUD.success((button.tag == 0 ? "liked" : "cancelled").localized)
-            button.image = UIImage(named: button.tag == 0 ? "like-filled" : "like")
-            button.tag = button.tag == 0 ? 1 : 0;
+            RBHUD.success((button.tag == uncheckedTag ? "liked" : "cancelled").localized)
+            button.image = UIImage(named: button.tag == uncheckedTag ? "like-filled" : "like")
+            button.tag = button.tag == uncheckedTag ? checkedTag : uncheckedTag;
         }
         
-        if button.tag == 0 {
+        if button.tag == uncheckedTag {
             LikesService.like(.topic, id: id, callback: callback)
         } else {
             LikesService.unlike(.topic, id: id, callback: callback)

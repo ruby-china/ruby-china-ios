@@ -55,6 +55,22 @@ class TopicsService {
         }
     }
     
+    /// 帖子详情
+    ///
+    /// - parameter id:       帖子ID
+    /// - parameter callback: 完成时回调
+    static func detail(id: Int, callback: (statusCode: Int?, topic: Topic?, topicMeta: TopicMeta?) -> ()) {
+        APIRequest.shared.get("/api/v3/topics/\(id)", parameters: nil) { (statusCode, result) in
+            guard let result = result else {
+                callback(statusCode: statusCode, topic: nil, topicMeta: nil)
+                return
+            }
+            let topic: Topic? = result["topic"].isEmpty ? nil : Topic(json: result["topic"])
+            let topicMeta: TopicMeta? = result["meta"].isEmpty ? nil :TopicMeta(json: result["meta"])
+            callback(statusCode: statusCode, topic: topic, topicMeta: topicMeta)
+        }
+    }
+    
     /// 收藏帖子
     ///
     /// - parameter id:       帖子ID
