@@ -24,6 +24,7 @@ class TopicCell: UITableViewCell {
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         self.contentView.addSubview(avatarImageView)
+        self.contentView.addSubview(avatarMaskImageView)
         self.contentView.addSubview(titleLabel)
         self.contentView.addSubview(repliesCountLabel)
         self.contentView.addSubview(nodeButton)
@@ -77,6 +78,9 @@ class TopicCell: UITableViewCell {
             make.left.top.equalToSuperview().inset(kContentPadding)
             make.size.equalTo(kAvatarSize)
         }
+        avatarMaskImageView.snp_makeConstraints { (make) in
+            make.edges.equalTo(avatarImageView)
+        }
         repliesCountLabel.snp_makeConstraints { (make) in
             make.top.right.equalToSuperview().inset(kContentPadding)
             make.width.equalTo(30)
@@ -119,9 +123,14 @@ class TopicCell: UITableViewCell {
         view.contentMode = .ScaleAspectFill
         view.clipsToBounds = true
         view.backgroundColor = UIColor(white: 0.85, alpha: 1)
-        view.layer.cornerRadius = kAvatarSize.width * 0.5
         view.userInteractionEnabled = true
         view.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(userAction)))
+        return view
+    }()
+    private lazy var avatarMaskImageView: UIImageView = {
+        let view = UIImageView()
+        view.image = UIImage(named: "avatar-mask")!.imageWithRenderingMode(.AlwaysTemplate)
+        view.tintColor = UIColor.whiteColor()
         return view
     }()
     private lazy var titleLabel: UILabel = {
