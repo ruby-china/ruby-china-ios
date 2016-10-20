@@ -117,11 +117,7 @@ class TurbolinksSessionLib: NSObject {
     }
     
     private func presentLoginController() {
-        let controller = SignInViewController()
-        controller.delegate = self
-        
-        let navController = ThemeNavigationController(rootViewController: controller)
-        UIApplication.currentViewController()?.presentViewController(navController, animated: true, completion: nil)
+        SignInViewController.show().delegate = self
     }
     
     private func presentEditTopicController(path: String) {

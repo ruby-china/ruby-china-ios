@@ -10,6 +10,13 @@ class SignInViewController: UIViewController {
     weak var delegate: SignInViewControllerDelegate?
     var onDidAuthenticate: ((sender: SignInViewController) -> Void)?
     
+    static func show() -> SignInViewController {
+        let controller = SignInViewController()
+        let navController = ThemeNavigationController(rootViewController: controller)
+        UIApplication.currentViewController()?.presentViewController(navController, animated: true, completion: nil)
+        return controller
+    }
+    
     private var contentView: UIView!
     private var loginField: RBTextField!
     private var passwordField: RBTextField!
@@ -85,6 +92,11 @@ class SignInViewController: UIViewController {
         passwordField.resignFirstResponder()
     }
     
+}
+
+// MARK: - Actions
+
+extension SignInViewController {
     func actionLogin() {
         if loginButton.enabled {
             loginField.resignFirstResponder()

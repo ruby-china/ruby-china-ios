@@ -99,15 +99,6 @@ class RootViewController: UITabBarController {
         }
     }
     
-    private func presentSignInViewController(onDidAuthenticate: () -> Void) {
-        let controller = SignInViewController()
-        controller.onDidAuthenticate = { sender in
-            onDidAuthenticate()
-        }
-        let navController = ThemeNavigationController(rootViewController: controller)
-        presentViewController(navController, animated: true, completion: nil)
-    }
-    
     private func resetNavigationItem(viewController: UIViewController) {
         navigationItem.title = viewController.navigationItem.title
         navigationItem.titleView = viewController.navigationItem.titleView
@@ -160,9 +151,9 @@ extension RootViewController: UITabBarControllerDelegate {
     func tabBarController(tabBarController: UITabBarController, shouldSelectViewController viewController: UIViewController) -> Bool {
         let tag = viewController.tabBarItem.tag
         if (tag == kFavoritesTag || tag == kNotificationsTag) && !OAuth2.shared.isLogined {
-            presentSignInViewController() {
-                self.selectedViewController = viewController
-                self.resetNavigationItem(viewController)
+            SignInViewController.show().onDidAuthenticate = { [weak self] (sender) in
+                self?.selectedViewController = viewController
+                self?.resetNavigationItem(viewController)
             }
             return false
         }
