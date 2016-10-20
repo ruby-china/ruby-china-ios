@@ -11,23 +11,29 @@ import UIKit
 class RootTopicsViewController: TopicsViewController {
     private var disappearTime: NSDate?
     
-    private lazy var filterSegment: UISegmentedControl = {
-        let filterSegment = UISegmentedControl(items: ["default".localized, "popular".localized, "latest".localized, "jobs".localized])
-        filterSegment.selectedSegmentIndex = 0
-        filterSegment.addTarget(self, action: #selector(filterChangedAction), forControlEvents: .ValueChanged)
-        return filterSegment
-    }()
+//    private lazy var filterSegment: UISegmentedControl = {
+//        let filterSegment = UISegmentedControl(items: ["default".localized, "popular".localized, "latest".localized, "jobs".localized])
+//        filterSegment.selectedSegmentIndex = 0
+//        filterSegment.addTarget(self, action: #selector(filterChangedAction), forControlEvents: .ValueChanged)
+//        return filterSegment
+//    }()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         navigationItem.title = "title topics".localized
-        navigationItem.titleView = filterSegment
-        navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(named: "new"), style: .Plain, target: self, action: #selector(newTopicAction))
+//        navigationItem.titleView = filterSegment
+        
+        let items = [
+            UIBarButtonItem(image: UIImage(named: "new"), style: .Plain, target: self, action: #selector(newTopicAction)),
+            UIBarButtonItem(image: UIImage(named: "search"), style: .Plain, target: self, action: #selector(searchAction)),
+            UIBarButtonItem(image: UIImage(named: "filter"), style: .Plain, target: self, action: #selector(filterAction)),
+        ]
+        navigationItem.rightBarButtonItems = items
         
         addObserver()
         
-        filterChangedAction(filterSegment)
+        load(listType: .popular, nodeID: 0, offset: 0)
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -46,21 +52,29 @@ class RootTopicsViewController: TopicsViewController {
 
 extension RootTopicsViewController {
     
-    func filterChangedAction(sender: UISegmentedControl) {
-        var listType: TopicsService.ListType
-        var nodeID = 0
-        switch sender.selectedSegmentIndex {
-        case 1:
-            listType = TopicsService.ListType.excellent
-        case 2:
-            listType = TopicsService.ListType.last_actived
-        case 3:
-            listType = TopicsService.ListType.last_actived
-            nodeID = 25
-        default:
-            listType = TopicsService.ListType.popular
-        }
-        load(listType: listType, nodeID: nodeID, offset: 0)
+//    func filterChangedAction(sender: UISegmentedControl) {
+//        var listType: TopicsService.ListType
+//        var nodeID = 0
+//        switch sender.selectedSegmentIndex {
+//        case 1:
+//            listType = TopicsService.ListType.excellent
+//        case 2:
+//            listType = TopicsService.ListType.last_actived
+//        case 3:
+//            listType = TopicsService.ListType.last_actived
+//            nodeID = 25
+//        default:
+//            listType = TopicsService.ListType.popular
+//        }
+//        load(listType: listType, nodeID: nodeID, offset: 0)
+//    }
+    
+    func filterAction() {
+        
+    }
+    
+    func searchAction() {
+        
     }
     
     func newTopicAction() {
@@ -92,7 +106,7 @@ extension RootTopicsViewController {
         disappearTime = nil
         
         if -time.timeIntervalSinceNow > (60 * 60 * 2.0) {
-            filterChangedAction(filterSegment)
+            self.tableView.mj_header.beginRefreshing()
         }
     }
 }
