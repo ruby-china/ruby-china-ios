@@ -108,6 +108,7 @@ class WebViewController: VisitableViewController {
         visitableURL = urlWithPath(currentPath)
         if isViewLoaded() {
             reloadVisitable()
+            loadTopicActionButtonStatus()
         }
     }
     
@@ -193,10 +194,6 @@ private let checkedTag = 1;
 extension WebViewController {
     
     private func addTopicActionButton() {
-        if !OAuth2.shared.isLogined {
-            return
-        }
-        
         var rightBarButtonItems = self.navigationItem.rightBarButtonItems ?? [UIBarButtonItem]()
         topicFavoriteButton = UIBarButtonItem(image: UIImage(named: "bookmark"), style: .Plain, target: self, action: #selector(self.topicFavoriteAction))
         rightBarButtonItems.append(topicFavoriteButton!)
@@ -210,7 +207,7 @@ extension WebViewController {
     }
     
     private func loadTopicActionButtonStatus() {
-        guard let id = topicID else {
+        guard let id = topicID where OAuth2.shared.isLogined else {
             return
         }
         TopicsService.detail(id) { [weak self] (statusCode, topic, topicMeta) in
@@ -237,6 +234,9 @@ extension WebViewController {
     }
     
     func topicFavoriteAction() {
+        if !OAuth2.shared.isLogined {
+            SignInViewController.show()
+        }
         guard let button = topicFavoriteButton, id = topicID else {
             return
         }
@@ -258,6 +258,9 @@ extension WebViewController {
     }
     
     func topicFollowAction() {
+        if !OAuth2.shared.isLogined {
+            SignInViewController.show()
+        }
         guard let button = topicFollowButton, id = topicID else {
             return
         }
@@ -279,6 +282,9 @@ extension WebViewController {
     }
     
     func topicLikeAction() {
+        if !OAuth2.shared.isLogined {
+            SignInViewController.show()
+        }
         guard let button = topicLikeButton, id = topicID else {
             return
         }
