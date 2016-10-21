@@ -108,13 +108,26 @@ class TopicCell: UITableViewCell {
     private func titleAttributedText(data: Topic) -> NSAttributedString {
         let attributes = [NSFontAttributeName : kTitleTextFont]
         let attributedString = NSMutableAttributedString(string: data.title, attributes: attributes)
-        if data.excellent {
+        
+        func addIcon(name fontAwesomeName: FontAwesome, color: UIColor) {
             let attributes = [NSFontAttributeName : UIFont.fontAwesomeOfSize(kTitleTextSize),
-                              NSForegroundColorAttributeName : PRIMARY_COLOR]
-            let diamondString = " \(String.fontAwesomeIconWithName(.Diamond))"
+                              NSForegroundColorAttributeName : color]
+            let diamondString = " \(String.fontAwesomeIconWithName(fontAwesomeName))"
             let diamondAttributed = NSAttributedString(string: diamondString, attributes: attributes)
             attributedString.appendAttributedString(diamondAttributed)
         }
+        
+        if let _ = data.suggestedAt {
+            addIcon(name: .ThumbTack, color: UIColor(white: 0.6, alpha: 1))
+        }
+        if data.excellent {
+            addIcon(name: .Diamond, color: PRIMARY_COLOR)
+        }
+        if let _ = data.closedAt {
+            let iconColor = UIColor(red: 69.0 / 255.0, green: 199.0 / 255.0, blue: 34.0 / 255.0, alpha: 1)
+            addIcon(name: .Check, color: iconColor)
+        }
+        
         return attributedString
     }
     
