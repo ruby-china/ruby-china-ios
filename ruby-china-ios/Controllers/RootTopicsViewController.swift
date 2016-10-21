@@ -33,7 +33,7 @@ class RootTopicsViewController: TopicsViewController {
         
         addObserver()
         
-        load(listType: .popular, nodeID: 0, offset: 0)
+        load(listType: .last_actived, nodeID: 0, offset: 0)
     }
     
     override func viewWillAppear(animated: Bool) {
