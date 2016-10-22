@@ -74,7 +74,8 @@ extension RootTopicsViewController {
     }
     
     func searchAction() {
-        
+        let vc = SearchViewController()
+        navigationController?.pushViewController(vc, animated: true)
     }
     
     func newTopicAction() {

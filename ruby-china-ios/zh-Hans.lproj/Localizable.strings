@@ -32,6 +32,7 @@
 "title edit reply" = "修改回帖";
 "title wiki" = "Wiki";
 "title wiki details" = "阅读 Wiki";
+"title search" = "搜索";
 "share" = "分享";
 "cancel" = "取消";
 "close" = "关闭";
@@ -41,3 +42,4 @@
 "followed" = "已关注";
 "liked" = "已赞";
 "cancelled" = "已取消";
+"search placeholder" = "输入搜索关键字";

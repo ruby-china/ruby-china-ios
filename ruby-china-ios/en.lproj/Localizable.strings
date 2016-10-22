@@ -32,6 +32,7 @@
 "title edit reply" = "Edit reply";
 "title wiki" = "Wiki";
 "title wiki details" = "Read Wiki";
+"title search" = "Search";
 "share" = "Share";
 "cancel" = "Cancel";
 "close" = "Close";
@@ -41,3 +42,4 @@
 "followed" = "Followed";
 "liked" = "Liked";
 "cancelled" = "Cancelled";
+"search placeholder" = "Enter search keywords";
