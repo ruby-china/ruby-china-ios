@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import SwiftyJSON
 
 class TopicsFilterViewController: UIViewController {
     
@@ -39,8 +40,9 @@ class TopicsFilterViewController: UIViewController {
         let nodes: [NodeData]
     }
     
-    private let kHeaderIdentifier = "HEADERVIEW"
-    private let kCellIdentifier = "NODECELL"
+    private let headerIdentifier = "HEADERVIEW"
+    private let cellIdentifier = "NODECELL"
+    private let cacheNodesJSONKey = "cacheNodesJSONKey"
     private var groupDatas = [GroupData]()
     private var parentWindow: UIWindow?
 
@@ -67,8 +69,8 @@ class TopicsFilterViewController: UIViewController {
         view.delegate = self
         view.dataSource = self
         view.backgroundColor = UIColor(white: 1, alpha: 0.9)
-        view.registerClass(TopicsFilterNodeCell.self, forCellWithReuseIdentifier: self.kCellIdentifier)
-        view.registerClass(TopicsFilterNodeSectionHeaderView.self, forSupplementaryViewOfKind: UICollectionElementKindSectionHeader, withReuseIdentifier: self.kHeaderIdentifier)
+        view.registerClass(TopicsFilterNodeCell.self, forCellWithReuseIdentifier: self.cellIdentifier)
+        view.registerClass(TopicsFilterNodeSectionHeaderView.self, forSupplementaryViewOfKind: UICollectionElementKindSectionHeader, withReuseIdentifier: self.headerIdentifier)
         return view
     }()
     
@@ -84,8 +86,6 @@ class TopicsFilterViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        initGroupDatas()
-        
         view.addSubview(closeButton)
         view.addSubview(collectionView)
         closeButton.snp_makeConstraints { (make) in
@@ -95,6 +95,15 @@ class TopicsFilterViewController: UIViewController {
         collectionView.snp_makeConstraints { (make) in
             make.top.equalTo(closeButton.snp_bottom)
             make.left.bottom.right.equalToSuperview()
+        }
+        
+        initGroupDatas()
+        
+        if let jsonString = NSUserDefaults.standardUserDefaults().valueForKey(cacheNodesJSONKey) as? String {
+            let json = JSON.parse(jsonString)
+            if let nodes = nodesFromJSON(json) {
+                addGroupDatas(nodes: nodes, isSync: true)
+            }
         }
         
         loadNodes()
@@ -120,7 +129,7 @@ extension TopicsFilterViewController: UICollectionViewDelegate, UICollectionView
     
     func collectionView(collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, atIndexPath indexPath: NSIndexPath) -> UICollectionReusableView {
         if kind == UICollectionElementKindSectionHeader {
-            let view = collectionView.dequeueReusableSupplementaryViewOfKind(kind, withReuseIdentifier: kHeaderIdentifier, forIndexPath: indexPath) as! TopicsFilterNodeSectionHeaderView
+            let view = collectionView.dequeueReusableSupplementaryViewOfKind(kind, withReuseIdentifier: headerIdentifier, forIndexPath: indexPath) as! TopicsFilterNodeSectionHeaderView
             view.name = groupDatas[indexPath.section].name
             return view
         }
@@ -130,7 +139,7 @@ extension TopicsFilterViewController: UICollectionViewDelegate, UICollectionView
     func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
         let node = groupDatas[indexPath.section].nodes[indexPath.item]
         
-        let cell = collectionView.dequeueReusableCellWithReuseIdentifier(kCellIdentifier, forIndexPath: indexPath) as! TopicsFilterNodeCell
+        let cell = collectionView.dequeueReusableCellWithReuseIdentifier(cellIdentifier, forIndexPath: indexPath) as! TopicsFilterNodeCell
         cell.normalImage = cellNormalImage
         cell.selectedImage = cellSelectedImage
         cell.name = node.getName()
@@ -191,23 +200,40 @@ extension TopicsFilterViewController {
     
     private func loadNodes() {
         NodesService.list { [weak self] (statusCode, result) in
-            if let nodes = result {
-                self?.addDatas(nodes: nodes)
+            guard let `self` = self, result = result else {
+                return
+            }
+            
+            if let nodes = self.nodesFromJSON(result) where nodes.count > 0 {
+                NSUserDefaults.standardUserDefaults().setValue(result.rawString(), forKey: self.cacheNodesJSONKey)
+                NSUserDefaults.standardUserDefaults().synchronize()
+                
+                self.addGroupDatas(nodes: nodes, isSync: false)
             }
         }
     }
     
-    private func addDatas(nodes nodes: [Node]) {
+    private func nodesFromJSON(json: JSON) -> [Node]? {
+        guard let nodeList = json["nodes"].array where nodeList.count > 0 else {
+            return nil
+        }
+        var nodes = [Node]()
+        for nodeJSON in nodeList {
+            nodes.append(Node(json: nodeJSON))
+        }
+        return nodes
+    }
+    
+    private func addGroupDatas(nodes nodes: [Node], isSync: Bool) {
         if nodes.count <= 0 {
             return
         }
         
         let selectedData = self.selectedData
-        dispatch_async(dispatch_get_global_queue(QOS_CLASS_USER_INITIATED, 0)) {
-            
-            var scrollToIndexPath: NSIndexPath?
-            var addGroupDatas = [GroupData]()
-            
+        var scrollToIndexPath: NSIndexPath?
+        var nodeGroupDatas = [GroupData]()
+        
+        func sortAndCreateNodeGroupDatas() {
             let sortNodes = nodes.sort {
                 $0.sectionName != $1.sectionName ? $0.sectionName < $1.sectionName : $0.name < $1.name
             }
@@ -216,27 +242,38 @@ extension TopicsFilterViewController {
             var prevSectionName = sortNodes.first!.sectionName
             for node in sortNodes {
                 if node.sectionName != prevSectionName {
-                    addGroupDatas.append(GroupData(name: prevSectionName, nodes: nodeList))
+                    nodeGroupDatas.append(GroupData(name: prevSectionName, nodes: nodeList))
                     nodeList = [NodeData]()
                     prevSectionName = node.sectionName
                 }
                 
                 let nodeData = NodeData.node(id: node.id, name: node.name)
                 if scrollToIndexPath == nil && selectedData != nil && selectedData! == nodeData {
-                    scrollToIndexPath = NSIndexPath(forItem: nodeList.count, inSection: addGroupDatas.count + 1)
+                    scrollToIndexPath = NSIndexPath(forItem: nodeList.count, inSection: nodeGroupDatas.count + 1)
                 }
                 nodeList.append(nodeData)
             }
             if nodeList.count > 0 {
-                addGroupDatas.append(GroupData(name: prevSectionName, nodes: nodeList))
+                nodeGroupDatas.append(GroupData(name: prevSectionName, nodes: nodeList))
             }
-            
-            dispatch_async(dispatch_get_main_queue()) { [weak self] in
-                self?.groupDatas += addGroupDatas
-                let addRange = NSRange(location: 1, length: addGroupDatas.count)
-                self?.collectionView.insertSections(NSIndexSet(indexesInRange: addRange))
-                if let indexPath = scrollToIndexPath {
-                    self?.collectionView.scrollToItemAtIndexPath(indexPath, atScrollPosition: .CenteredVertically, animated: false)
+        }
+        
+        func displayNodeGroupDatas() {
+            self.groupDatas = [self.groupDatas[0]] + nodeGroupDatas
+            self.collectionView.reloadData()
+            if let indexPath = scrollToIndexPath {
+                self.collectionView.scrollToItemAtIndexPath(indexPath, atScrollPosition: .CenteredVertically, animated: false)
+            }
+        }
+        
+        if isSync {
+            sortAndCreateNodeGroupDatas()
+            displayNodeGroupDatas()
+        } else {
+            dispatch_async(dispatch_get_global_queue(QOS_CLASS_USER_INITIATED, 0)) {
+                sortAndCreateNodeGroupDatas()
+                dispatch_async(dispatch_get_main_queue()) {
+                    displayNodeGroupDatas()
                 }
             }
         }
