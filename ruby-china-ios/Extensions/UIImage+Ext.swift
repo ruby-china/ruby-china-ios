@@ -31,6 +31,16 @@ extension UIImage {
         return img
     }
     
+    
+    /// 生成圆角图片
+    ///
+    /// - parameter imageSize:       图片大小
+    /// - parameter radius:          圆角大小
+    /// - parameter backgroundColor: 背景色
+    /// - parameter borderWidth:     边框宽度
+    /// - parameter borderColor:     边框颜色
+    ///
+    /// - returns: 指定大小的圆角图片
     static func roundedCorner(imageSize imageSize: CGSize, radius: CGFloat, backgroundColor: UIColor, borderWidth: CGFloat, borderColor: UIColor) -> UIImage? {
         let sizeToFit = imageSize
         let halfBorderWidth = CGFloat(borderWidth / 2.0)
