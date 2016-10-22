@@ -42,7 +42,7 @@ class TopicCell: UITableViewCell {
             if let data = data {
                 avatarImageView.kf_setImageWithURL(data.user.avatarUrl, optionsInfo: [
                     .BackgroundDecode,
-                    .Transition(ImageTransition.Fade(1))
+                    .Transition(ImageTransition.Fade(0.5))
                 ])
                 titleLabel.attributedText = titleAttributedText(data)
                 repliesCountLabel.text = data.repliesCount > 0 ? "\(data.repliesCount)" : nil
@@ -61,6 +61,62 @@ class TopicCell: UITableViewCell {
     var onUserClick: ((data: Topic?) -> ())?
     var onNodeClick: ((data: Topic?) -> ())?
     
+    private lazy var avatarImageView: UIImageView = {
+        let view = UIImageView()
+        view.contentMode = .ScaleAspectFill
+        view.clipsToBounds = true
+        view.backgroundColor = UIColor(white: 0.85, alpha: 1)
+        view.userInteractionEnabled = true
+        view.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(userAction)))
+        return view
+    }()
+    private lazy var avatarMaskImageView: UIImageView = {
+        let view = UIImageView()
+        view.image = UIImage(named: "avatar-mask")!.imageWithRenderingMode(.AlwaysTemplate)
+        view.tintColor = UIColor.whiteColor()
+        return view
+    }()
+    private lazy var titleLabel: UILabel = {
+        let view = UILabel()
+        view.textColor = UIColor(white: 0.13, alpha: 1)
+        view.numberOfLines = 0
+        return view
+    }()
+    private lazy var repliesCountLabel: UILabel = {
+        let view = UILabel()
+        view.textColor = UIColor(white: 0.4, alpha: 1)
+        view.font = kTextFont
+        view.textAlignment = .Right
+        return view
+    }()
+    private lazy var nodeButton: UIButton = {
+        let view = UIButton()
+        view.titleLabel?.font = kTextFont
+        view.setTitleColor(kButtonTitleColor, forState: .Normal)
+        view.addTarget(self, action: #selector(nodeAction), forControlEvents: .TouchUpInside)
+        return view
+    }()
+    private lazy var separateLabel: UILabel = {
+        let view = UILabel()
+        view.font = kTextFont
+        view.textColor = kButtonTitleColor
+        view.text = " • "
+        return view
+    }()
+    private lazy var userNameButton: UIButton = {
+        let view = UIButton()
+        view.titleLabel?.font = kTextFont
+        view.setTitleColor(kButtonTitleColor, forState: .Normal)
+        view.addTarget(self, action: #selector(userAction), forControlEvents: .TouchUpInside)
+        return view
+    }()
+    
+}
+
+// MARK: - action
+
+extension TopicCell {
+    
     func userAction() {
         if let action = onUserClick {
             action(data: data)
@@ -72,6 +128,12 @@ class TopicCell: UITableViewCell {
             action(data: data)
         }
     }
+    
+}
+
+// MARK: - private
+
+extension TopicCell {
     
     private func setupConstraints() {
         avatarImageView.snp_makeConstraints { (make) in
@@ -130,55 +192,5 @@ class TopicCell: UITableViewCell {
         
         return attributedString
     }
-    
-    private lazy var avatarImageView: UIImageView = {
-        let view = UIImageView()
-        view.contentMode = .ScaleAspectFill
-        view.clipsToBounds = true
-        view.backgroundColor = UIColor(white: 0.85, alpha: 1)
-        view.userInteractionEnabled = true
-        view.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(userAction)))
-        return view
-    }()
-    private lazy var avatarMaskImageView: UIImageView = {
-        let view = UIImageView()
-        view.image = UIImage(named: "avatar-mask")!.imageWithRenderingMode(.AlwaysTemplate)
-        view.tintColor = UIColor.whiteColor()
-        return view
-    }()
-    private lazy var titleLabel: UILabel = {
-        let view = UILabel()
-        view.textColor = UIColor(white: 0.13, alpha: 1)
-        view.numberOfLines = 0
-        return view
-    }()
-    private lazy var repliesCountLabel: UILabel = {
-        let view = UILabel()
-        view.textColor = UIColor(white: 0.4, alpha: 1)
-        view.font = kTextFont
-        view.textAlignment = .Right
-        return view
-    }()
-    private lazy var nodeButton: UIButton = {
-        let view = UIButton()
-        view.titleLabel?.font = kTextFont
-        view.setTitleColor(kButtonTitleColor, forState: .Normal)
-        view.addTarget(self, action: #selector(nodeAction), forControlEvents: .TouchUpInside)
-        return view
-    }()
-    private lazy var separateLabel: UILabel = {
-        let view = UILabel()
-        view.font = kTextFont
-        view.textColor = kButtonTitleColor
-        view.text = " • "
-        return view
-    }()
-    private lazy var userNameButton: UIButton = {
-        let view = UIButton()
-        view.titleLabel?.font = kTextFont
-        view.setTitleColor(kButtonTitleColor, forState: .Normal)
-        view.addTarget(self, action: #selector(userAction), forControlEvents: .TouchUpInside)
-        return view
-    }()
     
 }
