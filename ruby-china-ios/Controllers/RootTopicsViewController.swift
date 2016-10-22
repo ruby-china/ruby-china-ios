@@ -11,8 +11,6 @@ import UIKit
 class RootTopicsViewController: TopicsViewController {
     
     private var disappearTime: NSDate?
-    private var filterViewController: TopicsFilterViewController?
-    private var filterWindow: UIWindow?
     private var filterData = TopicsFilterViewController.NodeData.listType(.last_actived)
     
     override func viewDidLoad() {
@@ -46,12 +44,18 @@ class RootTopicsViewController: TopicsViewController {
 
 extension RootTopicsViewController {
     
-    func closefilterAction() {
-        closeFilterViewController()
-    }
-    
     func filterAction() {
-        showFilterViewController()
+        let vc = TopicsFilterViewController.show()
+        vc.selectedData = filterData
+        vc.onChangeSelect = { [weak self] (sender) in
+            guard let `self` = self, data = sender.selectedData else {
+                return
+            }
+            self.filterData = data
+            self.resetTitle(data)
+            self.reloadTopics(data)
+            sender.close()
+        }
     }
     
     func searchAction() {
@@ -75,59 +79,6 @@ extension RootTopicsViewController {
         NSNotificationCenter.defaultCenter().addObserverForName(UIApplicationWillResignActiveNotification, object: nil, queue: nil) { [weak self](notification) in
             self?.resetDisappearTime()
         }
-    }
-    
-    private func showFilterViewController() {
-        let window = UIWindow(frame: UIScreen.mainScreen().bounds)
-        window.windowLevel = UIWindowLevelAlert
-        
-        let closeButton = UIButton()
-        closeButton.addTarget(self, action: #selector(closefilterAction), forControlEvents: .TouchUpInside)
-        var frame = window.bounds
-        frame.size.height = 64
-        closeButton.frame = frame
-        window.addSubview(closeButton)
-        
-        let vc = TopicsFilterViewController()
-        vc.selectedData = filterData
-        vc.onChangeSelect = { [weak self] (sender) in
-            guard let `self` = self, data = sender.selectedData else {
-                return
-            }
-            self.filterData = data
-            self.resetTitle(data)
-            self.reloadTopics(data)
-            self.closefilterAction()
-        }
-        frame = window.bounds
-        frame.origin.y = closeButton.frame.size.height
-        frame.size.height -= frame.origin.y
-        vc.view.frame = frame
-        window.addSubview(vc.view)
-        
-        window.makeKeyAndVisible()
-        vc.view.alpha = 0
-        UIView.animateWithDuration(0.3, animations: {
-            vc.view.alpha = 1
-        })
-        
-        filterWindow = window
-        filterViewController = vc
-    }
-    
-    private func closeFilterViewController() {
-        guard let vc = filterViewController, window = filterWindow else {
-            return
-        }
-        UIView.animateWithDuration(0.3, animations: {
-            vc.view.alpha = 0
-        }, completion: { _ in
-            vc.removeFromParentViewController()
-            vc.view.removeFromSuperview()
-            window.resignKeyWindow()
-            self.filterViewController = nil
-            self.filterWindow = nil
-        })
     }
     
     private func resetTitle(filterData: TopicsFilterViewController.NodeData) {

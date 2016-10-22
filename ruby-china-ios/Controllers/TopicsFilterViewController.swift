@@ -18,11 +18,11 @@ class TopicsFilterViewController: UIViewController {
             switch self {
             case let .listType(type):
                 switch type {
-                case .last_actived  : return "默认"
-                case .recent        : return "最新发布"
-                case .no_reply      : return "无人问津"
+                case .last_actived  : return "default".localized
+                case .recent        : return "type recent".localized
+                case .no_reply      : return "type no reply".localized
                 case .popular       : return ""
-                case .excellent     : return "优质帖子"
+                case .excellent     : return "type excellent".localized
                 }
             case let .node(_, name):
                 return name
@@ -32,6 +32,7 @@ class TopicsFilterViewController: UIViewController {
     
     var selectedData: NodeData?
     var onChangeSelect: ((TopicsFilterViewController) -> ())?
+    var onCancel: ((TopicsFilterViewController) -> ())?
     
     private struct GroupData {
         let name: String
@@ -41,7 +42,14 @@ class TopicsFilterViewController: UIViewController {
     private let kHeaderIdentifier = "HEADERVIEW"
     private let kCellIdentifier = "NODECELL"
     private var groupDatas = [GroupData]()
+    private var parentWindow: UIWindow?
 
+    private lazy var closeButton: UIButton = {
+        let view = UIButton()
+        view.addTarget(self, action: #selector(close), forControlEvents: .TouchUpInside)
+        return view
+    }()
+    
     private lazy var collectionView: UICollectionView = {
         let colNumber: CGFloat = 4
         let cellMargin: CGFloat = 10
@@ -58,7 +66,7 @@ class TopicsFilterViewController: UIViewController {
         
         view.delegate = self
         view.dataSource = self
-        view.backgroundColor = UIColor.clearColor()
+        view.backgroundColor = UIColor(white: 1, alpha: 0.9)
         view.registerClass(TopicsFilterNodeCell.self, forCellWithReuseIdentifier: self.kCellIdentifier)
         view.registerClass(TopicsFilterNodeSectionHeaderView.self, forSupplementaryViewOfKind: UICollectionElementKindSectionHeader, withReuseIdentifier: self.kHeaderIdentifier)
         return view
@@ -78,13 +86,22 @@ class TopicsFilterViewController: UIViewController {
         
         initGroupDatas()
         
-        view.backgroundColor = UIColor(white: 1, alpha: 0.9)
+        view.addSubview(closeButton)
         view.addSubview(collectionView)
+        closeButton.snp_makeConstraints { (make) in
+            make.left.top.right.equalToSuperview()
+            make.height.equalTo(64)
+        }
         collectionView.snp_makeConstraints { (make) in
-            make.edges.equalToSuperview()
+            make.top.equalTo(closeButton.snp_bottom)
+            make.left.bottom.right.equalToSuperview()
         }
         
         loadNodes()
+    }
+    
+    override func preferredStatusBarStyle() -> UIStatusBarStyle {
+        return .LightContent
     }
 
 }
@@ -129,6 +146,35 @@ extension TopicsFilterViewController: UICollectionViewDelegate, UICollectionView
     
 }
 
+// MARK: - public
+
+extension TopicsFilterViewController {
+    
+    static func show() -> TopicsFilterViewController {
+        let vc = TopicsFilterViewController()
+        let window = UIWindow(frame: UIScreen.mainScreen().bounds)
+        window.rootViewController = vc
+        window.windowLevel = UIWindowLevelAlert
+        window.makeKeyAndVisible()
+        window.alpha = 0
+        UIView.animateWithDuration(0.3, animations: {
+            window.alpha = 1
+        })
+        
+        vc.parentWindow = window
+        
+        return vc
+    }
+    
+    func close() {
+        UIView.animateWithDuration(0.3, animations: {
+            self.parentWindow!.alpha = 0
+            }, completion: { _ in
+                self.parentWindow = nil
+        })
+    }
+}
+
 // MARK: - private
 
 extension TopicsFilterViewController {
@@ -140,7 +186,7 @@ extension TopicsFilterViewController {
             NodeData.listType(.no_reply),
             NodeData.listType(.recent),
         ]
-        groupDatas.append(GroupData(name: "所有帖子", nodes: nodes))
+        groupDatas.append(GroupData(name: "all topics".localized, nodes: nodes))
     }
     
     private func loadNodes() {
@@ -187,7 +233,8 @@ extension TopicsFilterViewController {
             
             dispatch_async(dispatch_get_main_queue()) { [weak self] in
                 self?.groupDatas += addGroupDatas
-                self?.collectionView.reloadData()
+                let addRange = NSRange(location: 1, length: addGroupDatas.count)
+                self?.collectionView.insertSections(NSIndexSet(indexesInRange: addRange))
                 if let indexPath = scrollToIndexPath {
                     self?.collectionView.scrollToItemAtIndexPath(indexPath, atScrollPosition: .CenteredVertically, animated: false)
                 }
