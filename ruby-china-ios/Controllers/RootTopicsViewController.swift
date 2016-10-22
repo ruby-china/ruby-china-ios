@@ -9,31 +9,25 @@
 import UIKit
 
 class RootTopicsViewController: TopicsViewController {
-    private var disappearTime: NSDate?
     
-//    private lazy var filterSegment: UISegmentedControl = {
-//        let filterSegment = UISegmentedControl(items: ["default".localized, "popular".localized, "latest".localized, "jobs".localized])
-//        filterSegment.selectedSegmentIndex = 0
-//        filterSegment.addTarget(self, action: #selector(filterChangedAction), forControlEvents: .ValueChanged)
-//        return filterSegment
-//    }()
+    private var disappearTime: NSDate?
+    private var filterViewController: TopicsFilterViewController?
+    private var filterWindow: UIWindow?
+    private var filterData = TopicsFilterViewController.NodeData.listType(.last_actived)
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        navigationItem.title = "title topics".localized
-//        navigationItem.titleView = filterSegment
-        
-        let items = [
+        navigationItem.rightBarButtonItems = [
             UIBarButtonItem(image: UIImage(named: "new"), style: .Plain, target: self, action: #selector(newTopicAction)),
             UIBarButtonItem(image: UIImage(named: "search"), style: .Plain, target: self, action: #selector(searchAction)),
             UIBarButtonItem(image: UIImage(named: "filter"), style: .Plain, target: self, action: #selector(filterAction)),
         ]
-        navigationItem.rightBarButtonItems = items
         
         addObserver()
         
-        load(listType: .last_actived, nodeID: 0, offset: 0)
+        resetTitle(filterData)
+        reloadTopics(filterData)
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -52,25 +46,12 @@ class RootTopicsViewController: TopicsViewController {
 
 extension RootTopicsViewController {
     
-//    func filterChangedAction(sender: UISegmentedControl) {
-//        var listType: TopicsService.ListType
-//        var nodeID = 0
-//        switch sender.selectedSegmentIndex {
-//        case 1:
-//            listType = TopicsService.ListType.excellent
-//        case 2:
-//            listType = TopicsService.ListType.last_actived
-//        case 3:
-//            listType = TopicsService.ListType.last_actived
-//            nodeID = 25
-//        default:
-//            listType = TopicsService.ListType.popular
-//        }
-//        load(listType: listType, nodeID: nodeID, offset: 0)
-//    }
+    func closefilterAction() {
+        closeFilterViewController()
+    }
     
     func filterAction() {
-        
+        showFilterViewController()
     }
     
     func searchAction() {
@@ -93,6 +74,79 @@ extension RootTopicsViewController {
         }
         NSNotificationCenter.defaultCenter().addObserverForName(UIApplicationWillResignActiveNotification, object: nil, queue: nil) { [weak self](notification) in
             self?.resetDisappearTime()
+        }
+    }
+    
+    private func showFilterViewController() {
+        let window = UIWindow(frame: UIScreen.mainScreen().bounds)
+        window.windowLevel = UIWindowLevelAlert
+        
+        let closeButton = UIButton()
+        closeButton.addTarget(self, action: #selector(closefilterAction), forControlEvents: .TouchUpInside)
+        var frame = window.bounds
+        frame.size.height = 64
+        closeButton.frame = frame
+        window.addSubview(closeButton)
+        
+        let vc = TopicsFilterViewController()
+        vc.selectedData = filterData
+        vc.onChangeSelect = { [weak self] (sender) in
+            guard let `self` = self, data = sender.selectedData else {
+                return
+            }
+            self.filterData = data
+            self.resetTitle(data)
+            self.reloadTopics(data)
+            self.closefilterAction()
+        }
+        frame = window.bounds
+        frame.origin.y = closeButton.frame.size.height
+        frame.size.height -= frame.origin.y
+        vc.view.frame = frame
+        window.addSubview(vc.view)
+        
+        window.makeKeyAndVisible()
+        vc.view.alpha = 0
+        UIView.animateWithDuration(0.3, animations: {
+            vc.view.alpha = 1
+        })
+        
+        filterWindow = window
+        filterViewController = vc
+    }
+    
+    private func closeFilterViewController() {
+        guard let vc = filterViewController, window = filterWindow else {
+            return
+        }
+        UIView.animateWithDuration(0.3, animations: {
+            vc.view.alpha = 0
+        }, completion: { _ in
+            vc.removeFromParentViewController()
+            vc.view.removeFromSuperview()
+            window.resignKeyWindow()
+            self.filterViewController = nil
+            self.filterWindow = nil
+        })
+    }
+    
+    private func resetTitle(filterData: TopicsFilterViewController.NodeData) {
+        switch filterData {
+        case let .listType(type):
+            navigationItem.title = type == .last_actived ? "title topics".localized : filterData.getName()
+        case let .node(_, name):
+            navigationItem.title = name
+        }
+        
+        tabBarController?.title = navigationItem.title
+    }
+    
+    private func reloadTopics(filterData: TopicsFilterViewController.NodeData) {
+        switch filterData {
+        case let .listType(type):
+            load(listType: type, nodeID: 0, offset: 0)
+        case let .node(id, _):
+            load(listType: .last_actived, nodeID: id, offset: 0)
         }
     }
     

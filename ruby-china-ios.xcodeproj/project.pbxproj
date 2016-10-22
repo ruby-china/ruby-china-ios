@@ -31,6 +31,9 @@
 		24742D011D50FE2E00D16CA9 /* RBTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24742CEE1D50FE2E00D16CA9 /* RBTextField.swift */; };
 		24758CEB1D620FFA00D8C743 /* UIImage+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24758CEA1D620FFA00D8C743 /* UIImage+Ext.swift */; };
 		24887F351DBAFED300BB7EDC /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24887F341DBAFED300BB7EDC /* SearchViewController.swift */; };
+		24887F371DBB2FBD00BB7EDC /* TopicsFilterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24887F361DBB2FBD00BB7EDC /* TopicsFilterViewController.swift */; };
+		24887F391DBB334200BB7EDC /* TopicsFilterNodeCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24887F381DBB334200BB7EDC /* TopicsFilterNodeCell.swift */; };
+		24887F3B1DBB38A000BB7EDC /* TopicsFilterNodeSectionHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24887F3A1DBB38A000BB7EDC /* TopicsFilterNodeSectionHeaderView.swift */; };
 		248EE2031DB22C67005E61C6 /* Node.swift in Sources */ = {isa = PBXBuildFile; fileRef = 248EE2021DB22C67005E61C6 /* Node.swift */; };
 		248EE2051DB22D9C005E61C6 /* NodesService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 248EE2041DB22D9C005E61C6 /* NodesService.swift */; };
 		249C0A7F1D75C1E600097458 /* String+Localize.swift in Sources */ = {isa = PBXBuildFile; fileRef = 249C0A7E1D75C1E600097458 /* String+Localize.swift */; };
@@ -76,6 +79,9 @@
 		24742CEE1D50FE2E00D16CA9 /* RBTextField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RBTextField.swift; sourceTree = "<group>"; };
 		24758CEA1D620FFA00D8C743 /* UIImage+Ext.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIImage+Ext.swift"; sourceTree = "<group>"; };
 		24887F341DBAFED300BB7EDC /* SearchViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchViewController.swift; sourceTree = "<group>"; };
+		24887F361DBB2FBD00BB7EDC /* TopicsFilterViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TopicsFilterViewController.swift; sourceTree = "<group>"; };
+		24887F381DBB334200BB7EDC /* TopicsFilterNodeCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TopicsFilterNodeCell.swift; sourceTree = "<group>"; };
+		24887F3A1DBB38A000BB7EDC /* TopicsFilterNodeSectionHeaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TopicsFilterNodeSectionHeaderView.swift; sourceTree = "<group>"; };
 		248EE2021DB22C67005E61C6 /* Node.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Node.swift; sourceTree = "<group>"; };
 		248EE2041DB22D9C005E61C6 /* NodesService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NodesService.swift; sourceTree = "<group>"; };
 		249C0A7D1D75BFF700097458 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/Localizable.strings"; sourceTree = "<group>"; };
@@ -132,6 +138,7 @@
 				96F9FD6C1D59A814004FD824 /* ProfileViewController.swift */,
 				24E5B3FF1D6B2C82006515E3 /* ThemeNavigationController.swift */,
 				24887F341DBAFED300BB7EDC /* SearchViewController.swift */,
+				24887F361DBB2FBD00BB7EDC /* TopicsFilterViewController.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -168,6 +175,8 @@
 				24742CEE1D50FE2E00D16CA9 /* RBTextField.swift */,
 				244667CA1D6349EF00F76B10 /* RBHUD.swift */,
 				2463030D1DAE7BEF00EF26AB /* TopicCell.swift */,
+				24887F381DBB334200BB7EDC /* TopicsFilterNodeCell.swift */,
+				24887F3A1DBB38A000BB7EDC /* TopicsFilterNodeSectionHeaderView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -388,9 +397,12 @@
 				24758CEB1D620FFA00D8C743 /* UIImage+Ext.swift in Sources */,
 				24742CF71D50FE2E00D16CA9 /* SignInViewController.swift in Sources */,
 				248EE2031DB22C67005E61C6 /* Node.swift in Sources */,
+				24887F351DBAFED300BB7EDC /* SearchViewController.swift in Sources */,
 				24B228ED1DAA877600DEC44D /* TopicsService.swift in Sources */,
 				24742CEF1D50FE2E00D16CA9 /* EditAccountViewController.swift in Sources */,
+				24887F371DBB2FBD00BB7EDC /* TopicsFilterViewController.swift in Sources */,
 				24742CF51D50FE2E00D16CA9 /* SideMenuNavigationController.swift in Sources */,
+				24887F3B1DBB38A000BB7EDC /* TopicsFilterNodeSectionHeaderView.swift in Sources */,
 				24742CF01D50FE2E00D16CA9 /* EditReplyViewController.swift in Sources */,
 				967684771D45D88300EC9BD9 /* Constants.swift in Sources */,
 				24654AE21DAFCE3800BF912B /* TopicsViewController.swift in Sources */,
@@ -416,6 +428,7 @@
 				24742D001D50FE2E00D16CA9 /* ErrorView.swift in Sources */,
 				24A6A3EE1DB7B82500EC89DB /* LikesService.swift in Sources */,
 				244667CB1D6349EF00F76B10 /* RBHUD.swift in Sources */,
+				24887F391DBB334200BB7EDC /* TopicsFilterNodeCell.swift in Sources */,
 				24742CF91D50FE2E00D16CA9 /* WebViewController.swift in Sources */,
 				24742CF21D50FE2E00D16CA9 /* NewTopicViewController.swift in Sources */,
 				24742CFB1D50FE2E00D16CA9 /* DeviceService.swift in Sources */,
