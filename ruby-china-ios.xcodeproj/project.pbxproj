@@ -43,6 +43,7 @@
 		24B228EF1DAA8B1600DEC44D /* Topic.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24B228EE1DAA8B1600DEC44D /* Topic.swift */; };
 		24B228F31DAA972500DEC44D /* String+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24B228F21DAA972500DEC44D /* String+Ext.swift */; };
 		24E5B4001D6B2C82006515E3 /* ThemeNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24E5B3FF1D6B2C82006515E3 /* ThemeNavigationController.swift */; };
+		24FDFBBC1DBBAE06004BB9A6 /* UIBarButtonItem+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24FDFBBB1DBBAE06004BB9A6 /* UIBarButtonItem+Ext.swift */; };
 		961580A71D477A7600B32BDA /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 961580A61D477A7600B32BDA /* Assets.xcassets */; };
 		961F70FA1D6AB0440079212C /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 961F70FC1D6AB0440079212C /* Localizable.strings */; };
 		9670F1901D4235D200128F8A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9670F18F1D4235D200128F8A /* AppDelegate.swift */; };
@@ -93,6 +94,8 @@
 		24B228EE1DAA8B1600DEC44D /* Topic.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Topic.swift; sourceTree = "<group>"; };
 		24B228F21DAA972500DEC44D /* String+Ext.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "String+Ext.swift"; sourceTree = "<group>"; };
 		24E5B3FF1D6B2C82006515E3 /* ThemeNavigationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ThemeNavigationController.swift; sourceTree = "<group>"; };
+		24FDFBBB1DBBAE06004BB9A6 /* UIBarButtonItem+Ext.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIBarButtonItem+Ext.swift"; sourceTree = "<group>"; };
+		24FDFBBD1DBBB53D004BB9A6 /* Ruby China.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Ruby China.entitlements"; sourceTree = "<group>"; };
 		27849C620AD961F60F073D43 /* Pods-ruby-china-ios.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ruby-china-ios.release.xcconfig"; path = "Pods/Target Support Files/Pods-ruby-china-ios/Pods-ruby-china-ios.release.xcconfig"; sourceTree = "<group>"; };
 		3D8873230E620CCF5BBCEE42 /* Pods_ruby_china_ios.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ruby_china_ios.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		961580A61D477A7600B32BDA /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -188,6 +191,7 @@
 				249C0A7E1D75C1E600097458 /* String+Localize.swift */,
 				24B228F21DAA972500DEC44D /* String+Ext.swift */,
 				24A6A3EB1DB796D400EC89DB /* UIScrollView+MJRefreshDefault.swift */,
+				24FDFBBB1DBBAE06004BB9A6 /* UIBarButtonItem+Ext.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -233,6 +237,7 @@
 		9670F18E1D4235D200128F8A /* ruby-china-ios */ = {
 			isa = PBXGroup;
 			children = (
+				24FDFBBD1DBBB53D004BB9A6 /* Ruby China.entitlements */,
 				967684761D45D88300EC9BD9 /* Constants.swift */,
 				9670F18F1D4235D200128F8A /* AppDelegate.swift */,
 				24742CE91D50FE2E00D16CA9 /* Models */,
@@ -401,6 +406,7 @@
 				24887F371DBB2FBD00BB7EDC /* TopicsFilterViewController.swift in Sources */,
 				24742CF51D50FE2E00D16CA9 /* SideMenuNavigationController.swift in Sources */,
 				24887F3B1DBB38A000BB7EDC /* TopicsFilterNodeSectionHeaderView.swift in Sources */,
+				24FDFBBC1DBBAE06004BB9A6 /* UIBarButtonItem+Ext.swift in Sources */,
 				24742CF01D50FE2E00D16CA9 /* EditReplyViewController.swift in Sources */,
 				967684771D45D88300EC9BD9 /* Constants.swift in Sources */,
 				24654AE21DAFCE3800BF912B /* TopicsViewController.swift in Sources */,
@@ -557,6 +563,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				DEVELOPMENT_TEAM = A38T799N53;
+				CODE_SIGN_ENTITLEMENTS = "ruby-china-ios/Ruby China.entitlements";
 				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				INFOPLIST_FILE = "ruby-china-ios/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -576,6 +583,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				DEVELOPMENT_TEAM = A38T799N53;
+				CODE_SIGN_ENTITLEMENTS = "ruby-china-ios/Ruby China.entitlements";
 				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				INFOPLIST_FILE = "ruby-china-ios/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";

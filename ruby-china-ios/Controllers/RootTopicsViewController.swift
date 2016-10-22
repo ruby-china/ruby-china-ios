@@ -17,9 +17,10 @@ class RootTopicsViewController: TopicsViewController {
         super.viewDidLoad()
         
         navigationItem.rightBarButtonItems = [
-            UIBarButtonItem(image: UIImage(named: "new"), style: .Plain, target: self, action: #selector(newTopicAction)),
-            UIBarButtonItem(image: UIImage(named: "search"), style: .Plain, target: self, action: #selector(searchAction)),
-            UIBarButtonItem(image: UIImage(named: "filter"), style: .Plain, target: self, action: #selector(filterAction)),
+            UIBarButtonItem.fixNavigationSpacer(),
+            UIBarButtonItem.customView(image: UIImage(named: "new"), target: self, action: #selector(newTopicAction)),
+            UIBarButtonItem.customView(image: UIImage(named: "search"), target: self, action: #selector(searchAction)),
+            UIBarButtonItem.customView(image: UIImage(named: "filter"), target: self, action: #selector(filterAction)),
         ]
         
         addObserver()

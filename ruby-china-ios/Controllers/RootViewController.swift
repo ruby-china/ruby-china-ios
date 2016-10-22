@@ -26,10 +26,6 @@ class RootViewController: UITabBarController {
         // SideMenuManager.menuAddPanGestureToPresent(toView: )
     }
     
-    private func createSideMenuBarButton(image: UIImage?) -> UIBarButtonItem {
-        return UIBarButtonItem(image: image, style: .Plain, target: self, action: #selector(displaySideMenu))
-    }
-    
     private func setupViewControllers() {
         let topicsController = RootTopicsViewController()
         topicsController.tabBarItem = UITabBarItem(title: "topics".localized, image: UIImage(named: "topic"), tag: kTopicsTag)
@@ -73,7 +69,10 @@ class RootViewController: UITabBarController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        navigationItem.leftBarButtonItem = createSideMenuBarButton(UIImage(named: "menu"))
+        navigationItem.leftBarButtonItems = [
+            UIBarButtonItem.fixNavigationSpacer(),
+            UIBarButtonItem.customView(image: UIImage(named: "menu"), target: self, action: #selector(displaySideMenu))
+        ]
         delegate = self
         setupSideMenu()
         setupViewControllers()

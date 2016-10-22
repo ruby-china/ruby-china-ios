@@ -78,9 +78,9 @@ class WebViewController: VisitableViewController {
     }()
     
     private var topicID: Int?;
-    private var topicFavoriteButton: UIBarButtonItem?
-    private var topicFollowButton: UIBarButtonItem?
-    private var topicLikeButton: UIBarButtonItem?
+    private var topicFavoriteButton: UIButton?
+    private var topicFollowButton: UIButton?
+    private var topicLikeButton: UIButton?
     
     convenience init(path: String) {
         self.init()
@@ -195,8 +195,8 @@ extension WebViewController {
     }
     
     private func addMoreButton() {
-        var rightBarButtonItems = self.navigationItem.rightBarButtonItems ?? [UIBarButtonItem]()
-        let menuButton = UIBarButtonItem(image: UIImage(named: "dropdown"), style: .Plain, target: self, action: #selector(self.showTopicContextMenu))
+        var rightBarButtonItems = self.navigationItem.rightBarButtonItems ?? [UIBarButtonItem.fixNavigationSpacer()]
+        let menuButton = UIBarButtonItem.customView(image: UIImage(named: "dropdown"), target: self, action: #selector(self.showTopicContextMenu))
         rightBarButtonItems.append(menuButton)
         self.navigationItem.rightBarButtonItems = rightBarButtonItems
     }
@@ -216,13 +216,14 @@ private let checkedTag = 1;
 extension WebViewController {
     
     private func addTopicActionButton() {
-        var rightBarButtonItems = self.navigationItem.rightBarButtonItems ?? [UIBarButtonItem]()
-        topicFavoriteButton = UIBarButtonItem(image: UIImage(named: "bookmark"), style: .Plain, target: self, action: #selector(topicFavoriteAction(_:)))
-        rightBarButtonItems.append(topicFavoriteButton!)
-        topicFollowButton = UIBarButtonItem(image: UIImage(named: "invisible"), style: .Plain, target: self, action: #selector(topicFollowAction(_:)))
-        rightBarButtonItems.append(topicFollowButton!)
-        topicLikeButton = UIBarButtonItem(image: UIImage(named: "like"), style: .Plain, target: self, action: #selector(topicLikeAction(_:)))
-        rightBarButtonItems.append(topicLikeButton!)
+        var rightBarButtonItems = self.navigationItem.rightBarButtonItems ?? [UIBarButtonItem.fixNavigationSpacer()]
+        let (item1, button1) = UIBarButtonItem.customView2(image: UIImage(named: "bookmark"), target: self, action: #selector(topicFavoriteAction(_:)))
+        let (item2, button2) = UIBarButtonItem.customView2(image: UIImage(named: "invisible"), target: self, action: #selector(topicFollowAction(_:)))
+        let (item3, button3) = UIBarButtonItem.customView2(image: UIImage(named: "like"), target: self, action: #selector(topicLikeAction(_:)))
+        topicFavoriteButton = button1
+        topicFollowButton = button2
+        topicLikeButton = button3
+        rightBarButtonItems += [item1, item2, item3]
         self.navigationItem.rightBarButtonItems = rightBarButtonItems
         
         self.loadTopicActionButtonStatus()
@@ -241,33 +242,36 @@ extension WebViewController {
             }
             
             if let button = self?.topicFavoriteButton {
-                button.tag = meta.favorited ? checkedTag : uncheckedTag;
-                button.image = UIImage(named: meta.favorited ? "bookmark-filled" : "bookmark")
+                button.tag = meta.favorited ? checkedTag : uncheckedTag
+                let image = UIImage(named: meta.favorited ? "bookmark-filled" : "bookmark")?.imageWithColor(NAVBAR_TINT_COLOR)
+                button.setImage(image, forState: .Normal)
             }
             if let button = self?.topicFollowButton {
-                button.tag = meta.followed ? checkedTag : uncheckedTag;
-                button.image = UIImage(named: meta.followed ? "invisible-filled" : "invisible")
+                button.tag = meta.followed ? checkedTag : uncheckedTag
+                let image = UIImage(named: meta.followed ? "invisible-filled" : "invisible")?.imageWithColor(NAVBAR_TINT_COLOR)
+                button.setImage(image, forState: .Normal)
             }
             if let button = self?.topicLikeButton {
-                button.tag = meta.liked ? checkedTag : uncheckedTag;
-                button.image = UIImage(named: meta.liked ? "like-filled" : "like")
+                button.tag = meta.liked ? checkedTag : uncheckedTag
+                let image = UIImage(named: meta.liked ? "like-filled" : "like")?.imageWithColor(NAVBAR_TINT_COLOR)
+                button.setImage(image, forState: .Normal)
             }
         }
     }
     
-    func topicFavoriteAction(sender: UIBarButtonItem) {
+    func topicFavoriteAction(sender: UIButton) {
         self.topicAction(sender)
     }
     
-    func topicFollowAction(sender: UIBarButtonItem) {
+    func topicFollowAction(sender: UIButton) {
         self.topicAction(sender)
     }
     
-    func topicLikeAction(sender: UIBarButtonItem) {
+    func topicLikeAction(sender: UIButton) {
         self.topicAction(sender)
     }
     
-    private func topicAction(button: UIBarButtonItem) {
+    private func topicAction(button: UIButton) {
         if !OAuth2.shared.isLogined {
             SignInViewController.show()
             return
@@ -302,7 +306,8 @@ extension WebViewController {
             }
             
             RBHUD.success(button.tag == uncheckedTag ? successMessage : "cancelled".localized)
-            button.image = UIImage(named: button.tag == uncheckedTag ? checkedImageNamed : uncheckedImageNamed)
+            let image = UIImage(named: button.tag == uncheckedTag ? checkedImageNamed : uncheckedImageNamed)?.imageWithColor(NAVBAR_TINT_COLOR)
+            button.setImage(image, forState: .Normal)
             button.tag = button.tag == uncheckedTag ? checkedTag : uncheckedTag;
         }
         
