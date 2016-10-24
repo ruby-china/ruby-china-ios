@@ -16,6 +16,7 @@ class RBHUD {
             return
         }
         let hud = MBProgressHUD.showHUDAddedTo(view, animated: true)
+        hud.userInteractionEnabled = false
         hud.customView = UIImageView(image: UIImage(named: "hud-success"))
         hud.mode = .CustomView
         hud.label.text = message
@@ -27,6 +28,7 @@ class RBHUD {
             return
         }
         let hud = MBProgressHUD.showHUDAddedTo(view, animated: true)
+        hud.userInteractionEnabled = false
         hud.mode = .Text
         hud.label.text = message
         hud.hideAnimated(true, afterDelay: 3)
