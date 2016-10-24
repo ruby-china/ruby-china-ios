@@ -176,7 +176,8 @@ extension WebViewController {
     private func urlWithPath(path: String) -> NSURL {
         var urlString = ROOT_URL + path
         if let accessToken = OAuth2.shared.accessToken {
-            urlString += "?access_token=" + accessToken
+            let char = urlString.rangeOfString("?") == nil ? "?" : "&"
+            urlString += "\(char)access_token=\(accessToken)"
         }
         
         return NSURL(string: urlString)!
