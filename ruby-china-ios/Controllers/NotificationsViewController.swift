@@ -14,7 +14,7 @@ class NotificationsViewController: WebViewController {
         
         navigationItem.rightBarButtonItems = [
             UIBarButtonItem.fixNavigationSpacer(),
-            UIBarButtonItem.customView(image: UIImage(named: "trash"), target: self, action: #selector(cleanNotificationsAction))
+            UIBarButtonItem.narrowButtonItem(image: UIImage(named: "trash"), target: self, action: #selector(cleanNotificationsAction))
         ]
     }
     

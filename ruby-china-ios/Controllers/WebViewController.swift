@@ -196,7 +196,7 @@ extension WebViewController {
     
     private func addMoreButton() {
         var rightBarButtonItems = self.navigationItem.rightBarButtonItems ?? [UIBarButtonItem.fixNavigationSpacer()]
-        let menuButton = UIBarButtonItem.customView(image: UIImage(named: "dropdown"), target: self, action: #selector(self.showTopicContextMenu))
+        let menuButton = UIBarButtonItem.narrowButtonItem(image: UIImage(named: "dropdown"), target: self, action: #selector(self.showTopicContextMenu))
         rightBarButtonItems.append(menuButton)
         self.navigationItem.rightBarButtonItems = rightBarButtonItems
     }
@@ -217,9 +217,9 @@ extension WebViewController {
     
     private func addTopicActionButton() {
         var rightBarButtonItems = self.navigationItem.rightBarButtonItems ?? [UIBarButtonItem.fixNavigationSpacer()]
-        let (item1, button1) = UIBarButtonItem.customView2(image: UIImage(named: "bookmark"), target: self, action: #selector(topicFavoriteAction(_:)))
-        let (item2, button2) = UIBarButtonItem.customView2(image: UIImage(named: "invisible"), target: self, action: #selector(topicFollowAction(_:)))
-        let (item3, button3) = UIBarButtonItem.customView2(image: UIImage(named: "like"), target: self, action: #selector(topicLikeAction(_:)))
+        let (item1, button1) = UIBarButtonItem.narrowButtonItem2(image: UIImage(named: "bookmark"), target: self, action: #selector(topicFavoriteAction(_:)))
+        let (item2, button2) = UIBarButtonItem.narrowButtonItem2(image: UIImage(named: "invisible"), target: self, action: #selector(topicFollowAction(_:)))
+        let (item3, button3) = UIBarButtonItem.narrowButtonItem2(image: UIImage(named: "like"), target: self, action: #selector(topicLikeAction(_:)))
         topicFavoriteButton = button1
         topicFollowButton = button2
         topicLikeButton = button3

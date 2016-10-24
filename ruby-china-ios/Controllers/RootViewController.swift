@@ -71,7 +71,7 @@ class RootViewController: UITabBarController {
         
         navigationItem.leftBarButtonItems = [
             UIBarButtonItem.fixNavigationSpacer(),
-            UIBarButtonItem.customView(image: UIImage(named: "menu"), target: self, action: #selector(displaySideMenu))
+            UIBarButtonItem.narrowButtonItem(image: UIImage(named: "menu"), target: self, action: #selector(displaySideMenu))
         ]
         delegate = self
         setupSideMenu()
