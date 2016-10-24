@@ -6,11 +6,11 @@ target 'ruby-china-ios' do
   pod 'Alamofire', '~> 3.0'
   pod 'Heimdallr', '~> 3.0'
   pod 'Router', '~> 1.0'
-  pod 'PKHUD', '~> 3.2'
   pod 'Kingfisher', '~> 2.4'
   pod 'SnapKit', '~> 0.22'
   pod 'FontAwesome.swift', :git => 'https://github.com/thii/FontAwesome.swift.git', :branch => 'swift-2.3'
 
+  pod 'MBProgressHUD'
   pod 'MJRefresh'
   pod 'YYKeyboardManager'
   pod 'UITableView+FDTemplateLayoutCell'

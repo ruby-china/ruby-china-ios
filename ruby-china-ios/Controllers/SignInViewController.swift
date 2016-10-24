@@ -179,6 +179,7 @@ extension SignInViewController: OAuth2Delegate {
             }
         }
         
+        RBHUD.progressHidden()
         RBHUD.error(errorMessage)
     }
 }
