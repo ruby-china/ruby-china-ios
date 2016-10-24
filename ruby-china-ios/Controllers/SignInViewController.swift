@@ -17,53 +17,15 @@ class SignInViewController: UIViewController {
         return controller
     }
     
+    private var appNameLabel: UILabel!
     private var contentView: UIView!
     private var loginField: RBTextField!
     private var passwordField: RBTextField!
     private var loginButton: UIButton!
     
-    private func setupViews() {
-        let margin = CGFloat(20)
-        
-        loginField = RBTextField(frame: CGRectMake(margin, 0, view.frame.width - margin * 2, 44))
-        loginField.clearButtonMode = .WhileEditing
-        loginField.autocorrectionType = .No
-        loginField.keyboardType = .EmailAddress
-        loginField.autocapitalizationType = .None
-        loginField.placeholder = "login name".localized
-        loginField.delegate = self
-        loginField.returnKeyType = .Next
-        loginField.addTarget(self, action: #selector(textFieldDidChanged), forControlEvents: UIControlEvents.EditingChanged)
-        loginField.text = NSUserDefaults.standardUserDefaults().stringForKey("loginName")
-        
-        passwordField = RBTextField(frame: CGRectMake(margin, loginField.frame.maxY + margin, view.frame.width - margin * 2, 44))
-        passwordField.placeholder = "password".localized
-        passwordField.secureTextEntry = true
-        passwordField.delegate = self
-        passwordField.returnKeyType = .Done
-        passwordField.addTarget(self, action: #selector(textFieldDidChanged), forControlEvents: UIControlEvents.EditingChanged)
-        
-        loginButton = UIButton(frame: CGRectMake(margin, passwordField.frame.maxY + margin, view.frame.width - margin * 2, 44))
-        loginButton.setTitle("sign in".localized, forState: .Normal)
-        loginButton.setBackgroundImage(UIImage.fromColor(NAVBAR_BG_COLOR), forState: .Normal)
-        loginButton.setBackgroundImage(UIImage.fromColor(NAVBAR_BORDER_COLOR), forState: .Highlighted)
-        loginButton.setTitleColor(UIColor.whiteColor(), forState: .Normal)
-        loginButton.addTarget(self, action: #selector(actionLogin), forControlEvents: .TouchDown)
-        
-        contentView = UIView(frame: CGRectMake(0, 0, view.frame.width, loginButton.frame.maxY))
-        contentView.center = view.center
-        contentView.autoresizingMask = [.FlexibleTopMargin, .FlexibleBottomMargin]
-        
-        contentView.addSubview(loginField)
-        contentView.addSubview(passwordField)
-        contentView.addSubview(loginButton)
-        view.addSubview(contentView)
-    }
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        title = "sign in".localized
         navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .Cancel, target: self, action: #selector(actionClose))
         navigationItem.rightBarButtonItem = UIBarButtonItem(title: "sign up".localized, style: .Plain, target: self, action: #selector(actionSignup))
         view.backgroundColor = UIColor.whiteColor()
@@ -125,6 +87,63 @@ extension SignInViewController {
     }
 }
 
+// MARK: - private
+
+extension SignInViewController {
+    
+    private func setupViews() {
+        appNameLabel = UILabel()
+        appNameLabel.text = "Ruby China"
+        appNameLabel.textColor = PRIMARY_COLOR
+        appNameLabel.font = UIFont.boldSystemFontOfSize(40)
+        appNameLabel.sizeToFit()
+        
+        let margin = CGFloat(20)
+        
+        loginField = RBTextField(frame: CGRectMake(margin, 0, view.frame.width - margin * 2, 44))
+        loginField.clearButtonMode = .WhileEditing
+        loginField.autocorrectionType = .No
+        loginField.keyboardType = .EmailAddress
+        loginField.autocapitalizationType = .None
+        loginField.placeholder = "login name".localized
+        loginField.delegate = self
+        loginField.returnKeyType = .Next
+        loginField.addTarget(self, action: #selector(textFieldDidChanged), forControlEvents: UIControlEvents.EditingChanged)
+        loginField.text = NSUserDefaults.standardUserDefaults().stringForKey("loginName")
+        
+        passwordField = RBTextField(frame: CGRectMake(margin, loginField.frame.maxY + margin, view.frame.width - margin * 2, 44))
+        passwordField.placeholder = "password".localized
+        passwordField.secureTextEntry = true
+        passwordField.delegate = self
+        passwordField.returnKeyType = .Done
+        passwordField.addTarget(self, action: #selector(textFieldDidChanged), forControlEvents: UIControlEvents.EditingChanged)
+        
+        loginButton = UIButton(frame: CGRectMake(margin, passwordField.frame.maxY + margin, view.frame.width - margin * 2, 44))
+        loginButton.setTitle("sign in".localized, forState: .Normal)
+        loginButton.setBackgroundImage(UIImage.fromColor(NAVBAR_BG_COLOR), forState: .Normal)
+        loginButton.setBackgroundImage(UIImage.fromColor(NAVBAR_BORDER_COLOR), forState: .Highlighted)
+        loginButton.setTitleColor(UIColor.whiteColor(), forState: .Normal)
+        loginButton.addTarget(self, action: #selector(actionLogin), forControlEvents: .TouchDown)
+        
+        contentView = UIView(frame: CGRectMake(0, 0, view.frame.width, loginButton.frame.maxY))
+        contentView.center = view.center
+        contentView.autoresizingMask = [.FlexibleTopMargin, .FlexibleBottomMargin]
+        
+        contentView.addSubview(loginField)
+        contentView.addSubview(passwordField)
+        contentView.addSubview(loginButton)
+        view.addSubview(appNameLabel)
+        view.addSubview(contentView)
+        
+        refreshAppNameLabelCenter()
+    }
+    
+    private func refreshAppNameLabelCenter() {
+        appNameLabel.center = CGPoint(x: contentView.center.x, y: contentView.frame.minY / 2.0)
+    }
+    
+}
+
 extension SignInViewController: YYKeyboardObserver {
     func keyboardChangedWithTransition(transition: YYKeyboardTransition) {
         UIView.animateWithDuration(transition.animationDuration, delay: 0, options: transition.animationOption, animations: {
@@ -135,6 +154,7 @@ extension SignInViewController: YYKeyboardObserver {
                 y = self.view.frame.height * 0.5
             }
             self.contentView.center = CGPoint(x: self.view.frame.width * 0.5, y: y)
+            self.refreshAppNameLabelCenter()
         }, completion: nil)
     }
 }
