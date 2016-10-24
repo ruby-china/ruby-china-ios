@@ -100,7 +100,7 @@ extension TopicsViewController {
         if isLoading { return }
         isLoading = true
         
-        let limit = 20
+        let limit = 40
         TopicsService.list(listType, node_id: nodeID, offset: offset, limit: limit, callback: { [weak self] (statusCode, result) in
             guard let `self` = self else {
                 return
