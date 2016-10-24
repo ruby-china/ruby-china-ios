@@ -559,7 +559,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = C095BB2F4502B2B10DA854CC /* Pods-ruby-china-ios.debug.xcconfig */;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				DEVELOPMENT_TEAM = A38T799N53;
@@ -579,7 +578,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 27849C620AD961F60F073D43 /* Pods-ruby-china-ios.release.xcconfig */;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				DEVELOPMENT_TEAM = A38T799N53;
