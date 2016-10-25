@@ -180,7 +180,7 @@ extension TopicCell {
         }
         
         if let _ = data.suggestedAt {
-            addIcon(name: .ThumbTack, color: UIColor(white: 0.6, alpha: 1))
+            addIcon(name: .AngleDoubleUp, color: UIColor(white: 0.6, alpha: 1))
         }
         if data.excellent {
             addIcon(name: .Diamond, color: PRIMARY_COLOR)
