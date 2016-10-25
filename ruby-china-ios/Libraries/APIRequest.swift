@@ -18,6 +18,12 @@ class APIRequest {
         return _shared
     }
     
+    private lazy var alamofireManager: Alamofire.Manager = {
+        let configuration = NSURLSessionConfiguration.defaultSessionConfiguration()
+        configuration.timeoutIntervalForRequest = 5
+        configuration.timeoutIntervalForResource = 5
+        return Alamofire.Manager(configuration: configuration)
+    }()
     private var headers: [String: String]?
     
     private var _accessToken:  String?
@@ -33,7 +39,7 @@ class APIRequest {
     
     private func _request(method: Alamofire.Method, path: String, parameters: [String: AnyObject]?, callback: APIRequestCallback) {
         // print("headers", headers)
-        Alamofire.request(method, "\(ROOT_URL)\(path)", parameters: parameters, encoding: .URL, headers: headers).responseJSON { response in
+        alamofireManager.request(method, "\(ROOT_URL)\(path)", parameters: parameters, encoding: .URL, headers: headers).responseJSON { response in
             print(method, path, response.response?.statusCode)
             let result = response.data == nil ? nil : JSON(data: response.data!)
             let statusCode = response.response?.statusCode
