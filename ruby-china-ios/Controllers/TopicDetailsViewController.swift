@@ -64,18 +64,6 @@ extension TopicDetailsViewController {
             
             let checked = button.tag == uncheckedTag
             self.setButton(button, checked: checked, likesCount: likesCount)
-            
-            var successMessage = ""
-            if button == topicFavoriteButton {
-                successMessage = "favorited".localized
-            } else if button == topicFollowButton {
-                successMessage = "followed".localized
-            } else if button == topicLikeButton {
-                successMessage = "liked".localized
-            } else {
-                return
-            }
-            RBHUD.success(checked ? successMessage : "cancelled".localized)
         }
         
         if button == topicFavoriteButton {
@@ -160,17 +148,17 @@ extension TopicDetailsViewController {
         if button == topicFavoriteButton {
             checkedImageNamed = "bookmark-filled"
             uncheckedImageNamed = "bookmark"
-            checkedTitle = "已收藏"
-            uncheckedTitle = "收藏"
+            checkedTitle = "favorited".localized
+            uncheckedTitle = "favorites".localized
         } else if button == topicFollowButton {
             checkedImageNamed = "invisible-filled"
             uncheckedImageNamed = "invisible"
-            checkedTitle = "已关注"
-            uncheckedTitle = "关注"
+            checkedTitle = "followed".localized
+            uncheckedTitle = "follow".localized
         } else if button == topicLikeButton {
             checkedImageNamed = "like-filled"
             uncheckedImageNamed = "like"
-            checkedTitle = "\(likesCount ?? 0)个赞"
+            checkedTitle = "\(likesCount ?? 0)\("n like".localized)"
             uncheckedTitle = checkedTitle
         } else {
             return
