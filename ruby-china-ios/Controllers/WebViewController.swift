@@ -40,13 +40,6 @@ class WebViewController: VisitableViewController {
         router.bind("/topics/new") { [weak self] (req) in
             self?.pageTitle = "title new topic".localized
         }
-        router.bind("/topics/:id") { [weak self] (req) in
-            if let `self` = self, idString = req.param("id"), id = Int(idString) {
-                self.topicID = id
-                self.addMoreButton()
-                self.addTopicActionButton()
-            }
-        }
         router.bind("/topics/:id/edit") { [weak self] (req) in
             self?.pageTitle = "title edit topic".localized
         }
@@ -77,11 +70,6 @@ class WebViewController: VisitableViewController {
         return view
     }()
     
-    private var topicID: Int?;
-    private var topicFavoriteButton: UIButton?
-    private var topicFollowButton: UIButton?
-    private var topicLikeButton: UIButton?
-    
     convenience init(path: String) {
         self.init()
         currentPath = path
@@ -109,6 +97,13 @@ class WebViewController: VisitableViewController {
 
 extension WebViewController {
     
+    func addMoreButton() {
+        var rightBarButtonItems = self.navigationItem.rightBarButtonItems ?? [UIBarButtonItem.fixNavigationSpacer()]
+        let menuButton = UIBarButtonItem.narrowButtonItem(image: UIImage(named: "dropdown"), target: self, action: #selector(self.showTopicContextMenu))
+        rightBarButtonItems.append(menuButton)
+        self.navigationItem.rightBarButtonItems = rightBarButtonItems
+    }
+    
     func presentError(error: Error) {
         errorView.error = error
         view.addSubview(errorView)
@@ -126,7 +121,6 @@ extension WebViewController {
         visitableURL = urlWithPath(currentPath)
         if isViewLoaded() {
             reloadVisitable()
-            loadTopicActionButtonStatus()
         }
     }
     
@@ -195,146 +189,9 @@ extension WebViewController {
         }
     }
     
-    private func addMoreButton() {
-        var rightBarButtonItems = self.navigationItem.rightBarButtonItems ?? [UIBarButtonItem.fixNavigationSpacer()]
-        let menuButton = UIBarButtonItem.narrowButtonItem(image: UIImage(named: "dropdown"), target: self, action: #selector(self.showTopicContextMenu))
-        rightBarButtonItems.append(menuButton)
-        self.navigationItem.rightBarButtonItems = rightBarButtonItems
-    }
-    
     private func share(textToShare: String, url: NSURL) {
         let objectsToShare = [textToShare, url]
         let activityViewController = UIActivityViewController(activityItems: objectsToShare, applicationActivities: nil)
         self.presentViewController(activityViewController, animated: true, completion: nil)
     }
-}
-
-// MARK: - 帖子相关功能
-
-private let uncheckedTag = 0;
-private let checkedTag = 1;
-
-extension WebViewController {
-    
-    private func addTopicActionButton() {
-        var rightBarButtonItems = self.navigationItem.rightBarButtonItems ?? [UIBarButtonItem.fixNavigationSpacer()]
-        let (item1, button1) = UIBarButtonItem.narrowButtonItem2(image: UIImage(named: "bookmark"), target: self, action: #selector(topicFavoriteAction(_:)))
-        let (item2, button2) = UIBarButtonItem.narrowButtonItem2(image: UIImage(named: "invisible"), target: self, action: #selector(topicFollowAction(_:)))
-        let (item3, button3) = UIBarButtonItem.narrowButtonItem2(image: UIImage(named: "like"), target: self, action: #selector(topicLikeAction(_:)))
-        topicFavoriteButton = button1
-        topicFollowButton = button2
-        topicLikeButton = button3
-        rightBarButtonItems += [item1, item2, item3]
-        self.navigationItem.rightBarButtonItems = rightBarButtonItems
-        
-        self.loadTopicActionButtonStatus()
-    }
-    
-    private func loadTopicActionButtonStatus() {
-        guard let id = topicID where OAuth2.shared.isLogined else {
-            return
-        }
-        TopicsService.detail(id) { [weak self] (statusCode, topic, topicMeta) in
-            guard let code = statusCode where code == 200 else {
-                return
-            }
-            guard let meta = topicMeta else {
-                return
-            }
-            
-            if let button = self?.topicFavoriteButton {
-                button.tag = meta.favorited ? checkedTag : uncheckedTag
-                let image = UIImage(named: meta.favorited ? "bookmark-filled" : "bookmark")?.imageWithColor(NAVBAR_TINT_COLOR)
-                button.setImage(image, forState: .Normal)
-            }
-            if let button = self?.topicFollowButton {
-                button.tag = meta.followed ? checkedTag : uncheckedTag
-                let image = UIImage(named: meta.followed ? "invisible-filled" : "invisible")?.imageWithColor(NAVBAR_TINT_COLOR)
-                button.setImage(image, forState: .Normal)
-            }
-            if let button = self?.topicLikeButton {
-                button.tag = meta.liked ? checkedTag : uncheckedTag
-                let image = UIImage(named: meta.liked ? "like-filled" : "like")?.imageWithColor(NAVBAR_TINT_COLOR)
-                button.setImage(image, forState: .Normal)
-            }
-        }
-    }
-    
-    func topicFavoriteAction(sender: UIButton) {
-        self.topicAction(sender)
-    }
-    
-    func topicFollowAction(sender: UIButton) {
-        self.topicAction(sender)
-    }
-    
-    func topicLikeAction(sender: UIButton) {
-        self.topicAction(sender)
-    }
-    
-    private func topicAction(button: UIButton) {
-        if !OAuth2.shared.isLogined {
-            SignInViewController.show()
-            return
-        }
-        
-        guard let id = topicID else {
-            return
-        }
-        
-        func callback(statusCode: Int?) {
-            guard let code = statusCode where code == 200 else {
-                return
-            }
-            
-            var successMessage = ""
-            var checkedImageNamed = ""
-            var uncheckedImageNamed = ""
-            if button == topicFavoriteButton {
-                successMessage = "favorited".localized
-                checkedImageNamed = "bookmark-filled"
-                uncheckedImageNamed = "bookmark"
-            } else if button == topicFollowButton {
-                successMessage = "followed".localized
-                checkedImageNamed = "invisible-filled"
-                uncheckedImageNamed = "invisible"
-            } else if button == topicLikeButton {
-                successMessage = "liked".localized
-                checkedImageNamed = "like-filled"
-                uncheckedImageNamed = "like"
-            } else {
-                return
-            }
-            
-            RBHUD.success(button.tag == uncheckedTag ? successMessage : "cancelled".localized)
-            let image = UIImage(named: button.tag == uncheckedTag ? checkedImageNamed : uncheckedImageNamed)?.imageWithColor(NAVBAR_TINT_COLOR)
-            button.setImage(image, forState: .Normal)
-            button.tag = button.tag == uncheckedTag ? checkedTag : uncheckedTag;
-        }
-        
-        if button == topicFavoriteButton {
-            if button.tag == uncheckedTag {
-                TopicsService.favorite(id, callback: callback)
-            } else {
-                TopicsService.unfavorite(id, callback: callback)
-            }
-        } else if button == topicFollowButton {
-            if button.tag == uncheckedTag {
-                TopicsService.follow(id, callback: callback)
-            } else {
-                TopicsService.unfollow(id, callback: callback)
-            }
-        } else if button == topicLikeButton {
-            if button.tag == uncheckedTag {
-                LikesService.like(.topic, id: id, callback: { (statusCode, count) in
-                    callback(statusCode)
-                })
-            } else {
-                LikesService.unlike(.topic, id: id, callback:{ (statusCode, count) in
-                    callback(statusCode)
-                })
-            }
-        }
-    }
-    
 }

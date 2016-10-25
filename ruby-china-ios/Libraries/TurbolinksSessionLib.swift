@@ -48,6 +48,14 @@ class TurbolinksSessionLib: NSObject {
             let path = "/topics/\(req.param("topic_id")!)/replies/\(req.param("id")!)/edit"
             self.presentEditReplyController(path)
         }
+        
+        router.bind("/topics/:id") { req in
+            if let idString = req.param("id"), id = Int(idString),
+                navigationController = UIApplication.currentViewController()?.navigationController {
+                let vc = TopicDetailsViewController(topicID: id)
+                navigationController.pushViewController(vc, animated: true)
+            }
+        }
         return router
     }()
     
