@@ -99,7 +99,7 @@ extension WebViewController {
     
     func addMoreButton() {
         var rightBarButtonItems = self.navigationItem.rightBarButtonItems ?? [UIBarButtonItem.fixNavigationSpacer()]
-        let menuButton = UIBarButtonItem.narrowButtonItem(image: UIImage(named: "dropdown"), target: self, action: #selector(self.showTopicContextMenu))
+        let menuButton = UIBarButtonItem.narrowButtonItem(image: UIImage(named: "dropdown"), target: self, action: #selector(moreAction))
         rightBarButtonItems.append(menuButton)
         self.navigationItem.rightBarButtonItems = rightBarButtonItems
     }
@@ -129,32 +129,25 @@ extension WebViewController {
         reloadVisitable()
     }
     
-    func showTopicContextMenu() {
+    func shareAction() {
+        guard let webView = self.visitableView.webView,
+            title = webView.title,
+            url = webView.URL,
+            components = NSURLComponents(URL: url, resolvingAgainstBaseURL: false) else {
+            return
+        }
+        components.query = nil
+        components.fragment = nil
+        self.share(title, url: components.URL!)
+    }
+    
+    func moreAction() {
         let sheet = UIAlertController(title: nil, message: nil, preferredStyle: .ActionSheet)
+        
         let shareAction = UIAlertAction(title: "share".localized, style: .Default, handler: { [weak self] action in
-            guard let `self` = self,
-                webView = self.visitableView.webView,
-                title = webView.title,
-                url = webView.URL,
-                components = NSURLComponents(URL: url, resolvingAgainstBaseURL: false) else {
-                    return
-            }
-            components.query = nil
-            components.fragment = nil
-            self.share(title, url: components.URL!)
+            self?.shareAction()
         })
         sheet.addAction(shareAction)
-        let moveToFooterAction = UIAlertAction(title: "move to footer".localized, style: .Default, handler: { [weak self] action in
-            guard let `self` = self, scrollView = self.visitableView.webView?.scrollView else {
-                return
-            }
-            let offset = CGPoint(x: 0, y: scrollView.contentSize.height - scrollView.frame.height)
-            if offset.y < 0 {
-                return
-            }
-            scrollView.setContentOffset(offset, animated: true)
-        })
-        sheet.addAction(moveToFooterAction)
         
         let cancelAction = UIAlertAction(title: "cancel".localized, style: .Cancel, handler: nil)
         sheet.addAction(cancelAction)

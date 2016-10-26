@@ -39,7 +39,7 @@
 "get accessToken failed" = "获取 accessToken 失败，请重试！";
 "move to footer" = "移到尾部";
 "favorites" = "收藏";
-"favorited" = "已收藏";
+"cancel favorites" = "取消收藏";
 "follow" = "关注";
 "followed" = "已关注";
 "n like" = "个赞";

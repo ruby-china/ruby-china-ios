@@ -11,9 +11,9 @@ import UIKit
 class TopicDetailsViewController: WebViewController {
     
     private var topicID: Int!;
-    private var topicFavoriteButton: ImageTitleView!
-    private var topicFollowButton: ImageTitleView!
-    private var topicLikeButton: ImageTitleView!
+    private var followButton: ImageTitleView!
+    private var likeButton: ImageTitleView!
+    private var favorited: Bool = false
     
     
     convenience init(topicID: Int) {
@@ -66,25 +66,59 @@ extension TopicDetailsViewController {
             self.setButton(button, checked: checked, likesCount: likesCount)
         }
         
-        if button == topicFavoriteButton {
-            if button.tag == uncheckedTag {
-                TopicsService.favorite(id, callback: callback1)
-            } else {
-                TopicsService.unfavorite(id, callback: callback1)
-            }
-        } else if button == topicFollowButton {
+        if button == followButton {
             if button.tag == uncheckedTag {
                 TopicsService.follow(id, callback: callback1)
             } else {
                 TopicsService.unfollow(id, callback: callback1)
             }
-        } else if button == topicLikeButton {
+        } else if button == likeButton {
             if button.tag == uncheckedTag {
                 LikesService.like(.topic, id: id, callback: callback2)
             } else {
                 LikesService.unlike(.topic, id: id, callback: callback2)
             }
         }
+    }
+    
+    override func moreAction() {
+        let sheet = UIAlertController(title: nil, message: nil, preferredStyle: .ActionSheet)
+        
+        let favoriteTitle = (favorited ? "cancel favorites" : "favorites").localized
+        let favoriteAction = UIAlertAction(title: favoriteTitle, style: .Default) { [weak self] action in
+            if !OAuth2.shared.isLogined {
+                SignInViewController.show()
+                return
+            }
+            
+            guard let `self` = self, id = self.topicID else {
+                return
+            }
+            
+            if self.favorited {
+                TopicsService.unfavorite(id) { [weak self] (response) in
+                    if let code = response.response?.statusCode where code == 200 {
+                        self?.favorited = false
+                    }
+                }
+            } else {
+                TopicsService.favorite(id) { [weak self] (response) in
+                    if let code = response.response?.statusCode where code == 200 {
+                        self?.favorited = true
+                    }
+                }
+            }
+        }
+        sheet.addAction(favoriteAction)
+        
+        let shareAction = UIAlertAction(title: "share".localized, style: .Default) { [weak self] action in
+            self?.shareAction()
+        }
+        sheet.addAction(shareAction)
+        
+        let cancelAction = UIAlertAction(title: "cancel".localized, style: .Cancel, handler: nil)
+        sheet.addAction(cancelAction)
+        self.presentViewController(sheet, animated: true, completion: nil)
     }
     
 }
@@ -110,22 +144,19 @@ extension TopicDetailsViewController {
     
     private func addTopicActionButton() {
         var rightBarButtonItems = navigationItem.rightBarButtonItems ?? [UIBarButtonItem.fixNavigationSpacer()]
-        topicFavoriteButton = createButton(icon: UIImage(named: "bookmark"), target: self, action: #selector(topicAction(_:)))
-        topicFollowButton = createButton(icon: UIImage(named: "invisible"), target: self, action: #selector(topicAction(_:)))
-        topicLikeButton = createButton(icon: UIImage(named: "like"), target: self, action: #selector(topicAction(_:)))
+        followButton = createButton(icon: UIImage(named: "invisible"), target: self, action: #selector(topicAction(_:)))
+        likeButton = createButton(icon: UIImage(named: "like"), target: self, action: #selector(topicAction(_:)))
         rightBarButtonItems += [
-            UIBarButtonItem(customView: topicFavoriteButton),
-            UIBarButtonItem(customView: topicFollowButton),
-            UIBarButtonItem(customView: topicLikeButton),
+            UIBarButtonItem(customView: followButton),
+            UIBarButtonItem(customView: likeButton),
         ]
         navigationItem.rightBarButtonItems = rightBarButtonItems
     }
     
     private func loadTopicActionButtonStatus() {
         guard let id = topicID where OAuth2.shared.isLogined else {
-            self.setButton(self.topicFavoriteButton, checked: false)
-            self.setButton(self.topicFollowButton, checked: false)
-            self.setButton(self.topicLikeButton, checked: false)
+            self.setButton(followButton, checked: false)
+            self.setButton(likeButton, checked: false)
             return
         }
         TopicsService.detail(id) { [weak self] (response, topic, topicMeta) in
@@ -136,26 +167,21 @@ extension TopicDetailsViewController {
                 return
             }
             
-            self.setButton(self.topicFavoriteButton, checked: meta.favorited)
-            self.setButton(self.topicFollowButton, checked: meta.followed)
-            self.setButton(self.topicLikeButton, checked: meta.liked, likesCount: topic.likesCount)
+            self.favorited = meta.favorited
+            self.setButton(self.followButton, checked: meta.followed)
+            self.setButton(self.likeButton, checked: meta.liked, likesCount: topic.likesCount)
         }
     }
     
     private func setButton(button: ImageTitleView, checked: Bool, likesCount: Int? = nil) {
         var checkedImageNamed, uncheckedImageNamed: String!
         var checkedTitle, uncheckedTitle: String!
-        if button == topicFavoriteButton {
-            checkedImageNamed = "bookmark-filled"
-            uncheckedImageNamed = "bookmark"
-            checkedTitle = "favorited".localized
-            uncheckedTitle = "favorites".localized
-        } else if button == topicFollowButton {
+        if button == followButton {
             checkedImageNamed = "invisible-filled"
             uncheckedImageNamed = "invisible"
             checkedTitle = "followed".localized
             uncheckedTitle = "follow".localized
-        } else if button == topicLikeButton {
+        } else if button == likeButton {
             checkedImageNamed = "like-filled"
             uncheckedImageNamed = "like"
             checkedTitle = "\(likesCount ?? 0)\("n like".localized)"

@@ -39,7 +39,7 @@
 "get accessToken failed" = "Get accessToken failed, Please try again!";
 "move to footer" = "Move to footer";
 "favorites" = "Favorites";
-"favorited" = "Favorited";
+"cancel favorites" = "Cancel Favorites";
 "follow" = "Follow";
 "followed" = "Followed";
 "n like" = "";

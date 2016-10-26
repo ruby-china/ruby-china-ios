@@ -75,9 +75,9 @@ class TopicsService {
     ///
     /// - parameter id:       帖子ID
     /// - parameter callback: 完成时回调
-    static func favorite(id: Int, callback: (response: APICallbackResponse) -> ()) {
+    static func favorite(id: Int, callback: ((response: APICallbackResponse) -> ())? = nil) {
         APIRequest.shared.post("/api/v3/topics/\(id)/favorite", parameters: nil) { (response, result) in
-            callback(response: response)
+            callback?(response: response)
         }
     }
     
@@ -85,9 +85,9 @@ class TopicsService {
     ///
     /// - parameter id:       帖子ID
     /// - parameter callback: 完成时回调
-    static func unfavorite(id: Int, callback: (response: APICallbackResponse) -> ()) {
+    static func unfavorite(id: Int, callback: ((response: APICallbackResponse) -> ())? = nil) {
         APIRequest.shared.post("/api/v3/topics/\(id)/unfavorite", parameters: nil) { (response, result) in
-            callback(response: response)
+            callback?(response: response)
         }
     }
     
