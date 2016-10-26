@@ -30,7 +30,7 @@ class TopicsService {
     /// - parameter offset:   分页起始位置
     /// - parameter limit:    分页大小，范围 1..150
     /// - parameter callback: 完成时回调
-    static func list(type: ListType = .last_actived, node_id: Int = 0, offset: Int = 0, limit: Int = 20, callback: (statusCode: Int?, result: [Topic]?) -> ()) {
+    static func list(type: ListType = .last_actived, node_id: Int = 0, offset: Int = 0, limit: Int = 20, callback: (response: APICallbackResponse, result: [Topic]?) -> ()) {
         
         var parameters = [String: AnyObject]()
         parameters["type"] = type.rawValue
@@ -40,9 +40,9 @@ class TopicsService {
             parameters["node_id"] = node_id
         }
         
-        APIRequest.shared.get("/api/v3/topics.json", parameters: parameters) { (statusCode, result) in
+        APIRequest.shared.get("/api/v3/topics.json", parameters: parameters) { (response, result) in
             guard let _ = result, topicList = result!["topics"].array where topicList.count > 0 else {
-                callback(statusCode: statusCode, result: nil)
+                callback(response: response, result: nil)
                 return
             }
             
@@ -51,7 +51,7 @@ class TopicsService {
                 topics.append(Topic(json: topicJSON))
             }
             
-            callback(statusCode: statusCode, result: topics)
+            callback(response: response, result: topics)
         }
     }
     
@@ -59,15 +59,15 @@ class TopicsService {
     ///
     /// - parameter id:       帖子ID
     /// - parameter callback: 完成时回调
-    static func detail(id: Int, callback: (statusCode: Int?, topic: Topic?, topicMeta: TopicMeta?) -> ()) {
-        APIRequest.shared.get("/api/v3/topics/\(id)", parameters: nil) { (statusCode, result) in
+    static func detail(id: Int, callback: (response: APICallbackResponse, topic: Topic?, topicMeta: TopicMeta?) -> ()) {
+        APIRequest.shared.get("/api/v3/topics/\(id)", parameters: nil) { (response, result) in
             guard let result = result else {
-                callback(statusCode: statusCode, topic: nil, topicMeta: nil)
+                callback(response: response, topic: nil, topicMeta: nil)
                 return
             }
             let topic: Topic? = result["topic"].isEmpty ? nil : Topic(json: result["topic"])
             let topicMeta: TopicMeta? = result["meta"].isEmpty ? nil :TopicMeta(json: result["meta"])
-            callback(statusCode: statusCode, topic: topic, topicMeta: topicMeta)
+            callback(response: response, topic: topic, topicMeta: topicMeta)
         }
     }
     
@@ -75,9 +75,9 @@ class TopicsService {
     ///
     /// - parameter id:       帖子ID
     /// - parameter callback: 完成时回调
-    static func favorite(id: Int, callback: (statusCode: Int?) -> ()) {
-        APIRequest.shared.post("/api/v3/topics/\(id)/favorite", parameters: nil) { (statusCode, result) in
-            callback(statusCode: statusCode)
+    static func favorite(id: Int, callback: (response: APICallbackResponse) -> ()) {
+        APIRequest.shared.post("/api/v3/topics/\(id)/favorite", parameters: nil) { (response, result) in
+            callback(response: response)
         }
     }
     
@@ -85,9 +85,9 @@ class TopicsService {
     ///
     /// - parameter id:       帖子ID
     /// - parameter callback: 完成时回调
-    static func unfavorite(id: Int, callback: (statusCode: Int?) -> ()) {
-        APIRequest.shared.post("/api/v3/topics/\(id)/unfavorite", parameters: nil) { (statusCode, result) in
-            callback(statusCode: statusCode)
+    static func unfavorite(id: Int, callback: (response: APICallbackResponse) -> ()) {
+        APIRequest.shared.post("/api/v3/topics/\(id)/unfavorite", parameters: nil) { (response, result) in
+            callback(response: response)
         }
     }
     
@@ -95,9 +95,9 @@ class TopicsService {
     ///
     /// - parameter id:       帖子ID
     /// - parameter callback: 完成时回调
-    static func follow(id: Int, callback: (statusCode: Int?) -> ()) {
-        APIRequest.shared.post("/api/v3/topics/\(id)/follow", parameters: nil) { (statusCode, result) in
-            callback(statusCode: statusCode)
+    static func follow(id: Int, callback: (response: APICallbackResponse) -> ()) {
+        APIRequest.shared.post("/api/v3/topics/\(id)/follow", parameters: nil) { (response, result) in
+            callback(response: response)
         }
     }
     
@@ -105,9 +105,9 @@ class TopicsService {
     ///
     /// - parameter id:       帖子ID
     /// - parameter callback: 完成时回调
-    static func unfollow(id: Int, callback: (statusCode: Int?) -> ()) {
-        APIRequest.shared.post("/api/v3/topics/\(id)/unfollow", parameters: nil) { (statusCode, result) in
-            callback(statusCode: statusCode)
+    static func unfollow(id: Int, callback: (response: APICallbackResponse) -> ()) {
+        APIRequest.shared.post("/api/v3/topics/\(id)/unfollow", parameters: nil) { (response, result) in
+            callback(response: response)
         }
     }
 }

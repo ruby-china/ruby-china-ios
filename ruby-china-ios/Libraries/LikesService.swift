@@ -21,11 +21,11 @@ class LikesService {
     /// - parameter type:     关联类型
     /// - parameter id:       关联ID
     /// - parameter callback: 完成时回调
-    static func like(type: Type, id: Int, callback: (statusCode: Int?, count: Int?) -> ()) {
+    static func like(type: Type, id: Int, callback: (response: APICallbackResponse, count: Int?) -> ()) {
         let parameters: [String : AnyObject] = ["obj_type": type.rawValue, "obj_id": id]
-        APIRequest.shared.post("/api/v3/likes", parameters: parameters) { (statusCode, result) in
+        APIRequest.shared.post("/api/v3/likes", parameters: parameters) { (response, result) in
             let count = result == nil ? nil : result!["count"].int
-            callback(statusCode: statusCode, count: count)
+            callback(response: response, count: count)
         }
     }
     
@@ -34,11 +34,11 @@ class LikesService {
     /// - parameter type:     关联类型
     /// - parameter id:       关联ID
     /// - parameter callback: 完成时回调
-    static func unlike(type: Type, id: Int, callback: (statusCode: Int?, count: Int?) -> ()) {
+    static func unlike(type: Type, id: Int, callback: (response: APICallbackResponse, count: Int?) -> ()) {
         let parameters: [String : AnyObject] = ["obj_type": type.rawValue, "obj_id": id]
-        APIRequest.shared.delete("/api/v3/likes", parameters: parameters) { (statusCode, result) in
+        APIRequest.shared.delete("/api/v3/likes", parameters: parameters) { (response, result) in
             let count = result == nil ? nil : result!["count"].int
-            callback(statusCode: statusCode, count: count)
+            callback(response: response, count: count)
         }
     }
     

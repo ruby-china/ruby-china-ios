@@ -54,11 +54,11 @@ extension TopicDetailsViewController {
             return
         }
         
-        func callback1(statusCode: Int?) {
-            callback2(statusCode, likesCount: nil)
+        func callback1(response: APICallbackResponse) {
+            callback2(response, likesCount: nil)
         }
-        func callback2(statusCode: Int?, likesCount: Int?) {
-            guard let code = statusCode where code == 200 else {
+        func callback2(response: APICallbackResponse, likesCount: Int?) {
+            guard let code = response.response?.statusCode where code == 200 else {
                 return
             }
             
@@ -128,8 +128,8 @@ extension TopicDetailsViewController {
             self.setButton(self.topicLikeButton, checked: false)
             return
         }
-        TopicsService.detail(id) { [weak self] (statusCode, topic, topicMeta) in
-            guard let code = statusCode where code == 200 else {
+        TopicsService.detail(id) { [weak self] (response, topic, topicMeta) in
+            guard let code = response.response?.statusCode where code == 200 else {
                 return
             }
             guard let `self` = self, topic = topic, meta = topicMeta else {

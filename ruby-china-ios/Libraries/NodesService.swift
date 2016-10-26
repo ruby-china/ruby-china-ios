@@ -13,7 +13,7 @@ class NodesService {
     /// 获取节点列表
     ///
     /// - parameter callback: 完成时回调
-    static func list(callback: (statusCode: Int?, result: JSON?) -> ()) {
+    static func list(callback: (response: APICallbackResponse, result: JSON?) -> ()) {
         APIRequest.shared.get("/api/v3/nodes.json", parameters: nil, callback: callback)
     }
     
@@ -21,12 +21,12 @@ class NodesService {
     ///
     /// - parameter nodeID:   节点ID
     /// - parameter callback: 完成时回调
-    static func info(nodeID: Int, callback: (statusCode: Int?, result: Node?) -> ()) {
-        APIRequest.shared.get("/api/v3/nodes/\(nodeID).json", parameters: nil) { (statusCode, result) in
+    static func info(nodeID: Int, callback: (response: APICallbackResponse, result: Node?) -> ()) {
+        APIRequest.shared.get("/api/v3/nodes/\(nodeID).json", parameters: nil) { (response, result) in
             if let _ = result where result!["node"].isEmpty == false {
-                callback(statusCode: statusCode, result: Node(json: result!["node"]))
+                callback(response: response, result: Node(json: result!["node"]))
             } else {
-                callback(statusCode: statusCode, result: nil)
+                callback(response: response, result: nil)
             }
         }
     }

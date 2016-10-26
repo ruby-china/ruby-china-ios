@@ -199,7 +199,7 @@ extension TopicsFilterViewController {
     }
     
     private func loadNodes() {
-        NodesService.list { [weak self] (statusCode, result) in
+        NodesService.list { [weak self] (response, result) in
             guard let `self` = self, result = result else {
                 return
             }
