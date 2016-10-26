@@ -14,7 +14,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     private func initAppearance() {
         UINavigationBar.appearance().theme = true
-        UISegmentedControl.appearance().theme = true
         UITabBar.appearance().theme = true
         
         UITabBarItem.appearance().setTitleTextAttributes([NSForegroundColorAttributeName: BLACK_COLOR], forState: .Normal)
@@ -115,15 +114,6 @@ extension UINavigationBar {
             self.layer.shadowRadius = 1
             self.layer.shadowColor = UIColor.blackColor().CGColor
             self.layer.shadowOpacity = 0.05
-        }
-    }
-}
-
-extension UISegmentedControl {
-    var theme: Bool {
-        get { return false }
-        set {
-            self.tintColor = NAVBAR_TINT_COLOR
         }
     }
 }
