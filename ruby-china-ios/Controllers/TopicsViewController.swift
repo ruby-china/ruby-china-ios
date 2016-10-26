@@ -18,6 +18,8 @@ class TopicsViewController: UITableViewController {
     private var nodeID = 0
     private var topicList: [Topic]?
     
+    private var errorView: ErrorView?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -28,6 +30,7 @@ class TopicsViewController: UITableViewController {
         tableView.tableFooterView = UIView()
         tableView.separatorInset = UIEdgeInsetsZero
         tableView.headerWithRefreshingBlock { [weak self] in
+            self?.errorView?.removeFromSuperview()
             self?.load(offset: 0)
         }
         tableView.footerWithRefreshingBlock { [weak self] in
@@ -88,6 +91,8 @@ class TopicsViewController: UITableViewController {
     
 }
 
+// MARK: - public
+
 extension TopicsViewController {
     
     func load(listType listType: TopicsService.ListType, nodeID: Int, offset: Int) {
@@ -95,6 +100,12 @@ extension TopicsViewController {
         self.nodeID = nodeID
         self.tableView.mj_header.beginRefreshing()
     }
+    
+}
+
+// MARK: - private
+
+extension TopicsViewController {
     
     private func load(offset offset: Int) {
         if isLoading { return }
@@ -115,13 +126,60 @@ extension TopicsViewController {
             }
             self.tableView.mj_footer.hidden = result == nil ? true : (result!.count < limit)
             
-            if self.topicList == nil || offset == 0 {
-                self.topicList = result
-            } else if let topics = result {
-                self.topicList! += topics
+            if let topics = result {
+                if self.topicList == nil || offset == 0 {
+                    self.topicList = topics
+                } else {
+                    self.topicList! += topics
+                }
+                self.tableView.reloadData()
+            } else {
+                var error: Error!
+                switch response.result {
+                case .Success:
+                    guard let statusCode = response.response?.statusCode else {
+                        return
+                    }
+                    switch statusCode {
+                    case 404:
+                        error = Error.HTTPNotFoundError
+                    default:
+                        error = Error(HTTPStatusCode: statusCode)
+                    }
+                case .Failure(let err):
+                    error = Error(title: "网络连接错误", message: err.localizedDescription)
+                }
+                
+                if let list = self.topicList where list.count > 0 {
+                    RBHUD.error(error.message)
+                } else {
+                    self.presentError(error)
+                }
             }
-            self.tableView.reloadData()
         })
+    }
+    
+    private func presentError(error: Error) {
+        errorView?.removeFromSuperview()
+        
+        errorView = NSBundle.mainBundle().loadNibNamed("ErrorView", owner: self, options: nil)!.first as? ErrorView
+        if errorView == nil {
+            return
+        }
+        
+        errorView!.retryButton.addTarget(self, action: #selector(errorViewRetryAction), forControlEvents: .TouchUpInside)
+        errorView!.error = error
+        view.addSubview(errorView!)
+        errorView!.snp_remakeConstraints { (make) in
+            make.edges.equalToSuperview()
+            var screenSize = UIScreen.mainScreen().bounds.size
+            screenSize.height -= 64 + 49
+            make.size.equalTo(screenSize)
+        }
+    }
+    
+    func errorViewRetryAction() {
+        tableView.mj_header.beginRefreshing()
     }
     
     private func loadNodeInfo() {
