@@ -43,7 +43,6 @@
 		24B228EF1DAA8B1600DEC44D /* Topic.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24B228EE1DAA8B1600DEC44D /* Topic.swift */; };
 		24B228F31DAA972500DEC44D /* String+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24B228F21DAA972500DEC44D /* String+Ext.swift */; };
 		24BA25451DBF858D004A801C /* TopicDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24BA25441DBF858D004A801C /* TopicDetailsViewController.swift */; };
-		24BA25491DBF9C54004A801C /* ImageTitleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24BA25481DBF9C54004A801C /* ImageTitleView.swift */; };
 		24E5B4001D6B2C82006515E3 /* ThemeNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24E5B3FF1D6B2C82006515E3 /* ThemeNavigationController.swift */; };
 		24FDFBBC1DBBAE06004BB9A6 /* UIBarButtonItem+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24FDFBBB1DBBAE06004BB9A6 /* UIBarButtonItem+Ext.swift */; };
 		961580A71D477A7600B32BDA /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 961580A61D477A7600B32BDA /* Assets.xcassets */; };
@@ -96,7 +95,6 @@
 		24B228EE1DAA8B1600DEC44D /* Topic.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Topic.swift; sourceTree = "<group>"; };
 		24B228F21DAA972500DEC44D /* String+Ext.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "String+Ext.swift"; sourceTree = "<group>"; };
 		24BA25441DBF858D004A801C /* TopicDetailsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TopicDetailsViewController.swift; sourceTree = "<group>"; };
-		24BA25481DBF9C54004A801C /* ImageTitleView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageTitleView.swift; sourceTree = "<group>"; };
 		24E5B3FF1D6B2C82006515E3 /* ThemeNavigationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ThemeNavigationController.swift; sourceTree = "<group>"; };
 		24FDFBBB1DBBAE06004BB9A6 /* UIBarButtonItem+Ext.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIBarButtonItem+Ext.swift"; sourceTree = "<group>"; };
 		24FDFBBD1DBBB53D004BB9A6 /* Ruby China.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Ruby China.entitlements"; sourceTree = "<group>"; };
@@ -184,7 +182,6 @@
 				2463030D1DAE7BEF00EF26AB /* TopicCell.swift */,
 				24887F381DBB334200BB7EDC /* TopicsFilterNodeCell.swift */,
 				24887F3A1DBB38A000BB7EDC /* TopicsFilterNodeSectionHeaderView.swift */,
-				24BA25481DBF9C54004A801C /* ImageTitleView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -408,7 +405,6 @@
 				248EE2031DB22C67005E61C6 /* Node.swift in Sources */,
 				24887F351DBAFED300BB7EDC /* SearchViewController.swift in Sources */,
 				24B228ED1DAA877600DEC44D /* TopicsService.swift in Sources */,
-				24BA25491DBF9C54004A801C /* ImageTitleView.swift in Sources */,
 				24742CEF1D50FE2E00D16CA9 /* EditAccountViewController.swift in Sources */,
 				24887F371DBB2FBD00BB7EDC /* TopicsFilterViewController.swift in Sources */,
 				24742CF51D50FE2E00D16CA9 /* SideMenuNavigationController.swift in Sources */,

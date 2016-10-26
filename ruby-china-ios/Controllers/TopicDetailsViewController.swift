@@ -11,8 +11,8 @@ import UIKit
 class TopicDetailsViewController: WebViewController {
     
     private var topicID: Int!;
-    private var followButton: ImageTitleView!
-    private var likeButton: ImageTitleView!
+    private var followButton: UIButton!
+    private var likeButton: UIButton!
     private var favorited: Bool = false
     
     
@@ -42,15 +42,31 @@ class TopicDetailsViewController: WebViewController {
 
 extension TopicDetailsViewController {
     
-    func topicAction(sender: AnyObject) {
+    override func moreAction() {
+        let sheet = UIAlertController(title: nil, message: nil, preferredStyle: .ActionSheet)
+        
+        let favoriteTitle = (favorited ? "cancel favorites" : "favorites").localized
+        let favoriteAction = UIAlertAction(title: favoriteTitle, style: .Default) { [weak self] action in
+            self?.favoriteAction()
+        }
+        sheet.addAction(favoriteAction)
+        
+        let shareAction = UIAlertAction(title: "share".localized, style: .Default) { [weak self] action in
+            self?.shareAction()
+        }
+        sheet.addAction(shareAction)
+        
+        let cancelAction = UIAlertAction(title: "cancel".localized, style: .Cancel, handler: nil)
+        sheet.addAction(cancelAction)
+        self.presentViewController(sheet, animated: true, completion: nil)
+    }
+    
+    func topicAction(button: UIButton) {
         if !OAuth2.shared.isLogined {
             SignInViewController.show()
             return
         }
         guard let id = topicID else {
-            return
-        }
-        guard let tap = sender as? UITapGestureRecognizer, button = tap.view as? ImageTitleView else {
             return
         }
         
@@ -81,44 +97,25 @@ extension TopicDetailsViewController {
         }
     }
     
-    override func moreAction() {
-        let sheet = UIAlertController(title: nil, message: nil, preferredStyle: .ActionSheet)
+    func favoriteAction() {
+        if !OAuth2.shared.isLogined {
+            SignInViewController.show()
+            return
+        }
         
-        let favoriteTitle = (favorited ? "cancel favorites" : "favorites").localized
-        let favoriteAction = UIAlertAction(title: favoriteTitle, style: .Default) { [weak self] action in
-            if !OAuth2.shared.isLogined {
-                SignInViewController.show()
-                return
-            }
-            
-            guard let `self` = self, id = self.topicID else {
-                return
-            }
-            
-            if self.favorited {
-                TopicsService.unfavorite(id) { [weak self] (response) in
-                    if let code = response.response?.statusCode where code == 200 {
-                        self?.favorited = false
-                    }
+        if favorited {
+            TopicsService.unfavorite(topicID) { [weak self] (response) in
+                if let code = response.response?.statusCode where code == 200 {
+                    self?.favorited = false
                 }
-            } else {
-                TopicsService.favorite(id) { [weak self] (response) in
-                    if let code = response.response?.statusCode where code == 200 {
-                        self?.favorited = true
-                    }
+            }
+        } else {
+            TopicsService.favorite(topicID) { [weak self] (response) in
+                if let code = response.response?.statusCode where code == 200 {
+                    self?.favorited = true
                 }
             }
         }
-        sheet.addAction(favoriteAction)
-        
-        let shareAction = UIAlertAction(title: "share".localized, style: .Default) { [weak self] action in
-            self?.shareAction()
-        }
-        sheet.addAction(shareAction)
-        
-        let cancelAction = UIAlertAction(title: "cancel".localized, style: .Cancel, handler: nil)
-        sheet.addAction(cancelAction)
-        self.presentViewController(sheet, animated: true, completion: nil)
     }
     
 }
@@ -130,26 +127,19 @@ private let checkedTag = 1;
 
 extension TopicDetailsViewController {
     
-    private func createButton(icon icon: UIImage?, target: AnyObject, action: Selector) -> ImageTitleView {
-        let button = ImageTitleView()
-        button.titleLabel.font = UIFont.systemFontOfSize(11)
-        button.titleLabel.text = title
-        button.titleLabel.textColor = NAVBAR_TINT_COLOR
-        button.titleLabel.textAlignment = .Center
-        button.imageView.image = icon?.imageWithColor(NAVBAR_TINT_COLOR)
-        button.frame = CGRect(x: 0, y: 0, width: 44, height: button.imageView.image!.size.height + button.titleLabel.font.lineHeight)
-        button.addGestureRecognizer(UITapGestureRecognizer(target: target, action: action))
-        return button
-    }
-    
     private func addTopicActionButton() {
         var rightBarButtonItems = navigationItem.rightBarButtonItems ?? [UIBarButtonItem.fixNavigationSpacer()]
-        followButton = createButton(icon: UIImage(named: "invisible"), target: self, action: #selector(topicAction(_:)))
-        likeButton = createButton(icon: UIImage(named: "like"), target: self, action: #selector(topicAction(_:)))
-        rightBarButtonItems += [
-            UIBarButtonItem(customView: followButton),
-            UIBarButtonItem(customView: likeButton),
-        ]
+        
+        let (followItem, followBtn) = UIBarButtonItem.narrowButtonItem2(image: UIImage(named: "invisible"), target: self, action: #selector(topicAction(_:)))
+        followButton = followBtn
+        
+        let (likeItem, likeBtn) = UIBarButtonItem.narrowButtonItem2(image: UIImage(named: "like"), target: self, action: #selector(topicAction(_:)))
+        likeBtn.frame.size.width = 50
+        likeBtn.titleLabel?.font = UIFont.systemFontOfSize(13)
+        likeBtn.setTitleColor(NAVBAR_TINT_COLOR, forState: .Normal)
+        likeButton = likeBtn
+        
+        rightBarButtonItems += [followItem, likeItem]
         navigationItem.rightBarButtonItems = rightBarButtonItems
     }
     
@@ -173,29 +163,30 @@ extension TopicDetailsViewController {
         }
     }
     
-    private func setButton(button: ImageTitleView, checked: Bool, likesCount: Int? = nil) {
+    private func setButton(button: UIButton, checked: Bool, likesCount: Int? = nil) {
         var checkedImageNamed, uncheckedImageNamed: String!
-        var checkedTitle, uncheckedTitle: String!
+        var title: String?
         if button == followButton {
             checkedImageNamed = "invisible-filled"
             uncheckedImageNamed = "invisible"
-            checkedTitle = "followed".localized
-            uncheckedTitle = "follow".localized
         } else if button == likeButton {
             checkedImageNamed = "like-filled"
             uncheckedImageNamed = "like"
-            checkedTitle = "\(likesCount ?? 0)\("n like".localized)"
-            uncheckedTitle = checkedTitle
+            title = " \(likesCount ?? 0)"
         } else {
             return
         }
         
         button.tag = checked ? checkedTag : uncheckedTag
-        let image = UIImage(named: checked ? checkedImageNamed : uncheckedImageNamed)?.imageWithColor(NAVBAR_TINT_COLOR)
-        button.imageView.image = image
-        button.titleLabel.text = checked ? checkedTitle : uncheckedTitle
-        if checked {
-            button.showImageZoomAnimation()
+        let image = UIImage(named: checked ? checkedImageNamed : uncheckedImageNamed)
+        button.setImage(image?.imageWithColor(NAVBAR_TINT_COLOR), forState: .Normal)
+        button.setTitle(title, forState: .Normal)
+        // 选中动画
+        if let imageView = button.imageView where checked {
+            imageView.transform = CGAffineTransformMakeScale(0.0, 0.0)
+            UIView.animateWithDuration(0.3, delay: 0, usingSpringWithDamping: 0.5, initialSpringVelocity: 20, options: UIViewAnimationOptions.CurveLinear, animations: {
+                imageView.transform = CGAffineTransformMakeScale(1, 1)
+            }, completion: nil)
         }
     }
 }
