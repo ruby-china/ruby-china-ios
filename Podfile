@@ -9,6 +9,7 @@ target 'ruby-china-ios' do
   pod 'Kingfisher', '~> 2.4'
   pod 'SnapKit', '~> 0.22'
   pod 'FontAwesome.swift', :git => 'https://github.com/thii/FontAwesome.swift.git', :branch => 'swift-2.3'
+  pod 'SKPhotoBrowser', '~> 3.1'
 
   pod 'MBProgressHUD'
   pod 'MJRefresh'

@@ -10,6 +10,7 @@ import Turbolinks
 import WebKit
 import Router
 import SafariServices
+import SKPhotoBrowser
 
 class TurbolinksSessionLib: NSObject {
     static let sharedInstance: TurbolinksSessionLib = {
@@ -168,6 +169,18 @@ class TurbolinksSessionLib: NSObject {
         UIApplication.currentViewController()?.presentViewController(navController, animated: true, completion: nil)
     }
     
+    private func presentImageBrowserController(url: NSURL) {
+        if (SKCache.sharedCache.imageCache as? CustomImageCache) == nil {
+            SKCache.sharedCache.imageCache = CustomImageCache()
+        }
+        
+        let photo = SKPhoto.photoWithImageURL(url.absoluteString!)
+        photo.shouldCachePhotoURLImage = true
+        
+        let browser = SKPhotoBrowser(photos: [photo])
+        UIApplication.currentViewController()?.presentViewController(browser, animated: true, completion: nil)
+    }
+    
     private func pushNodeTopicsController(nodeID: Int) {
         let controller = TopicsViewController()
         controller.load(listType: .last_actived, nodeID: nodeID, offset: 0)
@@ -241,7 +254,10 @@ extension TurbolinksSessionLib: WKNavigationDelegate {
         }
         
         if let url = navigationAction.request.URL {
-            if let host = url.host where host != NSURL(string: ROOT_URL)!.host! {
+            if let ext = url.pathExtension?.lowercaseString where (["jpg", "png", "gif"].filter{ ext.hasPrefix($0) }).count > 0 {
+                // 查看图片
+                presentImageBrowserController(url)
+            } else if let host = url.host where host != NSURL(string: ROOT_URL)!.host! {
                 // 外部网站, open in SafariView
                 safariOpen(url)
             } else if let path = url.path {
