@@ -17,6 +17,9 @@ extension UIScrollView {
     func headerWithRefreshingBlock(block: MJRefreshComponentRefreshingBlock) -> () {
         let header = MJRefreshNormalHeader(refreshingBlock: block)
         header.lastUpdatedTimeLabel.hidden = true
+        if let color = header.stateLabel?.textColor, image = UIImage(named: "refresh-arrow")?.imageWithColor(color) {
+            header.arrowView.image = image
+        }
         self.mj_header = header
     }
     
