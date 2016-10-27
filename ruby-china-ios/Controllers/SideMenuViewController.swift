@@ -70,7 +70,7 @@ class SideMenuViewController: UITableViewController {
                 cell.imageView?.image = UIImage(named: "copyright")!.imageWithRenderingMode(.AlwaysTemplate)
                 cell.imageView?.tintColor = UIColor(red: 246 / 255.0, green: 191 / 255.0, blue: 50 / 255.0, alpha: 1)
             } else {
-                cell.textLabel!.text = "Version \(APP_VERSION).\(build)"
+                cell.textLabel!.text = "Version \(APP_VERSION) (build \(build))"
                 cell.imageView?.image = UIImage(named: "versions")!.imageWithRenderingMode(.AlwaysTemplate)
                 cell.imageView?.tintColor = UIColor(red: 87 / 255.0, green: 187 / 255.0, blue: 138 / 255.0, alpha: 1)
             }
