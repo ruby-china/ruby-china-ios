@@ -26,12 +26,8 @@ class RootViewController: UITabBarController {
         // SideMenuManager.menuAddPanGestureToPresent(toView: )
     }
     
-    private func createSideMenuBarButton(image: UIImage?) -> UIBarButtonItem {
-        return UIBarButtonItem(image: image, style: .Plain, target: self, action: #selector(displaySideMenu))
-    }
-    
     private func setupViewControllers() {
-        let topicsController = TopicsViewController(path: "/topics")
+        let topicsController = RootTopicsViewController()
         topicsController.tabBarItem = UITabBarItem(title: "topics".localized, image: UIImage(named: "topic"), tag: kTopicsTag)
         
         let pagesController = WebViewController(path: "/wiki")
@@ -73,7 +69,10 @@ class RootViewController: UITabBarController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        navigationItem.leftBarButtonItem = createSideMenuBarButton(UIImage(named: "menu"))
+        navigationItem.leftBarButtonItems = [
+            UIBarButtonItem.fixNavigationSpacer(),
+            UIBarButtonItem.narrowButtonItem(image: UIImage(named: "menu"), target: self, action: #selector(displaySideMenu))
+        ]
         delegate = self
         setupSideMenu()
         setupViewControllers()
@@ -99,35 +98,19 @@ class RootViewController: UITabBarController {
         }
     }
     
-    private func presentSignInViewController(onDidAuthenticate: () -> Void) {
-        let controller = SignInViewController()
-        controller.onDidAuthenticate = { sender in
-            onDidAuthenticate()
-        }
-        let navController = ThemeNavigationController(rootViewController: controller)
-        presentViewController(navController, animated: true, completion: nil)
-    }
-    
     private func resetNavigationItem(viewController: UIViewController) {
+        navigationItem.title = viewController.navigationItem.title
         navigationItem.titleView = viewController.navigationItem.titleView
-        navigationItem.rightBarButtonItem = viewController.navigationItem.rightBarButtonItem
+        navigationItem.rightBarButtonItems = viewController.navigationItem.rightBarButtonItems
     }
     
     func updateLoginState() {
         if let viewController = selectedViewController where OAuth2.shared.currentUser == nil {
             switch viewController.tabBarItem.tag {
             case kFavoritesTag, kNotificationsTag:
-                let topicsController = viewControllers![0] as! TopicsViewController;
+                let topicsController = viewControllers![0]
                 selectedViewController = topicsController
                 resetNavigationItem(topicsController)
-                
-                // 在通知界面退出登录切换到话题界面，这时界面没有显示 WebView，只显示了截图，不能操作界面。
-                // 虽然设置 selectedViewController 的代码已经走了遍 willAppear 和 didAppear，但 Turbolinks 没有激活话题界面的 WebView。
-                // 先用下面的代码解决一下。
-                dispatch_async(dispatch_get_main_queue(), {
-                    topicsController.viewWillAppear(false)
-                    topicsController.viewDidAppear(false)
-                })
             default: break
             }
         }
@@ -167,9 +150,9 @@ extension RootViewController: UITabBarControllerDelegate {
     func tabBarController(tabBarController: UITabBarController, shouldSelectViewController viewController: UIViewController) -> Bool {
         let tag = viewController.tabBarItem.tag
         if (tag == kFavoritesTag || tag == kNotificationsTag) && !OAuth2.shared.isLogined {
-            presentSignInViewController() {
-                self.selectedViewController = viewController
-                self.resetNavigationItem(viewController)
+            SignInViewController.show().onDidAuthenticate = { [weak self] (sender) in
+                self?.selectedViewController = viewController
+                self?.resetNavigationItem(viewController)
             }
             return false
         }

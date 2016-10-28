@@ -6,25 +6,43 @@
 //  Copyright © 2016年 ruby-china. All rights reserved.
 //
 
-import PKHUD
+import MBProgressHUD
+
+private var hud: MBProgressHUD?
 
 class RBHUD {
     static func success(message: String?) {
-        HUD.allowsInteraction = true
-        HUD.flash(.LabeledSuccess(title: nil, subtitle: message), delay: 2.0)
+        guard let view = UIApplication.sharedApplication().keyWindow else {
+            return
+        }
+        let hud = MBProgressHUD.showHUDAddedTo(view, animated: true)
+        hud.userInteractionEnabled = false
+        hud.customView = UIImageView(image: UIImage(named: "hud-success"))
+        hud.mode = .CustomView
+        hud.label.text = message
+        hud.hideAnimated(true, afterDelay: 3)
     }
     
     static func error(message: String?) {
-        HUD.allowsInteraction = true
-        HUD.flash(.LabeledError(title: nil, subtitle: message), delay: 2.0)
+        guard let view = UIApplication.sharedApplication().keyWindow else {
+            return
+        }
+        let hud = MBProgressHUD.showHUDAddedTo(view, animated: true)
+        hud.userInteractionEnabled = false
+        hud.mode = .Text
+        hud.label.text = message
+        hud.hideAnimated(true, afterDelay: 3)
     }
     
     static func progress(message: String?) {
-        HUD.allowsInteraction = false
-        HUD.show(.LabeledProgress(title: nil, subtitle: message))
+        guard let view = UIApplication.sharedApplication().keyWindow else {
+            return
+        }
+        hud = MBProgressHUD.showHUDAddedTo(view, animated: true)
+        hud?.label.text = message;
     }
     
     static func progressHidden() {
-        HUD.hide()
+        hud?.hideAnimated(true)
     }
 }

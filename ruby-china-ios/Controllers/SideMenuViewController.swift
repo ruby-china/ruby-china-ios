@@ -8,6 +8,7 @@
 
 import UIKit
 import Router
+import Kingfisher
 
 class SideMenuViewController: UITableViewController {
     private lazy var router = Router()
@@ -22,7 +23,6 @@ class SideMenuViewController: UITableViewController {
         UIColor(red: 79 / 255.0, green: 195 / 255.0, blue: 247 / 255.0, alpha: 1),
     ]
     
-    private let version = NSBundle.mainBundle().infoDictionary!["CFBundleShortVersionString"] as! String
     private let build = NSBundle.mainBundle().infoDictionary!["CFBundleVersion"] as! String
     
     override func viewDidLoad() {
@@ -39,16 +39,6 @@ class SideMenuViewController: UITableViewController {
         tableView.dataSource = self
         
         initRouter()
-    }
-    
-    func initRouter() {
-        router.bind("/logout") { (req) in
-            OAuth2.shared.logout()
-        }
-        router.bind("/account/sign_up") { (req) in
-            let url = NSURL(string: "\(ROOT_URL)/account/sign_up")!
-            UIApplication.sharedApplication().openURL(url)
-        }
     }
     
     override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
@@ -80,7 +70,7 @@ class SideMenuViewController: UITableViewController {
                 cell.imageView?.image = UIImage(named: "copyright")!.imageWithRenderingMode(.AlwaysTemplate)
                 cell.imageView?.tintColor = UIColor(red: 246 / 255.0, green: 191 / 255.0, blue: 50 / 255.0, alpha: 1)
             } else {
-                cell.textLabel!.text = "Version \(version).\(build)"
+                cell.textLabel!.text = "Version \(APP_VERSION) (build \(build))"
                 cell.imageView?.image = UIImage(named: "versions")!.imageWithRenderingMode(.AlwaysTemplate)
                 cell.imageView?.tintColor = UIColor(red: 87 / 255.0, green: 187 / 255.0, blue: 138 / 255.0, alpha: 1)
             }
@@ -105,6 +95,12 @@ class SideMenuViewController: UITableViewController {
         }
     }
     
+}
+
+// MARK: - action
+
+extension SideMenuViewController {
+    
     func updateLoginState() {
         if let user = OAuth2.shared.currentUser where OAuth2.shared.isLogined {
             menuItems = [user.login, "edit account".localized, "notes".localized, "sign out".localized]
@@ -116,11 +112,8 @@ class SideMenuViewController: UITableViewController {
             ]
             menuItemPaths = ["/\(user.login)", "/account/edit", "/notes", "/logout"]
             
-            downloadUserAvatar({ [weak self] (avatar) in
-                guard let `self` = self else {
-                    return
-                }
-                guard let avatarImage = avatar.drawRectWithRoundedCorner(radius: 11, CGSizeMake(22, 22)) else {
+            KingfisherManager.sharedManager.retrieveImageWithURL(user.avatarUrl, optionsInfo: nil, progressBlock: nil, completionHandler: { [weak self] (image, error, cacheType, imageURL) in
+                guard let `self` = self, avatarImage = image?.drawRectWithRoundedCorner(radius: 11, CGSizeMake(22, 22)) else {
                     return
                 }
                 self.menuItemIcons[0] = avatarImage
@@ -138,7 +131,23 @@ class SideMenuViewController: UITableViewController {
         self.tableView.reloadData()
     }
     
-    func actionWithPath(path: String) {
+}
+
+// MARK: - private
+
+extension SideMenuViewController {
+    
+    private func initRouter() {
+        router.bind("/logout") { (req) in
+            OAuth2.shared.logout()
+        }
+        router.bind("/account/sign_up") { (req) in
+            let url = NSURL(string: "\(ROOT_URL)/account/sign_up")!
+            UIApplication.sharedApplication().openURL(url)
+        }
+    }
+    
+    private func actionWithPath(path: String) {
         let matchedRoute = router.match(NSURL(string: path)!)
         if (matchedRoute == nil) {
             dismissViewControllerAnimated(true, completion: {
@@ -147,18 +156,4 @@ class SideMenuViewController: UITableViewController {
         }
     }
     
-    private func downloadUserAvatar(onComplate: (avatar: UIImage) -> Void) {
-        let downloadTask = NSURLSession.sharedSession().dataTaskWithURL(OAuth2.shared.currentUser!.avatarUrl) { (data, response, error) in
-            if let error = error {
-                print(error)
-                return
-            }
-            if let data = data {
-                if let avatar = UIImage(data: data) {
-                    onComplate(avatar: avatar)
-                }
-            }
-        }
-        downloadTask.resume()
-    }
 }

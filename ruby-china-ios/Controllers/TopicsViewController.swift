@@ -1,77 +1,190 @@
 //
-//  TopicsViewController.swift
+//  TopicsTableViewController.swift
 //  ruby-china-ios
 //
-//  Created by 柯磊 on 16/8/2.
+//  Created by 柯磊 on 16/10/13.
 //  Copyright © 2016年 ruby-china. All rights reserved.
 //
 
 import UIKit
+import UITableView_FDTemplateLayoutCell
 
-class TopicsViewController: WebViewController {
-    private var disappearTime: NSDate?
+class TopicsViewController: UITableViewController {
+
+    private let kCellReuseIdentifier = "TOPIC_CELL"
+    
+    private var isLoading = false
+    private var listType = TopicsService.ListType.popular
+    private var nodeID = 0
+    private var topicList: [Topic]?
+    
+    private var errorView: ErrorView?
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        let filterSegment = UISegmentedControl(items: ["default".localized, "popular".localized, "latest".localized, "jobs".localized])
-        filterSegment.selectedSegmentIndex = 0
-        filterSegment.addTarget(self, action: #selector(filterChangedAction), forControlEvents: .ValueChanged)
+        clearsSelectionOnViewWillAppear = true
         
-        navigationItem.titleView = filterSegment
+        tableView.registerClass(TopicCell.self, forCellReuseIdentifier: kCellReuseIdentifier)
+        tableView.separatorColor = UIColor(white: 0.94, alpha: 1)
+        tableView.tableFooterView = UIView()
+        tableView.separatorInset = UIEdgeInsetsZero
+        tableView.headerWithRefreshingBlock { [weak self] in
+            self?.errorView?.removeFromSuperview()
+            self?.load(offset: 0)
+        }
+        tableView.footerWithRefreshingBlock { [weak self] in
+            guard let `self` = self else {
+                return
+            }
+            self.load(offset: self.topicList!.count)
+        }
         
-        navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(named: "new"), style: .Plain, target: self, action: #selector(newTopicAction))
-        
-        addObserver()
-    }
-    
-    override func viewWillAppear(animated: Bool) {
-        super.viewWillAppear(animated)
-        autoRefreshContent()
-    }
-    
-    override func viewDidDisappear(animated: Bool) {
-        super.viewDidDisappear(animated)
-        resetDisappearTime()
-    }
-    
-    func filterChangedAction(sender: UISegmentedControl) {
-        switch sender.selectedSegmentIndex {
-        case 1:
-            TurbolinksSessionLib.sharedInstance.actionToPath("/topics/popular", withAction: .Restore)
-        case 2:
-            TurbolinksSessionLib.sharedInstance.actionToPath("/topics/last", withAction: .Restore)
-        case 3:
-            TurbolinksSessionLib.sharedInstance.actionToPath("/jobs", withAction: .Restore)
-        default:
-            TurbolinksSessionLib.sharedInstance.actionToPath("/topics", withAction: .Restore)
+        if (nodeID > 0) {
+            loadNodeInfo()
         }
     }
-    
-    func newTopicAction() {
-        TurbolinksSessionLib.sharedInstance.actionToPath("/topics/new", withAction: .Replace)
+
+    // MARK: - Table view data source
+
+    override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return topicList == nil ? 0 : topicList!.count
     }
     
-    private func addObserver() {
-        NSNotificationCenter.defaultCenter().addObserverForName(UIApplicationDidBecomeActiveNotification, object: nil, queue: nil) { [weak self](notification) in
-            self?.autoRefreshContent()
+    override func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+        let data = topicList![indexPath.row]
+        return tableView.fd_heightForCellWithIdentifier(kCellReuseIdentifier, configuration: { (cell) in
+            if let cell = cell as? TopicCell {
+                cell.data = data
+            }
+        })
+    }
+
+    override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCellWithIdentifier(kCellReuseIdentifier, forIndexPath: indexPath) as! TopicCell
+        cell.data = topicList![indexPath.row]
+        cell.onUserClick = { (data) in
+            guard let topic = data else {
+                return
+            }
+            TurbolinksSessionLib.sharedInstance.actionToPath("/\(topic.user.login)", withAction: .Advance)
         }
-        NSNotificationCenter.defaultCenter().addObserverForName(UIApplicationWillResignActiveNotification, object: nil, queue: nil) { [weak self](notification) in
-            self?.resetDisappearTime()
+        cell.onNodeClick = { [weak self] (data) in
+            guard let `self` = self, topic = data else {
+                return
+            }
+            
+            if (self.nodeID > 0) {
+                // 已经在节点帖子列表界面，再点击节点，则不再打开节点帖子界面，而直接进入帖子
+                TurbolinksSessionLib.sharedInstance.actionToPath("/topics/\(topic.id)", withAction: .Advance)
+            } else {
+                TurbolinksSessionLib.sharedInstance.actionToPath("/topics/node\(topic.nodeID)", withAction: .Advance)
+            }
         }
+        return cell
+    }
+
+    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        let data = topicList![indexPath.row]
+        TurbolinksSessionLib.sharedInstance.actionToPath("/topics/\(data.id)", withAction: .Advance)
     }
     
-    private func resetDisappearTime() {
-        disappearTime = NSDate()
+}
+
+// MARK: - public
+
+extension TopicsViewController {
+    
+    func load(listType listType: TopicsService.ListType, nodeID: Int, offset: Int) {
+        self.listType = listType
+        self.nodeID = nodeID
+        self.tableView.mj_header.beginRefreshing()
     }
     
-    private func autoRefreshContent() {
-        guard let disappearTime = disappearTime else {
+}
+
+// MARK: - private
+
+extension TopicsViewController {
+    
+    private func load(offset offset: Int) {
+        if isLoading { return }
+        isLoading = true
+        
+        let limit = 40
+        TopicsService.list(listType, node_id: nodeID, offset: offset, limit: limit, callback: { [weak self] (response, result) in
+            guard let `self` = self else {
+                return
+            }
+            self.isLoading = false
+            
+            if (self.tableView.mj_header.isRefreshing()) {
+                self.tableView.mj_header.endRefreshing()
+            }
+            if (self.tableView.mj_footer.isRefreshing()) {
+                self.tableView.mj_footer.endRefreshing()
+            }
+            self.tableView.mj_footer.hidden = result == nil ? true : (result!.count < limit)
+            
+            if let topics = result {
+                if self.topicList == nil || offset == 0 {
+                    self.topicList = topics
+                } else {
+                    self.topicList! += topics
+                }
+                self.tableView.reloadData()
+            } else {
+                var error: Error!
+                switch response.result {
+                case .Success:
+                    guard let statusCode = response.response?.statusCode else {
+                        return
+                    }
+                    switch statusCode {
+                    case 404:
+                        error = Error.HTTPNotFoundError
+                    default:
+                        error = Error(HTTPStatusCode: statusCode)
+                    }
+                case .Failure(let err):
+                    error = Error(title: "网络连接错误", message: err.localizedDescription)
+                }
+                
+                if let list = self.topicList where list.count > 0 {
+                    RBHUD.error(error.message)
+                } else {
+                    self.presentError(error)
+                }
+            }
+        })
+    }
+    
+    private func presentError(error: Error) {
+        errorView?.removeFromSuperview()
+        
+        errorView = NSBundle.mainBundle().loadNibNamed("ErrorView", owner: self, options: nil)!.first as? ErrorView
+        if errorView == nil {
             return
         }
-        if -disappearTime.timeIntervalSinceNow > (60 * 60 * 2.0) {
-            TurbolinksSessionLib.sharedInstance.visitableDidRequestRefresh(self)
+        
+        errorView!.retryButton.addTarget(self, action: #selector(errorViewRetryAction), forControlEvents: .TouchUpInside)
+        errorView!.error = error
+        view.addSubview(errorView!)
+        errorView!.snp_remakeConstraints { (make) in
+            make.edges.equalToSuperview()
+            var screenSize = UIScreen.mainScreen().bounds.size
+            screenSize.height -= 64 + 49
+            make.size.equalTo(screenSize)
         }
-        self.disappearTime = nil
+    }
+    
+    func errorViewRetryAction() {
+        tableView.mj_header.beginRefreshing()
+    }
+    
+    private func loadNodeInfo() {
+        NodesService.info(nodeID) { [weak self] (statusCode, result) in
+            self?.title = result == nil ? "title node".localized : result!.name;
+        }
     }
 }

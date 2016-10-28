@@ -8,26 +8,29 @@
 
 class TopicsService {
 
+    /// list接口排序类型
+    ///
+    /// - last_actived: 最近回复
+    /// - recent:       最近的
+    /// - no_reply:     无回复的
+    /// - popular:      受欢迎的
+    /// - excellent:    精华
     enum ListType: String {
-        /// 活跃的
         case last_actived
-        /// 最近的
         case recent
-        /// 无回复的
         case no_reply
-        /// 受欢迎的
         case popular
-        /// 精华
         case excellent
     }
     
     /// 获取帖子列表
     ///
-    /// - parameter type:    排序类型
-    /// - parameter node_id: 节点编号，传大于 0 时返回该节点的帖子
-    /// - parameter offset:  分页起始位置
-    /// - parameter limit:   分页大小，范围 1..150
-    static func list(type: ListType = .last_actived, node_id: Int = 0, offset: Int = 0, limit: Int = 20, callback: (statusCode: Int?, result: [Topic]?) -> ()) {
+    /// - parameter type:     排序类型
+    /// - parameter node_id:  节点编号，传大于 0 时返回该节点的帖子
+    /// - parameter offset:   分页起始位置
+    /// - parameter limit:    分页大小，范围 1..150
+    /// - parameter callback: 完成时回调
+    static func list(type: ListType = .last_actived, node_id: Int = 0, offset: Int = 0, limit: Int = 20, callback: (response: APICallbackResponse, result: [Topic]?) -> ()) {
         
         var parameters = [String: AnyObject]()
         parameters["type"] = type.rawValue
@@ -37,21 +40,74 @@ class TopicsService {
             parameters["node_id"] = node_id
         }
         
-        APIRequest.shared.get("/api/v3/topics.json", parameters: parameters) { (statusCode, result) in
-            var topics: [Topic]? = nil
-            
+        APIRequest.shared.get("/api/v3/topics.json", parameters: parameters) { (response, result) in
             guard let _ = result, topicList = result!["topics"].array where topicList.count > 0 else {
-                callback(statusCode: statusCode, result: topics)
+                callback(response: response, result: nil)
                 return
             }
             
-            topics = [Topic]()
+            var topics = [Topic]()
             for topicJSON in topicList {
-                topics!.append(Topic(json: topicJSON))
+                topics.append(Topic(json: topicJSON))
             }
             
-            callback(statusCode: statusCode, result: topics)
+            callback(response: response, result: topics)
         }
     }
     
+    /// 帖子详情
+    ///
+    /// - parameter id:       帖子ID
+    /// - parameter callback: 完成时回调
+    static func detail(id: Int, callback: (response: APICallbackResponse, topic: Topic?, topicMeta: TopicMeta?) -> ()) {
+        APIRequest.shared.get("/api/v3/topics/\(id)", parameters: nil) { (response, result) in
+            guard let result = result else {
+                callback(response: response, topic: nil, topicMeta: nil)
+                return
+            }
+            let topic: Topic? = result["topic"].isEmpty ? nil : Topic(json: result["topic"])
+            let topicMeta: TopicMeta? = result["meta"].isEmpty ? nil :TopicMeta(json: result["meta"])
+            callback(response: response, topic: topic, topicMeta: topicMeta)
+        }
+    }
+    
+    /// 收藏帖子
+    ///
+    /// - parameter id:       帖子ID
+    /// - parameter callback: 完成时回调
+    static func favorite(id: Int, callback: ((response: APICallbackResponse) -> ())? = nil) {
+        APIRequest.shared.post("/api/v3/topics/\(id)/favorite", parameters: nil) { (response, result) in
+            callback?(response: response)
+        }
+    }
+    
+    /// 取消收藏
+    ///
+    /// - parameter id:       帖子ID
+    /// - parameter callback: 完成时回调
+    static func unfavorite(id: Int, callback: ((response: APICallbackResponse) -> ())? = nil) {
+        APIRequest.shared.post("/api/v3/topics/\(id)/unfavorite", parameters: nil) { (response, result) in
+            callback?(response: response)
+        }
+    }
+    
+    /// 关注帖子
+    ///
+    /// - parameter id:       帖子ID
+    /// - parameter callback: 完成时回调
+    static func follow(id: Int, callback: (response: APICallbackResponse) -> ()) {
+        APIRequest.shared.post("/api/v3/topics/\(id)/follow", parameters: nil) { (response, result) in
+            callback(response: response)
+        }
+    }
+    
+    /// 取消关注
+    ///
+    /// - parameter id:       帖子ID
+    /// - parameter callback: 完成时回调
+    static func unfollow(id: Int, callback: (response: APICallbackResponse) -> ()) {
+        APIRequest.shared.post("/api/v3/topics/\(id)/unfollow", parameters: nil) { (response, result) in
+            callback(response: response)
+        }
+    }
 }

@@ -26,7 +26,14 @@ struct Topic {
     
     /// 精华帖
     let excellent: Bool
+    /// 已删除
     let deleted: Bool
+    /// 置顶时间
+    let suggestedAt: NSDate?
+    /// 关闭时间
+    let closedAt: NSDate?
+    /// 操作权限
+    let abilities: Abilities
     
     init(json: JSON) {
         id = json["id"].intValue
@@ -45,5 +52,56 @@ struct Topic {
         
         excellent = json["excellent"].boolValue
         deleted = json["deleted"].boolValue
+        
+        suggestedAt = json["suggested_at"].string?.dateValueFromISO8601()
+        closedAt = json["closed_at"].string?.dateValueFromISO8601()
+        
+        abilities = Abilities(json: json["abilities"])
+    }
+    
+    
+    /// 帖子权限
+    struct Abilities {
+        /// 可修改
+        let update: Bool
+        /// 可删除
+        let destroy: Bool
+        /// 屏蔽话题
+        let ban: Bool
+        /// 加精华
+        let excellent: Bool
+        /// 取消精华
+        let unexcellent: Bool
+        /// 关闭回复
+        let close: Bool
+        /// 开启回复
+        let open: Bool
+        
+        init(json: JSON) {
+            update = json["update"].boolValue
+            destroy = json["destroy"].boolValue
+            ban = json["ban"].boolValue
+            excellent = json["excellent"].boolValue
+            unexcellent = json["unexcellent"].boolValue
+            close = json["close"].boolValue
+            open = json["open"].boolValue
+        }
+    }
+    
+}
+
+/// 帖子更多状态
+struct TopicMeta {
+    /// 赞
+    let liked: Bool
+    /// 关注
+    let followed: Bool
+    /// 收藏
+    let favorited: Bool
+    
+    init(json: JSON) {
+        liked = json["liked"].boolValue
+        followed = json["followed"].boolValue
+        favorited = json["favorited"].boolValue
     }
 }

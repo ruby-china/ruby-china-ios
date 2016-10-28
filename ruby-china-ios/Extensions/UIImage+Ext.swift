@@ -31,6 +31,43 @@ extension UIImage {
         return img
     }
     
+    
+    /// 生成圆角图片
+    ///
+    /// - parameter imageSize:       图片大小
+    /// - parameter radius:          圆角大小
+    /// - parameter backgroundColor: 背景色
+    /// - parameter borderWidth:     边框宽度
+    /// - parameter borderColor:     边框颜色
+    ///
+    /// - returns: 指定大小的圆角图片
+    static func roundedCorner(imageSize imageSize: CGSize, radius: CGFloat, backgroundColor: UIColor, borderWidth: CGFloat, borderColor: UIColor) -> UIImage? {
+        let sizeToFit = imageSize
+        let halfBorderWidth = CGFloat(borderWidth / 2.0)
+        
+        UIGraphicsBeginImageContextWithOptions(sizeToFit, false, UIScreen.mainScreen().scale)
+        guard let context = UIGraphicsGetCurrentContext() else {
+            UIGraphicsEndImageContext()
+            return nil
+        }
+        
+        CGContextSetLineWidth(context, borderWidth)
+        CGContextSetStrokeColorWithColor(context, borderColor.CGColor)
+        CGContextSetFillColorWithColor(context, backgroundColor.CGColor)
+        
+        let width = sizeToFit.width, height = sizeToFit.height
+        CGContextMoveToPoint(context, width - halfBorderWidth, radius + halfBorderWidth)  // 开始坐标右边开始
+        CGContextAddArcToPoint(context, width - halfBorderWidth, height - halfBorderWidth, width - radius - halfBorderWidth, height - halfBorderWidth, radius)  // 右下角角度
+        CGContextAddArcToPoint(context, halfBorderWidth, height - halfBorderWidth, halfBorderWidth, height - radius - halfBorderWidth, radius) // 左下角角度
+        CGContextAddArcToPoint(context, halfBorderWidth, halfBorderWidth, width - halfBorderWidth, halfBorderWidth, radius) // 左上角
+        CGContextAddArcToPoint(context, width - halfBorderWidth, halfBorderWidth, width - halfBorderWidth, radius + halfBorderWidth, radius) // 右上角
+        
+        CGContextDrawPath(context, .FillStroke)
+        let output = UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsEndImageContext()
+        return output
+    }
+    
     /**
      将当前图片裁成圆角图
      

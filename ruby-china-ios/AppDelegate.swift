@@ -14,7 +14,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     private func initAppearance() {
         UINavigationBar.appearance().theme = true
-        UISegmentedControl.appearance().theme = true
         UITabBar.appearance().theme = true
         
         UITabBarItem.appearance().setTitleTextAttributes([NSForegroundColorAttributeName: BLACK_COLOR], forState: .Normal)
@@ -119,15 +118,6 @@ extension UINavigationBar {
     }
 }
 
-extension UISegmentedControl {
-    var theme: Bool {
-        get { return false }
-        set {
-            self.tintColor = SEGMENT_BG_COLOR
-        }
-    }
-}
-
 extension UITabBar {
     var theme: Bool {
         get { return false }
@@ -143,5 +133,12 @@ extension UITabBar {
             navBorder.backgroundColor = UIColor(red:0.93, green:0.92, blue:0.91, alpha:1.0)
             self.addSubview(navBorder)
         }
+    }
+}
+
+extension UIApplication {
+    /// 获取应用主UINavigationController
+    static var appNavigationController: UINavigationController {
+        return UIApplication.sharedApplication().keyWindow!.rootViewController as! UINavigationController
     }
 }

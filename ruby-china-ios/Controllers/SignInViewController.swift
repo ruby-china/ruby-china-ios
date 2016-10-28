@@ -10,12 +10,94 @@ class SignInViewController: UIViewController {
     weak var delegate: SignInViewControllerDelegate?
     var onDidAuthenticate: ((sender: SignInViewController) -> Void)?
     
+    static func show() -> SignInViewController {
+        let controller = SignInViewController()
+        let navController = ThemeNavigationController(rootViewController: controller)
+        UIApplication.currentViewController()?.presentViewController(navController, animated: true, completion: nil)
+        return controller
+    }
+    
+    private var appNameLabel: UILabel!
     private var contentView: UIView!
     private var loginField: RBTextField!
     private var passwordField: RBTextField!
     private var loginButton: UIButton!
     
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .Cancel, target: self, action: #selector(actionClose))
+        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "sign up".localized, style: .Plain, target: self, action: #selector(actionSignup))
+        view.backgroundColor = UIColor.whiteColor()
+        
+        setupViews()
+        
+        OAuth2.shared.delegate = self
+        
+        textFieldDidChanged()
+        
+        YYKeyboardManager.defaultManager().addObserver(self)
+    }
+    
+    override func viewDidAppear(animated: Bool) {
+        super.viewDidAppear(animated)
+        if let text = loginField.text where text != "" {
+            passwordField.becomeFirstResponder()
+        } else {
+            loginField.becomeFirstResponder()
+        }
+    }
+    
+    override func viewWillDisappear(animated: Bool) {
+        super.viewWillDisappear(animated)
+        loginField.resignFirstResponder()
+        passwordField.resignFirstResponder()
+    }
+    
+}
+
+// MARK: - Actions
+
+extension SignInViewController {
+    func actionLogin() {
+        if loginButton.enabled {
+            loginField.resignFirstResponder()
+            passwordField.resignFirstResponder()
+            
+            RBHUD.progress(nil)
+            OAuth2.shared.login(loginField.text!, password: passwordField.text!)
+        }
+    }
+    
+    func actionClose() {
+        dismissViewControllerAnimated(true, completion: nil)
+    }
+    
+    func textFieldDidChanged() {
+        if let username = loginField.text, let password = passwordField.text where username != "" && password != "" {
+            loginButton.enabled = true
+        } else {
+            loginButton.enabled = false
+        }
+    }
+    
+    func actionSignup() {
+        let url = NSURL(string: "\(ROOT_URL)/account/sign_up")!
+        UIApplication.sharedApplication().openURL(url)
+    }
+}
+
+// MARK: - private
+
+extension SignInViewController {
+    
     private func setupViews() {
+        appNameLabel = UILabel()
+        appNameLabel.text = "Ruby China"
+        appNameLabel.textColor = PRIMARY_COLOR
+        appNameLabel.font = UIFont.boldSystemFontOfSize(40)
+        appNameLabel.sizeToFit()
+        
         let margin = CGFloat(20)
         
         loginField = RBTextField(frame: CGRectMake(margin, 0, view.frame.width - margin * 2, 44))
@@ -50,67 +132,16 @@ class SignInViewController: UIViewController {
         contentView.addSubview(loginField)
         contentView.addSubview(passwordField)
         contentView.addSubview(loginButton)
+        view.addSubview(appNameLabel)
         view.addSubview(contentView)
-    }
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
         
-        title = "sign in".localized
-        navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .Cancel, target: self, action: #selector(actionClose))
-        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "sign up".localized, style: .Plain, target: self, action: #selector(actionSignup))
-        view.backgroundColor = UIColor.whiteColor()
-        
-        setupViews()
-        
-        OAuth2.shared.delegate = self
-        
-        textFieldDidChanged()
-        
-        YYKeyboardManager.defaultManager().addObserver(self)
+        refreshAppNameLabelCenter()
     }
     
-    override func viewDidAppear(animated: Bool) {
-        super.viewDidAppear(animated)
-        if let text = loginField.text where text != "" {
-            passwordField.becomeFirstResponder()
-        } else {
-            loginField.becomeFirstResponder()
-        }
+    private func refreshAppNameLabelCenter() {
+        appNameLabel.center = CGPoint(x: contentView.center.x, y: contentView.frame.minY / 2.0)
     }
     
-    override func viewWillDisappear(animated: Bool) {
-        super.viewWillDisappear(animated)
-        loginField.resignFirstResponder()
-        passwordField.resignFirstResponder()
-    }
-    
-    func actionLogin() {
-        if loginButton.enabled {
-            loginField.resignFirstResponder()
-            passwordField.resignFirstResponder()
-            
-            RBHUD.progress(nil)
-            OAuth2.shared.login(loginField.text!, password: passwordField.text!)
-        }
-    }
-    
-    func actionClose() {
-        dismissViewControllerAnimated(true, completion: nil)
-    }
-    
-    func textFieldDidChanged() {
-        if let username = loginField.text, let password = passwordField.text where username != "" && password != "" {
-            loginButton.enabled = true
-        } else {
-            loginButton.enabled = false
-        }
-    }
-    
-    func actionSignup() {
-        let url = NSURL(string: "\(ROOT_URL)/account/sign_up")!
-        UIApplication.sharedApplication().openURL(url)
-    }
 }
 
 extension SignInViewController: YYKeyboardObserver {
@@ -123,6 +154,7 @@ extension SignInViewController: YYKeyboardObserver {
                 y = self.view.frame.height * 0.5
             }
             self.contentView.center = CGPoint(x: self.view.frame.width * 0.5, y: y)
+            self.refreshAppNameLabelCenter()
         }, completion: nil)
     }
 }
@@ -167,6 +199,7 @@ extension SignInViewController: OAuth2Delegate {
             }
         }
         
+        RBHUD.progressHidden()
         RBHUD.error(errorMessage)
     }
 }

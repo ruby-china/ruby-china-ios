@@ -84,7 +84,7 @@ class OAuth2 {
     }
     
     private func reloadCurrentUser() {
-        APIRequest.shared.get("/api/v3/users/me.json", parameters: nil, callback: { (statusCode, result) in
+        APIRequest.shared.get("/api/v3/users/me.json", parameters: nil, callback: { (response, result) in
             if let result = result where !result.isEmpty {
                 let userJSON = result["user"]
                 self.currentUser = User(json: userJSON)
@@ -101,7 +101,7 @@ class OAuth2 {
     }
     
     func refreshUnreadNotifications(callback: (Int -> Void)) {
-        APIRequest.shared.get("/api/v3/notifications/unread_count", parameters: nil) { (statusCode, result) in
+        APIRequest.shared.get("/api/v3/notifications/unread_count", parameters: nil) { (response, result) in
             if let result = result where !result.isEmpty {
                 let unreadCount = result["count"].intValue
                 print("Unread notification count", unreadCount)

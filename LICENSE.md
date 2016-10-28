@@ -29,8 +29,26 @@ Easy to use OAuth 2 library for iOS, written in Swift.
 ### [Router](https://github.com/ViacomInc/Router)
 A micro routing library written in swift, primarily for deep linking use cases.
 
-### [PKHUD](https://github.com/pkluz/PKHUD)
-A Swift based reimplementation of the Apple HUD (Volume, Ringer, Rotation,…) for iOS 8.
+### [Kingfisher](https://github.com/onevcat/Kingfisher)
+A lightweight, pure-Swift library for downloading and caching images from the web.
+
+### [SnapKit](https://github.com/SnapKit/SnapKit)
+A Swift Autolayout DSL for iOS & OS X http://snapkit.io
+
+### [FontAwesome.swift](https://github.com/thii/FontAwesome.swift)
+Use FontAwesome in your Swift projects.
+
+### [SKPhotoBrowser](https://github.com/suzuki-0000/SKPhotoBrowser)
+Simple PhotoBrowser/Viewer inspired by facebook, twitter photo browsers written by swift.
+
+### [MBProgressHUD](https://github.com/jdg/MBProgressHUD)
+MBProgressHUD + Customizations http://www.bukovinski.com/.
+
+### [MJRefresh](https://github.com/CoderMJLee/MJRefresh)
+An easy way to use pull-to-refresh.
+
+### [UITableView-FDTemplateLayoutCell](https://github.com/forkingdog/UITableView-FDTemplateLayoutCell)
+Template auto layout cell for automatically UITableViewCell height calculating.
 
 ### [YYKeyboardManager](https://github.com/ibireme/YYKeyboardManager)
 iOS utility class allows you to access keyboard view and track keyboard animation.

@@ -13,7 +13,8 @@ import UIKit
 let COPYRIGHT_URL = "https://github.com/ruby-china/ruby-china-ios/blob/master/LICENSE.md"
 let PROJECT_URL = "https://github.com/ruby-china/ruby-china-ios"
 
-let USER_AGENT = "turbolinks-app, ruby-china, official"
+let APP_VERSION = NSBundle.mainBundle().infoDictionary!["CFBundleShortVersionString"] as! String
+let USER_AGENT = "turbolinks-app, ruby-china, official, iOS, version:" + APP_VERSION
 
 // Blue Theme
 //let NAVBAR_BG_COLOR = UIColor(red:0.25, green:0.32, blue:0.71, alpha:1.0)
