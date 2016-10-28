@@ -27,15 +27,18 @@ class SearchViewController: WebViewController {
             if let clearButton = searchField.valueForKey("_clearButton") as? UIButton, clearImage = clearButton.imageForState(.Normal) {
                 view.setImage(clearImage.imageWithColor(searchField.textColor!), forSearchBarIcon: .Clear, state: .Normal)
             }
-            
         }
         return view
     }()
+    
+    var onCancel: (SearchViewController -> ())?
     
     override func viewDidLoad() {
         currentPath = searchPath
         super.viewDidLoad()
         navigationItem.titleView = searchBar
+        let cancelItem = UIBarButtonItem(barButtonSystemItem: .Cancel, target: self, action: #selector(cancelButtonAction))
+        navigationItem.rightBarButtonItem = cancelItem
     }
     
     override func visitableDidRender() {
@@ -43,8 +46,8 @@ class SearchViewController: WebViewController {
         visitableView.webView?.hidden = currentPath == searchPath
     }
     
-    override func viewDidAppear(animated: Bool) {
-        super.viewDidAppear(animated)
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
         if searchBar.text == nil || searchBar.text!.characters.count <= 0 {
             searchBar.becomeFirstResponder()
         }
@@ -59,6 +62,7 @@ class SearchViewController: WebViewController {
 // MARK: - UISearchBarDelegate
 
 extension SearchViewController: UISearchBarDelegate {
+    
     func searchBarSearchButtonClicked(searchBar: UISearchBar) {
         searchBar.resignFirstResponder()
         let text = searchBar.text ?? ""
@@ -68,4 +72,15 @@ extension SearchViewController: UISearchBarDelegate {
             reloadVisitable()
         }
     }
+    
+}
+
+// MARK: - action
+
+extension SearchViewController {
+    
+    func cancelButtonAction() {
+        onCancel?(self)
+    }
+    
 }

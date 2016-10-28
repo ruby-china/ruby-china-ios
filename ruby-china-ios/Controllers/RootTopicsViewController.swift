@@ -72,7 +72,12 @@ extension RootTopicsViewController {
     
     func searchAction() {
         let vc = SearchViewController()
-        navigationController?.pushViewController(vc, animated: true)
+        vc.onCancel = { sender in
+            sender.dismissViewControllerAnimated(true, completion: nil)
+        }
+        
+        let nc = UINavigationController(rootViewController: vc)
+        self.presentViewController(nc, animated: true, completion: nil)
     }
     
     func newTopicAction() {
