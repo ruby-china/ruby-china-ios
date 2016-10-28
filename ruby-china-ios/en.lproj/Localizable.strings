@@ -38,8 +38,8 @@
 "close" = "Close";
 "get accessToken failed" = "Get accessToken failed, Please try again!";
 "move to footer" = "Move to footer";
-"favorites" = "Favorites";
-"cancel favorites" = "Cancel Favorites";
+"favorites" = "Bookmark";
+"cancel favorites" = "Unbookmark";
 "follow" = "Follow";
 "followed" = "Followed";
 "n like" = "";
