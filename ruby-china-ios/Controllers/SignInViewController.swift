@@ -178,7 +178,7 @@ extension SignInViewController: OAuth2Delegate {
         UserDefaults.standard.setValue(loginField.text, forKey: "loginName")
         UserDefaults.standard.synchronize()
         
-        print("Login successed", OAuth2.shared.accessToken)
+        print("Login successed", accessToken)
         dismiss(animated: false, completion: {
             self.delegate?.signInViewControllerDidAuthenticate(self)
             self.onDidAuthenticate?(self)

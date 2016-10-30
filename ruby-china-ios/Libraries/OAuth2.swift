@@ -89,14 +89,14 @@ class OAuth2 {
             if let result = result , !result.isEmpty {
                 let userJSON = result["user"]
                 self.currentUser = User(json: userJSON)
-                print(self.currentUser)
+                print(self.currentUser as Any)
                 
                 UserDefaults.standard.setValue(userJSON.rawString(), forKey: "loginUserJSON")
                 UserDefaults.standard.synchronize()
             } else if let loginUserJSON = UserDefaults.standard.string(forKey: "loginUserJSON"), let dataFromString = loginUserJSON.data(using: .utf8, allowLossyConversion: false) {
                 let jsonObject = JSON(data: dataFromString)
                 self.currentUser = User(json: jsonObject)
-                print(self.currentUser)
+                print(self.currentUser as Any)
             }
         })
     }
