@@ -23,13 +23,12 @@ class TopicCell: UITableViewCell {
     
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
-        self.contentView.addSubview(avatarImageView)
-        self.contentView.addSubview(avatarMaskImageView)
-        self.contentView.addSubview(titleLabel)
-        self.contentView.addSubview(repliesCountLabel)
-        self.contentView.addSubview(nodeButton)
-        self.contentView.addSubview(separateLabel)
-        self.contentView.addSubview(userNameButton)
+        contentView.addSubview(avatarImageView)
+        contentView.addSubview(titleLabel)
+        contentView.addSubview(repliesCountLabel)
+        contentView.addSubview(nodeButton)
+        contentView.addSubview(separateLabel)
+        contentView.addSubview(userNameButton)
         setupConstraints()
     }
     
@@ -40,9 +39,12 @@ class TopicCell: UITableViewCell {
     var data: Topic? {
         didSet {
             if let data = data {
+                let imageProcessor = RoundCornerImageProcessor(cornerRadius: kAvatarSize.width / 2.0, targetSize: kAvatarSize)
                 avatarImageView.kf.setImage(with: data.user.avatarUrl, options: [
+                    .processor(imageProcessor),
                     .transition(ImageTransition.fade(0.5))
                 ])
+                
                 titleLabel.attributedText = titleAttributedText(data)
                 repliesCountLabel.text = data.repliesCount > 0 ? "\(data.repliesCount)" : nil
                 nodeButton.setTitle(data.nodeName, for: UIControlState())
@@ -64,15 +66,8 @@ class TopicCell: UITableViewCell {
         let view = UIImageView()
         view.contentMode = .scaleAspectFill
         view.clipsToBounds = true
-        view.backgroundColor = UIColor(white: 0.85, alpha: 1)
         view.isUserInteractionEnabled = true
         view.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(userAction)))
-        return view
-    }()
-    fileprivate lazy var avatarMaskImageView: UIImageView = {
-        let view = UIImageView()
-        view.image = UIImage(named: "avatar-mask")!.withRenderingMode(.alwaysTemplate)
-        view.tintColor = UIColor.white
         return view
     }()
     fileprivate lazy var titleLabel: UILabel = {
@@ -138,9 +133,6 @@ extension TopicCell {
         avatarImageView.snp.makeConstraints { (make) in
             make.left.top.equalToSuperview().inset(kContentPadding)
             make.size.equalTo(kAvatarSize)
-        }
-        avatarMaskImageView.snp.makeConstraints { (make) in
-            make.edges.equalTo(avatarImageView)
         }
         repliesCountLabel.snp.makeConstraints { (make) in
             make.top.right.equalToSuperview().inset(kContentPadding)

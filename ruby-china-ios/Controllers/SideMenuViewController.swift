@@ -112,8 +112,10 @@ extension SideMenuViewController {
             ]
             menuItemPaths = ["/\(user.login)", "/account/edit", "/notes", "/logout"]
             
-            KingfisherManager.shared.retrieveImage(with: user.avatarUrl, options: nil, progressBlock: nil, completionHandler: { [weak self] (image, error, cacheType, imageURL) in
-                guard let `self` = self, let avatarImage = image?.drawRectWithRoundedCorner(radius: 11, CGSize(width: 22, height: 22)) else {
+            let avatarSize = CGSize(width: 22, height: 22)
+            let imageProcessor = RoundCornerImageProcessor(cornerRadius: avatarSize.width * 0.5, targetSize: avatarSize)
+            KingfisherManager.shared.retrieveImage(with: user.avatarUrl, options: [.processor(imageProcessor)], progressBlock: nil, completionHandler: { [weak self] (image, error, cacheType, imageURL) in
+                guard let `self` = self, let avatarImage = image else {
                     return
                 }
                 self.menuItemIcons[0] = avatarImage

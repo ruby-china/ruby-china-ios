@@ -74,35 +74,6 @@ extension UIImage {
     }
     
     /**
-     将当前图片裁成圆角图
-     
-     - parameter radius:    圆角尺寸
-     - parameter sizetoFit: 裁成的图片宽高
-     
-     - returns: 圆角图片
-     */
-    func drawRectWithRoundedCorner(radius: CGFloat, _ sizetoFit: CGSize) -> UIImage? {
-        let rect = CGRect(origin: CGPoint(x: 0, y: 0), size: sizetoFit)
-        
-        UIGraphicsBeginImageContextWithOptions(rect.size, false, UIScreen.main.scale)
-        guard let context = UIGraphicsGetCurrentContext() else {
-            UIGraphicsEndImageContext()
-            return nil
-        }
-        
-        let path = UIBezierPath(roundedRect: rect, byRoundingCorners: .allCorners, cornerRadii: CGSize(width: radius, height: radius))
-        context.addPath(path.cgPath)
-        context.clip()
-        
-        self.draw(in: rect)
-        context.drawPath(using: .fillStroke)
-        let output = UIGraphicsGetImageFromCurrentImageContext()
-        UIGraphicsEndImageContext()
-        
-        return output
-    }
-    
-    /**
      为当前图片用指定颜色填充后取得新的图片
      
      - parameter color: 填充色
