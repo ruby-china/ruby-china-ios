@@ -22,8 +22,6 @@ class RootViewController: UITabBarController {
         SideMenuManager.menuFadeStatusBar = false
         SideMenuManager.menuPresentMode = .viewSlideOut
         SideMenuManager.menuAnimationBackgroundColor = UIColor.gray
-        // SideMenu 不要手势，用处不大
-        // SideMenuManager.menuAddPanGestureToPresent(toView: )
     }
     
     fileprivate func setupViewControllers() {
