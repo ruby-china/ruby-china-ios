@@ -58,9 +58,9 @@ class RootViewController: UITabBarController {
         let path = (note as NSNotification).userInfo![NOTICE_MENU_CLICKED_PATH] as! String
         
         if let url = URL(string: path), let host = url.host , host != URL(string: ROOT_URL)!.host! {
-            TurbolinksSessionLib.sharedInstance.safariOpen(url)
+            TurbolinksSessionLib.shared.safariOpen(url)
         } else {
-            TurbolinksSessionLib.sharedInstance.actionToPath(path, withAction: .Advance)
+            TurbolinksSessionLib.shared.action(.Advance, path: path)
         }
     }
     
@@ -156,7 +156,7 @@ extension RootViewController: UITabBarControllerDelegate {
         }
         
         if let webViewController = viewController as? WebViewController , webViewController == selectedViewController {
-            TurbolinksSessionLib.sharedInstance.visitableDidRequestRefresh(webViewController)
+            TurbolinksSessionLib.shared.visitableDidRequestRefresh(webViewController)
         }
         return true
     }

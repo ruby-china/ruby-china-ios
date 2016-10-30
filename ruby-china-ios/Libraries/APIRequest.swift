@@ -5,11 +5,12 @@
 //  Created by Jason Lee on 16/7/26.
 //  Copyright © 2016年 ruby-china. All rights reserved.
 //
+
 import Alamofire
 import SwiftyJSON
 
 typealias APICallbackResponse = DataResponse<Data>
-typealias APICallback = (APICallbackResponse, _ json: JSON?) -> Void
+typealias APICallback = (APICallbackResponse, JSON?) -> Void
 
 class APIRequest {
     
@@ -29,28 +30,15 @@ class APIRequest {
         ret.adapter = self
         return ret
     }()
-//    fileprivate var headers: [String: String]?
-    
-//    fileprivate var _accessToken:  String?
     var accessToken: String?
-//        {
-//        get {
-//            return _accessToken
-//        }
-//        set {
-//            _accessToken = newValue
-//            headers = newValue == nil ? nil : ["Authorization": "Bearer \(newValue!)"]
-//        }
-//    }
     
     fileprivate func _request(_ method: HTTPMethod, path: String, parameters: [String: AnyObject]?, callback: @escaping APICallback) {
-        // print("headers", headers)
         manager.request("\(ROOT_URL)\(path)", method: method, parameters: parameters).responseData { response in
             switch response.result {
             case .success:
-                print(method, path, response.response?.statusCode)
+                print(method, path, response.response!.statusCode)
                 let result = response.data == nil ? nil : JSON(data: response.data!)
-                let statusCode = response.response?.statusCode
+                let statusCode = response.response!.statusCode
                 if (statusCode == 401) {
                     OAuth2.shared.logout()
                     return

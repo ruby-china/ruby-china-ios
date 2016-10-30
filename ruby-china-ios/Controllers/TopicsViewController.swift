@@ -67,7 +67,7 @@ class TopicsViewController: UITableViewController {
             guard let topic = data else {
                 return
             }
-            TurbolinksSessionLib.sharedInstance.actionToPath("/\(topic.user.login)", withAction: .Advance)
+            TurbolinksSessionLib.shared.action(.Advance, path: "/\(topic.user.login)")
         }
         cell.onNodeClick = { [weak self] (data) in
             guard let `self` = self, let topic = data else {
@@ -76,9 +76,9 @@ class TopicsViewController: UITableViewController {
             
             if (self.nodeID > 0) {
                 // 已经在节点帖子列表界面，再点击节点，则不再打开节点帖子界面，而直接进入帖子
-                TurbolinksSessionLib.sharedInstance.actionToPath("/topics/\(topic.id)", withAction: .Advance)
+                TurbolinksSessionLib.shared.action(.Advance, path: "/topics/\(topic.id)")
             } else {
-                TurbolinksSessionLib.sharedInstance.actionToPath("/topics/node\(topic.nodeID)", withAction: .Advance)
+                TurbolinksSessionLib.shared.action(.Advance, path: "/topics/node\(topic.nodeID)")
             }
         }
         return cell
@@ -86,7 +86,7 @@ class TopicsViewController: UITableViewController {
 
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let data = topicList![(indexPath as NSIndexPath).row]
-        TurbolinksSessionLib.sharedInstance.actionToPath("/topics/\(data.id)", withAction: .Advance)
+        TurbolinksSessionLib.shared.action(.Advance, path: "/topics/\(data.id)")
     }
     
 }

@@ -78,7 +78,7 @@ class WebViewController: VisitableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        TurbolinksSessionLib.sharedInstance.visit(self)
+        TurbolinksSessionLib.shared.visit(self)
         
         _ = router.match(URL(string: currentPath)!)
         navigationItem.title = pageTitle

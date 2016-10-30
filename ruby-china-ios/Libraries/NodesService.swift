@@ -13,7 +13,7 @@ class NodesService {
     /// 获取节点列表
     ///
     /// - parameter callback: 完成时回调
-    static func list(_ callback: @escaping (_ response: APICallbackResponse, _ result: JSON?) -> ()) {
+    static func list(_ callback: @escaping (APICallbackResponse, JSON?) -> ()) {
         APIRequest.shared.get("/api/v3/nodes.json", parameters: nil, callback: callback)
     }
     
@@ -21,7 +21,7 @@ class NodesService {
     ///
     /// - parameter nodeID:   节点ID
     /// - parameter callback: 完成时回调
-    static func info(_ nodeID: Int, callback: @escaping (_ response: APICallbackResponse, _ result: Node?) -> ()) {
+    static func info(_ nodeID: Int, callback: @escaping (APICallbackResponse, Node?) -> ()) {
         APIRequest.shared.get("/api/v3/nodes/\(nodeID).json", parameters: nil) { (response, result) in
             if let _ = result , result!["node"].isEmpty == false {
                 callback(response, Node(json: result!["node"]))

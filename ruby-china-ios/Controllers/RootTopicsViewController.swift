@@ -81,7 +81,7 @@ extension RootTopicsViewController {
     }
     
     func newTopicAction() {
-        TurbolinksSessionLib.sharedInstance.actionToPath("/topics/new", withAction: .Replace)
+        TurbolinksSessionLib.shared.action(.Replace, path: "/topics/new")
     }
     
 }

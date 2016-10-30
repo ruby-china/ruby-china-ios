@@ -59,7 +59,7 @@ class TopicsService {
     ///
     /// - parameter id:       帖子ID
     /// - parameter callback: 完成时回调
-    static func detail(_ id: Int, callback: @escaping (_ response: APICallbackResponse, _ topic: Topic?, _ topicMeta: TopicMeta?) -> ()) {
+    static func detail(_ id: Int, callback: @escaping (APICallbackResponse, Topic?, TopicMeta?) -> ()) {
         APIRequest.shared.get("/api/v3/topics/\(id)", parameters: nil) { (response, result) in
             guard let result = result else {
                 callback(response, nil, nil)
@@ -75,7 +75,7 @@ class TopicsService {
     ///
     /// - parameter id:       帖子ID
     /// - parameter callback: 完成时回调
-    static func favorite(_ id: Int, callback: ((_ response: APICallbackResponse) -> ())? = nil) {
+    static func favorite(_ id: Int, callback: ((APICallbackResponse) -> ())? = nil) {
         APIRequest.shared.post("/api/v3/topics/\(id)/favorite", parameters: nil) { (response, result) in
             callback?(response)
         }
@@ -85,7 +85,7 @@ class TopicsService {
     ///
     /// - parameter id:       帖子ID
     /// - parameter callback: 完成时回调
-    static func unfavorite(_ id: Int, callback: ((_ response: APICallbackResponse) -> ())? = nil) {
+    static func unfavorite(_ id: Int, callback: ((APICallbackResponse) -> ())? = nil) {
         APIRequest.shared.post("/api/v3/topics/\(id)/unfavorite", parameters: nil) { (response, result) in
             callback?(response)
         }
@@ -95,7 +95,7 @@ class TopicsService {
     ///
     /// - parameter id:       帖子ID
     /// - parameter callback: 完成时回调
-    static func follow(_ id: Int, callback: @escaping (_ response: APICallbackResponse) -> ()) {
+    static func follow(_ id: Int, callback: @escaping (APICallbackResponse) -> ()) {
         APIRequest.shared.post("/api/v3/topics/\(id)/follow", parameters: nil) { (response, result) in
             callback(response)
         }
@@ -105,7 +105,7 @@ class TopicsService {
     ///
     /// - parameter id:       帖子ID
     /// - parameter callback: 完成时回调
-    static func unfollow(_ id: Int, callback: @escaping (_ response: APICallbackResponse) -> ()) {
+    static func unfollow(_ id: Int, callback: @escaping (APICallbackResponse) -> ()) {
         APIRequest.shared.post("/api/v3/topics/\(id)/unfollow", parameters: nil) { (response, result) in
             callback(response)
         }

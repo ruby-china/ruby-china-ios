@@ -13,7 +13,7 @@ import SafariServices
 import SKPhotoBrowser
 
 class TurbolinksSessionLib: NSObject {
-    static let sharedInstance: TurbolinksSessionLib = {
+    static let shared: TurbolinksSessionLib = {
         return TurbolinksSessionLib()
     }()
     
@@ -80,7 +80,7 @@ class TurbolinksSessionLib: NSObject {
         return session
     }()
     
-    func actionToPath(_ path: String, withAction action: Action) {
+    func action(_ action: Action, path: String) {
         if let _ = router.match(URL(string: path)!) {
             return
         }
@@ -197,7 +197,7 @@ extension TurbolinksSessionLib: SessionDelegate {
             return
         }
         
-        actionToPath(path, withAction: action)
+        self.action(action, path: path)
     }
     
     func session(_ session: Session, didFailRequestForVisitable visitable: Visitable, withError error: NSError) {
@@ -262,7 +262,7 @@ extension TurbolinksSessionLib: WKNavigationDelegate {
                 // 外部网站, open in SafariView
                 safariOpen(url)
             } else {
-                actionToPath(url.path, withAction: .Advance)
+                action(.Advance, path: url.path)
             }
         }
         decisionHandler(.cancel)
@@ -284,7 +284,7 @@ extension TurbolinksSessionLib: PopupWebViewControllerDelegate {
         }
         
         if (controller.currentPath == "topics/new") {
-            actionToPath(url!.path, withAction: .Advance)
+            action(.Advance, path: url!.path)
         } else {
             session.reload()
         }
