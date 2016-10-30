@@ -17,16 +17,16 @@ class TurbolinksSessionLib: NSObject {
         return TurbolinksSessionLib()
     }()
     
-    func visit(visitable: Visitable) {
+    func visit(_ visitable: Visitable) {
         session.visit(visitable)
-        visitable.visitableView.webView?.UIDelegate = self
+        visitable.visitableView.webView?.uiDelegate = self
     }
     
-    func visitableDidRequestRefresh(visitable: Visitable) {
+    func visitableDidRequestRefresh(_ visitable: Visitable) {
         session.visitableDidRequestRefresh(visitable)
     }
     
-    private lazy var router: Router = {
+    fileprivate lazy var router: Router = {
         let router = Router()
         router.bind("/account/edit") { req in
             self.presentEditAccountController(req.route.route)
@@ -35,7 +35,7 @@ class TurbolinksSessionLib: NSObject {
             self.presentEditTopicController(req.route.route)
         }
         router.bind("/topics/node:id") { req in
-            if let idString = req.param("id"), nodeID = Int(idString) {
+            if let idString = req.param("id"), let nodeID = Int(idString) {
                 self.pushNodeTopicsController(nodeID)
             }
         }
@@ -51,8 +51,8 @@ class TurbolinksSessionLib: NSObject {
         }
         
         router.bind("/topics/:id") { req in
-            if let idString = req.param("id"), id = Int(idString),
-                navigationController = UIApplication.currentViewController()?.navigationController {
+            if let idString = req.param("id"), let id = Int(idString),
+                let navigationController = UIApplication.currentViewController()?.navigationController {
                 let vc = TopicDetailsViewController(topicID: id)
                 navigationController.pushViewController(vc, animated: true)
             }
@@ -60,34 +60,34 @@ class TurbolinksSessionLib: NSObject {
         return router
     }()
     
-    private var application: UIApplication {
-        return UIApplication.sharedApplication()
+    fileprivate var application: UIApplication {
+        return UIApplication.shared
     }
     
-    private let kMessageHandlerName = "NativeApp"
+    fileprivate let kMessageHandlerName = "NativeApp"
     
-    private lazy var webViewConfiguration: WKWebViewConfiguration = {
+    fileprivate lazy var webViewConfiguration: WKWebViewConfiguration = {
         let configuration = WKWebViewConfiguration()
-        configuration.userContentController.addScriptMessageHandler(self, name: self.kMessageHandlerName)
+        configuration.userContentController.add(self, name: self.kMessageHandlerName)
         configuration.applicationNameForUserAgent = USER_AGENT
         configuration.processPool = WKProcessPool()
         return configuration
     }()
     
-    private lazy var session: Session = {
+    fileprivate lazy var session: Session = {
         let session = Session(webViewConfiguration: self.webViewConfiguration)
         session.delegate = self
         return session
     }()
     
-    func actionToPath(path: String, withAction action: Action) {
-        if let _ = router.match(NSURL(string: path)!) {
+    func actionToPath(_ path: String, withAction action: Action) {
+        if let _ = router.match(URL(string: path)!) {
             return
         }
         
         var realAction = action
         // 检查 parentViewController 是因为 topmostVisitable 可能已被移除，但因 session 持有 topmostVisitable，所以导致其被移除后未被释放
-        if let vc = session.topmostVisitable as? WebViewController, _ = vc.parentViewController where session.webView.URL?.path == path {
+        if let vc = session.topmostVisitable as? WebViewController, let _ = vc.parent , session.webView.url?.path == path {
             // 如果要访问的地址是相同的，直接 Restore，而不是创建新的页面
             realAction = .Restore
         }
@@ -101,7 +101,7 @@ class TurbolinksSessionLib: NSObject {
             if let accessToken = OAuth2.shared.accessToken {
                 urlString += "?access_token=" + accessToken
             }
-            topWebViewController.visitableURL = NSURL(string: urlString)!
+            topWebViewController.visitableURL = URL(string: urlString)!
             session.reload()
         } else {
             guard let navigationController = UIApplication.currentViewController()?.navigationController else {
@@ -112,7 +112,7 @@ class TurbolinksSessionLib: NSObject {
             if realAction == .Advance {
                 navigationController.pushViewController(visitable, animated: true)
             } else if realAction == .Replace {
-                navigationController.popViewControllerAnimated(false)
+                navigationController.popViewController(animated: false)
                 navigationController.pushViewController(visitable, animated: false)
             } else {
                 navigationController.pushViewController(visitable, animated: false)
@@ -120,16 +120,16 @@ class TurbolinksSessionLib: NSObject {
         }
     }
     
-    func safariOpen(url: NSURL) {
-        let safariViewController = SFSafariViewController(URL: url)
-        UIApplication.currentViewController()?.presentViewController(safariViewController, animated: true, completion: nil)
+    func safariOpen(_ url: URL) {
+        let safariViewController = SFSafariViewController(url: url)
+        UIApplication.currentViewController()?.present(safariViewController, animated: true, completion: nil)
     }
     
-    private func presentLoginController() {
+    fileprivate func presentLoginController() {
         SignInViewController.show().delegate = self
     }
     
-    private func presentEditTopicController(path: String) {
+    fileprivate func presentEditTopicController(_ path: String) {
         if (!OAuth2.shared.isLogined) {
             presentLoginController()
             return
@@ -139,18 +139,18 @@ class TurbolinksSessionLib: NSObject {
         controller.delegate = self
         
         let navController = ThemeNavigationController(rootViewController: controller)
-        UIApplication.currentViewController()?.presentViewController(navController, animated: true, completion: nil)
+        UIApplication.currentViewController()?.present(navController, animated: true, completion: nil)
     }
     
-    private func presentProfileController(path: String) {
+    fileprivate func presentProfileController(_ path: String) {
         let controller = ProfileViewController(path: path)
         controller.delegate = self
         
         let navController = ThemeNavigationController(rootViewController: controller)
-        UIApplication.currentViewController()?.presentViewController(navController, animated: true, completion: nil)
+        UIApplication.currentViewController()?.present(navController, animated: true, completion: nil)
     }
     
-    private func presentEditReplyController(path: String) {
+    fileprivate func presentEditReplyController(_ path: String) {
         if (!OAuth2.shared.isLogined) {
             presentLoginController()
             return
@@ -159,29 +159,29 @@ class TurbolinksSessionLib: NSObject {
         let controller = EditReplyViewController(path: path)
         controller.delegate = self
         let navController = ThemeNavigationController(rootViewController: controller)
-        UIApplication.currentViewController()?.presentViewController(navController, animated: true, completion: nil)
+        UIApplication.currentViewController()?.present(navController, animated: true, completion: nil)
     }
     
-    private func presentEditAccountController(path: String) {
+    fileprivate func presentEditAccountController(_ path: String) {
         let controller = EditAccountViewController(path: path)
         controller.delegate = self
         let navController = ThemeNavigationController(rootViewController: controller)
-        UIApplication.currentViewController()?.presentViewController(navController, animated: true, completion: nil)
+        UIApplication.currentViewController()?.present(navController, animated: true, completion: nil)
     }
     
-    private func presentImageBrowserController(url: NSURL) {
+    fileprivate func presentImageBrowserController(_ url: URL) {
         if (SKCache.sharedCache.imageCache as? CustomImageCache) == nil {
             SKCache.sharedCache.imageCache = CustomImageCache()
         }
         
-        let photo = SKPhoto.photoWithImageURL(url.absoluteString!)
+        let photo = SKPhoto.photoWithImageURL(url.absoluteString)
         photo.shouldCachePhotoURLImage = true
         
         let browser = SKPhotoBrowser(photos: [photo])
-        UIApplication.currentViewController()?.presentViewController(browser, animated: true, completion: nil)
+        UIApplication.currentViewController()?.present(browser, animated: true, completion: nil)
     }
     
-    private func pushNodeTopicsController(nodeID: Int) {
+    fileprivate func pushNodeTopicsController(_ nodeID: Int) {
         let controller = TopicsViewController()
         controller.load(listType: .last_actived, nodeID: nodeID, offset: 0)
         UIApplication.currentViewController()?.navigationController?.pushViewController(controller, animated: true)
@@ -189,7 +189,7 @@ class TurbolinksSessionLib: NSObject {
 }
 
 extension TurbolinksSessionLib: SessionDelegate {
-    func session(session: Session, didProposeVisitToURL URL: NSURL, withAction action: Action) {
+    func session(_ session: Session, didProposeVisitToURL URL: Foundation.URL, withAction action: Action) {
         let path = URL.path
         
         if let popupWebViewController = session.topmostVisitable as? PopupWebViewController {
@@ -197,15 +197,15 @@ extension TurbolinksSessionLib: SessionDelegate {
             return
         }
         
-        actionToPath(path!, withAction: action)
+        actionToPath(path, withAction: action)
     }
     
-    func session(session: Session, didFailRequestForVisitable visitable: Visitable, withError error: NSError) {
+    func session(_ session: Session, didFailRequestForVisitable visitable: Visitable, withError error: NSError) {
         NSLog("ERROR: %@", error)
-        guard let viewController = visitable as? WebViewController, errorCode = ErrorCode(rawValue: error.code) else { return }
+        guard let viewController = visitable as? WebViewController, let errorCode = ErrorCode(rawValue: error.code) else { return }
         
         switch errorCode {
-        case .HTTPFailure:
+        case .httpFailure:
             let statusCode = error.userInfo["statusCode"] as! Int
             switch statusCode {
             case 401:
@@ -217,30 +217,30 @@ extension TurbolinksSessionLib: SessionDelegate {
             default:
                 viewController.presentError(Error(HTTPStatusCode: statusCode))
             }
-        case .NetworkFailure:
+        case .networkFailure:
             viewController.presentError(.NetworkError)
         }
     }
     
-    func sessionDidStartRequest(session: Session) {
-        application.networkActivityIndicatorVisible = true
+    func sessionDidStartRequest(_ session: Session) {
+        application.isNetworkActivityIndicatorVisible = true
     }
     
-    func sessionDidFinishRequest(session: Session) {
-        application.networkActivityIndicatorVisible = false
+    func sessionDidFinishRequest(_ session: Session) {
+        application.isNetworkActivityIndicatorVisible = false
     }
     
-    func sessionDidLoadWebView(session: Session) {
+    func sessionDidLoadWebView(_ session: Session) {
         session.webView.navigationDelegate = self
     }
 }
 
 extension TurbolinksSessionLib: WKNavigationDelegate {
-    func webView(webView: WKWebView, decidePolicyForNavigationAction navigationAction: WKNavigationAction, decisionHandler: (WKNavigationActionPolicy) -> ()) {
+    func webView(_ webView: WKWebView, decidePolicyFor navigationAction: WKNavigationAction, decisionHandler: @escaping (WKNavigationActionPolicy) -> ()) {
         
         // PopupViewController
         if let popupWebViewController = session.topmostVisitable as? PopupWebViewController {
-            popupWebViewController.webView(webView, decidePolicyForNavigationAction: navigationAction, decisionHandler: decisionHandler)
+            popupWebViewController.webView(webView, decidePolicyFor: navigationAction, decisionHandler: decisionHandler)
             return
         }
         
@@ -249,41 +249,42 @@ extension TurbolinksSessionLib: WKNavigationDelegate {
         // po navigationAction 返回 <WKNavigationAction: 0x7fd0f9422eb0; navigationType = -1; syntheticClickType = 0; request = <NSMutableURLRequest: 0x61800001e700> { URL: https://www.youtube.com/embed/xMFs9DTympQ }; sourceFrame = (null); targetFrame = <WKFrameInfo: 0x7fd0f9401030; isMainFrame = NO; request = (null)>>
         // 所有这里判断一下 navigationType 值来修复进入帖子自动打开 Youtube 网页的问题
         if navigationAction.navigationType.rawValue < 0 {
-            decisionHandler(.Allow)
+            decisionHandler(.allow)
             return
         }
         
-        if let url = navigationAction.request.URL {
-            if let ext = url.pathExtension?.lowercaseString where (["jpg", "png", "gif"].filter{ ext.hasPrefix($0) }).count > 0 {
+        if let url = navigationAction.request.url {
+            let ext = url.pathExtension.lowercased()
+            if (["jpg", "png", "gif"].filter{ ext.hasPrefix($0) }).count > 0 {
                 // 查看图片
                 presentImageBrowserController(url)
-            } else if let host = url.host where host != NSURL(string: ROOT_URL)!.host! {
+            } else if let host = url.host , host != URL(string: ROOT_URL)!.host! {
                 // 外部网站, open in SafariView
                 safariOpen(url)
-            } else if let path = url.path {
-                actionToPath(path, withAction: .Advance)
+            } else {
+                actionToPath(url.path, withAction: .Advance)
             }
         }
-        decisionHandler(.Cancel)
+        decisionHandler(.cancel)
     }
 }
 
 extension TurbolinksSessionLib: SignInViewControllerDelegate {
-    func signInViewControllerDidAuthenticate(sender: SignInViewController) {
+    func signInViewControllerDidAuthenticate(_ sender: SignInViewController) {
         // 重新载入之前的页面
         session.reload()
     }
 }
 
 extension TurbolinksSessionLib: PopupWebViewControllerDelegate {
-    func popupWebViewControllerDidFinished(controller: PopupWebViewController, toURL url: NSURL?) {
+    func popupWebViewControllerDidFinished(_ controller: PopupWebViewController, toURL url: URL?) {
         if (url == nil) {
             session.reload()
             return
         }
         
         if (controller.currentPath == "topics/new") {
-            actionToPath(url!.path!, withAction: .Advance)
+            actionToPath(url!.path, withAction: .Advance)
         } else {
             session.reload()
         }
@@ -293,7 +294,7 @@ extension TurbolinksSessionLib: PopupWebViewControllerDelegate {
 // MARK: - WKScriptMessageHandler
 
 extension TurbolinksSessionLib: WKScriptMessageHandler {
-    func userContentController(userContentController: WKUserContentController, didReceiveScriptMessage message: WKScriptMessage) {
+    func userContentController(_ userContentController: WKUserContentController, didReceive message: WKScriptMessage) {
         if message.name != kMessageHandlerName {
             return
         }
@@ -301,7 +302,7 @@ extension TurbolinksSessionLib: WKScriptMessageHandler {
             return
         }
         // window.webkit.messageHandlers.NativeApp.postMessage({func: "alert_success", message: "成功"})
-        if let funcName = dic["func"] as? String, message = dic["message"] as? String {
+        if let funcName = dic["func"] as? String, let message = dic["message"] as? String {
             if funcName == "alert_success" {
                 RBHUD.success(message)
             } else {
@@ -317,33 +318,33 @@ extension TurbolinksSessionLib: WKUIDelegate {
     // 这个方法是在HTML中调用了JS的alert()方法时，就会回调此API。
     // 注意，使用了`WKWebView`后，在JS端调用alert()就不会在HTML
     // 中显示弹出窗口。因此，我们需要在此处手动弹出ios系统的alert。
-    func webView(webView: WKWebView, runJavaScriptAlertPanelWithMessage message: String, initiatedByFrame frame: WKFrameInfo, completionHandler: () -> Void) {
-        let alert = UIAlertController(title: "提示", message: message, preferredStyle: .Alert)
-        alert.addAction(UIAlertAction(title: "确定", style: .Default, handler: { _ in
+    func webView(_ webView: WKWebView, runJavaScriptAlertPanelWithMessage message: String, initiatedByFrame frame: WKFrameInfo, completionHandler: @escaping () -> Void) {
+        let alert = UIAlertController(title: "提示", message: message, preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "确定", style: .default, handler: { _ in
             completionHandler()
         }))
-        UIApplication.currentViewController()?.presentViewController(alert, animated: true, completion: nil)
+        UIApplication.currentViewController()?.present(alert, animated: true, completion: nil)
     }
     
-    func webView(webView: WKWebView, runJavaScriptConfirmPanelWithMessage message: String, initiatedByFrame frame: WKFrameInfo, completionHandler: (Bool) -> Void) {
-        let alert = UIAlertController(title: "Ruby China", message: message, preferredStyle: .Alert)
-        alert.addAction(UIAlertAction(title: "确定", style: .Default, handler: { _ in
+    func webView(_ webView: WKWebView, runJavaScriptConfirmPanelWithMessage message: String, initiatedByFrame frame: WKFrameInfo, completionHandler: @escaping (Bool) -> Void) {
+        let alert = UIAlertController(title: "Ruby China", message: message, preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "确定", style: .default, handler: { _ in
             completionHandler(true)
         }))
-        alert.addAction(UIAlertAction(title: "取消", style: .Cancel, handler: { _ in
+        alert.addAction(UIAlertAction(title: "取消", style: .cancel, handler: { _ in
             completionHandler(false)
         }))
-        UIApplication.currentViewController()?.presentViewController(alert, animated: true, completion: nil)
+        UIApplication.currentViewController()?.present(alert, animated: true, completion: nil)
     }
     
-    func webView(webView: WKWebView, runJavaScriptTextInputPanelWithPrompt prompt: String, defaultText: String?, initiatedByFrame frame: WKFrameInfo, completionHandler: (String?) -> Void) {
-        let alert = UIAlertController(title: prompt, message: defaultText, preferredStyle: .Alert)
-        alert.addTextFieldWithConfigurationHandler { (textField: UITextField) -> Void in
-            textField.textColor = UIColor.redColor()
+    func webView(_ webView: WKWebView, runJavaScriptTextInputPanelWithPrompt prompt: String, defaultText: String?, initiatedByFrame frame: WKFrameInfo, completionHandler: @escaping (String?) -> Void) {
+        let alert = UIAlertController(title: prompt, message: defaultText, preferredStyle: .alert)
+        alert.addTextField { (textField: UITextField) -> Void in
+            textField.textColor = UIColor.red
         }
-        alert.addAction(UIAlertAction(title: "确定", style: .Default, handler: { _ in
+        alert.addAction(UIAlertAction(title: "确定", style: .default, handler: { _ in
             completionHandler(alert.textFields![0].text!)
         }))
-        UIApplication.currentViewController()?.presentViewController(alert, animated: true, completion: nil)
+        UIApplication.currentViewController()?.present(alert, animated: true, completion: nil)
     }
 }

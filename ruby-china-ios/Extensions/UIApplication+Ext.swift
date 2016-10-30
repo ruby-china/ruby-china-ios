@@ -15,17 +15,17 @@ extension UIApplication {
      - returns: 正在显示的ViewController
      */
     static func currentViewController() -> UIViewController? {
-        let viewController = UIApplication.sharedApplication().keyWindow!.rootViewController!
+        let viewController = UIApplication.shared.keyWindow!.rootViewController!
         return findBestViewController(viewController)
     }
-    static private func findBestViewController(viewController: UIViewController) -> UIViewController {
+    static fileprivate func findBestViewController(_ viewController: UIViewController) -> UIViewController {
         if let vc = viewController.presentedViewController {
             // Return presented view controller
             return findBestViewController(vc)
-        } else if let svc = viewController as? UISplitViewController where svc.viewControllers.count > 0 {
+        } else if let svc = viewController as? UISplitViewController , svc.viewControllers.count > 0 {
             // Return right hand side
             return findBestViewController(svc.viewControllers.last!)
-        } else if let nc = viewController as? UINavigationController where nc.viewControllers.count > 0 {
+        } else if let nc = viewController as? UINavigationController , nc.viewControllers.count > 0 {
             // Return top view
             return findBestViewController(nc.viewControllers.last!)
         } else if let tbc = viewController as? UITabBarController, let vc = tbc.selectedViewController {

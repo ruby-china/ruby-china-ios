@@ -1,71 +1,83 @@
 PODS:
-  - Alamofire (3.5.1)
-  - FontAwesome.swift (0.10.1)
+  - Alamofire (4.0.1)
+  - FontAwesome.swift (1.0.0)
   - Heimdallr (3.5.0):
     - Heimdallr/Core (= 3.5.0)
   - Heimdallr/Core (3.5.0):
-    - Result (~> 2.0)
-  - Kingfisher (2.6.1)
+    - Result (~> 3.0)
+  - Kingfisher (3.1.4)
   - MBProgressHUD (1.0.0)
   - MJRefresh (3.1.12)
-  - Result (2.1.3)
+  - Result (3.0.0)
   - Router (1.0.0)
-  - SideMenu (1.2.1)
-  - SKPhotoBrowser (3.1.2)
-  - SnapKit (0.22.0)
-  - SwiftyJSON (2.4.0)
+  - SideMenu (2.0.5)
+  - SKPhotoBrowser (3.1.3)
+  - SnapKit (3.0.2)
+  - SwiftyJSON (3.1.1)
   - Turbolinks (1.0.2)
   - UITableView+FDTemplateLayoutCell (1.4)
   - YYKeyboardManager (1.0.1)
 
 DEPENDENCIES:
-  - Alamofire (~> 3.0)
-  - FontAwesome.swift (from `https://github.com/thii/FontAwesome.swift.git`, branch `swift-2.3`)
-  - Heimdallr (~> 3.0)
-  - Kingfisher (~> 2.4)
+  - Alamofire
+  - FontAwesome.swift
+  - Heimdallr (from `https://github.com/marcelofabri/Heimdallr.swift.git`, branch `swift-3.0`)
+  - Kingfisher
   - MBProgressHUD
   - MJRefresh
-  - Router (~> 1.0)
-  - SideMenu (~> 1.0)
-  - SKPhotoBrowser (~> 3.1)
-  - SnapKit (~> 0.22)
-  - SwiftyJSON (~> 2.0)
-  - Turbolinks (from `https://github.com/turbolinks/turbolinks-ios.git`)
+  - Router (from `https://github.com/ViacomInc/Router.git`)
+  - SideMenu
+  - SKPhotoBrowser (from `https://github.com/suzuki-0000/SKPhotoBrowser.git`, branch `swift3`)
+  - SnapKit
+  - SwiftyJSON
+  - Turbolinks (from `https://github.com/turbolinks/turbolinks-ios.git`, branch `swift-3.0`)
   - UITableView+FDTemplateLayoutCell
   - YYKeyboardManager
 
 EXTERNAL SOURCES:
-  FontAwesome.swift:
-    :branch: swift-2.3
-    :git: https://github.com/thii/FontAwesome.swift.git
+  Heimdallr:
+    :branch: swift-3.0
+    :git: https://github.com/marcelofabri/Heimdallr.swift.git
+  Router:
+    :git: https://github.com/ViacomInc/Router.git
+  SKPhotoBrowser:
+    :branch: swift3
+    :git: https://github.com/suzuki-0000/SKPhotoBrowser.git
   Turbolinks:
+    :branch: swift-3.0
     :git: https://github.com/turbolinks/turbolinks-ios.git
 
 CHECKOUT OPTIONS:
-  FontAwesome.swift:
-    :commit: acffe80af29eb82fc6e799cb728ddce8c15e7b19
-    :git: https://github.com/thii/FontAwesome.swift.git
+  Heimdallr:
+    :commit: 41099fea0156ffb421fdb835ebc76ea7e6f600c1
+    :git: https://github.com/marcelofabri/Heimdallr.swift.git
+  Router:
+    :commit: 833c7cc52b8b78cefe7e49069495f72d6e7dfb2a
+    :git: https://github.com/ViacomInc/Router.git
+  SKPhotoBrowser:
+    :commit: 2ec9887a8f5bc82aabc61da035cd4ab9b1230b63
+    :git: https://github.com/suzuki-0000/SKPhotoBrowser.git
   Turbolinks:
-    :commit: 27379cfdf0454636505d99251ca32f2b506547eb
+    :commit: e24228dd447375a23f817d6c413ad4d3067fc95e
     :git: https://github.com/turbolinks/turbolinks-ios.git
 
 SPEC CHECKSUMS:
-  Alamofire: 0dfba1184a543e2aa160f4e39cac4e8aba48d223
-  FontAwesome.swift: 340bcf987db498134d42838df73960603a720a84
-  Heimdallr: 5451a68028a6dc02f009fb6b73923d7f88b702c7
-  Kingfisher: 7e5515bf6c4f2acad91f6400955d2257549cab7b
+  Alamofire: 7682d43245de14874acd142ec137b144aa1dd335
+  FontAwesome.swift: 2d32a3d62195343c2004b7c9043294ed2948553a
+  Heimdallr: 6d371eb270d6d06d8c9ef5dc9fe7f7bda1331154
+  Kingfisher: 6c67e3e57f2d81a9cfdfa25052cd86f33ceac9bb
   MBProgressHUD: 4890f671c94e8a0f3cf959aa731e9de2f036d71a
   MJRefresh: b96cdb21c4aa75a7b07654311ab2f315c497e806
-  Result: 18e1a7597fbcca5923c565b40a25a98afafdee02
+  Result: 1b3e431f37cbcd3ad89c6aa9ab0ae55515fae3b6
   Router: 6088d6d321e097070d5ea4bd792cb015dfa0fbb4
-  SideMenu: d38e42ab18a5c0875a77cfec7e7cecea72a69518
-  SKPhotoBrowser: e942c03c3206b5cf229fd4ce56b872bce800124a
-  SnapKit: 0dd2fd157330f1ea11fd84da13e6be8a7a22bae0
-  SwiftyJSON: 96918c1bf505efa50c4f72957018dd3452090c9c
+  SideMenu: 0ecfd407b24e7d36c57fc50ca7f5d7cedb7c8841
+  SKPhotoBrowser: 4690ffb59db79849454241ecc65cc3d6af9965bf
+  SnapKit: 2e456761aa92d4d4067a7a5594c18769d451a8ad
+  SwiftyJSON: f0be2e604f83e8405a624e9f891898bf6ed4e019
   Turbolinks: d8209bab43803adae8c06d434368e16479023407
   UITableView+FDTemplateLayoutCell: 234e1582bcc4e18461af91155123bb96538ed030
   YYKeyboardManager: ff53d2e80d1808567a7f004028bd200d9469a89f
 
-PODFILE CHECKSUM: 8bd0bec9e089422171a89cd9bd29500de02f3d5b
+PODFILE CHECKSUM: 744919ad89fb447ff03cdbf85e10080aeaa5dcb9
 
 COCOAPODS: 1.1.1

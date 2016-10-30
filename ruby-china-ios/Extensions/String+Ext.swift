@@ -9,13 +9,13 @@
 import Foundation
 
 extension String {
-    func dateValue(format: String) -> NSDate? {
-        let dateFormatter = NSDateFormatter()
+    func dateValue(_ format: String) -> Date? {
+        let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = format
-        return dateFormatter.dateFromString(self)
+        return dateFormatter.date(from: self)
     }
     
-    func dateValueFromISO8601() -> NSDate? {
+    func dateValueFromISO8601() -> Date? {
         return self.dateValue("yyyy-MM-dd'T'HH:mm:ss.SSSZ")
     }
 }

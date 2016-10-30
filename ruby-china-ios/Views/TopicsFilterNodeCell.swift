@@ -10,15 +10,15 @@ import UIKit
 
 class TopicsFilterNodeCell: UICollectionViewCell {
     
-    private lazy var imageView: UIImageView = {
+    fileprivate lazy var imageView: UIImageView = {
         let view = UIImageView()
         return view
     }()
     
-    private lazy var label: UILabel = {
+    fileprivate lazy var label: UILabel = {
         let view = UILabel()
-        view.textAlignment = .Center
-        view.font = UIFont.systemFontOfSize(12)
+        view.textAlignment = .center
+        view.font = UIFont.systemFont(ofSize: 12)
         view.adjustsFontSizeToFitWidth = true
         return view
     }()
@@ -34,10 +34,10 @@ class TopicsFilterNodeCell: UICollectionViewCell {
         }
     }
     
-    override var selected: Bool {
+    override var isSelected: Bool {
         didSet {
-            label.textColor = selected ? NAVBAR_TINT_COLOR : SEGMENT_BG_COLOR
-            imageView.image = selected ? selectedImage : normalImage
+            label.textColor = isSelected ? NAVBAR_TINT_COLOR : SEGMENT_BG_COLOR
+            imageView.image = isSelected ? selectedImage : normalImage
         }
     }
     
@@ -45,10 +45,10 @@ class TopicsFilterNodeCell: UICollectionViewCell {
         super.init(frame: frame)
         contentView.addSubview(imageView)
         contentView.addSubview(label)
-        imageView.snp_makeConstraints { (make) in
+        imageView.snp.makeConstraints { (make) in
             make.edges.equalToSuperview()
         }
-        label.snp_makeConstraints { (make) in
+        label.snp.makeConstraints { (make) in
             make.edges.equalToSuperview()
         }
     }

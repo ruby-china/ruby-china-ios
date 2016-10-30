@@ -11,12 +11,12 @@ struct User {
     
     let login: String
     let name: String?
-    let avatarUrl: NSURL
+    let avatarUrl: URL
     
     let location: String?
     let company: String?
     let twitter: String?
-    let website: NSURL?
+    let website: URL?
     let bio: String?
     let tagline: String?
     let github: String?
@@ -41,20 +41,20 @@ struct User {
     }
     
     init?(json: JSON) {
-        if json.type == .Null { return nil }
+        if json.type == .null { return nil }
         
         self.id = json["id"].stringValue
         
         self.login = json["login"].stringValue
         self.name = json["name"].string
-        self.avatarUrl = NSURL(string: json["avatar_url"].stringValue)!
+        self.avatarUrl = NSURL(string: json["avatar_url"].stringValue)! as URL
         
         // details
         self.location = json["location"].string
         self.company = json["company"].string
         self.twitter = json["twitter"].string
         if let website = json["website"].string {
-            self.website = NSURL(string: website)
+            self.website = NSURL(string: website) as URL?
         } else {
             self.website = nil
         }

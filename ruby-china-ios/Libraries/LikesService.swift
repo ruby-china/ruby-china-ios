@@ -12,7 +12,7 @@ class LikesService {
     ///
     /// - topic: 帖子
     /// - reply: 回复
-    enum Type: String {
+    enum `Type`: String {
         case topic, reply
     }
     
@@ -21,11 +21,11 @@ class LikesService {
     /// - parameter type:     关联类型
     /// - parameter id:       关联ID
     /// - parameter callback: 完成时回调
-    static func like(type: Type, id: Int, callback: (response: APICallbackResponse, count: Int?) -> ()) {
-        let parameters: [String : AnyObject] = ["obj_type": type.rawValue, "obj_id": id]
+    static func like(_ type: Type, id: Int, callback: @escaping (_ response: APICallbackResponse, _ count: Int?) -> ()) {
+        let parameters: [String : AnyObject] = ["obj_type": type.rawValue as AnyObject, "obj_id": id as AnyObject]
         APIRequest.shared.post("/api/v3/likes", parameters: parameters) { (response, result) in
             let count = result == nil ? nil : result!["count"].int
-            callback(response: response, count: count)
+            callback(response, count)
         }
     }
     
@@ -34,11 +34,11 @@ class LikesService {
     /// - parameter type:     关联类型
     /// - parameter id:       关联ID
     /// - parameter callback: 完成时回调
-    static func unlike(type: Type, id: Int, callback: (response: APICallbackResponse, count: Int?) -> ()) {
-        let parameters: [String : AnyObject] = ["obj_type": type.rawValue, "obj_id": id]
+    static func unlike(_ type: Type, id: Int, callback: @escaping (_ response: APICallbackResponse, _ count: Int?) -> ()) {
+        let parameters: [String : AnyObject] = ["obj_type": type.rawValue as AnyObject, "obj_id": id as AnyObject]
         APIRequest.shared.delete("/api/v3/likes", parameters: parameters) { (response, result) in
             let count = result == nil ? nil : result!["count"].int
-            callback(response: response, count: count)
+            callback(response, count)
         }
     }
     

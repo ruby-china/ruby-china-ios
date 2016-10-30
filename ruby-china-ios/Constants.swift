@@ -13,7 +13,7 @@ import UIKit
 let COPYRIGHT_URL = "https://github.com/ruby-china/ruby-china-ios/blob/master/LICENSE.md"
 let PROJECT_URL = "https://github.com/ruby-china/ruby-china-ios"
 
-let APP_VERSION = NSBundle.mainBundle().infoDictionary!["CFBundleShortVersionString"] as! String
+let APP_VERSION = Bundle.main.infoDictionary!["CFBundleShortVersionString"] as! String
 let USER_AGENT = "turbolinks-app, ruby-china, official, iOS, version:" + APP_VERSION
 
 // Blue Theme

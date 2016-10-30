@@ -5,7 +5,7 @@ class EditAccountViewController: PopupWebViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "save".localized, style: .Plain, target: self, action: #selector(actionSubmit))
+        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "save".localized, style: .plain, target: self, action: #selector(actionSubmit))
     }
     
     func actionSubmit() {

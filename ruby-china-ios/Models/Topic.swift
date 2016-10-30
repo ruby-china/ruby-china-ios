@@ -13,9 +13,9 @@ struct Topic {
     let id: Int
     let user: User
     let title: String
-    let createdAt: NSDate
-    let updatedAt: NSDate
-    let repliedAt: NSDate?
+    let createdAt: Date
+    let updatedAt: Date
+    let repliedAt: Date?
     let repliesCount: Int
     let lastReplyUserID: Int?
     let lastReplyUserLogin: String?
@@ -29,9 +29,9 @@ struct Topic {
     /// 已删除
     let deleted: Bool
     /// 置顶时间
-    let suggestedAt: NSDate?
+    let suggestedAt: Date?
     /// 关闭时间
-    let closedAt: NSDate?
+    let closedAt: Date?
     /// 操作权限
     let abilities: Abilities
     
@@ -39,9 +39,9 @@ struct Topic {
         id = json["id"].intValue
         user = User(json: json["user"])!
         title = json["title"].stringValue
-        createdAt = json["created_at"].stringValue.dateValueFromISO8601()!
-        updatedAt = json["updated_at"].stringValue.dateValueFromISO8601()!
-        repliedAt = json["replied_at"].string?.dateValueFromISO8601()
+        createdAt = json["created_at"].stringValue.dateValueFromISO8601()! as Date
+        updatedAt = json["updated_at"].stringValue.dateValueFromISO8601()! as Date
+        repliedAt = json["replied_at"].string?.dateValueFromISO8601() as Date?
         repliesCount = json["replies_count"].intValue
         lastReplyUserID = json["last_reply_user_id"].int
         lastReplyUserLogin = json["last_reply_user_login"].string
@@ -53,8 +53,8 @@ struct Topic {
         excellent = json["excellent"].boolValue
         deleted = json["deleted"].boolValue
         
-        suggestedAt = json["suggested_at"].string?.dateValueFromISO8601()
-        closedAt = json["closed_at"].string?.dateValueFromISO8601()
+        suggestedAt = json["suggested_at"].string?.dateValueFromISO8601() as Date?
+        closedAt = json["closed_at"].string?.dateValueFromISO8601() as Date?
         
         abilities = Abilities(json: json["abilities"])
     }

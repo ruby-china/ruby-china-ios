@@ -10,23 +10,23 @@ import UIKit
 import SideMenu
 
 class RootViewController: UITabBarController {
-    private let kTopicsTag = 0
-    private let kWikiTag = 1
-    private let kFavoritesTag = 2
-    private let kNotificationsTag = 99
-    private var isDidAppear = false
-    private var needDisplayNotifications = false
+    fileprivate let kTopicsTag = 0
+    fileprivate let kWikiTag = 1
+    fileprivate let kFavoritesTag = 2
+    fileprivate let kNotificationsTag = 99
+    fileprivate var isDidAppear = false
+    fileprivate var needDisplayNotifications = false
     
-    private func setupSideMenu() {
-        SideMenuManager.menuLeftNavigationController = UIStoryboard(name: "Main", bundle: nil).instantiateViewControllerWithIdentifier("sideMenuController") as? UISideMenuNavigationController
+    fileprivate func setupSideMenu() {
+        SideMenuManager.menuLeftNavigationController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "sideMenuController") as? UISideMenuNavigationController
         SideMenuManager.menuFadeStatusBar = false
-        SideMenuManager.menuPresentMode = .ViewSlideOut
-        SideMenuManager.menuAnimationBackgroundColor = UIColor.grayColor()
+        SideMenuManager.menuPresentMode = .viewSlideOut
+        SideMenuManager.menuAnimationBackgroundColor = UIColor.gray
         // SideMenu 不要手势，用处不大
         // SideMenuManager.menuAddPanGestureToPresent(toView: )
     }
     
-    private func setupViewControllers() {
+    fileprivate func setupViewControllers() {
         let topicsController = RootTopicsViewController()
         topicsController.tabBarItem = UITabBarItem(title: "topics".localized, image: UIImage(named: "topic"), tag: kTopicsTag)
         
@@ -42,24 +42,24 @@ class RootViewController: UITabBarController {
         viewControllers = [topicsController, pagesController, favoritesController, notificationsController]
         viewControllers?.forEach({ (viewController) in
             let oldImage = viewController.tabBarItem.image
-            viewController.tabBarItem.image = oldImage?.imageWithColor(BLACK_COLOR)?.imageWithRenderingMode(.AlwaysOriginal)
+            viewController.tabBarItem.image = oldImage?.imageWithColor(BLACK_COLOR)?.withRenderingMode(.alwaysOriginal)
         })
     }
     
     func displaySideMenu() {
         let presentSideMenuController = {
             if let sideMenuController = SideMenuManager.menuLeftNavigationController {
-                self.presentViewController(sideMenuController, animated: true, completion: nil)
+                self.present(sideMenuController, animated: true, completion: nil)
             }
         }
         
         presentSideMenuController()
     }
     
-    func actionMenuClicked(note: NSNotification) {
-        let path = note.userInfo![NOTICE_MENU_CLICKED_PATH] as! String
+    func actionMenuClicked(_ note: Notification) {
+        let path = (note as NSNotification).userInfo![NOTICE_MENU_CLICKED_PATH] as! String
         
-        if let url = NSURL(string: path), host = url.host where host != NSURL(string: ROOT_URL)!.host! {
+        if let url = URL(string: path), let host = url.host , host != URL(string: ROOT_URL)!.host! {
             TurbolinksSessionLib.sharedInstance.safariOpen(url)
         } else {
             TurbolinksSessionLib.sharedInstance.actionToPath(path, withAction: .Advance)
@@ -77,18 +77,18 @@ class RootViewController: UITabBarController {
         setupSideMenu()
         setupViewControllers()
         
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(displaySideMenu), name: NOTICE_DISPLAY_MENU, object: nil)
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(actionMenuClicked), name: NOTICE_MENU_CLICKED, object: nil)
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(updateLoginState), name: USER_CHANGED, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(displaySideMenu), name: NSNotification.Name(rawValue: NOTICE_DISPLAY_MENU), object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(actionMenuClicked), name: NSNotification.Name(rawValue: NOTICE_MENU_CLICKED), object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(updateLoginState), name: NSNotification.Name(rawValue: USER_CHANGED), object: nil)
         
         resetNavigationItem(viewControllers![selectedIndex])
     }
     
-    override func viewDidAppear(animated: Bool) {
+    override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         isDidAppear = true
         
-        if let app = UIApplication.sharedApplication().delegate as? AppDelegate {
+        if let app = UIApplication.shared.delegate as? AppDelegate {
             app.refreshUnreadNotificationCount()
         }
         
@@ -98,14 +98,14 @@ class RootViewController: UITabBarController {
         }
     }
     
-    private func resetNavigationItem(viewController: UIViewController) {
+    fileprivate func resetNavigationItem(_ viewController: UIViewController) {
         navigationItem.title = viewController.navigationItem.title
         navigationItem.titleView = viewController.navigationItem.titleView
         navigationItem.rightBarButtonItems = viewController.navigationItem.rightBarButtonItems
     }
     
     func updateLoginState() {
-        if let viewController = selectedViewController where OAuth2.shared.currentUser == nil {
+        if let viewController = selectedViewController , OAuth2.shared.currentUser == nil {
             switch viewController.tabBarItem.tag {
             case kFavoritesTag, kNotificationsTag:
                 let topicsController = viewControllers![0]
@@ -115,7 +115,7 @@ class RootViewController: UITabBarController {
             }
         }
         
-        if let app = UIApplication.sharedApplication().delegate as? AppDelegate {
+        if let app = UIApplication.shared.delegate as? AppDelegate {
             app.refreshUnreadNotificationCount()
         }
     }
@@ -127,10 +127,10 @@ class RootViewController: UITabBarController {
         }
         
         if presentedViewController != nil {
-            dismissViewControllerAnimated(false, completion: nil)
+            dismiss(animated: false, completion: nil)
         }
-        if let viewController = navigationController?.viewControllers.last where viewController != self {
-            navigationController?.popToViewController(self, animated: false)
+        if let viewController = navigationController?.viewControllers.last , viewController != self {
+            _ = navigationController?.popToViewController(self, animated: false)
         }
         
         guard let notificationsController = viewControllers!.last as? NotificationsViewController else {
@@ -139,7 +139,7 @@ class RootViewController: UITabBarController {
         if selectedViewController == notificationsController {
             return
         }
-        if tabBarController(self, shouldSelectViewController: notificationsController) {
+        if tabBarController(self, shouldSelect: notificationsController) {
             selectedViewController = notificationsController
             resetNavigationItem(notificationsController)
         }
@@ -147,7 +147,7 @@ class RootViewController: UITabBarController {
 }
 
 extension RootViewController: UITabBarControllerDelegate {
-    func tabBarController(tabBarController: UITabBarController, shouldSelectViewController viewController: UIViewController) -> Bool {
+    func tabBarController(_ tabBarController: UITabBarController, shouldSelect viewController: UIViewController) -> Bool {
         let tag = viewController.tabBarItem.tag
         if (tag == kFavoritesTag || tag == kNotificationsTag) && !OAuth2.shared.isLogined {
             SignInViewController.show().onDidAuthenticate = { [weak self] (sender) in
@@ -157,13 +157,13 @@ extension RootViewController: UITabBarControllerDelegate {
             return false
         }
         
-        if let webViewController = viewController as? WebViewController where webViewController == selectedViewController {
+        if let webViewController = viewController as? WebViewController , webViewController == selectedViewController {
             TurbolinksSessionLib.sharedInstance.visitableDidRequestRefresh(webViewController)
         }
         return true
     }
     
-    func tabBarController(tabBarController: UITabBarController, didSelectViewController viewController: UIViewController) {
+    func tabBarController(_ tabBarController: UITabBarController, didSelect viewController: UIViewController) {
         resetNavigationItem(viewController)
     }
 }

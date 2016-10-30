@@ -12,7 +12,7 @@ class SideMenuNavigationController: UISideMenuNavigationController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        let bgFrame = CGRectMake(0, -24, navigationBar.frame.width, navigationBar.frame.height + 24)
+        let bgFrame = CGRect(x: 0, y: -24, width: navigationBar.frame.width, height: navigationBar.frame.height + 24)
         let bgView = UIView(frame: bgFrame)
         
         bgView.backgroundColor = SIDEMENU_NAVBAR_BG_COLOR
