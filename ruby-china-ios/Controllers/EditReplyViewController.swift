@@ -6,7 +6,7 @@ class EditReplyViewController: PopupWebViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "save".localized, style: .Plain, target: self, action: #selector(actionDone))
+        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "save".localized, style: .plain, target: self, action: #selector(actionDone))
     }
     
     func actionDone() {

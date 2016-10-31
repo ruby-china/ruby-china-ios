@@ -15,11 +15,11 @@ class ThemeNavigationController: UINavigationController {
         navigationBar.bottomBorder = true
     }
     
-    override func dismissViewControllerAnimated(flag: Bool, completion: (() -> Void)?) {
+    override func dismiss(animated flag: Bool, completion: (() -> Void)?) {
         // 修复 WebView 中点击“上传图片”按钮不能正常打开“照片图库”问题
         // http://stackoverflow.com/questions/25942676/ios-8-sdk-modal-uiwebview-and-camera-image-picker
         if presentedViewController != nil {
-            super.dismissViewControllerAnimated(flag, completion: completion)
+            super.dismiss(animated: flag, completion: completion)
         }
     }
 }

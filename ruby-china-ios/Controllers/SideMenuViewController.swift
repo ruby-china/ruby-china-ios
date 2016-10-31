@@ -11,88 +11,90 @@ import Router
 import Kingfisher
 
 class SideMenuViewController: UITableViewController {
-    private lazy var router = Router()
     
-    private var menuItems: [String]!
-    private var menuItemPaths: [String]!
-    private var menuItemIcons: [UIImage]!
-    private var menuItemIconColors = [
+    struct ItemData {
+        let name: String
+        let image: UIImage
+        let imageColor: UIColor
+        let actionURL: URL
+    }
+    
+    fileprivate lazy var router: Router = {
+        let router = Router()
+        router.bind("/logout") { (req) in
+            OAuth2.shared.logout()
+        }
+        router.bind("/account/sign_up") { (req) in
+            if let url = URL(string: "\(ROOT_URL)\(req.route.route)") {
+                UIApplication.shared.openURL(url)
+            }
+        }
+        return router
+    }()
+    
+    fileprivate var userItems = [ItemData]()
+    fileprivate let userImageColors = [
         UIColor(red: 94 / 255.0, green: 151 / 255.0, blue: 246 / 255.0, alpha: 1),
         UIColor(red: 156 / 255.0, green: 204 / 255.0, blue: 101 / 255.0, alpha: 1),
         UIColor(red: 224 / 255.0, green: 96 / 255.0, blue: 85 / 255.0, alpha: 1),
         UIColor(red: 79 / 255.0, green: 195 / 255.0, blue: 247 / 255.0, alpha: 1),
-    ]
-    
-    private let build = NSBundle.mainBundle().infoDictionary!["CFBundleVersion"] as! String
+        ]
+    fileprivate lazy var appItems: [ItemData] = {
+        let build = Bundle.main.infoDictionary!["CFBundleVersion"] as! String
+        return [
+            ItemData(
+                name: "copyright".localized,
+                image: UIImage(named: "copyright")!.withRenderingMode(.alwaysTemplate),
+                imageColor: UIColor(red: 246 / 255.0, green: 191 / 255.0, blue: 50 / 255.0, alpha: 1),
+                actionURL: URL(string: COPYRIGHT_URL)!
+            ),
+            ItemData(
+                name: "Version \(APP_VERSION) (build \(build))",
+                image: UIImage(named: "versions")!.withRenderingMode(.alwaysTemplate),
+                imageColor: UIColor(red: 87 / 255.0, green: 187 / 255.0, blue: 138 / 255.0, alpha: 1),
+                actionURL: URL(string: PROJECT_URL)!
+            )
+        ]
+    }()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         title = "Ruby China"
         
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(updateLoginState), name: USER_CHANGED, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(updateLoginState), name: NSNotification.Name(rawValue: USER_CHANGED), object: nil)
         updateLoginState()
         
         tableView.backgroundColor = SIDEMENU_BG_COLOR
         
         tableView.delegate = self
         tableView.dataSource = self
-        
-        initRouter()
     }
     
-    override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+    override func numberOfSections(in tableView: UITableView) -> Int {
         return 2
     }
     
-    override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         switch section {
-        case 0:
-            return menuItems.count
-        case 1:
-            return 2
-        default:
-            return 0
+        case 0: return userItems.count
+        case 1: return appItems.count
+        default: return 0
         }
     }
     
-    override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier("Cell", forIndexPath: indexPath)
-        
-        switch indexPath.section {
-        case 0:
-            cell.textLabel!.text = menuItems[indexPath.row]
-            cell.imageView?.image = menuItemIcons[indexPath.row]
-            cell.imageView?.tintColor = menuItemIconColors[indexPath.row]
-        case 1:
-            if indexPath.row == 0 {
-                cell.textLabel!.text = "copyright".localized
-                cell.imageView?.image = UIImage(named: "copyright")!.imageWithRenderingMode(.AlwaysTemplate)
-                cell.imageView?.tintColor = UIColor(red: 246 / 255.0, green: 191 / 255.0, blue: 50 / 255.0, alpha: 1)
-            } else {
-                cell.textLabel!.text = "Version \(APP_VERSION) (build \(build))"
-                cell.imageView?.image = UIImage(named: "versions")!.imageWithRenderingMode(.AlwaysTemplate)
-                cell.imageView?.tintColor = UIColor(red: 87 / 255.0, green: 187 / 255.0, blue: 138 / 255.0, alpha: 1)
-            }
-        default: break
-        }
-        
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath)
+        let itemData = indexPath.section == 0 ? userItems[indexPath.row] : appItems[indexPath.row]
+        cell.textLabel!.text = itemData.name
+        cell.imageView?.image = itemData.image
+        cell.imageView?.tintColor = itemData.imageColor
         return cell
     }
     
-    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        switch indexPath.section {
-        case 0:
-            let path = menuItemPaths[indexPath.row]
-            actionWithPath(path)
-        case 1:
-            if indexPath.row == 0 {
-                actionWithPath(COPYRIGHT_URL)
-            } else {
-                UIApplication.sharedApplication().openURL(NSURL(string: PROJECT_URL)!)
-            }
-        default: break
-        }
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let itemData = indexPath.section == 0 ? userItems[indexPath.row] : appItems[indexPath.row]
+        action(forURL: itemData.actionURL)
     }
     
 }
@@ -102,30 +104,61 @@ class SideMenuViewController: UITableViewController {
 extension SideMenuViewController {
     
     func updateLoginState() {
-        if let user = OAuth2.shared.currentUser where OAuth2.shared.isLogined {
-            menuItems = [user.login, "edit account".localized, "notes".localized, "sign out".localized]
-            menuItemIcons = [
-                UIImage(named: "profile")!.imageWithRenderingMode(.AlwaysTemplate),
-                UIImage(named: "edit-user")!.imageWithRenderingMode(.AlwaysTemplate),
-                UIImage(named: "notes")!.imageWithRenderingMode(.AlwaysTemplate),
-                UIImage(named: "logout")!.imageWithRenderingMode(.AlwaysTemplate),
+        if let user = OAuth2.shared.currentUser , OAuth2.shared.isLogined {
+            userItems = [
+                ItemData(
+                    name: user.login,
+                    image: UIImage(named: "profile")!.withRenderingMode(.alwaysTemplate),
+                    imageColor: userImageColors[0],
+                    actionURL: URL(string: "\(ROOT_URL)/\(user.login)")!
+                ),
+                ItemData(
+                    name: "edit account".localized,
+                    image: UIImage(named: "edit-user")!.withRenderingMode(.alwaysTemplate),
+                    imageColor: userImageColors[1],
+                    actionURL: URL(string: "\(ROOT_URL)/account/edit")!
+                ),
+                ItemData(
+                    name: "notes".localized,
+                    image: UIImage(named: "notes")!.withRenderingMode(.alwaysTemplate),
+                    imageColor: userImageColors[2],
+                    actionURL: URL(string: "\(ROOT_URL)/notes")!
+                ),
+                ItemData(
+                    name: "sign out".localized,
+                    image: UIImage(named: "logout")!.withRenderingMode(.alwaysTemplate),
+                    imageColor: userImageColors[3],
+                    actionURL: URL(string: "\(ROOT_URL)/logout")!
+                )
             ]
-            menuItemPaths = ["/\(user.login)", "/account/edit", "/notes", "/logout"]
             
-            KingfisherManager.sharedManager.retrieveImageWithURL(user.avatarUrl, optionsInfo: nil, progressBlock: nil, completionHandler: { [weak self] (image, error, cacheType, imageURL) in
-                guard let `self` = self, avatarImage = image?.drawRectWithRoundedCorner(radius: 11, CGSizeMake(22, 22)) else {
+            // 下载用户头像
+            let avatarSize = CGSize(width: 22, height: 22)
+            let imageProcessor = RoundCornerImageProcessor(cornerRadius: avatarSize.width * 0.5, targetSize: avatarSize)
+            KingfisherManager.shared.retrieveImage(with: user.avatarUrl, options: [.processor(imageProcessor)], progressBlock: nil, completionHandler: { [weak self] (image, error, cacheType, imageURL) in
+                guard let `self` = self, let avatarImage = image else {
                     return
                 }
-                self.menuItemIcons[0] = avatarImage
+                let oldData = self.userItems[0]
+                let newData = ItemData(name: oldData.name, image: avatarImage, imageColor: oldData.imageColor, actionURL: oldData.actionURL)
+                self.userItems[0] = newData
                 self.tableView.reloadData()
             })
         } else {
-            menuItems = ["sign in".localized, "sign up".localized]
-            menuItemIcons = [
-                UIImage(named: "login")!.imageWithRenderingMode(.AlwaysTemplate),
-                UIImage(named: "profile")!.imageWithRenderingMode(.AlwaysTemplate),
+            userItems = [
+                ItemData(
+                    name: "sign in".localized,
+                    image: UIImage(named: "login")!.withRenderingMode(.alwaysTemplate),
+                    imageColor: userImageColors[0],
+                    actionURL: URL(string: "\(ROOT_URL)/account/sign_in")!
+                ),
+                ItemData(
+                    name: "sign up".localized,
+                    image: UIImage(named: "profile")!.withRenderingMode(.alwaysTemplate),
+                    imageColor: userImageColors[1],
+                    actionURL: URL(string: "\(ROOT_URL)/account/sign_up")!
+                )
             ]
-            menuItemPaths = ["/account/sign_in", "/account/sign_up"]
         }
         
         self.tableView.reloadData()
@@ -137,21 +170,15 @@ extension SideMenuViewController {
 
 extension SideMenuViewController {
     
-    private func initRouter() {
-        router.bind("/logout") { (req) in
-            OAuth2.shared.logout()
+    fileprivate func action(forURL url: URL) {
+        guard let host = url.host else {
+            return
         }
-        router.bind("/account/sign_up") { (req) in
-            let url = NSURL(string: "\(ROOT_URL)/account/sign_up")!
-            UIApplication.sharedApplication().openURL(url)
-        }
-    }
-    
-    private func actionWithPath(path: String) {
-        let matchedRoute = router.match(NSURL(string: path)!)
-        if (matchedRoute == nil) {
-            dismissViewControllerAnimated(true, completion: {
-                NSNotificationCenter.defaultCenter().postNotificationName(NOTICE_MENU_CLICKED, object: self, userInfo: [NOTICE_MENU_CLICKED_PATH: path])
+        if host != URL(string: ROOT_URL)!.host! {
+            UIApplication.shared.openURL(url)
+        } else if router.match(URL(string: url.path)!) == nil {
+            dismiss(animated: true, completion: {
+                NotificationCenter.default.post(name: Notification.Name(rawValue: NOTICE_MENU_CLICKED), object: self, userInfo: [NOTICE_MENU_CLICKED_PATH: url.path])
             })
         }
     }

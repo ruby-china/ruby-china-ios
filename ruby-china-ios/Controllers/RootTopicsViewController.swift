@@ -10,12 +10,12 @@ import UIKit
 
 class RootTopicsViewController: TopicsViewController {
     
-    private lazy var hideWebViewController: WebViewController = {
+    fileprivate lazy var hideWebViewController: WebViewController = {
         let vc = WebViewController(path: "/topics")
         return vc
     }()
-    private var disappearTime: NSDate?
-    private var filterData = TopicsFilterViewController.NodeData.listType(.last_actived)
+    fileprivate var disappearTime: Date?
+    fileprivate var filterData = TopicsFilterViewController.NodeData.listType(.last_actived)
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -40,12 +40,12 @@ class RootTopicsViewController: TopicsViewController {
         reloadTopics(filterData)
     }
     
-    override func viewWillAppear(animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         checkRefreshContent()
     }
     
-    override func viewDidDisappear(animated: Bool) {
+    override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
         resetDisappearTime()
     }
@@ -60,7 +60,7 @@ extension RootTopicsViewController {
         let vc = TopicsFilterViewController.show()
         vc.selectedData = filterData
         vc.onChangeSelect = { [weak self] (sender) in
-            guard let `self` = self, data = sender.selectedData else {
+            guard let `self` = self, let data = sender.selectedData else {
                 return
             }
             self.filterData = data
@@ -73,15 +73,15 @@ extension RootTopicsViewController {
     func searchAction() {
         let vc = SearchViewController()
         vc.onCancel = { sender in
-            sender.dismissViewControllerAnimated(true, completion: nil)
+            sender.dismiss(animated: true, completion: nil)
         }
         
         let nc = UINavigationController(rootViewController: vc)
-        self.presentViewController(nc, animated: true, completion: nil)
+        self.present(nc, animated: true, completion: nil)
     }
     
     func newTopicAction() {
-        TurbolinksSessionLib.sharedInstance.actionToPath("/topics/new", withAction: .Replace)
+        TurbolinksSessionLib.shared.action(.Replace, path: "/topics/new")
     }
     
 }
@@ -89,16 +89,16 @@ extension RootTopicsViewController {
 // MARK: - private methods
 
 extension RootTopicsViewController {
-    private func addObserver() {
-        NSNotificationCenter.defaultCenter().addObserverForName(UIApplicationDidBecomeActiveNotification, object: nil, queue: nil) { [weak self](notification) in
+    fileprivate func addObserver() {
+        NotificationCenter.default.addObserver(forName: NSNotification.Name.UIApplicationDidBecomeActive, object: nil, queue: nil) { [weak self](notification) in
             self?.checkRefreshContent()
         }
-        NSNotificationCenter.defaultCenter().addObserverForName(UIApplicationWillResignActiveNotification, object: nil, queue: nil) { [weak self](notification) in
+        NotificationCenter.default.addObserver(forName: NSNotification.Name.UIApplicationWillResignActive, object: nil, queue: nil) { [weak self](notification) in
             self?.resetDisappearTime()
         }
     }
     
-    private func resetTitle(filterData: TopicsFilterViewController.NodeData) {
+    fileprivate func resetTitle(_ filterData: TopicsFilterViewController.NodeData) {
         switch filterData {
         case let .listType(type):
             navigationItem.title = type == .last_actived ? "title topics".localized : filterData.getName()
@@ -109,7 +109,7 @@ extension RootTopicsViewController {
         tabBarController?.title = navigationItem.title
     }
     
-    private func reloadTopics(filterData: TopicsFilterViewController.NodeData) {
+    fileprivate func reloadTopics(_ filterData: TopicsFilterViewController.NodeData) {
         switch filterData {
         case let .listType(type):
             load(listType: type, nodeID: 0, offset: 0)
@@ -118,11 +118,11 @@ extension RootTopicsViewController {
         }
     }
     
-    private func resetDisappearTime() {
-        disappearTime = NSDate()
+    fileprivate func resetDisappearTime() {
+        disappearTime = Date()
     }
     
-    private func checkRefreshContent() {
+    fileprivate func checkRefreshContent() {
         guard let time = disappearTime else {
             return
         }

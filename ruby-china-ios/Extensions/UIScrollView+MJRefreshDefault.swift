@@ -14,11 +14,11 @@ extension UIScrollView {
     /// 增加下拉刷新功能
     ///
     /// - parameter block: 回调：刷新操作
-    func headerWithRefreshingBlock(block: MJRefreshComponentRefreshingBlock) -> () {
+    func headerWithRefreshingBlock(_ block: @escaping MJRefreshComponentRefreshingBlock) -> () {
         let header = MJRefreshNormalHeader(refreshingBlock: block)
-        header.lastUpdatedTimeLabel.hidden = true
-        if let color = header.stateLabel?.textColor, image = UIImage(named: "refresh-arrow")?.imageWithColor(color) {
-            header.arrowView.image = image
+        header?.lastUpdatedTimeLabel.isHidden = true
+        if let color = header?.stateLabel?.textColor, let image = UIImage(named: "refresh-arrow")?.imageWithColor(color) {
+            header?.arrowView.image = image
         }
         self.mj_header = header
     }
@@ -26,9 +26,9 @@ extension UIScrollView {
     /// 增加上拉刷新功能
     ///
     /// - parameter block: 回调：刷新操作
-    func footerWithRefreshingBlock(block: MJRefreshComponentRefreshingBlock) -> () {
+    func footerWithRefreshingBlock(_ block: @escaping MJRefreshComponentRefreshingBlock) -> () {
         let footer = MJRefreshAutoNormalFooter(refreshingBlock: block)
-        footer.hidden = true
+        footer?.isHidden = true
         self.mj_footer = footer
     }
     

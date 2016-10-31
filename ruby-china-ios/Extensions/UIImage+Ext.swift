@@ -17,15 +17,15 @@ extension UIImage {
      
      - returns: 图片
      */
-    static func fromColor(color: UIColor) -> UIImage? {
+    static func fromColor(_ color: UIColor) -> UIImage? {
         let rect = CGRect(x: 0, y: 0, width: 1, height: 1)
         UIGraphicsBeginImageContext(rect.size)
         guard let context = UIGraphicsGetCurrentContext() else {
             UIGraphicsEndImageContext()
             return nil
         }
-        CGContextSetFillColorWithColor(context, color.CGColor)
-        CGContextFillRect(context, rect)
+        context.setFillColor(color.cgColor)
+        context.fill(rect)
         let img = UIGraphicsGetImageFromCurrentImageContext()
         UIGraphicsEndImageContext()
         return img
@@ -41,59 +41,35 @@ extension UIImage {
     /// - parameter borderColor:     边框颜色
     ///
     /// - returns: 指定大小的圆角图片
-    static func roundedCorner(imageSize imageSize: CGSize, radius: CGFloat, backgroundColor: UIColor, borderWidth: CGFloat, borderColor: UIColor) -> UIImage? {
+    static func roundedCorner(imageSize: CGSize, radius: CGFloat, backgroundColor: UIColor, borderWidth: CGFloat, borderColor: UIColor) -> UIImage? {
         let sizeToFit = imageSize
         let halfBorderWidth = CGFloat(borderWidth / 2.0)
         
-        UIGraphicsBeginImageContextWithOptions(sizeToFit, false, UIScreen.mainScreen().scale)
+        UIGraphicsBeginImageContextWithOptions(sizeToFit, false, UIScreen.main.scale)
         guard let context = UIGraphicsGetCurrentContext() else {
             UIGraphicsEndImageContext()
             return nil
         }
         
-        CGContextSetLineWidth(context, borderWidth)
-        CGContextSetStrokeColorWithColor(context, borderColor.CGColor)
-        CGContextSetFillColorWithColor(context, backgroundColor.CGColor)
+        context.setLineWidth(borderWidth)
+        context.setStrokeColor(borderColor.cgColor)
+        context.setFillColor(backgroundColor.cgColor)
         
         let width = sizeToFit.width, height = sizeToFit.height
-        CGContextMoveToPoint(context, width - halfBorderWidth, radius + halfBorderWidth)  // 开始坐标右边开始
-        CGContextAddArcToPoint(context, width - halfBorderWidth, height - halfBorderWidth, width - radius - halfBorderWidth, height - halfBorderWidth, radius)  // 右下角角度
-        CGContextAddArcToPoint(context, halfBorderWidth, height - halfBorderWidth, halfBorderWidth, height - radius - halfBorderWidth, radius) // 左下角角度
-        CGContextAddArcToPoint(context, halfBorderWidth, halfBorderWidth, width - halfBorderWidth, halfBorderWidth, radius) // 左上角
-        CGContextAddArcToPoint(context, width - halfBorderWidth, halfBorderWidth, width - halfBorderWidth, radius + halfBorderWidth, radius) // 右上角
+        // 开始坐标右边开始
+        context.move(to: CGPoint(x: width - halfBorderWidth, y: radius + halfBorderWidth))
+        // 右下角
+        context.addArc(tangent1End: CGPoint(x: width - halfBorderWidth, y: height - halfBorderWidth), tangent2End: CGPoint(x: width - radius - halfBorderWidth, y: height - halfBorderWidth), radius: radius)
+        // 左下角
+        context.addArc(tangent1End: CGPoint(x: halfBorderWidth, y: height - halfBorderWidth), tangent2End: CGPoint(x: halfBorderWidth, y: height - radius - halfBorderWidth), radius: radius)
+        // 左上角
+        context.addArc(tangent1End: CGPoint(x: halfBorderWidth, y: halfBorderWidth), tangent2End: CGPoint(x: width - halfBorderWidth, y: halfBorderWidth), radius: radius)
+        // 右上角
+        context.addArc(tangent1End: CGPoint(x: width - halfBorderWidth, y: halfBorderWidth), tangent2End: CGPoint(x: width - halfBorderWidth, y: radius + halfBorderWidth), radius: radius)
         
-        CGContextDrawPath(context, .FillStroke)
+        context.drawPath(using: .fillStroke)
         let output = UIGraphicsGetImageFromCurrentImageContext()
         UIGraphicsEndImageContext()
-        return output
-    }
-    
-    /**
-     将当前图片裁成圆角图
-     
-     - parameter radius:    圆角尺寸
-     - parameter sizetoFit: 裁成的图片宽高
-     
-     - returns: 圆角图片
-     */
-    func drawRectWithRoundedCorner(radius radius: CGFloat, _ sizetoFit: CGSize) -> UIImage? {
-        let rect = CGRect(origin: CGPoint(x: 0, y: 0), size: sizetoFit)
-        
-        UIGraphicsBeginImageContextWithOptions(rect.size, false, UIScreen.mainScreen().scale)
-        guard let context = UIGraphicsGetCurrentContext() else {
-            UIGraphicsEndImageContext()
-            return nil
-        }
-        
-        let path = UIBezierPath(roundedRect: rect, byRoundingCorners: .AllCorners, cornerRadii: CGSize(width: radius, height: radius))
-        CGContextAddPath(context, path.CGPath)
-        CGContextClip(context)
-        
-        self.drawInRect(rect)
-        CGContextDrawPath(context, .FillStroke)
-        let output = UIGraphicsGetImageFromCurrentImageContext()
-        UIGraphicsEndImageContext()
-        
         return output
     }
     
@@ -104,8 +80,8 @@ extension UIImage {
      
      - returns: 新图片
      */
-    func imageWithColor(color: UIColor) -> UIImage? {
-        guard let cgimage = CGImage else {
+    func imageWithColor(_ color: UIColor) -> UIImage? {
+        guard let cgimage = cgImage else {
             return nil
         }
         
@@ -115,13 +91,13 @@ extension UIImage {
             return nil
         }
         
-        CGContextTranslateCTM(context, 0, size.height)
-        CGContextScaleCTM(context, 1.0, -1.0)
-        CGContextSetBlendMode(context, .Normal)
-        let rect = CGRectMake(0, 0, size.width, size.height)
-        CGContextClipToMask(context, rect, cgimage)
+        context.translateBy(x: 0, y: size.height)
+        context.scaleBy(x: 1.0, y: -1.0)
+        context.setBlendMode(.normal)
+        let rect = CGRect(x: 0, y: 0, width: size.width, height: size.height)
+        context.clip(to: rect, mask: cgimage)
         color.setFill()
-        CGContextFillRect(context, rect)
+        context.fill(rect)
         let newImage = UIGraphicsGetImageFromCurrentImageContext()
         
         UIGraphicsEndImageContext()

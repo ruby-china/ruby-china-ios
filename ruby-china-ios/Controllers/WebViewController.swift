@@ -8,7 +8,7 @@ class WebViewController: VisitableViewController {
             visitableURL = urlWithPath(currentPath)
         }
     }
-    private lazy var router: Router = {
+    fileprivate lazy var router: Router = {
         let router = Router()
         router.bind("/topics") { [weak self] (req) in
             self?.pageTitle = "title topics".localized
@@ -61,12 +61,12 @@ class WebViewController: VisitableViewController {
         return router
     }()
     
-    private var pageTitle = ""
+    fileprivate var pageTitle = ""
     
-    private lazy var errorView: ErrorView = {
-        let view = NSBundle.mainBundle().loadNibNamed("ErrorView", owner: self, options: nil)!.first as! ErrorView
+    fileprivate lazy var errorView: ErrorView = {
+        let view = Bundle.main.loadNibNamed("ErrorView", owner: self, options: nil)!.first as! ErrorView
         view.translatesAutoresizingMaskIntoConstraints = false
-        view.retryButton.addTarget(self, action: #selector(retry(_:)), forControlEvents: .TouchUpInside)
+        view.retryButton.addTarget(self, action: #selector(retry(_:)), for: .touchUpInside)
         return view
     }()
     
@@ -78,9 +78,9 @@ class WebViewController: VisitableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        TurbolinksSessionLib.sharedInstance.visit(self)
+        TurbolinksSessionLib.shared.visit(self)
         
-        router.match(NSURL(string: currentPath)!)
+        _ = router.match(URL(string: currentPath)!)
         navigationItem.title = pageTitle
         
         addObserver()
@@ -104,11 +104,11 @@ extension WebViewController {
         self.navigationItem.rightBarButtonItems = rightBarButtonItems
     }
     
-    func presentError(error: Error) {
+    func presentError(_ error: Error) {
         errorView.error = error
         view.addSubview(errorView)
-        view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:|[view]|", options: [], metrics: nil, views: ["view": errorView]))
-        view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:|[view]|", options: [], metrics: nil, views: ["view": errorView]))
+        view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|[view]|", options: [], metrics: nil, views: ["view": errorView]))
+        view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|[view]|", options: [], metrics: nil, views: ["view": errorView]))
     }
     
 }
@@ -119,39 +119,41 @@ extension WebViewController {
     
     func reloadByLoginStatusChanged() {
         visitableURL = urlWithPath(currentPath)
-        if isViewLoaded() {
+        if isViewLoaded {
             reloadVisitable()
         }
     }
     
-    func retry(sender: AnyObject) {
+    func retry(_ sender: AnyObject) {
         errorView.removeFromSuperview()
         reloadVisitable()
     }
     
     func shareAction() {
         guard let webView = self.visitableView.webView,
-            title = webView.title,
-            url = webView.URL,
-            components = NSURLComponents(URL: url, resolvingAgainstBaseURL: false) else {
+            let title = webView.title,
+            let url = webView.url,
+            var components = URLComponents(url: url, resolvingAgainstBaseURL: false) else {
             return
         }
         components.query = nil
         components.fragment = nil
-        self.share(title, url: components.URL!)
+        if let url = components.url {
+            share(title, url: url)
+        }
     }
     
     func moreAction() {
-        let sheet = UIAlertController(title: nil, message: nil, preferredStyle: .ActionSheet)
+        let sheet = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
         
-        let shareAction = UIAlertAction(title: "share".localized, style: .Default, handler: { [weak self] action in
+        let shareAction = UIAlertAction(title: "share".localized, style: .default, handler: { [weak self] action in
             self?.shareAction()
         })
         sheet.addAction(shareAction)
         
-        let cancelAction = UIAlertAction(title: "cancel".localized, style: .Cancel, handler: nil)
+        let cancelAction = UIAlertAction(title: "cancel".localized, style: .cancel, handler: nil)
         sheet.addAction(cancelAction)
-        self.presentViewController(sheet, animated: true, completion: nil)
+        self.present(sheet, animated: true, completion: nil)
     }
     
 }
@@ -160,19 +162,19 @@ extension WebViewController {
 
 extension WebViewController {
     
-    private func urlWithPath(path: String) -> NSURL {
+    fileprivate func urlWithPath(_ path: String) -> URL {
         var urlString = ROOT_URL + path
         if let accessToken = OAuth2.shared.accessToken {
-            let char = urlString.rangeOfString("?") == nil ? "?" : "&"
+            let char = urlString.range(of: "?") == nil ? "?" : "&"
             urlString += "\(char)access_token=\(accessToken)"
         }
         
-        return NSURL(string: urlString)!
+        return URL(string: urlString)!
     }
     
-    private func addObserver() {
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(reloadByLoginStatusChanged), name: NOTICE_SIGNIN_SUCCESS, object: nil)
-        NSNotificationCenter.defaultCenter().addObserverForName(NOTICE_SIGNOUT, object: nil, queue: nil) { [weak self] (notification) in
+    fileprivate func addObserver() {
+        NotificationCenter.default.addObserver(self, selector: #selector(reloadByLoginStatusChanged), name: NSNotification.Name(rawValue: NOTICE_SIGNIN_SUCCESS), object: nil)
+        NotificationCenter.default.addObserver(forName: NSNotification.Name(rawValue: NOTICE_SIGNOUT), object: nil, queue: nil) { [weak self] (notification) in
             guard let `self` = self else {
                 return
             }
@@ -182,9 +184,9 @@ extension WebViewController {
         }
     }
     
-    private func share(textToShare: String, url: NSURL) {
-        let objectsToShare = [textToShare, url]
+    fileprivate func share(_ textToShare: String, url: URL) {
+        let objectsToShare = [textToShare, url] as [Any]
         let activityViewController = UIActivityViewController(activityItems: objectsToShare, applicationActivities: nil)
-        self.presentViewController(activityViewController, animated: true, completion: nil)
+        self.present(activityViewController, animated: true, completion: nil)
     }
 }

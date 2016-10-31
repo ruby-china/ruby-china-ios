@@ -11,24 +11,24 @@ import UITableView_FDTemplateLayoutCell
 
 class TopicsViewController: UITableViewController {
 
-    private let kCellReuseIdentifier = "TOPIC_CELL"
+    fileprivate let kCellReuseIdentifier = "TOPIC_CELL"
     
-    private var isLoading = false
-    private var listType = TopicsService.ListType.popular
-    private var nodeID = 0
-    private var topicList: [Topic]?
+    fileprivate var isLoading = false
+    fileprivate var listType = TopicsService.ListType.popular
+    fileprivate var nodeID = 0
+    fileprivate var topicList: [Topic]?
     
-    private var errorView: ErrorView?
+    fileprivate var errorView: ErrorView?
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         clearsSelectionOnViewWillAppear = true
         
-        tableView.registerClass(TopicCell.self, forCellReuseIdentifier: kCellReuseIdentifier)
+        tableView.register(TopicCell.self, forCellReuseIdentifier: kCellReuseIdentifier)
         tableView.separatorColor = UIColor(white: 0.94, alpha: 1)
         tableView.tableFooterView = UIView()
-        tableView.separatorInset = UIEdgeInsetsZero
+        tableView.separatorInset = UIEdgeInsets.zero
         tableView.headerWithRefreshingBlock { [weak self] in
             self?.errorView?.removeFromSuperview()
             self?.load(offset: 0)
@@ -47,46 +47,46 @@ class TopicsViewController: UITableViewController {
 
     // MARK: - Table view data source
 
-    override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return topicList == nil ? 0 : topicList!.count
     }
     
-    override func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
-        let data = topicList![indexPath.row]
-        return tableView.fd_heightForCellWithIdentifier(kCellReuseIdentifier, configuration: { (cell) in
+    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        let data = topicList![(indexPath as NSIndexPath).row]
+        return tableView.fd_heightForCell(withIdentifier: kCellReuseIdentifier, configuration: { (cell) in
             if let cell = cell as? TopicCell {
                 cell.data = data
             }
         })
     }
 
-    override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier(kCellReuseIdentifier, forIndexPath: indexPath) as! TopicCell
-        cell.data = topicList![indexPath.row]
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: kCellReuseIdentifier, for: indexPath) as! TopicCell
+        cell.data = topicList![(indexPath as NSIndexPath).row]
         cell.onUserClick = { (data) in
             guard let topic = data else {
                 return
             }
-            TurbolinksSessionLib.sharedInstance.actionToPath("/\(topic.user.login)", withAction: .Advance)
+            TurbolinksSessionLib.shared.action(.Advance, path: "/\(topic.user.login)")
         }
         cell.onNodeClick = { [weak self] (data) in
-            guard let `self` = self, topic = data else {
+            guard let `self` = self, let topic = data else {
                 return
             }
             
             if (self.nodeID > 0) {
                 // 已经在节点帖子列表界面，再点击节点，则不再打开节点帖子界面，而直接进入帖子
-                TurbolinksSessionLib.sharedInstance.actionToPath("/topics/\(topic.id)", withAction: .Advance)
+                TurbolinksSessionLib.shared.action(.Advance, path: "/topics/\(topic.id)")
             } else {
-                TurbolinksSessionLib.sharedInstance.actionToPath("/topics/node\(topic.nodeID)", withAction: .Advance)
+                TurbolinksSessionLib.shared.action(.Advance, path: "/topics/node\(topic.nodeID)")
             }
         }
         return cell
     }
 
-    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        let data = topicList![indexPath.row]
-        TurbolinksSessionLib.sharedInstance.actionToPath("/topics/\(data.id)", withAction: .Advance)
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let data = topicList![(indexPath as NSIndexPath).row]
+        TurbolinksSessionLib.shared.action(.Advance, path: "/topics/\(data.id)")
     }
     
 }
@@ -95,7 +95,7 @@ class TopicsViewController: UITableViewController {
 
 extension TopicsViewController {
     
-    func load(listType listType: TopicsService.ListType, nodeID: Int, offset: Int) {
+    func load(listType: TopicsService.ListType, nodeID: Int, offset: Int) {
         self.listType = listType
         self.nodeID = nodeID
         self.tableView.mj_header.beginRefreshing()
@@ -107,7 +107,7 @@ extension TopicsViewController {
 
 extension TopicsViewController {
     
-    private func load(offset offset: Int) {
+    fileprivate func load(offset: Int) {
         if isLoading { return }
         isLoading = true
         
@@ -124,7 +124,7 @@ extension TopicsViewController {
             if (self.tableView.mj_footer.isRefreshing()) {
                 self.tableView.mj_footer.endRefreshing()
             }
-            self.tableView.mj_footer.hidden = result == nil ? true : (result!.count < limit)
+            self.tableView.mj_footer.isHidden = result == nil ? true : (result!.count < limit)
             
             if let topics = result {
                 if self.topicList == nil || offset == 0 {
@@ -136,7 +136,7 @@ extension TopicsViewController {
             } else {
                 var error: Error!
                 switch response.result {
-                case .Success:
+                case .success:
                     guard let statusCode = response.response?.statusCode else {
                         return
                     }
@@ -146,11 +146,11 @@ extension TopicsViewController {
                     default:
                         error = Error(HTTPStatusCode: statusCode)
                     }
-                case .Failure(let err):
+                case .failure(let err):
                     error = Error(title: "网络连接错误", message: err.localizedDescription)
                 }
                 
-                if let list = self.topicList where list.count > 0 {
+                if let list = self.topicList , list.count > 0 {
                     RBHUD.error(error.message)
                 } else {
                     self.presentError(error)
@@ -159,20 +159,20 @@ extension TopicsViewController {
         })
     }
     
-    private func presentError(error: Error) {
+    fileprivate func presentError(_ error: Error) {
         errorView?.removeFromSuperview()
         
-        errorView = NSBundle.mainBundle().loadNibNamed("ErrorView", owner: self, options: nil)!.first as? ErrorView
+        errorView = Bundle.main.loadNibNamed("ErrorView", owner: self, options: nil)!.first as? ErrorView
         if errorView == nil {
             return
         }
         
-        errorView!.retryButton.addTarget(self, action: #selector(errorViewRetryAction), forControlEvents: .TouchUpInside)
+        errorView!.retryButton.addTarget(self, action: #selector(errorViewRetryAction), for: .touchUpInside)
         errorView!.error = error
         view.addSubview(errorView!)
-        errorView!.snp_remakeConstraints { (make) in
+        errorView!.snp.remakeConstraints { (make) in
             make.edges.equalToSuperview()
-            var screenSize = UIScreen.mainScreen().bounds.size
+            var screenSize = UIScreen.main.bounds.size
             screenSize.height -= 64 + 49
             make.size.equalTo(screenSize)
         }
@@ -182,7 +182,7 @@ extension TopicsViewController {
         tableView.mj_header.beginRefreshing()
     }
     
-    private func loadNodeInfo() {
+    fileprivate func loadNodeInfo() {
         NodesService.info(nodeID) { [weak self] (statusCode, result) in
             self?.title = result == nil ? "title node".localized : result!.name;
         }

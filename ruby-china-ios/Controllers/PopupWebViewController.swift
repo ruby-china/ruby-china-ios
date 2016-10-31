@@ -13,7 +13,7 @@ import WebKit
 import Turbolinks
 
 protocol PopupWebViewControllerDelegate: class {
-    func popupWebViewControllerDidFinished(controller: PopupWebViewController, toURL url: NSURL?)
+    func popupWebViewControllerDidFinished(_ controller: PopupWebViewController, toURL url: URL?)
 }
 
 class PopupWebViewController: WebViewController {
@@ -21,16 +21,16 @@ class PopupWebViewController: WebViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        navigationItem.leftBarButtonItem = UIBarButtonItem(title: "close".localized, style: .Plain, target: self, action: #selector(actionClose))
+        navigationItem.leftBarButtonItem = UIBarButtonItem(title: "close".localized, style: .plain, target: self, action: #selector(actionClose))
     }
     
     func actionClose() {
-        dismissViewControllerAnimated(true, completion: nil)
+        dismiss(animated: true, completion: nil)
     }
     
-    func session(session: Session, didProposeVisitToURL URL: NSURL, withAction action: Action) {
+    func session(_ session: Session, didProposeVisitToURL URL: Foundation.URL, withAction action: Action) {
         if URL.path != self.currentPath {
-            dismissViewControllerAnimated(true, completion: nil)
+            dismiss(animated: true, completion: nil)
             delegate?.popupWebViewControllerDidFinished(self, toURL: URL)
             return
         }
@@ -38,16 +38,18 @@ class PopupWebViewController: WebViewController {
 }
 
 extension PopupWebViewController: WKNavigationDelegate {
-    func webView(webView: WKWebView, decidePolicyForNavigationAction navigationAction: WKNavigationAction, decisionHandler: (WKNavigationActionPolicy) -> Void) {
-        if (navigationAction.request.HTTPMethod == "GET") {
-            if let URL = navigationAction.request.URL where URL.path != self.currentPath {
-                dismissViewControllerAnimated(true, completion: nil)
+    
+    func webView(_ webView: WKWebView, decidePolicyFor navigationAction: WKNavigationAction, decisionHandler: @escaping (WKNavigationActionPolicy) -> Void) {
+        if (navigationAction.request.httpMethod == "GET") {
+            if let URL = navigationAction.request.url , URL.path != self.currentPath {
+                dismiss(animated: true, completion: nil)
                 delegate?.popupWebViewControllerDidFinished(self, toURL: URL)
-                decisionHandler(.Cancel)
+                decisionHandler(.cancel)
                 return
             }
         }
         
-        decisionHandler(.Allow)
+        decisionHandler(.allow)
     }
+    
 }

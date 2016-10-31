@@ -10,10 +10,10 @@ import UIKit
 
 class TopicDetailsViewController: WebViewController {
     
-    private var topicID: Int!;
-    private var followButton: UIButton!
-    private var likeButton: UIButton!
-    private var favorited: Bool = false
+    fileprivate var topicID: Int!;
+    fileprivate var followButton: UIButton!
+    fileprivate var likeButton: UIButton!
+    fileprivate var favorited: Bool = false
     
     
     convenience init(topicID: Int) {
@@ -31,7 +31,7 @@ class TopicDetailsViewController: WebViewController {
     
     override func reloadByLoginStatusChanged() {
         super.reloadByLoginStatusChanged()
-        if isViewLoaded() {
+        if isViewLoaded {
             loadTopicActionButtonStatus()
         }
     }
@@ -43,25 +43,25 @@ class TopicDetailsViewController: WebViewController {
 extension TopicDetailsViewController {
     
     override func moreAction() {
-        let sheet = UIAlertController(title: nil, message: nil, preferredStyle: .ActionSheet)
+        let sheet = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
         
         let favoriteTitle = (favorited ? "cancel favorites" : "favorites").localized
-        let favoriteAction = UIAlertAction(title: favoriteTitle, style: .Default) { [weak self] action in
+        let favoriteAction = UIAlertAction(title: favoriteTitle, style: .default) { [weak self] action in
             self?.favoriteAction()
         }
         sheet.addAction(favoriteAction)
         
-        let shareAction = UIAlertAction(title: "share".localized, style: .Default) { [weak self] action in
+        let shareAction = UIAlertAction(title: "share".localized, style: .default) { [weak self] action in
             self?.shareAction()
         }
         sheet.addAction(shareAction)
         
-        let cancelAction = UIAlertAction(title: "cancel".localized, style: .Cancel, handler: nil)
+        let cancelAction = UIAlertAction(title: "cancel".localized, style: .cancel, handler: nil)
         sheet.addAction(cancelAction)
-        self.presentViewController(sheet, animated: true, completion: nil)
+        self.present(sheet, animated: true, completion: nil)
     }
     
-    func topicAction(button: UIButton) {
+    func topicAction(_ button: UIButton) {
         if !OAuth2.shared.isLogined {
             SignInViewController.show()
             return
@@ -70,11 +70,11 @@ extension TopicDetailsViewController {
             return
         }
         
-        func callback1(response: APICallbackResponse) {
+        func callback1(_ response: APICallbackResponse) {
             callback2(response, likesCount: nil)
         }
-        func callback2(response: APICallbackResponse, likesCount: Int?) {
-            guard let code = response.response?.statusCode where code == 200 else {
+        func callback2(_ response: APICallbackResponse, likesCount: Int?) {
+            guard let code = response.response?.statusCode , code == 200 else {
                 return
             }
             
@@ -105,13 +105,13 @@ extension TopicDetailsViewController {
         
         if favorited {
             TopicsService.unfavorite(topicID) { [weak self] (response) in
-                if let code = response.response?.statusCode where code == 200 {
+                if let code = response.response?.statusCode , code == 200 {
                     self?.favorited = false
                 }
             }
         } else {
             TopicsService.favorite(topicID) { [weak self] (response) in
-                if let code = response.response?.statusCode where code == 200 {
+                if let code = response.response?.statusCode , code == 200 {
                     self?.favorited = true
                 }
             }
@@ -127,7 +127,7 @@ private let checkedTag = 1;
 
 extension TopicDetailsViewController {
     
-    private func addTopicActionButton() {
+    fileprivate func addTopicActionButton() {
         var rightBarButtonItems = navigationItem.rightBarButtonItems ?? [UIBarButtonItem.fixNavigationSpacer()]
         
         let (followItem, followBtn) = UIBarButtonItem.narrowButtonItem2(image: UIImage(named: "invisible"), target: self, action: #selector(topicAction(_:)))
@@ -135,25 +135,25 @@ extension TopicDetailsViewController {
         
         let (likeItem, likeBtn) = UIBarButtonItem.narrowButtonItem2(image: UIImage(named: "like"), target: self, action: #selector(topicAction(_:)))
         likeBtn.frame.size.width = 50
-        likeBtn.titleLabel?.font = UIFont.systemFontOfSize(13)
-        likeBtn.setTitleColor(NAVBAR_TINT_COLOR, forState: .Normal)
+        likeBtn.titleLabel?.font = UIFont.systemFont(ofSize: 13)
+        likeBtn.setTitleColor(NAVBAR_TINT_COLOR, for: UIControlState())
         likeButton = likeBtn
         
         rightBarButtonItems += [followItem, likeItem]
         navigationItem.rightBarButtonItems = rightBarButtonItems
     }
     
-    private func loadTopicActionButtonStatus() {
-        guard let id = topicID where OAuth2.shared.isLogined else {
+    fileprivate func loadTopicActionButtonStatus() {
+        guard let id = topicID , OAuth2.shared.isLogined else {
             self.setButton(followButton, checked: false)
             self.setButton(likeButton, checked: false)
             return
         }
         TopicsService.detail(id) { [weak self] (response, topic, topicMeta) in
-            guard let code = response.response?.statusCode where code == 200 else {
+            guard let code = response.response?.statusCode , code == 200 else {
                 return
             }
-            guard let `self` = self, topic = topic, meta = topicMeta else {
+            guard let `self` = self, let topic = topic, let meta = topicMeta else {
                 return
             }
             
@@ -163,7 +163,7 @@ extension TopicDetailsViewController {
         }
     }
     
-    private func setButton(button: UIButton, checked: Bool, likesCount: Int? = nil) {
+    fileprivate func setButton(_ button: UIButton, checked: Bool, likesCount: Int? = nil) {
         var checkedImageNamed, uncheckedImageNamed: String!
         var title: String?
         if button == followButton {
@@ -179,13 +179,13 @@ extension TopicDetailsViewController {
         
         button.tag = checked ? checkedTag : uncheckedTag
         let image = UIImage(named: checked ? checkedImageNamed : uncheckedImageNamed)
-        button.setImage(image?.imageWithColor(NAVBAR_TINT_COLOR), forState: .Normal)
-        button.setTitle(title, forState: .Normal)
+        button.setImage(image?.imageWithColor(NAVBAR_TINT_COLOR), for: UIControlState())
+        button.setTitle(title, for: UIControlState())
         // 选中动画
-        if let imageView = button.imageView where checked {
-            imageView.transform = CGAffineTransformMakeScale(0.0, 0.0)
-            UIView.animateWithDuration(0.3, delay: 0, usingSpringWithDamping: 0.5, initialSpringVelocity: 20, options: UIViewAnimationOptions.CurveLinear, animations: {
-                imageView.transform = CGAffineTransformMakeScale(1, 1)
+        if let imageView = button.imageView , checked {
+            imageView.transform = CGAffineTransform(scaleX: 0.0, y: 0.0)
+            UIView.animate(withDuration: 0.3, delay: 0, usingSpringWithDamping: 0.5, initialSpringVelocity: 20, options: UIViewAnimationOptions.curveLinear, animations: {
+                imageView.transform = CGAffineTransform(scaleX: 1, y: 1)
             }, completion: nil)
         }
     }

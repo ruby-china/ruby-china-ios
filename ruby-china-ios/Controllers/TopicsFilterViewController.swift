@@ -35,24 +35,24 @@ class TopicsFilterViewController: UIViewController {
     var onChangeSelect: ((TopicsFilterViewController) -> ())?
     var onCancel: ((TopicsFilterViewController) -> ())?
     
-    private struct GroupData {
+    fileprivate struct GroupData {
         let name: String
         let nodes: [NodeData]
     }
     
-    private let headerIdentifier = "HEADERVIEW"
-    private let cellIdentifier = "NODECELL"
-    private let cacheNodesJSONKey = "cacheNodesJSONKey"
-    private var groupDatas = [GroupData]()
-    private var parentWindow: UIWindow?
+    fileprivate let headerIdentifier = "HEADERVIEW"
+    fileprivate let cellIdentifier = "NODECELL"
+    fileprivate let cacheNodesJSONKey = "cacheNodesJSONKey"
+    fileprivate var groupDatas = [GroupData]()
+    fileprivate var parentWindow: UIWindow?
 
-    private lazy var closeButton: UIButton = {
+    fileprivate lazy var closeButton: UIButton = {
         let view = UIButton()
-        view.addTarget(self, action: #selector(close), forControlEvents: .TouchUpInside)
+        view.addTarget(self, action: #selector(close), for: .touchUpInside)
         return view
     }()
     
-    private lazy var collectionView: UICollectionView = {
+    fileprivate lazy var collectionView: UICollectionView = {
         let colNumber: CGFloat = 4
         let cellMargin: CGFloat = 10
         let cellWidth = (self.view.bounds.size.width - (colNumber + 1) * cellMargin) / colNumber
@@ -64,23 +64,23 @@ class TopicsFilterViewController: UIViewController {
         layout.sectionInset = UIEdgeInsets(top: cellMargin, left: cellMargin, bottom: cellMargin, right: cellMargin)
         layout.headerReferenceSize = CGSize(width: self.view.bounds.size.width, height: 30)
         
-        let view = UICollectionView(frame: CGRectZero, collectionViewLayout: layout)
+        let view = UICollectionView(frame: CGRect.zero, collectionViewLayout: layout)
         
         view.delegate = self
         view.dataSource = self
         view.backgroundColor = UIColor(white: 1, alpha: 0.9)
-        view.registerClass(TopicsFilterNodeCell.self, forCellWithReuseIdentifier: self.cellIdentifier)
-        view.registerClass(TopicsFilterNodeSectionHeaderView.self, forSupplementaryViewOfKind: UICollectionElementKindSectionHeader, withReuseIdentifier: self.headerIdentifier)
+        view.register(TopicsFilterNodeCell.self, forCellWithReuseIdentifier: self.cellIdentifier)
+        view.register(TopicsFilterNodeSectionHeaderView.self, forSupplementaryViewOfKind: UICollectionElementKindSectionHeader, withReuseIdentifier: self.headerIdentifier)
         return view
     }()
     
-    private lazy var cellSelectedImage: UIImage? = {
+    fileprivate lazy var cellSelectedImage: UIImage? = {
         let cellSize = (self.collectionView.collectionViewLayout as! UICollectionViewFlowLayout).itemSize
         return UIImage.roundedCorner(imageSize: cellSize, radius: 5, backgroundColor: NAVBAR_BG_COLOR, borderWidth: 0, borderColor: NAVBAR_BG_COLOR)
     }()
-    private lazy var cellNormalImage: UIImage? = {
+    fileprivate lazy var cellNormalImage: UIImage? = {
         let cellSize = (self.collectionView.collectionViewLayout as! UICollectionViewFlowLayout).itemSize
-        return UIImage.roundedCorner(imageSize: cellSize, radius: 5, backgroundColor: UIColor.clearColor(), borderWidth: 1, borderColor: SEGMENT_BG_COLOR)
+        return UIImage.roundedCorner(imageSize: cellSize, radius: 5, backgroundColor: UIColor.clear, borderWidth: 1, borderColor: SEGMENT_BG_COLOR)
     }()
     
     override func viewDidLoad() {
@@ -88,18 +88,18 @@ class TopicsFilterViewController: UIViewController {
         
         view.addSubview(closeButton)
         view.addSubview(collectionView)
-        closeButton.snp_makeConstraints { (make) in
+        closeButton.snp.makeConstraints { (make) in
             make.left.top.right.equalToSuperview()
             make.height.equalTo(64)
         }
-        collectionView.snp_makeConstraints { (make) in
-            make.top.equalTo(closeButton.snp_bottom)
+        collectionView.snp.makeConstraints { (make) in
+            make.top.equalTo(closeButton.snp.bottom)
             make.left.bottom.right.equalToSuperview()
         }
         
         initGroupDatas()
         
-        if let jsonString = NSUserDefaults.standardUserDefaults().valueForKey(cacheNodesJSONKey) as? String {
+        if let jsonString = UserDefaults.standard.value(forKey: cacheNodesJSONKey) as? String {
             let json = JSON.parse(jsonString)
             if let nodes = nodesFromJSON(json) {
                 addGroupDatas(nodes: nodes, isSync: true)
@@ -109,8 +109,8 @@ class TopicsFilterViewController: UIViewController {
         loadNodes()
     }
     
-    override func preferredStatusBarStyle() -> UIStatusBarStyle {
-        return .LightContent
+    override var preferredStatusBarStyle : UIStatusBarStyle {
+        return .lightContent
     }
 
 }
@@ -119,36 +119,36 @@ class TopicsFilterViewController: UIViewController {
 
 extension TopicsFilterViewController: UICollectionViewDelegate, UICollectionViewDataSource {
     
-    func numberOfSectionsInCollectionView(collectionView: UICollectionView) -> Int {
+    func numberOfSections(in collectionView: UICollectionView) -> Int {
         return groupDatas.count
     }
     
-    func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return groupDatas[section].nodes.count
     }
     
-    func collectionView(collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, atIndexPath indexPath: NSIndexPath) -> UICollectionReusableView {
+    func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
         if kind == UICollectionElementKindSectionHeader {
-            let view = collectionView.dequeueReusableSupplementaryViewOfKind(kind, withReuseIdentifier: headerIdentifier, forIndexPath: indexPath) as! TopicsFilterNodeSectionHeaderView
-            view.name = groupDatas[indexPath.section].name
+            let view = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: headerIdentifier, for: indexPath) as! TopicsFilterNodeSectionHeaderView
+            view.name = groupDatas[(indexPath as NSIndexPath).section].name
             return view
         }
         return UICollectionReusableView()
     }
     
-    func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
-        let node = groupDatas[indexPath.section].nodes[indexPath.item]
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let node = groupDatas[(indexPath as NSIndexPath).section].nodes[(indexPath as NSIndexPath).item]
         
-        let cell = collectionView.dequeueReusableCellWithReuseIdentifier(cellIdentifier, forIndexPath: indexPath) as! TopicsFilterNodeCell
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellIdentifier, for: indexPath) as! TopicsFilterNodeCell
         cell.normalImage = cellNormalImage
         cell.selectedImage = cellSelectedImage
         cell.name = node.getName()
-        cell.selected = selectedData == nil ? false : node == selectedData!
+        cell.isSelected = selectedData == nil ? false : node == selectedData!
         return cell
     }
     
-    func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
-        let node = groupDatas[indexPath.section].nodes[indexPath.item]
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let node = groupDatas[(indexPath as NSIndexPath).section].nodes[(indexPath as NSIndexPath).item]
         selectedData = node
         onChangeSelect?(self)
     }
@@ -161,12 +161,12 @@ extension TopicsFilterViewController {
     
     static func show() -> TopicsFilterViewController {
         let vc = TopicsFilterViewController()
-        let window = UIWindow(frame: UIScreen.mainScreen().bounds)
+        let window = UIWindow(frame: UIScreen.main.bounds)
         window.rootViewController = vc
         window.windowLevel = UIWindowLevelAlert
         window.makeKeyAndVisible()
         window.alpha = 0
-        UIView.animateWithDuration(0.3, animations: {
+        UIView.animate(withDuration: 0.3, animations: {
             window.alpha = 1
         })
         
@@ -176,7 +176,7 @@ extension TopicsFilterViewController {
     }
     
     func close() {
-        UIView.animateWithDuration(0.3, animations: {
+        UIView.animate(withDuration: 0.3, animations: {
             self.parentWindow!.alpha = 0
             }, completion: { _ in
                 self.parentWindow = nil
@@ -188,7 +188,7 @@ extension TopicsFilterViewController {
 
 extension TopicsFilterViewController {
     
-    private func initGroupDatas() {
+    fileprivate func initGroupDatas() {
         let nodes = [
             NodeData.listType(.last_actived),
             NodeData.listType(.excellent),
@@ -198,23 +198,23 @@ extension TopicsFilterViewController {
         groupDatas.append(GroupData(name: "all topics".localized, nodes: nodes))
     }
     
-    private func loadNodes() {
+    fileprivate func loadNodes() {
         NodesService.list { [weak self] (response, result) in
-            guard let `self` = self, result = result else {
+            guard let `self` = self, let result = result else {
                 return
             }
             
-            if let nodes = self.nodesFromJSON(result) where nodes.count > 0 {
-                NSUserDefaults.standardUserDefaults().setValue(result.rawString(), forKey: self.cacheNodesJSONKey)
-                NSUserDefaults.standardUserDefaults().synchronize()
+            if let nodes = self.nodesFromJSON(result) , nodes.count > 0 {
+                UserDefaults.standard.setValue(result.rawString(), forKey: self.cacheNodesJSONKey)
+                UserDefaults.standard.synchronize()
                 
                 self.addGroupDatas(nodes: nodes, isSync: false)
             }
         }
     }
     
-    private func nodesFromJSON(json: JSON) -> [Node]? {
-        guard let nodeList = json["nodes"].array where nodeList.count > 0 else {
+    fileprivate func nodesFromJSON(_ json: JSON) -> [Node]? {
+        guard let nodeList = json["nodes"].array , nodeList.count > 0 else {
             return nil
         }
         var nodes = [Node]()
@@ -224,17 +224,17 @@ extension TopicsFilterViewController {
         return nodes
     }
     
-    private func addGroupDatas(nodes nodes: [Node], isSync: Bool) {
+    fileprivate func addGroupDatas(nodes: [Node], isSync: Bool) {
         if nodes.count <= 0 {
             return
         }
         
         let selectedData = self.selectedData
-        var scrollToIndexPath: NSIndexPath?
+        var scrollToIndexPath: IndexPath?
         var nodeGroupDatas = [GroupData]()
         
         func sortAndCreateNodeGroupDatas() {
-            let sortNodes = nodes.sort {
+            let sortNodes = nodes.sorted {
                 $0.sectionName != $1.sectionName ? $0.sectionName < $1.sectionName : $0.name < $1.name
             }
             
@@ -249,7 +249,7 @@ extension TopicsFilterViewController {
                 
                 let nodeData = NodeData.node(id: node.id, name: node.name)
                 if scrollToIndexPath == nil && selectedData != nil && selectedData! == nodeData {
-                    scrollToIndexPath = NSIndexPath(forItem: nodeList.count, inSection: nodeGroupDatas.count + 1)
+                    scrollToIndexPath = IndexPath(item: nodeList.count, section: nodeGroupDatas.count + 1)
                 }
                 nodeList.append(nodeData)
             }
@@ -262,7 +262,7 @@ extension TopicsFilterViewController {
             self.groupDatas = [self.groupDatas[0]] + nodeGroupDatas
             self.collectionView.reloadData()
             if let indexPath = scrollToIndexPath {
-                self.collectionView.scrollToItemAtIndexPath(indexPath, atScrollPosition: .CenteredVertically, animated: false)
+                self.collectionView.scrollToItem(at: indexPath, at: .centeredVertically, animated: false)
             }
         }
         
@@ -270,9 +270,9 @@ extension TopicsFilterViewController {
             sortAndCreateNodeGroupDatas()
             displayNodeGroupDatas()
         } else {
-            dispatch_async(dispatch_get_global_queue(QOS_CLASS_USER_INITIATED, 0)) {
+            DispatchQueue.global(qos: DispatchQoS.QoSClass.userInitiated).async {
                 sortAndCreateNodeGroupDatas()
-                dispatch_async(dispatch_get_main_queue()) {
+                DispatchQueue.main.async {
                     displayNodeGroupDatas()
                 }
             }

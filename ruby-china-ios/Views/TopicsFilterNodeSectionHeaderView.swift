@@ -10,9 +10,9 @@ import UIKit
 
 class TopicsFilterNodeSectionHeaderView: UICollectionReusableView {
     
-    private lazy var label: UILabel = {
+    fileprivate lazy var label: UILabel = {
         let view = UILabel()
-        view.font = UIFont.systemFontOfSize(12)
+        view.font = UIFont.systemFont(ofSize: 12)
         return view
     }()
     
@@ -29,7 +29,7 @@ class TopicsFilterNodeSectionHeaderView: UICollectionReusableView {
         super.init(frame: frame)
         backgroundColor = TABBAR_BG_COLOR
         addSubview(label)
-        label.snp_makeConstraints { (make) in
+        label.snp.makeConstraints { (make) in
             make.edges.equalToSuperview().inset(UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 10))
         }
     }

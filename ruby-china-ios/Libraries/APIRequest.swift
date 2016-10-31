@@ -5,70 +5,75 @@
 //  Created by Jason Lee on 16/7/26.
 //  Copyright © 2016年 ruby-china. All rights reserved.
 //
+
 import Alamofire
 import SwiftyJSON
 
-typealias APICallbackResponse = Response<NSData, NSError>
-typealias APICallback = (APICallbackResponse, json: JSON?) -> Void
+typealias APICallbackResponse = DataResponse<Data>
+typealias APICallback = (APICallbackResponse, JSON?) -> Void
 
 class APIRequest {
     
-    static private var _shared = APIRequest()
+    static fileprivate var _shared = APIRequest()
     
     static var shared: APIRequest {
         return _shared
     }
     
-    private lazy var alamofireManager: Alamofire.Manager = {
-        let configuration = NSURLSessionConfiguration.defaultSessionConfiguration()
+    fileprivate lazy var manager: SessionManager = {
+        let configuration = URLSessionConfiguration.default
+        configuration.httpAdditionalHeaders = SessionManager.defaultHTTPHeaders
         configuration.timeoutIntervalForRequest = 5
         configuration.timeoutIntervalForResource = 5
-        return Alamofire.Manager(configuration: configuration)
+        
+        let ret = SessionManager(configuration: configuration)
+        ret.adapter = self
+        return ret
     }()
-    private var headers: [String: String]?
+    var accessToken: String?
     
-    private var _accessToken:  String?
-    var accessToken: String? {
-        get {
-            return _accessToken
-        }
-        set {
-            _accessToken = newValue
-            headers = newValue == nil ? nil : ["Authorization": "Bearer \(newValue!)"]
-        }
-    }
-    
-    private func _request(method: Alamofire.Method, path: String, parameters: [String: AnyObject]?, callback: APICallback) {
-        // print("headers", headers)
-        alamofireManager.request(method, "\(ROOT_URL)\(path)", parameters: parameters, encoding: .URL, headers: headers).responseData { response in
+    fileprivate func _request(_ method: HTTPMethod, path: String, parameters: [String: AnyObject]?, callback: @escaping APICallback) {
+        manager.request("\(ROOT_URL)\(path)", method: method, parameters: parameters).responseData { response in
             switch response.result {
-            case .Success:
-                print(method, path, response.response?.statusCode)
+            case .success:
+                print(method, path, response.response!.statusCode)
                 let result = response.data == nil ? nil : JSON(data: response.data!)
-                let statusCode = response.response?.statusCode
+                let statusCode = response.response!.statusCode
                 if (statusCode == 401) {
                     OAuth2.shared.logout()
                     return
                 }
-                callback(response, json: result)
+                callback(response, result)
                 break
-            case .Failure(let error):
+            case .failure(let error):
                 print(method, path, error)
-                callback(response, json: nil)
+                callback(response, nil)
                 break
             }
         }
     }
     
-    func post(path: String, parameters: [String: AnyObject]?, callback: APICallback) {
-        return _request(.POST, path: path, parameters: parameters, callback: callback)
+    func post(_ path: String, parameters: [String: AnyObject]?, callback: @escaping APICallback) {
+        return _request(.post, path: path, parameters: parameters, callback: callback)
     }
     
-    func get(path: String, parameters: [String: AnyObject]?, callback: APICallback) {
-        return _request(.GET, path: path, parameters: parameters, callback: callback)
+    func get(_ path: String, parameters: [String: AnyObject]?, callback: @escaping APICallback) {
+        return _request(.get, path: path, parameters: parameters, callback: callback)
     }
     
-    func delete(path: String, parameters: [String: AnyObject]?, callback: APICallback) {
-        return _request(.DELETE, path: path, parameters: parameters, callback: callback)
+    func delete(_ path: String, parameters: [String: AnyObject]?, callback: @escaping APICallback) {
+        return _request(.delete, path: path, parameters: parameters, callback: callback)
+    }
+}
+
+extension APIRequest: RequestAdapter {
+    func adapt(_ urlRequest: URLRequest) throws -> URLRequest {
+        var urlRequest = urlRequest
+        
+        if let accessToken = accessToken, let url = urlRequest.url, url.absoluteString.hasPrefix(ROOT_URL) {
+            urlRequest.setValue("Bearer " + accessToken, forHTTPHeaderField: "Authorization")
+        }
+        
+        return urlRequest
     }
 }

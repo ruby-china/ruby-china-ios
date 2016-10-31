@@ -17,7 +17,7 @@ struct Node {
     let sort: Int
     let sectionID: Int
     let sectionName: String
-    let updatedAt: NSDate
+    let updatedAt: Date
     
     init(json: JSON) {
         id = json["id"].intValue
@@ -27,6 +27,6 @@ struct Node {
         sort = json["sort"].intValue
         sectionID = json["section_id"].intValue
         sectionName = json["section_name"].stringValue
-        updatedAt = json["updated_at"].stringValue.dateValueFromISO8601()!
+        updatedAt = json["updated_at"].stringValue.dateValueFromISO8601()! as Date
     }
 }

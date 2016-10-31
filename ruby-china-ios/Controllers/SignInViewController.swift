@@ -3,32 +3,32 @@ import WebKit
 import YYKeyboardManager
 
 protocol SignInViewControllerDelegate: class {
-    func signInViewControllerDidAuthenticate(sender: SignInViewController)
+    func signInViewControllerDidAuthenticate(_ sender: SignInViewController)
 }
 
 class SignInViewController: UIViewController {
     weak var delegate: SignInViewControllerDelegate?
-    var onDidAuthenticate: ((sender: SignInViewController) -> Void)?
+    var onDidAuthenticate: ((_ sender: SignInViewController) -> Void)?
     
-    static func show() -> SignInViewController {
+    @discardableResult static func show() -> SignInViewController {
         let controller = SignInViewController()
         let navController = ThemeNavigationController(rootViewController: controller)
-        UIApplication.currentViewController()?.presentViewController(navController, animated: true, completion: nil)
+        UIApplication.currentViewController()?.present(navController, animated: true, completion: nil)
         return controller
     }
     
-    private var appNameLabel: UILabel!
-    private var contentView: UIView!
-    private var loginField: RBTextField!
-    private var passwordField: RBTextField!
-    private var loginButton: UIButton!
+    fileprivate var appNameLabel: UILabel!
+    fileprivate var contentView: UIView!
+    fileprivate var loginField: RBTextField!
+    fileprivate var passwordField: RBTextField!
+    fileprivate var loginButton: UIButton!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .Cancel, target: self, action: #selector(actionClose))
-        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "sign up".localized, style: .Plain, target: self, action: #selector(actionSignup))
-        view.backgroundColor = UIColor.whiteColor()
+        navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action: #selector(actionClose))
+        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "sign up".localized, style: .plain, target: self, action: #selector(actionSignup))
+        view.backgroundColor = UIColor.white
         
         setupViews()
         
@@ -36,19 +36,19 @@ class SignInViewController: UIViewController {
         
         textFieldDidChanged()
         
-        YYKeyboardManager.defaultManager().addObserver(self)
+        YYKeyboardManager.default().add(self)
     }
     
-    override func viewDidAppear(animated: Bool) {
+    override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        if let text = loginField.text where text != "" {
+        if let text = loginField.text , text != "" {
             passwordField.becomeFirstResponder()
         } else {
             loginField.becomeFirstResponder()
         }
     }
     
-    override func viewWillDisappear(animated: Bool) {
+    override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         loginField.resignFirstResponder()
         passwordField.resignFirstResponder()
@@ -60,7 +60,7 @@ class SignInViewController: UIViewController {
 
 extension SignInViewController {
     func actionLogin() {
-        if loginButton.enabled {
+        if loginButton.isEnabled {
             loginField.resignFirstResponder()
             passwordField.resignFirstResponder()
             
@@ -70,20 +70,20 @@ extension SignInViewController {
     }
     
     func actionClose() {
-        dismissViewControllerAnimated(true, completion: nil)
+        dismiss(animated: true, completion: nil)
     }
     
     func textFieldDidChanged() {
-        if let username = loginField.text, let password = passwordField.text where username != "" && password != "" {
-            loginButton.enabled = true
+        if let username = loginField.text, let password = passwordField.text , username != "" && password != "" {
+            loginButton.isEnabled = true
         } else {
-            loginButton.enabled = false
+            loginButton.isEnabled = false
         }
     }
     
     func actionSignup() {
-        let url = NSURL(string: "\(ROOT_URL)/account/sign_up")!
-        UIApplication.sharedApplication().openURL(url)
+        let url = URL(string: "\(ROOT_URL)/account/sign_up")!
+        UIApplication.shared.openURL(url)
     }
 }
 
@@ -91,43 +91,43 @@ extension SignInViewController {
 
 extension SignInViewController {
     
-    private func setupViews() {
+    fileprivate func setupViews() {
         appNameLabel = UILabel()
         appNameLabel.text = "Ruby China"
         appNameLabel.textColor = PRIMARY_COLOR
-        appNameLabel.font = UIFont.boldSystemFontOfSize(40)
+        appNameLabel.font = UIFont.boldSystemFont(ofSize: 40)
         appNameLabel.sizeToFit()
         
         let margin = CGFloat(20)
         
-        loginField = RBTextField(frame: CGRectMake(margin, 0, view.frame.width - margin * 2, 44))
-        loginField.clearButtonMode = .WhileEditing
-        loginField.autocorrectionType = .No
-        loginField.keyboardType = .EmailAddress
-        loginField.autocapitalizationType = .None
+        loginField = RBTextField(frame: CGRect(x: margin, y: 0, width: view.frame.width - margin * 2, height: 44))
+        loginField.clearButtonMode = .whileEditing
+        loginField.autocorrectionType = .no
+        loginField.keyboardType = .emailAddress
+        loginField.autocapitalizationType = .none
         loginField.placeholder = "login name".localized
         loginField.delegate = self
-        loginField.returnKeyType = .Next
-        loginField.addTarget(self, action: #selector(textFieldDidChanged), forControlEvents: UIControlEvents.EditingChanged)
-        loginField.text = NSUserDefaults.standardUserDefaults().stringForKey("loginName")
+        loginField.returnKeyType = .next
+        loginField.addTarget(self, action: #selector(textFieldDidChanged), for: UIControlEvents.editingChanged)
+        loginField.text = UserDefaults.standard.string(forKey: "loginName")
         
-        passwordField = RBTextField(frame: CGRectMake(margin, loginField.frame.maxY + margin, view.frame.width - margin * 2, 44))
+        passwordField = RBTextField(frame: CGRect(x: margin, y: loginField.frame.maxY + margin, width: view.frame.width - margin * 2, height: 44))
         passwordField.placeholder = "password".localized
-        passwordField.secureTextEntry = true
+        passwordField.isSecureTextEntry = true
         passwordField.delegate = self
-        passwordField.returnKeyType = .Done
-        passwordField.addTarget(self, action: #selector(textFieldDidChanged), forControlEvents: UIControlEvents.EditingChanged)
+        passwordField.returnKeyType = .done
+        passwordField.addTarget(self, action: #selector(textFieldDidChanged), for: UIControlEvents.editingChanged)
         
-        loginButton = UIButton(frame: CGRectMake(margin, passwordField.frame.maxY + margin, view.frame.width - margin * 2, 44))
-        loginButton.setTitle("sign in".localized, forState: .Normal)
-        loginButton.setBackgroundImage(UIImage.fromColor(NAVBAR_BG_COLOR), forState: .Normal)
-        loginButton.setBackgroundImage(UIImage.fromColor(NAVBAR_BORDER_COLOR), forState: .Highlighted)
-        loginButton.setTitleColor(UIColor.whiteColor(), forState: .Normal)
-        loginButton.addTarget(self, action: #selector(actionLogin), forControlEvents: .TouchDown)
+        loginButton = UIButton(frame: CGRect(x: margin, y: passwordField.frame.maxY + margin, width: view.frame.width - margin * 2, height: 44))
+        loginButton.setTitle("sign in".localized, for: UIControlState())
+        loginButton.setBackgroundImage(UIImage.fromColor(NAVBAR_BG_COLOR), for: UIControlState())
+        loginButton.setBackgroundImage(UIImage.fromColor(NAVBAR_BORDER_COLOR), for: .highlighted)
+        loginButton.setTitleColor(UIColor.white, for: UIControlState())
+        loginButton.addTarget(self, action: #selector(actionLogin), for: .touchDown)
         
-        contentView = UIView(frame: CGRectMake(0, 0, view.frame.width, loginButton.frame.maxY))
+        contentView = UIView(frame: CGRect(x: 0, y: 0, width: view.frame.width, height: loginButton.frame.maxY))
         contentView.center = view.center
-        contentView.autoresizingMask = [.FlexibleTopMargin, .FlexibleBottomMargin]
+        contentView.autoresizingMask = [.flexibleTopMargin, .flexibleBottomMargin]
         
         contentView.addSubview(loginField)
         contentView.addSubview(passwordField)
@@ -138,17 +138,17 @@ extension SignInViewController {
         refreshAppNameLabelCenter()
     }
     
-    private func refreshAppNameLabelCenter() {
+    fileprivate func refreshAppNameLabelCenter() {
         appNameLabel.center = CGPoint(x: contentView.center.x, y: contentView.frame.minY / 2.0)
     }
     
 }
 
 extension SignInViewController: YYKeyboardObserver {
-    func keyboardChangedWithTransition(transition: YYKeyboardTransition) {
-        UIView.animateWithDuration(transition.animationDuration, delay: 0, options: transition.animationOption, animations: {
+    func keyboardChanged(with transition: YYKeyboardTransition) {
+        UIView.animate(withDuration: transition.animationDuration, delay: 0, options: transition.animationOption, animations: {
             var y: CGFloat = 0
-            if transition.toVisible {
+            if transition.toVisible.boolValue {
                 y = (self.view.frame.height - transition.toFrame.height) * 0.5
             } else {
                 y = self.view.frame.height * 0.5
@@ -160,7 +160,7 @@ extension SignInViewController: YYKeyboardObserver {
 }
 
 extension SignInViewController: UITextFieldDelegate {
-    func textFieldShouldReturn(textField: UITextField) -> Bool {
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         if (textField == loginField) {
             passwordField.becomeFirstResponder()
         }
@@ -173,20 +173,20 @@ extension SignInViewController: UITextFieldDelegate {
 }
 
 extension SignInViewController: OAuth2Delegate {
-    func oauth2DidLoginSuccessed(accessToken: String) {
+    func oauth2DidLoginSuccessed(_ accessToken: String) {
         RBHUD.progressHidden()
-        NSUserDefaults.standardUserDefaults().setValue(loginField.text, forKey: "loginName")
-        NSUserDefaults.standardUserDefaults().synchronize()
+        UserDefaults.standard.setValue(loginField.text, forKey: "loginName")
+        UserDefaults.standard.synchronize()
         
-        print("Login successed", OAuth2.shared.accessToken)
-        dismissViewControllerAnimated(false, completion: {
+        print("Login successed", accessToken)
+        dismiss(animated: false, completion: {
             self.delegate?.signInViewControllerDidAuthenticate(self)
-            self.onDidAuthenticate?(sender: self)
-            NSNotificationCenter.defaultCenter().postNotificationName(NOTICE_SIGNIN_SUCCESS, object: nil)
+            self.onDidAuthenticate?(self)
+            NotificationCenter.default.post(name: Notification.Name(rawValue: NOTICE_SIGNIN_SUCCESS), object: nil)
         })
     }
     
-    func oauth2DidLoginFailed(error: NSError) {
+    func oauth2DidLoginFailed(_ error: NSError) {
         print("Login failed", error)
         
         var errorMessage = ""
