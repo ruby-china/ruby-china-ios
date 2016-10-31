@@ -25,7 +25,7 @@ DEPENDENCIES:
   - Kingfisher
   - MBProgressHUD
   - MJRefresh
-  - Router (from `https://github.com/ViacomInc/Router.git`)
+  - Router (from `https://github.com/klaus01/Router.git`)
   - SideMenu
   - SKPhotoBrowser (from `https://github.com/suzuki-0000/SKPhotoBrowser.git`, branch `swift3`)
   - SnapKit
@@ -39,7 +39,7 @@ EXTERNAL SOURCES:
     :branch: swift-3.0
     :git: https://github.com/marcelofabri/Heimdallr.swift.git
   Router:
-    :git: https://github.com/ViacomInc/Router.git
+    :git: https://github.com/klaus01/Router.git
   SKPhotoBrowser:
     :branch: swift3
     :git: https://github.com/suzuki-0000/SKPhotoBrowser.git
@@ -52,8 +52,8 @@ CHECKOUT OPTIONS:
     :commit: 41099fea0156ffb421fdb835ebc76ea7e6f600c1
     :git: https://github.com/marcelofabri/Heimdallr.swift.git
   Router:
-    :commit: 833c7cc52b8b78cefe7e49069495f72d6e7dfb2a
-    :git: https://github.com/ViacomInc/Router.git
+    :commit: 409ac172500c0a0349beaa59f39243a5e0374fe6
+    :git: https://github.com/klaus01/Router.git
   SKPhotoBrowser:
     :commit: 2ec9887a8f5bc82aabc61da035cd4ab9b1230b63
     :git: https://github.com/suzuki-0000/SKPhotoBrowser.git
@@ -78,6 +78,6 @@ SPEC CHECKSUMS:
   UITableView+FDTemplateLayoutCell: 234e1582bcc4e18461af91155123bb96538ed030
   YYKeyboardManager: ff53d2e80d1808567a7f004028bd200d9469a89f
 
-PODFILE CHECKSUM: 744919ad89fb447ff03cdbf85e10080aeaa5dcb9
+PODFILE CHECKSUM: 713eb82cfb57f52c59db2425353e1d6254dbd12c
 
 COCOAPODS: 1.1.1

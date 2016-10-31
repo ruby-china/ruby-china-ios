@@ -53,7 +53,7 @@ class TurbolinksSessionLib: NSObject {
         router.bind("/topics/:id") { req in
             if let idString = req.param("id"), let id = Int(idString),
                 let navigationController = UIApplication.currentViewController()?.navigationController {
-                let vc = TopicDetailsViewController(topicID: id)
+                let vc = TopicDetailsViewController(topicID: id, topicPath: req.url.absoluteString)
                 navigationController.pushViewController(vc, animated: true)
             }
         }
@@ -261,8 +261,10 @@ extension TurbolinksSessionLib: WKNavigationDelegate {
             } else if let host = url.host , host != URL(string: ROOT_URL)!.host! {
                 // 外部网站, open in SafariView
                 safariOpen(url)
-            } else {
-                action(.Advance, path: url.path)
+            } else if var newURL = URLComponents(url: url, resolvingAgainstBaseURL: false) {
+                newURL.scheme = nil
+                newURL.host = nil
+                action(.Advance, path: newURL.string!)
             }
         }
         decisionHandler(.cancel)

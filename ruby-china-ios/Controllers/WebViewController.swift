@@ -163,13 +163,19 @@ extension WebViewController {
 extension WebViewController {
     
     fileprivate func urlWithPath(_ path: String) -> URL {
-        var urlString = ROOT_URL + path
+        var urlComponents = URLComponents(string: ROOT_URL + path)!
+        
         if let accessToken = OAuth2.shared.accessToken {
-            let char = urlString.range(of: "?") == nil ? "?" : "&"
-            urlString += "\(char)access_token=\(accessToken)"
+            var queryItems = urlComponents.queryItems ?? [URLQueryItem]()
+            if var item = queryItems.filter({ $0.name == "access_token" }).first {
+                item.value = accessToken
+            } else {
+                queryItems.append(URLQueryItem(name: "access_token", value: accessToken))
+            }
+            urlComponents.queryItems = queryItems
         }
         
-        return URL(string: urlString)!
+        return urlComponents.url!
     }
     
     fileprivate func addObserver() {

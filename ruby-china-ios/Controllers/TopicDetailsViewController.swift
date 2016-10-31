@@ -10,14 +10,14 @@ import UIKit
 
 class TopicDetailsViewController: WebViewController {
     
-    fileprivate var topicID: Int!;
+    fileprivate var topicID: Int!
     fileprivate var followButton: UIButton!
     fileprivate var likeButton: UIButton!
     fileprivate var favorited: Bool = false
     
     
-    convenience init(topicID: Int) {
-        self.init(path: "/topics/\(topicID)")
+    convenience init(topicID: Int, topicPath: String? = nil) {
+        self.init(path: topicPath ?? "/topics/\(topicID)")
         self.topicID = topicID
     }
     
