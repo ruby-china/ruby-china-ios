@@ -255,7 +255,7 @@ extension TurbolinksSessionLib: WKNavigationDelegate {
         
         if let url = navigationAction.request.url {
             let ext = url.pathExtension.lowercased()
-            if (["jpg", "png", "gif"].filter{ ext.hasPrefix($0) }).count > 0 {
+            if (["jpg", "jpeg", "png", "gif"].filter{ ext.hasPrefix($0) }).count > 0 {
                 // 查看图片
                 presentImageBrowserController(url)
             } else if let host = url.host , host != URL(string: ROOT_URL)!.host! {
