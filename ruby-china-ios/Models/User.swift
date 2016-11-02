@@ -7,7 +7,7 @@ import Foundation
 import SwiftyJSON
 
 struct User {
-    let id: String
+    let id: Int
     
     let login: String
     let name: String?
@@ -43,7 +43,7 @@ struct User {
     init?(json: JSON) {
         if json.type == .null { return nil }
         
-        self.id = json["id"].stringValue
+        self.id = json["id"].intValue
         
         self.login = json["login"].stringValue
         self.name = json["name"].string
