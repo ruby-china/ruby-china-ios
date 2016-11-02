@@ -36,6 +36,7 @@
 "share" = "Share";
 "cancel" = "Cancel";
 "close" = "Close";
+"retry" = "Retry";
 "get accessToken failed" = "Get accessToken failed, Please try again!";
 "move to footer" = "Move to footer";
 "favorites" = "Bookmark";
