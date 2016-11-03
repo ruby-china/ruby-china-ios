@@ -46,11 +46,7 @@ class TopicsService {
                 return
             }
             
-            var topics = [Topic]()
-            for topicJSON in topicList {
-                topics.append(Topic(json: topicJSON))
-            }
-            
+            let topics = topicList.map { Topic(json: $0) }
             callback(response, topics)
         }
     }

@@ -182,8 +182,7 @@ class TurbolinksSessionLib: NSObject {
     }
     
     fileprivate func pushNodeTopicsController(_ nodeID: Int) {
-        let controller = TopicsViewController()
-        controller.load(listType: .last_actived, nodeID: nodeID, offset: 0)
+        let controller = NodeTopicsViewController(nodeID: nodeID)
         UIApplication.currentViewController()?.navigationController?.pushViewController(controller, animated: true)
     }
 }

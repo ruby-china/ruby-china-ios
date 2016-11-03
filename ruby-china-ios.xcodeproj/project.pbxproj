@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2432ACDD1DCA30F900F95C7D /* UsersService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2432ACDC1DCA30F900F95C7D /* UsersService.swift */; };
+		2432ACDF1DCA392800F95C7D /* NodeTopicsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2432ACDE1DCA392800F95C7D /* NodeTopicsViewController.swift */; };
+		2432ACE11DCA3C1100F95C7D /* FavoriteTopicsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2432ACE01DCA3C1100F95C7D /* FavoriteTopicsViewController.swift */; };
 		244667CB1D6349EF00F76B10 /* RBHUD.swift in Sources */ = {isa = PBXBuildFile; fileRef = 244667CA1D6349EF00F76B10 /* RBHUD.swift */; };
 		245CCE6B1DB21A9E00428C2F /* RootTopicsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 245CCE6A1DB21A9E00428C2F /* RootTopicsViewController.swift */; };
 		2463030E1DAE7BEF00EF26AB /* TopicCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2463030D1DAE7BEF00EF26AB /* TopicCell.swift */; };
@@ -58,6 +61,9 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		2432ACDC1DCA30F900F95C7D /* UsersService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UsersService.swift; sourceTree = "<group>"; };
+		2432ACDE1DCA392800F95C7D /* NodeTopicsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NodeTopicsViewController.swift; sourceTree = "<group>"; };
+		2432ACE01DCA3C1100F95C7D /* FavoriteTopicsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FavoriteTopicsViewController.swift; sourceTree = "<group>"; };
 		244667CA1D6349EF00F76B10 /* RBHUD.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RBHUD.swift; sourceTree = "<group>"; };
 		245CCE6A1DB21A9E00428C2F /* RootTopicsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RootTopicsViewController.swift; sourceTree = "<group>"; };
 		2463030D1DAE7BEF00EF26AB /* TopicCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TopicCell.swift; sourceTree = "<group>"; };
@@ -139,6 +145,8 @@
 				24742CE01D50FE2E00D16CA9 /* SideMenuViewController.swift */,
 				24742CE11D50FE2E00D16CA9 /* SignInViewController.swift */,
 				24654AE11DAFCE3800BF912B /* TopicsViewController.swift */,
+				2432ACDE1DCA392800F95C7D /* NodeTopicsViewController.swift */,
+				2432ACE01DCA3C1100F95C7D /* FavoriteTopicsViewController.swift */,
 				24742CE31D50FE2E00D16CA9 /* WebViewController.swift */,
 				96F9FD6A1D59A168004FD824 /* PopupWebViewController.swift */,
 				96F9FD6C1D59A814004FD824 /* ProfileViewController.swift */,
@@ -158,6 +166,7 @@
 				24B228EC1DAA877600DEC44D /* TopicsService.swift */,
 				248EE2041DB22D9C005E61C6 /* NodesService.swift */,
 				24A6A3ED1DB7B82500EC89DB /* LikesService.swift */,
+				2432ACDC1DCA30F900F95C7D /* UsersService.swift */,
 				24742CE71D50FE2E00D16CA9 /* OAuth2.swift */,
 				24742CE81D50FE2E00D16CA9 /* TurbolinksSessionLib.swift */,
 				24DE002A1DC1CA2C004AA741 /* CustomSKImageCache.swift */,
@@ -402,12 +411,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2432ACDD1DCA30F900F95C7D /* UsersService.swift in Sources */,
 				24654AE41DAFDA1600BF912B /* UIApplication+Ext.swift in Sources */,
 				24758CEB1D620FFA00D8C743 /* UIImage+Ext.swift in Sources */,
 				24742CF71D50FE2E00D16CA9 /* SignInViewController.swift in Sources */,
 				248EE2031DB22C67005E61C6 /* Node.swift in Sources */,
 				24887F351DBAFED300BB7EDC /* SearchViewController.swift in Sources */,
 				24B228ED1DAA877600DEC44D /* TopicsService.swift in Sources */,
+				2432ACDF1DCA392800F95C7D /* NodeTopicsViewController.swift in Sources */,
 				24742CEF1D50FE2E00D16CA9 /* EditAccountViewController.swift in Sources */,
 				24887F371DBB2FBD00BB7EDC /* TopicsFilterViewController.swift in Sources */,
 				24742CF51D50FE2E00D16CA9 /* SideMenuNavigationController.swift in Sources */,
@@ -430,6 +441,7 @@
 				249C0A7F1D75C1E600097458 /* String+Localize.swift in Sources */,
 				24742CFD1D50FE2E00D16CA9 /* TurbolinksSessionLib.swift in Sources */,
 				24B228F31DAA972500DEC44D /* String+Ext.swift in Sources */,
+				2432ACE11DCA3C1100F95C7D /* FavoriteTopicsViewController.swift in Sources */,
 				24742CF41D50FE2E00D16CA9 /* RootViewController.swift in Sources */,
 				96F9FD6D1D59A814004FD824 /* ProfileViewController.swift in Sources */,
 				24742CF61D50FE2E00D16CA9 /* SideMenuViewController.swift in Sources */,

@@ -62,7 +62,7 @@ class SideMenuViewController: UITableViewController {
         
         title = "Ruby China"
         
-        NotificationCenter.default.addObserver(self, selector: #selector(updateLoginState), name: NSNotification.Name(rawValue: USER_CHANGED), object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(updateLoginState), name: NSNotification.Name(NOTICE_USER_CHANGED), object: nil)
         updateLoginState()
         
         tableView.backgroundColor = SIDEMENU_BG_COLOR

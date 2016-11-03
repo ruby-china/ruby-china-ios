@@ -16,6 +16,7 @@ class RootTopicsViewController: TopicsViewController {
     }()
     fileprivate var disappearTime: Date?
     fileprivate var filterData = TopicsFilterViewController.NodeData.listType(.last_actived)
+    fileprivate var listType = TopicsService.ListType.popular
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -50,6 +51,9 @@ class RootTopicsViewController: TopicsViewController {
         resetDisappearTime()
     }
     
+    override func loadTopics(offset: Int, limit: Int, callback: @escaping (APICallbackResponse, [Topic]?) -> ()) {
+        TopicsService.list(listType, node_id: nodeID, offset: offset, limit: limit, callback: callback)
+    }
 }
 
 // MARK: - action methods
@@ -107,6 +111,12 @@ extension RootTopicsViewController {
         }
         
         tabBarController?.title = navigationItem.title
+    }
+    
+    fileprivate func load(listType: TopicsService.ListType, nodeID: Int, offset: Int) {
+        self.listType = listType
+        self.nodeID = nodeID
+        self.tableView.mj_header.beginRefreshing()
     }
     
     fileprivate func reloadTopics(_ filterData: TopicsFilterViewController.NodeData) {

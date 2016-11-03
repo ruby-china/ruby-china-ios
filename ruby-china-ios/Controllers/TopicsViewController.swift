@@ -12,13 +12,15 @@ import UITableView_FDTemplateLayoutCell
 class TopicsViewController: UITableViewController {
 
     fileprivate let kCellReuseIdentifier = "TOPIC_CELL"
-    
     fileprivate var isLoading = false
-    fileprivate var listType = TopicsService.ListType.popular
-    fileprivate var nodeID = 0
-    fileprivate var topicList: [Topic]?
-    
     fileprivate var errorView: ErrorView?
+    
+    let defaultLimit = 40
+    var topicList: [Topic]?
+    var nodeID = 0
+    func loadTopics(offset: Int, limit: Int, callback: @escaping (APICallbackResponse, [Topic]?) -> ()) {
+        fatalError("loadTopics(offset:callback:) has not been implemented")
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -30,18 +32,17 @@ class TopicsViewController: UITableViewController {
         tableView.tableFooterView = UIView()
         tableView.separatorInset = UIEdgeInsets.zero
         tableView.headerWithRefreshingBlock { [weak self] in
-            self?.errorView?.removeFromSuperview()
-            self?.load(offset: 0)
+            guard let `self` = self else {
+                return
+            }
+            self.errorView?.removeFromSuperview()
+            self.load(offset: 0, limit: self.defaultLimit)
         }
         tableView.footerWithRefreshingBlock { [weak self] in
             guard let `self` = self else {
                 return
             }
-            self.load(offset: self.topicList!.count)
-        }
-        
-        if (nodeID > 0) {
-            loadNodeInfo()
+            self.load(offset: self.topicList!.count, limit: self.defaultLimit)
         }
     }
 
@@ -76,7 +77,8 @@ class TopicsViewController: UITableViewController {
             
             if (self.nodeID > 0) {
                 // 已经在节点帖子列表界面，再点击节点，则不再打开节点帖子界面，而直接进入帖子
-                TurbolinksSessionLib.shared.action(.Advance, path: "/topics/\(topic.id)")
+                let vc = TopicDetailsViewController(topicID: topic.id)
+                self.navigationController?.pushViewController(vc, animated: true)
             } else {
                 TurbolinksSessionLib.shared.action(.Advance, path: "/topics/node\(topic.nodeID)")
             }
@@ -86,7 +88,8 @@ class TopicsViewController: UITableViewController {
 
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let data = topicList![(indexPath as NSIndexPath).row]
-        TurbolinksSessionLib.shared.action(.Advance, path: "/topics/\(data.id)")
+        let vc = TopicDetailsViewController(topicID: data.id)
+        navigationController?.pushViewController(vc, animated: true)
     }
     
 }
@@ -95,24 +98,11 @@ class TopicsViewController: UITableViewController {
 
 extension TopicsViewController {
     
-    func load(listType: TopicsService.ListType, nodeID: Int, offset: Int) {
-        self.listType = listType
-        self.nodeID = nodeID
-        self.tableView.mj_header.beginRefreshing()
-    }
-    
-}
-
-// MARK: - private
-
-extension TopicsViewController {
-    
-    fileprivate func load(offset: Int) {
+    func load(offset: Int, limit: Int) {
         if isLoading { return }
         isLoading = true
         
-        let limit = 40
-        TopicsService.list(listType, node_id: nodeID, offset: offset, limit: limit, callback: { [weak self] (response, result) in
+        loadTopics(offset: offset, limit: limit) { [weak self] (response, result) in
             guard let `self` = self else {
                 return
             }
@@ -141,6 +131,8 @@ extension TopicsViewController {
                         return
                     }
                     switch statusCode {
+                    case 200..<300:
+                        return
                     case 404:
                         error = Error.HTTPNotFoundError
                     default:
@@ -156,8 +148,24 @@ extension TopicsViewController {
                     self.presentError(error)
                 }
             }
-        })
+        }
     }
+    
+}
+
+// MARK: - action
+
+extension TopicsViewController {
+    
+    func errorViewRetryAction() {
+        tableView.mj_header.beginRefreshing()
+    }
+    
+}
+
+// MARK: - private
+
+extension TopicsViewController {
     
     fileprivate func presentError(_ error: Error) {
         errorView?.removeFromSuperview()
@@ -178,13 +186,4 @@ extension TopicsViewController {
         }
     }
     
-    func errorViewRetryAction() {
-        tableView.mj_header.beginRefreshing()
-    }
-    
-    fileprivate func loadNodeInfo() {
-        NodesService.info(nodeID) { [weak self] (statusCode, result) in
-            self?.title = result == nil ? "title node".localized : result!.name;
-        }
-    }
 }

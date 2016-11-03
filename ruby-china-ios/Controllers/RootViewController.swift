@@ -31,7 +31,7 @@ class RootViewController: UITabBarController {
         let pagesController = WebViewController(path: "/wiki")
         pagesController.tabBarItem = UITabBarItem(title: "wiki".localized, image: UIImage(named: "wiki"), tag: kWikiTag)
         
-        let favoritesController = WebViewController(path: "/topics/favorites")
+        let favoritesController = FavoriteTopicsViewController()
         favoritesController.tabBarItem = UITabBarItem(title: "favorites".localized, image: UIImage(named: "favorites"), tag: kFavoritesTag)
         
         let notificationsController = NotificationsViewController(path: "/notifications")
@@ -75,9 +75,9 @@ class RootViewController: UITabBarController {
         setupSideMenu()
         setupViewControllers()
         
-        NotificationCenter.default.addObserver(self, selector: #selector(displaySideMenu), name: NSNotification.Name(rawValue: NOTICE_DISPLAY_MENU), object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(actionMenuClicked), name: NSNotification.Name(rawValue: NOTICE_MENU_CLICKED), object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(updateLoginState), name: NSNotification.Name(rawValue: USER_CHANGED), object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(displaySideMenu), name: NSNotification.Name(NOTICE_DISPLAY_MENU), object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(actionMenuClicked), name: NSNotification.Name(NOTICE_MENU_CLICKED), object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(updateLoginState), name: NSNotification.Name(NOTICE_USER_CHANGED), object: nil)
         
         resetNavigationItem(viewControllers![selectedIndex])
     }
