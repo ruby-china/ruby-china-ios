@@ -31,6 +31,7 @@ class RBHUD {
         hud.isUserInteractionEnabled = false
         hud.mode = .text
         hud.label.text = message
+        hud.label.numberOfLines = 0
         hud.hide(animated: true, afterDelay: 3)
     }
     
