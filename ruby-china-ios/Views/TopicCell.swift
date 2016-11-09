@@ -39,7 +39,8 @@ class TopicCell: UITableViewCell {
     var data: Topic? {
         didSet {
             if let data = data {
-                let imageProcessor = RoundCornerImageProcessor(cornerRadius: kAvatarSize.width / 2.0, targetSize: kAvatarSize)
+                let avatarSize = CGSize(width: kAvatarSize.width * 2, height: kAvatarSize.height * 2)
+                let imageProcessor = RoundCornerImageProcessor(cornerRadius: avatarSize.width / 2.0, targetSize: avatarSize)
                 avatarImageView.kf.setImage(with: data.user.avatarUrl, options: [
                     .processor(imageProcessor),
                     .transition(ImageTransition.fade(0.5))
@@ -64,8 +65,6 @@ class TopicCell: UITableViewCell {
     
     fileprivate lazy var avatarImageView: UIImageView = {
         let view = UIImageView()
-        view.contentMode = .scaleAspectFill
-        view.clipsToBounds = true
         view.isUserInteractionEnabled = true
         view.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(userAction)))
         return view

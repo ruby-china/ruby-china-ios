@@ -133,12 +133,13 @@ extension SideMenuViewController {
             ]
             
             // 下载用户头像
-            let avatarSize = CGSize(width: 22, height: 22)
+            let avatarSize = CGSize(width: 44, height: 44)
             let imageProcessor = RoundCornerImageProcessor(cornerRadius: avatarSize.width * 0.5, targetSize: avatarSize)
             KingfisherManager.shared.retrieveImage(with: user.avatarUrl, options: [.processor(imageProcessor)], progressBlock: nil, completionHandler: { [weak self] (image, error, cacheType, imageURL) in
-                guard let `self` = self, let avatarImage = image else {
+                guard let `self` = self, let image = image, let cgImage = image.cgImage else {
                     return
                 }
+                let avatarImage = UIImage(cgImage: cgImage, scale: 2, orientation: image.imageOrientation)
                 let oldData = self.userItems[0]
                 let newData = ItemData(name: oldData.name, image: avatarImage, imageColor: oldData.imageColor, actionURL: oldData.actionURL)
                 self.userItems[0] = newData
