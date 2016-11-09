@@ -5,7 +5,7 @@ PODS:
     - Heimdallr/Core (= 3.5.0)
   - Heimdallr/Core (3.5.0):
     - Result (~> 3.0)
-  - Kingfisher (3.1.4)
+  - Kingfisher (3.2.0)
   - MBProgressHUD (1.0.0)
   - MJRefresh (3.1.12)
   - Result (3.0.0)
@@ -49,7 +49,7 @@ EXTERNAL SOURCES:
 
 CHECKOUT OPTIONS:
   Heimdallr:
-    :commit: 41099fea0156ffb421fdb835ebc76ea7e6f600c1
+    :commit: af40d89fef3300b780c8a1675db70bf3147dfd0f
     :git: https://github.com/marcelofabri/Heimdallr.swift.git
   Router:
     :commit: 409ac172500c0a0349beaa59f39243a5e0374fe6
@@ -65,7 +65,7 @@ SPEC CHECKSUMS:
   Alamofire: 7682d43245de14874acd142ec137b144aa1dd335
   FontAwesome.swift: 2d32a3d62195343c2004b7c9043294ed2948553a
   Heimdallr: 6d371eb270d6d06d8c9ef5dc9fe7f7bda1331154
-  Kingfisher: 6c67e3e57f2d81a9cfdfa25052cd86f33ceac9bb
+  Kingfisher: 50407d1d5dbc34965009d425a286342ff36a84ea
   MBProgressHUD: 4890f671c94e8a0f3cf959aa731e9de2f036d71a
   MJRefresh: b96cdb21c4aa75a7b07654311ab2f315c497e806
   Result: 1b3e431f37cbcd3ad89c6aa9ab0ae55515fae3b6
