@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import UITableView_FDTemplateLayoutCell
 
 class TopicsViewController: UITableViewController {
 
@@ -53,12 +52,12 @@ class TopicsViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        let data = topicList![(indexPath as NSIndexPath).row]
-        return tableView.fd_heightForCell(withIdentifier: kCellReuseIdentifier, configuration: { (cell) in
-            if let cell = cell as? TopicCell {
-                cell.data = data
-            }
-        })
+        return UITableViewAutomaticDimension
+    }
+    
+    // 预估高度(按照一行 Title 计算)
+    override func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 56
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
