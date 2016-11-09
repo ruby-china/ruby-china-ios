@@ -14,7 +14,7 @@ class DeviseService {
     
     static func create(_ token: String) {
         APIRequest.shared.post(PATH, parameters: parameters(token)) { (response, result) in
-            if result!["ok"] == 1 {
+            if let result = result, let ok = result["ok"].int, ok == 1 {
                 print("Submit token successed.")
             }
         }
@@ -22,7 +22,7 @@ class DeviseService {
     
     static func destroy(_ token: String) {
         APIRequest.shared.delete(PATH, parameters: parameters(token)) { (response, result) in
-            if result!["ok"] == 1 {
+            if let result = result, let ok = result["ok"].int, ok == 1 {
                 print("Destroy token successed.")
             }
         }
