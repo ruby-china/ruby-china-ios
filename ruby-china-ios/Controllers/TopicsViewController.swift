@@ -30,6 +30,7 @@ class TopicsViewController: UITableViewController {
         tableView.separatorColor = UIColor(white: 0.94, alpha: 1)
         tableView.tableFooterView = UIView()
         tableView.separatorInset = UIEdgeInsets.zero
+        tableView.estimatedRowHeight = 56
         tableView.headerWithRefreshingBlock { [weak self] in
             guard let `self` = self else {
                 return
@@ -49,15 +50,6 @@ class TopicsViewController: UITableViewController {
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return topicList == nil ? 0 : topicList!.count
-    }
-    
-    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return UITableViewAutomaticDimension
-    }
-    
-    // 预估高度(按照一行 Title 计算)
-    override func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 56
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {

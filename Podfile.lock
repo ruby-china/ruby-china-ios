@@ -15,7 +15,6 @@ PODS:
   - SnapKit (3.0.2)
   - SwiftyJSON (3.1.1)
   - Turbolinks (1.0.2)
-  - UITableView+FDTemplateLayoutCell (1.4)
   - YYKeyboardManager (1.0.1)
 
 DEPENDENCIES:
@@ -31,7 +30,6 @@ DEPENDENCIES:
   - SnapKit
   - SwiftyJSON
   - Turbolinks (from `https://github.com/turbolinks/turbolinks-ios.git`, branch `swift-3.0`)
-  - UITableView+FDTemplateLayoutCell
   - YYKeyboardManager
 
 EXTERNAL SOURCES:
@@ -75,9 +73,8 @@ SPEC CHECKSUMS:
   SnapKit: 2e456761aa92d4d4067a7a5594c18769d451a8ad
   SwiftyJSON: f0be2e604f83e8405a624e9f891898bf6ed4e019
   Turbolinks: d8209bab43803adae8c06d434368e16479023407
-  UITableView+FDTemplateLayoutCell: 234e1582bcc4e18461af91155123bb96538ed030
   YYKeyboardManager: ff53d2e80d1808567a7f004028bd200d9469a89f
 
-PODFILE CHECKSUM: 713eb82cfb57f52c59db2425353e1d6254dbd12c
+PODFILE CHECKSUM: 69ffeaa7da1ec9db5516c753b9d2a91d4c08506a
 
 COCOAPODS: 1.1.1
