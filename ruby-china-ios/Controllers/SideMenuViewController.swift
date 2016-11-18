@@ -52,7 +52,7 @@ class SideMenuViewController: UITableViewController {
                 name: "Version \(APP_VERSION) (build \(build))",
                 image: UIImage(named: "versions")!.withRenderingMode(.alwaysTemplate),
                 imageColor: UIColor(red: 87 / 255.0, green: 187 / 255.0, blue: 138 / 255.0, alpha: 1),
-                actionURL: URL(string: PROJECT_URL)!
+                actionURL: URL(string: "#")!
             )
         ]
     }()
