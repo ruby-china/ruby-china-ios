@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import UITableView_FDTemplateLayoutCell
 
 class TopicsViewController: UITableViewController {
 
@@ -31,6 +30,7 @@ class TopicsViewController: UITableViewController {
         tableView.separatorColor = UIColor(white: 0.94, alpha: 1)
         tableView.tableFooterView = UIView()
         tableView.separatorInset = UIEdgeInsets.zero
+        tableView.estimatedRowHeight = 56
         tableView.headerWithRefreshingBlock { [weak self] in
             guard let `self` = self else {
                 return
@@ -50,15 +50,6 @@ class TopicsViewController: UITableViewController {
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return topicList == nil ? 0 : topicList!.count
-    }
-    
-    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        let data = topicList![(indexPath as NSIndexPath).row]
-        return tableView.fd_heightForCell(withIdentifier: kCellReuseIdentifier, configuration: { (cell) in
-            if let cell = cell as? TopicCell {
-                cell.data = data
-            }
-        })
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
