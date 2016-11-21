@@ -47,12 +47,6 @@ class SideMenuViewController: UITableViewController {
                 image: UIImage(named: "copyright")!.withRenderingMode(.alwaysTemplate),
                 imageColor: UIColor(red: 246 / 255.0, green: 191 / 255.0, blue: 50 / 255.0, alpha: 1),
                 actionURL: URL(string: COPYRIGHT_URL)!
-            ),
-            ItemData(
-                name: "Version \(APP_VERSION) (build \(build))",
-                image: UIImage(named: "versions")!.withRenderingMode(.alwaysTemplate),
-                imageColor: UIColor(red: 87 / 255.0, green: 187 / 255.0, blue: 138 / 255.0, alpha: 1),
-                actionURL: URL(string: "#")!
             )
         ]
     }()
