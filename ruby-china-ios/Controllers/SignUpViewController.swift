@@ -12,6 +12,7 @@ class SignUpViewController: PopupWebViewController {
     
     static func show(withSuperController: UIViewController) {
         let controller = SignUpViewController(path: "/account/sign_up")
+        NotificationCenter.default.post(name: NSNotification.Name(NOTICE_SIGNOUT), object: nil)
         let navController = ThemeNavigationController(rootViewController: controller)
         withSuperController.present(navController, animated: true, completion: nil)
     }
