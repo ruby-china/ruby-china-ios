@@ -48,6 +48,7 @@
 		24BA25451DBF858D004A801C /* TopicDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24BA25441DBF858D004A801C /* TopicDetailsViewController.swift */; };
 		24DE002B1DC1CA2C004AA741 /* CustomSKImageCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24DE002A1DC1CA2C004AA741 /* CustomSKImageCache.swift */; };
 		24E5B4001D6B2C82006515E3 /* ThemeNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24E5B3FF1D6B2C82006515E3 /* ThemeNavigationController.swift */; };
+		24F8FA9D1DEFE00800D5F57A /* SignUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24F8FA9C1DEFE00800D5F57A /* SignUpViewController.swift */; };
 		24FDFBBC1DBBAE06004BB9A6 /* UIBarButtonItem+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24FDFBBB1DBBAE06004BB9A6 /* UIBarButtonItem+Ext.swift */; };
 		961580A71D477A7600B32BDA /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 961580A61D477A7600B32BDA /* Assets.xcassets */; };
 		961F70FA1D6AB0440079212C /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 961F70FC1D6AB0440079212C /* Localizable.strings */; };
@@ -104,6 +105,7 @@
 		24BA25441DBF858D004A801C /* TopicDetailsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TopicDetailsViewController.swift; sourceTree = "<group>"; };
 		24DE002A1DC1CA2C004AA741 /* CustomSKImageCache.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomSKImageCache.swift; sourceTree = "<group>"; };
 		24E5B3FF1D6B2C82006515E3 /* ThemeNavigationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ThemeNavigationController.swift; sourceTree = "<group>"; };
+		24F8FA9C1DEFE00800D5F57A /* SignUpViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignUpViewController.swift; sourceTree = "<group>"; };
 		24FDFBBB1DBBAE06004BB9A6 /* UIBarButtonItem+Ext.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIBarButtonItem+Ext.swift"; sourceTree = "<group>"; };
 		24FDFBBD1DBBB53D004BB9A6 /* Ruby China.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Ruby China.entitlements"; sourceTree = "<group>"; };
 		27849C620AD961F60F073D43 /* Pods-ruby-china-ios.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ruby-china-ios.release.xcconfig"; path = "Pods/Target Support Files/Pods-ruby-china-ios/Pods-ruby-china-ios.release.xcconfig"; sourceTree = "<group>"; };
@@ -150,6 +152,7 @@
 				24742CE31D50FE2E00D16CA9 /* WebViewController.swift */,
 				96F9FD6A1D59A168004FD824 /* PopupWebViewController.swift */,
 				96F9FD6C1D59A814004FD824 /* ProfileViewController.swift */,
+				24F8FA9C1DEFE00800D5F57A /* SignUpViewController.swift */,
 				24E5B3FF1D6B2C82006515E3 /* ThemeNavigationController.swift */,
 				24887F341DBAFED300BB7EDC /* SearchViewController.swift */,
 				24887F361DBB2FBD00BB7EDC /* TopicsFilterViewController.swift */,
@@ -411,6 +414,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				24F8FA9D1DEFE00800D5F57A /* SignUpViewController.swift in Sources */,
 				2432ACDD1DCA30F900F95C7D /* UsersService.swift in Sources */,
 				24654AE41DAFDA1600BF912B /* UIApplication+Ext.swift in Sources */,
 				24758CEB1D620FFA00D8C743 /* UIImage+Ext.swift in Sources */,

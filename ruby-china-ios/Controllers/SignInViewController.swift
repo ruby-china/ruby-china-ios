@@ -82,8 +82,7 @@ extension SignInViewController {
     }
     
     func actionSignup() {
-        let url = URL(string: "\(ROOT_URL)/account/sign_up")!
-        UIApplication.shared.openURL(url)
+        SignUpViewController.show(withSuperController: self)
     }
 }
 

@@ -10,6 +10,7 @@
 "sign out" = "登出";
 "sign in" = "登录";
 "sign up" = "注册";
+"sign up success tips" = "注册成功！您可以登录了";
 "login name" = "用户名 / 邮箱";
 "password" = "密码";
 "login error message" = "登录名或密码错误，请重试！";

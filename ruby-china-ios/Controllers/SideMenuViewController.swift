@@ -24,11 +24,6 @@ class SideMenuViewController: UITableViewController {
         router.bind("/logout") { (req) in
             OAuth2.shared.logout()
         }
-        router.bind("/account/sign_up") { (req) in
-            if let url = URL(string: "\(ROOT_URL)\(req.route.route)") {
-                UIApplication.shared.openURL(url)
-            }
-        }
         return router
     }()
     
