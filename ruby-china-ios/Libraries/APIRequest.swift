@@ -37,11 +37,15 @@ class APIRequest {
             switch response.result {
             case .success:
                 print(method, path, response.response!.statusCode)
-                let result = response.data == nil ? nil : JSON(data: response.data!)
                 let statusCode = response.response!.statusCode
                 if (statusCode == 401) {
                     OAuth2.shared.logout()
                     return
+                }
+                
+                var result: JSON? = nil
+                if let data = response.data {
+                    result = JSON(data: data)
                 }
                 callback(response, result)
                 break
