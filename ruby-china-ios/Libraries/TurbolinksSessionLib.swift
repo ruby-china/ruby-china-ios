@@ -46,9 +46,7 @@ class TurbolinksSessionLib: NSObject {
             self.presentLoginController()
         }
         router.bind("/account/sign_up") { _ in
-            if let vc = UIApplication.currentViewController() {
-                SignUpViewController.show(withSuperController: vc)
-            }
+            SignUpViewController.show()
         }
         router.bind("/topics/:topic_id/replies/:id/edit") { req in
             let path = "/topics/\(req.param("topic_id")!)/replies/\(req.param("id")!)/edit"

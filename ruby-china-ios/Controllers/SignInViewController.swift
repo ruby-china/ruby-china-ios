@@ -82,7 +82,7 @@ extension SignInViewController {
     }
     
     func actionSignup() {
-        SignUpViewController.show(withSuperController: self)
+        SignUpViewController.show()
     }
 }
 

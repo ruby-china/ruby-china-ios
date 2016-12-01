@@ -184,10 +184,17 @@ extension WebViewController {
             guard let `self` = self else {
                 return
             }
-            let js = "document.cookie = '_homeland_session=; Path=/; Expires=Thu, 01 Jan 1970 00:00:01 GMT;';";
-            self.visitableView.webView?.evaluateJavaScript(js, completionHandler: nil)
+            self.clearSession()
             self.reloadByLoginStatusChanged()
         }
+        NotificationCenter.default.addObserver(forName: NSNotification.Name(NOTICE_CLEAR_SESSION), object: nil, queue: nil) { [weak self] (notification) in
+            self?.clearSession()
+        }
+    }
+    
+    fileprivate func clearSession() {
+        let js = "document.cookie = '_homeland_session=; Path=/; Expires=Thu, 01 Jan 1970 00:00:01 GMT;';";
+        visitableView.webView?.evaluateJavaScript(js, completionHandler: nil)
     }
     
     fileprivate func share(_ textToShare: String, url: URL) {
