@@ -10,6 +10,7 @@
 "sign out" = "Sign out";
 "sign in" = "Sign in";
 "sign up" = "Sign up";
+"sign up success tips" = "Sign up success! You can sign in.";
 "login name" = "Username / Email";
 "password" = "Password";
 "login error message" = "Username / Password incorrect, please try again!";

@@ -28,10 +28,14 @@ class PopupWebViewController: WebViewController {
         dismiss(animated: true, completion: nil)
     }
     
+    func doDidFinished(toURL: URL) {
+        dismiss(animated: true, completion: nil)
+        delegate?.popupWebViewControllerDidFinished(self, toURL: toURL)
+    }
+    
     func session(_ session: Session, didProposeVisitToURL URL: Foundation.URL, withAction action: Action) {
         if URL.path != self.currentPath {
-            dismiss(animated: true, completion: nil)
-            delegate?.popupWebViewControllerDidFinished(self, toURL: URL)
+            doDidFinished(toURL: URL)
             return
         }
     }
@@ -42,8 +46,7 @@ extension PopupWebViewController: WKNavigationDelegate {
     func webView(_ webView: WKWebView, decidePolicyFor navigationAction: WKNavigationAction, decisionHandler: @escaping (WKNavigationActionPolicy) -> Void) {
         if (navigationAction.request.httpMethod == "GET") {
             if let URL = navigationAction.request.url , URL.path != self.currentPath {
-                dismiss(animated: true, completion: nil)
-                delegate?.popupWebViewControllerDidFinished(self, toURL: URL)
+                doDidFinished(toURL: URL)
                 decisionHandler(.cancel)
                 return
             }
