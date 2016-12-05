@@ -10,18 +10,18 @@ import UIKit
 
 class SignUpViewController: PopupWebViewController {
     
-    static func show(withSuperController: UIViewController) {
+    @discardableResult static func show() -> SignUpViewController {
         let controller = SignUpViewController(path: "/account/sign_up")
         NotificationCenter.default.post(name: NSNotification.Name(NOTICE_SIGNOUT), object: nil)
         let navController = ThemeNavigationController(rootViewController: controller)
-        withSuperController.present(navController, animated: true, completion: nil)
+        UIApplication.currentViewController()?.present(navController, animated: true, completion: nil)
+        return controller
     }
     
     override func doDidFinished(toURL: URL) {
         super.doDidFinished(toURL: toURL)
-        // 清除 Session
         DispatchQueue.main.async {
-            NotificationCenter.default.post(name: NSNotification.Name(NOTICE_SIGNOUT), object: nil)
+            NotificationCenter.default.post(name: NSNotification.Name(NOTICE_CLEAR_SESSION), object: nil)
             RBHUD.success("sign up success tips".localized)
         }
     }
