@@ -43,12 +43,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     // MARK: - 通知相关
     
     func application(_ application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
-        let characterSet: CharacterSet = CharacterSet(charactersIn: "<>")
-        
-        let deviceTokenString: String = (deviceToken.description as NSString)
-            .trimmingCharacters(in: characterSet)
-            .replacingOccurrences(of: " ", with: "") as String
-        
+        let deviceTokenString: String = deviceToken.reduce("", {$0 + String(format: "%02X", $1)})
         print("DeviceToken \(deviceTokenString)")
         
         OAuth2.shared.deviceToken = deviceTokenString
