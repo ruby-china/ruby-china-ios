@@ -84,7 +84,12 @@ class TurbolinksSessionLib: NSObject {
     }()
     
     func action(_ action: Action, path: String) {
-        if let _ = router.match(URL(string: path)!) {
+        guard
+            let newPath = path.addingPercentEncoding(withAllowedCharacters: NSCharacterSet.urlQueryAllowed),
+            let url = URL(string: newPath) else {
+            return
+        }
+        if let _ = router.match(url) {
             return
         }
         
@@ -100,7 +105,7 @@ class TurbolinksSessionLib: NSObject {
                 return
             }
             
-            var urlString = ROOT_URL + path
+            var urlString = ROOT_URL + newPath
             if let accessToken = OAuth2.shared.accessToken {
                 urlString += "?access_token=" + accessToken
             }
@@ -111,7 +116,7 @@ class TurbolinksSessionLib: NSObject {
                 return
             }
             
-            let visitable = WebViewController(path: path)
+            let visitable = WebViewController(path: newPath)
             if realAction == .Advance {
                 navigationController.pushViewController(visitable, animated: true)
             } else if realAction == .Replace {
