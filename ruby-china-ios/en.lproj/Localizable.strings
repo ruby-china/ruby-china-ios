@@ -39,6 +39,8 @@
 "close" = "Close";
 "retry" = "Retry";
 "get accessToken failed" = "Get accessToken failed, Please try again!";
+"no user information was returned" = "No user information was returned!";
+"not sign in" = "Not sign in!";
 "move to footer" = "Move to footer";
 "favorites" = "Bookmark";
 "cancel favorites" = "Unbookmark";

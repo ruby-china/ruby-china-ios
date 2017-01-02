@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Alamofire
 
 class FavoriteTopicsViewController: TopicsViewController {
     
@@ -20,8 +21,13 @@ class FavoriteTopicsViewController: TopicsViewController {
     }
     
     override func loadTopics(offset: Int, limit: Int, callback: @escaping (APICallbackResponse, [Topic]?) -> ()) {
-        let userLogin = OAuth2.shared.currentUser!.login
-        UsersService.favorites(userLogin: userLogin, offset: offset, limit: limit, callback: callback)
+        if let user = OAuth2.shared.currentUser {
+            UsersService.favorites(userLogin: user.login, offset: offset, limit: limit, callback: callback)
+        } else {
+            let result = Result<Data>.failure(NSError(domain: "customize", code: -1, userInfo: [NSLocalizedDescriptionKey: "not sign in".localized]))
+            let response = APICallbackResponse(request: nil, response: nil, data: nil, result: result)
+            callback(response, nil)
+        }
     }
     
     override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {

@@ -41,7 +41,12 @@ class OAuth2 {
         heimdallr = Heimdallr(tokenURL: URL(string: "\(ROOT_URL)/oauth/token")!, credentials: OAuthClientCredentials(id: OAUTH_CLIENT_ID, secret: OAUTH_SECRET), accessTokenStore: accessTokenStore)
         
         accessToken = accessTokenStore.retrieveAccessToken()?.accessToken
-        if (isLogined) {
+        if (accessToken != nil) {
+            if let userData = UserDefaults.standard.data(forKey: "loginUserJSON") {
+                let jsonObject = JSON(data: userData)
+                currentUser = User(json: jsonObject)
+            }
+            
             reloadCurrentUser()
         }
     }
@@ -62,9 +67,17 @@ class OAuth2 {
                 print("Login successed. accessToken=\(accessToken)")
                 self.accessToken = accessToken
                 self.submitDeviceToken()
-                self.reloadCurrentUser()
-                DispatchQueue.main.async {
-                    self.delegate?.oauth2DidLoginSuccessed(accessToken)
+                self.reloadCurrentUser() { (response, user) in
+                    switch response.result {
+                    case .success(_):
+                        if user != nil {
+                            self.delegate?.oauth2DidLoginSuccessed(accessToken)
+                        } else {
+                            self.delegate?.oauth2DidLoginFailed(NSError(domain: "customize", code: -1, userInfo: [NSLocalizedDescriptionKey: "no user information was returned".localized]))
+                        }
+                    case .failure(let err):
+                        self.delegate?.oauth2DidLoginFailed(err as NSError)
+                    }
                 }
             case .failure(let err):
                 DispatchQueue.main.async {
@@ -75,7 +88,7 @@ class OAuth2 {
     }
     
     var isLogined: Bool {
-        return accessToken != nil
+        return accessToken != nil && currentUser != nil
     }
     
     fileprivate func submitDeviceToken() {
@@ -84,20 +97,18 @@ class OAuth2 {
         }
     }
     
-    fileprivate func reloadCurrentUser() {
+    fileprivate func reloadCurrentUser(callback: ((APICallbackResponse, User?) -> ())? = nil) {
         UsersService.me { (response, user) in
             switch response.result {
             case .success(let data) where user != nil:
                 self.currentUser = user!
+                debugPrint(self.currentUser as Any)
                 UserDefaults.standard.setValue(data, forKey: "loginUserJSON")
                 UserDefaults.standard.synchronize()
             default:
-                if let userData = UserDefaults.standard.data(forKey: "loginUserJSON") {
-                    let jsonObject = JSON(data: userData)
-                    self.currentUser = User(json: jsonObject)
-                }
+                break
             }
-            print(self.currentUser as Any)
+            callback?(response, user)
         }
     }
     

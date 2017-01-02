@@ -39,6 +39,8 @@
 "close" = "关闭";
 "retry" = "重试";
 "get accessToken failed" = "获取 accessToken 失败，请重试！";
+"no user information was returned" = "未返回用户信息！";
+"not sign in" = "未登录！";
 "move to footer" = "移到尾部";
 "favorites" = "收藏";
 "cancel favorites" = "取消收藏";
