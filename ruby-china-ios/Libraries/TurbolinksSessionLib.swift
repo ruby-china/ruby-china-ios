@@ -54,8 +54,11 @@ class TurbolinksSessionLib: NSObject {
         }
         
         router.bind("/topics/:id") { req in
-            if let idString = req.param("id"), let id = Int(idString),
-                let navigationController = UIApplication.currentViewController()?.navigationController {
+            guard let idString = req.param("id") else {
+                return
+            }
+            let idStringList = idString.characters.split { $0 == "#" }.map(String.init)
+            if idStringList.count > 0, let id = Int(idStringList[0]), let navigationController = UIApplication.currentViewController()?.navigationController {
                 let vc = TopicDetailsViewController(topicID: id, topicPath: req.url.absoluteString)
                 navigationController.pushViewController(vc, animated: true)
             }
