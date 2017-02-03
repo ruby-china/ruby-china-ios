@@ -13,8 +13,7 @@ target 'ruby-china-ios' do
   pod 'Kingfisher'
   pod 'SnapKit'
   pod 'FontAwesome.swift'
-  
-
+  pod 'Firebase/AppIndexing'
   pod 'MBProgressHUD'
   pod 'MJRefresh'
   pod 'YYKeyboardManager'

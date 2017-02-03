@@ -1,6 +1,29 @@
 PODS:
   - Alamofire (4.2.0)
+  - Firebase/AppIndexing (3.11.0):
+    - Firebase/Core
+    - FirebaseAppIndexing (= 1.2.0)
+  - Firebase/Core (3.11.0):
+    - FirebaseAnalytics (= 3.6.0)
+    - FirebaseCore (= 3.4.6)
+  - FirebaseAnalytics (3.6.0):
+    - FirebaseCore (~> 3.4)
+    - FirebaseInstanceID (~> 1.0)
+    - GoogleInterchangeUtilities (~> 1.2)
+    - GoogleSymbolUtilities (~> 1.1)
+    - GoogleToolboxForMac/NSData+zlib (~> 2.1)
+  - FirebaseAppIndexing (1.2.0)
+  - FirebaseCore (3.4.6):
+    - GoogleInterchangeUtilities (~> 1.2)
+    - GoogleToolboxForMac/NSData+zlib (~> 2.1)
+  - FirebaseInstanceID (1.0.8)
   - FontAwesome.swift (1.0.0)
+  - GoogleInterchangeUtilities (1.2.2):
+    - GoogleSymbolUtilities (~> 1.1)
+  - GoogleSymbolUtilities (1.1.2)
+  - GoogleToolboxForMac/Defines (2.1.0)
+  - GoogleToolboxForMac/NSData+zlib (2.1.0):
+    - GoogleToolboxForMac/Defines (= 2.1.0)
   - Heimdallr (3.5.1):
     - Heimdallr/Core (= 3.5.1)
   - Heimdallr/Core (3.5.1):
@@ -19,6 +42,7 @@ PODS:
 
 DEPENDENCIES:
   - Alamofire
+  - Firebase/AppIndexing
   - FontAwesome.swift
   - Heimdallr (from `https://github.com/marcelofabri/Heimdallr.swift.git`, branch `swift-3.0`)
   - Kingfisher
@@ -61,7 +85,15 @@ CHECKOUT OPTIONS:
 
 SPEC CHECKSUMS:
   Alamofire: aa2e09d871c9160ac53c90e83c68064a94e3dfbe
+  Firebase: b8134e285eb33201115bc688bc5d7f112923bc1f
+  FirebaseAnalytics: 9c67af0ebeb8d2146c9b4ea2616439affa947b58
+  FirebaseAppIndexing: d0fa52ce0ad13f4b5b2f09e4b47fb0dc2213f4e9
+  FirebaseCore: 03da1cb32615569bbc2830a22f9ad753d9a02ef5
+  FirebaseInstanceID: ba1e640935235e5fac39dfa816fe7660e72e1a8a
   FontAwesome.swift: 2d32a3d62195343c2004b7c9043294ed2948553a
+  GoogleInterchangeUtilities: d5bc4d88d5b661ab72f9d70c58d02ca8c27ad1f7
+  GoogleSymbolUtilities: 631ee17048aa5e9ab133470d768ea997a5ef9b96
+  GoogleToolboxForMac: 2b2596cbb7186865e98cadf2b1e262d851c2b168
   Heimdallr: 8881bb8ef21dcd347fd1c8b783ae0dafe68a4297
   Kingfisher: 821466474ad7ffc375a4aecadfa05068cfed67b3
   MBProgressHUD: 4890f671c94e8a0f3cf959aa731e9de2f036d71a
@@ -75,6 +107,6 @@ SPEC CHECKSUMS:
   Turbolinks: 1d952338afb5ae2875f55ce0e9122d3a51b0b3c8
   YYKeyboardManager: ff53d2e80d1808567a7f004028bd200d9469a89f
 
-PODFILE CHECKSUM: 69ffeaa7da1ec9db5516c753b9d2a91d4c08506a
+PODFILE CHECKSUM: 6358c3aca792fd614bc3d7e6455523cf8e1d2e27
 
-COCOAPODS: 1.1.1
+COCOAPODS: 1.2.0.beta.3
