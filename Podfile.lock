@@ -1,11 +1,11 @@
 PODS:
-  - Alamofire (4.2.0)
-  - Firebase/AppIndexing (3.11.0):
+  - Alamofire (4.3.0)
+  - Firebase/AppIndexing (3.12.0):
     - Firebase/Core
     - FirebaseAppIndexing (= 1.2.0)
-  - Firebase/Core (3.11.0):
+  - Firebase/Core (3.12.0):
     - FirebaseAnalytics (= 3.6.0)
-    - FirebaseCore (= 3.4.6)
+    - FirebaseCore (= 3.4.7)
   - FirebaseAnalytics (3.6.0):
     - FirebaseCore (~> 3.4)
     - FirebaseInstanceID (~> 1.0)
@@ -13,30 +13,31 @@ PODS:
     - GoogleSymbolUtilities (~> 1.1)
     - GoogleToolboxForMac/NSData+zlib (~> 2.1)
   - FirebaseAppIndexing (1.2.0)
-  - FirebaseCore (3.4.6):
+  - FirebaseCore (3.4.7):
     - GoogleInterchangeUtilities (~> 1.2)
+    - GoogleSymbolUtilities (~> 1.1)
     - GoogleToolboxForMac/NSData+zlib (~> 2.1)
   - FirebaseInstanceID (1.0.8)
   - FontAwesome.swift (1.0.0)
   - GoogleInterchangeUtilities (1.2.2):
     - GoogleSymbolUtilities (~> 1.1)
   - GoogleSymbolUtilities (1.1.2)
-  - GoogleToolboxForMac/Defines (2.1.0)
-  - GoogleToolboxForMac/NSData+zlib (2.1.0):
-    - GoogleToolboxForMac/Defines (= 2.1.0)
+  - GoogleToolboxForMac/Defines (2.1.1)
+  - GoogleToolboxForMac/NSData+zlib (2.1.1):
+    - GoogleToolboxForMac/Defines (= 2.1.1)
   - Heimdallr (3.5.1):
     - Heimdallr/Core (= 3.5.1)
   - Heimdallr/Core (3.5.1):
     - Result (~> 3.0)
-  - Kingfisher (3.2.2)
+  - Kingfisher (3.3.4)
   - MBProgressHUD (1.0.0)
   - MJRefresh (3.1.12)
   - Result (3.1.0)
   - Router (1.0.0)
-  - SideMenu (2.0.7)
-  - SKPhotoBrowser (3.1.3)
-  - SnapKit (3.0.2)
-  - SwiftyJSON (3.1.3)
+  - SideMenu (2.2.0)
+  - SKPhotoBrowser (4.0.1)
+  - SnapKit (3.1.2)
+  - SwiftyJSON (3.1.4)
   - Turbolinks (1.0.3)
   - YYKeyboardManager (1.0.1)
 
@@ -50,7 +51,7 @@ DEPENDENCIES:
   - MJRefresh
   - Router (from `https://github.com/klaus01/Router.git`)
   - SideMenu
-  - SKPhotoBrowser (from `https://github.com/suzuki-0000/SKPhotoBrowser.git`, branch `swift3`)
+  - SKPhotoBrowser
   - SnapKit
   - SwiftyJSON
   - Turbolinks (from `https://github.com/turbolinks/turbolinks-ios.git`, branch `swift-3.0`)
@@ -62,51 +63,45 @@ EXTERNAL SOURCES:
     :git: https://github.com/marcelofabri/Heimdallr.swift.git
   Router:
     :git: https://github.com/klaus01/Router.git
-  SKPhotoBrowser:
-    :branch: swift3
-    :git: https://github.com/suzuki-0000/SKPhotoBrowser.git
   Turbolinks:
     :branch: swift-3.0
     :git: https://github.com/turbolinks/turbolinks-ios.git
 
 CHECKOUT OPTIONS:
   Heimdallr:
-    :commit: 9b2ab3f5a7c83e42a6ee51a42a2fa840a0df8947
+    :commit: 213140048f6341516fcb3a4ae083a7bd83e2301b
     :git: https://github.com/marcelofabri/Heimdallr.swift.git
   Router:
     :commit: 409ac172500c0a0349beaa59f39243a5e0374fe6
     :git: https://github.com/klaus01/Router.git
-  SKPhotoBrowser:
-    :commit: 2b51155541dcf95a32917a9a610f851630fa4e41
-    :git: https://github.com/suzuki-0000/SKPhotoBrowser.git
   Turbolinks:
     :commit: e23688078bc15b471b514fcb75b8755ba41b084b
     :git: https://github.com/turbolinks/turbolinks-ios.git
 
 SPEC CHECKSUMS:
-  Alamofire: aa2e09d871c9160ac53c90e83c68064a94e3dfbe
-  Firebase: b8134e285eb33201115bc688bc5d7f112923bc1f
+  Alamofire: 856a113053a7bc9cbe5d6367a555d773fc5cfef7
+  Firebase: 8e99eb1ff553ad5bcc6072cc3d925bb89c1244d6
   FirebaseAnalytics: 9c67af0ebeb8d2146c9b4ea2616439affa947b58
   FirebaseAppIndexing: d0fa52ce0ad13f4b5b2f09e4b47fb0dc2213f4e9
-  FirebaseCore: 03da1cb32615569bbc2830a22f9ad753d9a02ef5
+  FirebaseCore: 46afaf2c2e0419ea7d3acfb08cf26a461a75fe85
   FirebaseInstanceID: ba1e640935235e5fac39dfa816fe7660e72e1a8a
   FontAwesome.swift: 2d32a3d62195343c2004b7c9043294ed2948553a
   GoogleInterchangeUtilities: d5bc4d88d5b661ab72f9d70c58d02ca8c27ad1f7
   GoogleSymbolUtilities: 631ee17048aa5e9ab133470d768ea997a5ef9b96
-  GoogleToolboxForMac: 2b2596cbb7186865e98cadf2b1e262d851c2b168
+  GoogleToolboxForMac: 8e329f1b599f2512c6b10676d45736bcc2cbbeb0
   Heimdallr: 8881bb8ef21dcd347fd1c8b783ae0dafe68a4297
-  Kingfisher: 821466474ad7ffc375a4aecadfa05068cfed67b3
+  Kingfisher: 35f289f015d26e81ea6c85048718c6205f3933c6
   MBProgressHUD: 4890f671c94e8a0f3cf959aa731e9de2f036d71a
   MJRefresh: b96cdb21c4aa75a7b07654311ab2f315c497e806
   Result: 4e3ed5995ed94d0cd6a09be9a431fce3f3624bbf
   Router: 6088d6d321e097070d5ea4bd792cb015dfa0fbb4
-  SideMenu: c5d3c3bc855b96bc2059e0b1ec346ecb54e80447
-  SKPhotoBrowser: 4690ffb59db79849454241ecc65cc3d6af9965bf
-  SnapKit: 2e456761aa92d4d4067a7a5594c18769d451a8ad
-  SwiftyJSON: 38a8ea2006779c0fc4c310cb2ee8195327740faf
+  SideMenu: eeff6b85456c5c6e14165655691d2033f6b24969
+  SKPhotoBrowser: 3a7c6fc02aa1620ab17253a47a49fafda46536e8
+  SnapKit: 12b24f569cb7c143acc9c22b9d91b23e7b1c84a2
+  SwiftyJSON: c2842d878f95482ffceec5709abc3d05680c0220
   Turbolinks: 1d952338afb5ae2875f55ce0e9122d3a51b0b3c8
   YYKeyboardManager: ff53d2e80d1808567a7f004028bd200d9469a89f
 
-PODFILE CHECKSUM: 6358c3aca792fd614bc3d7e6455523cf8e1d2e27
+PODFILE CHECKSUM: f97bb06e039272b4a0ab2e36ade43245088a1b16
 
-COCOAPODS: 1.2.0.beta.3
+COCOAPODS: 1.2.0
