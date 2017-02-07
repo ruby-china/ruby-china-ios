@@ -100,7 +100,7 @@ class TopicsFilterViewController: UIViewController {
         initGroupDatas()
         
         if let jsonString = UserDefaults.standard.value(forKey: cacheNodesJSONKey) as? String {
-            let json = JSON.parse(jsonString)
+            let json = JSON(parseJSON: jsonString)
             if let nodes = nodesFromJSON(json) {
                 addGroupDatas(nodes: nodes, isSync: true)
             }
