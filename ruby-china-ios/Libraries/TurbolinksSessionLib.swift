@@ -54,13 +54,26 @@ class TurbolinksSessionLib: NSObject {
         }
         
         router.bind("/topics/:id") { req in
-            guard let idString = req.param("id") else {
+            guard var idString = req.param("id") else {
                 return
             }
+            if req.url.fragment != nil {
+                idString = idString.replacingOccurrences(of: "%23", with: "#")
+            }
             let idStringList = idString.characters.split { $0 == "#" }.map(String.init)
-            if idStringList.count > 0, let id = Int(idStringList[0]), let navigationController = UIApplication.currentViewController()?.navigationController {
+            if
+                idStringList.count > 0,
+                let id = Int(idStringList[0]),
+                let currentViewController = UIApplication.currentViewController(),
+                let navigationController = currentViewController.navigationController {
+                
                 let vc = TopicDetailsViewController(topicID: id, topicPath: req.url.absoluteString)
-                navigationController.pushViewController(vc, animated: true)
+                if let oldVC = currentViewController as? TopicDetailsViewController, oldVC.topicID == id {
+                    navigationController.popViewController(animated: false)
+                    navigationController.pushViewController(vc, animated: false)
+                } else {
+                    navigationController.pushViewController(vc, animated: true)
+                }
             }
         }
         return router

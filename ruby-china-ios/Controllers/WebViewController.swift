@@ -163,7 +163,13 @@ extension WebViewController {
 extension WebViewController {
     
     fileprivate func urlWithPath(_ path: String) -> URL {
-        var urlComponents = URLComponents(string: ROOT_URL + path)!
+        let newPath = path.replacingOccurrences(of: "%23", with: "#")
+        var urlComponents = URLComponents(string: newPath)!
+        
+        let rootURLComponents = URLComponents(string: ROOT_URL)!
+        urlComponents.scheme = rootURLComponents.scheme
+        urlComponents.host = rootURLComponents.host
+        urlComponents.port = rootURLComponents.port
         
         if let accessToken = OAuth2.shared.accessToken {
             var queryItems = urlComponents.queryItems ?? [URLQueryItem]()

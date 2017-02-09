@@ -10,7 +10,7 @@ import UIKit
 
 class TopicDetailsViewController: WebViewController {
     
-    fileprivate var topicID: Int!
+    private(set) var topicID: Int!
     fileprivate var followButton: UIButton!
     fileprivate var likeButton: UIButton!
     fileprivate var favorited: Bool = false
