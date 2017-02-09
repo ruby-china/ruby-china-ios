@@ -287,7 +287,10 @@ extension TurbolinksSessionLib: WKNavigationDelegate {
             } else if var newURL = URLComponents(url: url, resolvingAgainstBaseURL: false) {
                 newURL.scheme = nil
                 newURL.host = nil
-                action(.Advance, path: newURL.string!)
+                newURL.port = nil
+                if let path = newURL.string {
+                    action(.Advance, path: path)
+                }
             }
         }
         decisionHandler(.cancel)
