@@ -16,7 +16,7 @@ class SideMenuViewController: UITableViewController {
         let name: String
         let image: UIImage
         let imageColor: UIColor
-        let actionURL: URL
+        let actionURL: URL?
     }
     
     fileprivate lazy var router: Router = {
@@ -42,6 +42,12 @@ class SideMenuViewController: UITableViewController {
                 image: UIImage(named: "copyright")!.withRenderingMode(.alwaysTemplate),
                 imageColor: UIColor(red: 246 / 255.0, green: 191 / 255.0, blue: 50 / 255.0, alpha: 1),
                 actionURL: URL(string: COPYRIGHT_URL)!
+            ),
+            ItemData(
+                name: "v\(APP_VERSION) (build \(build))",
+                image: UIImage(named: "versions")!.withRenderingMode(.alwaysTemplate),
+                imageColor: UIColor(red: 87 / 255.0, green: 187 / 255.0, blue: 138 / 255.0, alpha: 1),
+                actionURL: nil
             )
         ]
     }()
@@ -78,12 +84,15 @@ class SideMenuViewController: UITableViewController {
         cell.textLabel!.text = itemData.name
         cell.imageView?.image = itemData.image
         cell.imageView?.tintColor = itemData.imageColor
+        cell.selectionStyle = itemData.actionURL == nil ? .none : .blue
         return cell
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let itemData = indexPath.section == 0 ? userItems[indexPath.row] : appItems[indexPath.row]
-        action(forURL: itemData.actionURL)
+        if let url = itemData.actionURL {
+            action(forURL: url)
+        }
     }
     
 }
