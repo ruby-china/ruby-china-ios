@@ -13,7 +13,6 @@ target 'ruby-china-ios' do
   pod 'SnapKit'
   pod 'SKPhotoBrowser'
   pod 'FontAwesome.swift'
-  pod 'Firebase/AppIndexing'
   pod 'MBProgressHUD'
   pod 'MJRefresh'
   pod 'YYKeyboardManager'

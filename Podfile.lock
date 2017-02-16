@@ -1,35 +1,11 @@
 PODS:
   - Alamofire (4.3.0)
-  - Firebase/AppIndexing (3.12.0):
-    - Firebase/Core
-    - FirebaseAppIndexing (= 1.2.0)
-  - Firebase/Core (3.12.0):
-    - FirebaseAnalytics (= 3.6.0)
-    - FirebaseCore (= 3.4.7)
-  - FirebaseAnalytics (3.6.0):
-    - FirebaseCore (~> 3.4)
-    - FirebaseInstanceID (~> 1.0)
-    - GoogleInterchangeUtilities (~> 1.2)
-    - GoogleSymbolUtilities (~> 1.1)
-    - GoogleToolboxForMac/NSData+zlib (~> 2.1)
-  - FirebaseAppIndexing (1.2.0)
-  - FirebaseCore (3.4.7):
-    - GoogleInterchangeUtilities (~> 1.2)
-    - GoogleSymbolUtilities (~> 1.1)
-    - GoogleToolboxForMac/NSData+zlib (~> 2.1)
-  - FirebaseInstanceID (1.0.8)
   - FontAwesome.swift (1.0.0)
-  - GoogleInterchangeUtilities (1.2.2):
-    - GoogleSymbolUtilities (~> 1.1)
-  - GoogleSymbolUtilities (1.1.2)
-  - GoogleToolboxForMac/Defines (2.1.1)
-  - GoogleToolboxForMac/NSData+zlib (2.1.1):
-    - GoogleToolboxForMac/Defines (= 2.1.1)
   - Heimdallr (3.5.1):
     - Heimdallr/Core (= 3.5.1)
   - Heimdallr/Core (3.5.1):
     - Result (~> 3.0)
-  - Kingfisher (3.3.4)
+  - Kingfisher (3.4.0)
   - MBProgressHUD (1.0.0)
   - MJRefresh (3.1.12)
   - Result (3.1.0)
@@ -43,7 +19,6 @@ PODS:
 
 DEPENDENCIES:
   - Alamofire
-  - Firebase/AppIndexing
   - FontAwesome.swift
   - Heimdallr (from `https://github.com/marcelofabri/Heimdallr.swift.git`, branch `swift-3.0`)
   - Kingfisher
@@ -80,17 +55,9 @@ CHECKOUT OPTIONS:
 
 SPEC CHECKSUMS:
   Alamofire: 856a113053a7bc9cbe5d6367a555d773fc5cfef7
-  Firebase: 8e99eb1ff553ad5bcc6072cc3d925bb89c1244d6
-  FirebaseAnalytics: 9c67af0ebeb8d2146c9b4ea2616439affa947b58
-  FirebaseAppIndexing: d0fa52ce0ad13f4b5b2f09e4b47fb0dc2213f4e9
-  FirebaseCore: 46afaf2c2e0419ea7d3acfb08cf26a461a75fe85
-  FirebaseInstanceID: ba1e640935235e5fac39dfa816fe7660e72e1a8a
   FontAwesome.swift: 2d32a3d62195343c2004b7c9043294ed2948553a
-  GoogleInterchangeUtilities: d5bc4d88d5b661ab72f9d70c58d02ca8c27ad1f7
-  GoogleSymbolUtilities: 631ee17048aa5e9ab133470d768ea997a5ef9b96
-  GoogleToolboxForMac: 8e329f1b599f2512c6b10676d45736bcc2cbbeb0
   Heimdallr: 8881bb8ef21dcd347fd1c8b783ae0dafe68a4297
-  Kingfisher: 35f289f015d26e81ea6c85048718c6205f3933c6
+  Kingfisher: 5690cfb3d1bddf3a98d679a3a34d0b7294974ed2
   MBProgressHUD: 4890f671c94e8a0f3cf959aa731e9de2f036d71a
   MJRefresh: b96cdb21c4aa75a7b07654311ab2f315c497e806
   Result: 4e3ed5995ed94d0cd6a09be9a431fce3f3624bbf
@@ -102,6 +69,6 @@ SPEC CHECKSUMS:
   Turbolinks: 1d952338afb5ae2875f55ce0e9122d3a51b0b3c8
   YYKeyboardManager: ff53d2e80d1808567a7f004028bd200d9469a89f
 
-PODFILE CHECKSUM: f97bb06e039272b4a0ab2e36ade43245088a1b16
+PODFILE CHECKSUM: b9a418bbd48d01198e86a3f0f559c3e72436e3c7
 
 COCOAPODS: 1.2.0
