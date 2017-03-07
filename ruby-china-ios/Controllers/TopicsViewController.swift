@@ -24,6 +24,7 @@ class TopicsViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        automaticallyAdjustsScrollViewInsets = false
         clearsSelectionOnViewWillAppear = true
         
         tableView.register(TopicCell.self, forCellReuseIdentifier: kCellReuseIdentifier)
