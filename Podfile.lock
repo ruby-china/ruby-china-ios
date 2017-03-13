@@ -1,18 +1,18 @@
 PODS:
-  - Alamofire (4.3.0)
+  - Alamofire (4.4.0)
   - FontAwesome.swift (1.0.0)
   - Heimdallr (3.5.1):
     - Heimdallr/Core (= 3.5.1)
   - Heimdallr/Core (3.5.1):
     - Result (~> 3.0)
-  - Kingfisher (3.4.0)
+  - Kingfisher (3.5.2)
   - MBProgressHUD (1.0.0)
   - MJRefresh (3.1.12)
-  - Result (3.1.0)
+  - Result (3.2.1)
   - Router (1.0.0)
-  - SideMenu (2.2.0)
+  - SideMenu (2.3.0)
   - SKPhotoBrowser (4.0.1)
-  - SnapKit (3.1.2)
+  - SnapKit (3.2.0)
   - SwiftyJSON (3.1.4)
   - Turbolinks (1.0.3)
   - YYKeyboardManager (1.0.1)
@@ -54,17 +54,17 @@ CHECKOUT OPTIONS:
     :git: https://github.com/turbolinks/turbolinks-ios.git
 
 SPEC CHECKSUMS:
-  Alamofire: 856a113053a7bc9cbe5d6367a555d773fc5cfef7
+  Alamofire: dc44b1600b800eb63da6a19039a0083d62a6a62d
   FontAwesome.swift: 2d32a3d62195343c2004b7c9043294ed2948553a
   Heimdallr: 8881bb8ef21dcd347fd1c8b783ae0dafe68a4297
-  Kingfisher: 5690cfb3d1bddf3a98d679a3a34d0b7294974ed2
+  Kingfisher: 9950e382c500b6834ce004c7c4131c444e90c3a1
   MBProgressHUD: 4890f671c94e8a0f3cf959aa731e9de2f036d71a
   MJRefresh: b96cdb21c4aa75a7b07654311ab2f315c497e806
-  Result: 4e3ed5995ed94d0cd6a09be9a431fce3f3624bbf
+  Result: 2453a22e5c5b11c0c3a478736e82cd02f763b781
   Router: 6088d6d321e097070d5ea4bd792cb015dfa0fbb4
-  SideMenu: eeff6b85456c5c6e14165655691d2033f6b24969
+  SideMenu: 43d092cf615cf472f105c5b9867a21beff9fc269
   SKPhotoBrowser: 3a7c6fc02aa1620ab17253a47a49fafda46536e8
-  SnapKit: 12b24f569cb7c143acc9c22b9d91b23e7b1c84a2
+  SnapKit: 1ca44df72cfa543218d177cb8aab029d10d86ea7
   SwiftyJSON: c2842d878f95482ffceec5709abc3d05680c0220
   Turbolinks: 1d952338afb5ae2875f55ce0e9122d3a51b0b3c8
   YYKeyboardManager: ff53d2e80d1808567a7f004028bd200d9469a89f
