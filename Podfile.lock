@@ -5,7 +5,7 @@ PODS:
     - Heimdallr/Core (= 3.5.1)
   - Heimdallr/Core (3.5.1):
     - Result (~> 3.0)
-  - Kingfisher (3.5.1)
+  - Kingfisher (3.6.0)
   - MBProgressHUD (1.0.0)
   - MJRefresh (3.1.12)
   - Result (3.2.1)
@@ -14,7 +14,7 @@ PODS:
   - SKPhotoBrowser (4.0.1)
   - SnapKit (3.2.0)
   - SwiftyJSON (3.1.4)
-  - Turbolinks (1.0.3)
+  - Turbolinks (2.0.0)
   - YYKeyboardManager (1.0.1)
 
 DEPENDENCIES:
@@ -50,14 +50,14 @@ CHECKOUT OPTIONS:
     :commit: 409ac172500c0a0349beaa59f39243a5e0374fe6
     :git: https://github.com/klaus01/Router.git
   Turbolinks:
-    :commit: e23688078bc15b471b514fcb75b8755ba41b084b
+    :commit: 1d6e267dd6a60faed8e51d2cbf893bd7d7851538
     :git: https://github.com/turbolinks/turbolinks-ios.git
 
 SPEC CHECKSUMS:
   Alamofire: dc44b1600b800eb63da6a19039a0083d62a6a62d
   FontAwesome.swift: 2d32a3d62195343c2004b7c9043294ed2948553a
   Heimdallr: 8881bb8ef21dcd347fd1c8b783ae0dafe68a4297
-  Kingfisher: 12eeffeef42ea45b68c5e5acfe8ba9005b713ab4
+  Kingfisher: 300035f9a40634dc9b452d946c9f22250688fecd
   MBProgressHUD: 4890f671c94e8a0f3cf959aa731e9de2f036d71a
   MJRefresh: b96cdb21c4aa75a7b07654311ab2f315c497e806
   Result: 2453a22e5c5b11c0c3a478736e82cd02f763b781
@@ -66,9 +66,9 @@ SPEC CHECKSUMS:
   SKPhotoBrowser: 3a7c6fc02aa1620ab17253a47a49fafda46536e8
   SnapKit: 1ca44df72cfa543218d177cb8aab029d10d86ea7
   SwiftyJSON: c2842d878f95482ffceec5709abc3d05680c0220
-  Turbolinks: 1d952338afb5ae2875f55ce0e9122d3a51b0b3c8
+  Turbolinks: 3f60819d36350d872b436dc22497a1050c144b95
   YYKeyboardManager: ff53d2e80d1808567a7f004028bd200d9469a89f
 
-PODFILE CHECKSUM: b9a418bbd48d01198e86a3f0f559c3e72436e3c7
+PODFILE CHECKSUM: d43ed3a05a8d5aa81f35204ae0a50ee2d860ab62
 
 COCOAPODS: 1.2.0
