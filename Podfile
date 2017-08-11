@@ -3,7 +3,7 @@ use_frameworks!
 inhibit_all_warnings!
 target 'ruby-china-ios' do
   pod 'Router', git: 'https://github.com/klaus01/Router.git'
-  pod 'Turbolinks'
+  pod 'Turbolinks', :git => 'https://github.com/turbolinks/turbolinks-ios.git'
   pod 'Heimdallr'
   pod 'SideMenu'
   pod 'SwiftyJSON'

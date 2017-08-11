@@ -1,14 +1,14 @@
 PODS:
   - Alamofire (4.4.0)
   - FontAwesome.swift (1.0.0)
-  - Heimdallr (3.5.1):
-    - Heimdallr/Core (= 3.5.1)
-  - Heimdallr/Core (3.5.1):
+  - Heimdallr (3.6.1):
+    - Heimdallr/Core (= 3.6.1)
+  - Heimdallr/Core (3.6.1):
     - Result (~> 3.0)
   - Kingfisher (3.6.0)
   - MBProgressHUD (1.0.0)
   - MJRefresh (3.1.12)
-  - Result (3.2.1)
+  - Result (3.2.3)
   - Router (1.0.0)
   - SideMenu (2.3.0)
   - SKPhotoBrowser (4.0.1)
@@ -20,7 +20,7 @@ PODS:
 DEPENDENCIES:
   - Alamofire
   - FontAwesome.swift
-  - Heimdallr (from `https://github.com/marcelofabri/Heimdallr.swift.git`, branch `swift-3.0`)
+  - Heimdallr
   - Kingfisher
   - MBProgressHUD
   - MJRefresh
@@ -29,23 +29,16 @@ DEPENDENCIES:
   - SKPhotoBrowser
   - SnapKit
   - SwiftyJSON
-  - Turbolinks (from `https://github.com/turbolinks/turbolinks-ios.git`, branch `swift-3.0`)
+  - Turbolinks (from `https://github.com/turbolinks/turbolinks-ios.git`)
   - YYKeyboardManager
 
 EXTERNAL SOURCES:
-  Heimdallr:
-    :branch: swift-3.0
-    :git: https://github.com/marcelofabri/Heimdallr.swift.git
   Router:
     :git: https://github.com/klaus01/Router.git
   Turbolinks:
-    :branch: swift-3.0
     :git: https://github.com/turbolinks/turbolinks-ios.git
 
 CHECKOUT OPTIONS:
-  Heimdallr:
-    :commit: 213140048f6341516fcb3a4ae083a7bd83e2301b
-    :git: https://github.com/marcelofabri/Heimdallr.swift.git
   Router:
     :commit: 409ac172500c0a0349beaa59f39243a5e0374fe6
     :git: https://github.com/klaus01/Router.git
@@ -56,11 +49,11 @@ CHECKOUT OPTIONS:
 SPEC CHECKSUMS:
   Alamofire: dc44b1600b800eb63da6a19039a0083d62a6a62d
   FontAwesome.swift: 2d32a3d62195343c2004b7c9043294ed2948553a
-  Heimdallr: 8881bb8ef21dcd347fd1c8b783ae0dafe68a4297
+  Heimdallr: d2a8b1dc3ecc7ad249c9ffd20c990e2248fcd599
   Kingfisher: 300035f9a40634dc9b452d946c9f22250688fecd
   MBProgressHUD: 4890f671c94e8a0f3cf959aa731e9de2f036d71a
   MJRefresh: b96cdb21c4aa75a7b07654311ab2f315c497e806
-  Result: 2453a22e5c5b11c0c3a478736e82cd02f763b781
+  Result: 128640a6347e8d2ae48b142556739a2d13f90ce6
   Router: 6088d6d321e097070d5ea4bd792cb015dfa0fbb4
   SideMenu: 43d092cf615cf472f105c5b9867a21beff9fc269
   SKPhotoBrowser: 3a7c6fc02aa1620ab17253a47a49fafda46536e8
@@ -69,6 +62,6 @@ SPEC CHECKSUMS:
   Turbolinks: 3f60819d36350d872b436dc22497a1050c144b95
   YYKeyboardManager: ff53d2e80d1808567a7f004028bd200d9469a89f
 
-PODFILE CHECKSUM: d43ed3a05a8d5aa81f35204ae0a50ee2d860ab62
+PODFILE CHECKSUM: 53e31b0af6b483bb3c073c0b8822b59608f7a68f
 
-COCOAPODS: 1.2.0
+COCOAPODS: 1.2.1
