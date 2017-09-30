@@ -8,7 +8,7 @@ class EditAccountViewController: PopupWebViewController {
         navigationItem.rightBarButtonItem = UIBarButtonItem(title: "save".localized, style: .plain, target: self, action: #selector(actionSubmit))
     }
     
-    func actionSubmit() {
+    @objc func actionSubmit() {
         visitableView.webView?.evaluateJavaScript("$('form.edit_user').first().submit()", completionHandler: nil)
     }
 }

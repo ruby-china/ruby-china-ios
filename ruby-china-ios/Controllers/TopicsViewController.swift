@@ -145,7 +145,7 @@ extension TopicsViewController {
 }
 
 // MARK: - action
-
+@objc
 extension TopicsViewController {
     
     func errorViewRetryAction() {

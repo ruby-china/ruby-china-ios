@@ -57,7 +57,7 @@ class SignInViewController: UIViewController {
 }
 
 // MARK: - Actions
-
+@objc
 extension SignInViewController {
     func actionLogin() {
         if loginButton.isEnabled {

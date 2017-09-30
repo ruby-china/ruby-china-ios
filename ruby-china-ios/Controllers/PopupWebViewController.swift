@@ -24,7 +24,7 @@ class PopupWebViewController: WebViewController {
         navigationItem.leftBarButtonItem = UIBarButtonItem(title: "close".localized, style: .plain, target: self, action: #selector(actionClose))
     }
     
-    func actionClose() {
+    @objc func actionClose() {
         dismiss(animated: true, completion: nil)
     }
     

@@ -44,7 +44,7 @@ class RootViewController: UITabBarController {
         })
     }
     
-    func displaySideMenu() {
+    @objc func displaySideMenu() {
         let presentSideMenuController = {
             if let sideMenuController = SideMenuManager.menuLeftNavigationController {
                 self.present(sideMenuController, animated: true, completion: nil)
@@ -54,7 +54,7 @@ class RootViewController: UITabBarController {
         presentSideMenuController()
     }
     
-    func actionMenuClicked(_ note: Notification) {
+    @objc func actionMenuClicked(_ note: Notification) {
         let path = (note as NSNotification).userInfo![NOTICE_MENU_CLICKED_PATH] as! String
         
         if let url = URL(string: path), let host = url.host , host != URL(string: ROOT_URL)!.host! {
@@ -102,7 +102,7 @@ class RootViewController: UITabBarController {
         navigationItem.rightBarButtonItems = viewController.navigationItem.rightBarButtonItems
     }
     
-    func updateLoginState() {
+    @objc func updateLoginState() {
         if let viewController = selectedViewController , OAuth2.shared.currentUser == nil {
             switch viewController.tabBarItem.tag {
             case kFavoritesTag, kNotificationsTag:

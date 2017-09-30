@@ -35,11 +35,10 @@ class TopicDetailsViewController: WebViewController {
             loadTopicActionButtonStatus()
         }
     }
-    
 }
 
 // MARK: - action
-
+@objc
 extension TopicDetailsViewController {
     
     override func moreAction() {

@@ -9,7 +9,7 @@ class EditReplyViewController: PopupWebViewController {
         navigationItem.rightBarButtonItem = UIBarButtonItem(title: "save".localized, style: .plain, target: self, action: #selector(actionDone))
     }
     
-    func actionDone() {
+    @objc func actionDone() {
         visitableView.webView?.evaluateJavaScript("$('form[tb=\"edit-reply\"] .btn-primary').click()", completionHandler: nil)
     }
 }
