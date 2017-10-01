@@ -175,7 +175,7 @@ extension TopicsFilterViewController {
         return vc
     }
     
-    func close() {
+    @objc func close() {
         UIView.animate(withDuration: 0.3, animations: {
             self.parentWindow!.alpha = 0
             }, completion: { _ in

@@ -98,7 +98,7 @@ class SideMenuViewController: UITableViewController {
 }
 
 // MARK: - action
-
+@objc
 extension SideMenuViewController {
     
     func updateLoginState() {
@@ -166,7 +166,7 @@ extension SideMenuViewController {
 }
 
 // MARK: - private
-
+@objc
 extension SideMenuViewController {
     
     fileprivate func action(forURL url: URL) {

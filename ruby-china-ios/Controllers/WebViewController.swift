@@ -114,7 +114,7 @@ extension WebViewController {
 }
 
 // MARK: - action
-
+@objc
 extension WebViewController {
     
     func reloadByLoginStatusChanged() {

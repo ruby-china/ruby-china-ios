@@ -24,7 +24,7 @@ class NotificationsViewController: WebViewController {
         reloadVisitable()
     }
     
-    func cleanNotificationsAction() {
+    @objc func cleanNotificationsAction() {
         visitableView.webView?.evaluateJavaScript("$('#btn-remove-all').click();") { [weak self](obj, err) in
             self?.cleanBadge()
             _ = self?.visitableView.webView?.reload()

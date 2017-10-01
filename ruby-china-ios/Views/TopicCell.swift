@@ -107,7 +107,7 @@ class TopicCell: UITableViewCell {
 }
 
 // MARK: - action
-
+@objc
 extension TopicCell {
     
     func userAction() {
@@ -158,12 +158,12 @@ extension TopicCell {
     }
     
     fileprivate func titleAttributedText(_ data: Topic) -> NSAttributedString {
-        let attributes = [NSFontAttributeName : kTitleTextFont]
+        let attributes = [NSAttributedStringKey.font : kTitleTextFont]
         let attributedString = NSMutableAttributedString(string: data.title, attributes: attributes)
         
         func addIcon(name fontAwesomeName: FontAwesome, color: UIColor) {
-            let attributes = [NSFontAttributeName : UIFont.fontAwesome(ofSize: kTitleTextSize),
-                              NSForegroundColorAttributeName : color]
+            let attributes = [NSAttributedStringKey.font : UIFont.fontAwesome(ofSize: kTitleTextSize),
+                              NSAttributedStringKey.foregroundColor : color]
             let diamondString = " \(String.fontAwesomeIcon(name: fontAwesomeName))"
             let diamondAttributed = NSAttributedString(string: diamondString, attributes: attributes)
             attributedString.append(diamondAttributed)

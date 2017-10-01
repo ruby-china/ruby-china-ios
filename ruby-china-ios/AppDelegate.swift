@@ -16,8 +16,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         UINavigationBar.appearance().theme = true
         UITabBar.appearance().theme = true
 
-        UITabBarItem.appearance().setTitleTextAttributes([NSForegroundColorAttributeName: BLACK_COLOR], for: UIControlState())
-        UITabBarItem.appearance().setTitleTextAttributes([NSForegroundColorAttributeName: PRIMARY_COLOR], for: .selected)
+        UITabBarItem.appearance().setTitleTextAttributes([NSAttributedStringKey.foregroundColor: BLACK_COLOR], for: UIControlState())
+        UITabBarItem.appearance().setTitleTextAttributes([NSAttributedStringKey.foregroundColor: PRIMARY_COLOR], for: .selected)
     }
 
     fileprivate var becomeActivePage = String()

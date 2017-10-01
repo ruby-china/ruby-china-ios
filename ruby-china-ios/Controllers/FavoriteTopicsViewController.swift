@@ -45,7 +45,7 @@ class FavoriteTopicsViewController: TopicsViewController {
         }
     }
     
-    func favoriteChangedAction() {
+    @objc func favoriteChangedAction() {
         var limit = topicList == nil ? defaultLimit : topicList!.count
         limit = max(defaultLimit, limit)
         load(offset: 0, limit: limit)

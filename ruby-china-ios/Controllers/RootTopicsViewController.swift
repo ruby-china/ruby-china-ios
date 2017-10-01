@@ -57,7 +57,7 @@ class RootTopicsViewController: TopicsViewController {
 }
 
 // MARK: - action methods
-
+@objc 
 extension RootTopicsViewController {
     
     func filterAction() {

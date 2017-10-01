@@ -232,7 +232,7 @@ extension TurbolinksSessionLib: SessionDelegate {
             let statusCode = error.userInfo["statusCode"] as! Int
             switch statusCode {
             case 401:
-                if OAuth2.shared.isLogined {
+                if !OAuth2.shared.isLogined {
                     presentLoginController()
                 }
             case 404:

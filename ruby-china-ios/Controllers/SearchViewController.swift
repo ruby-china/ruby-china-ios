@@ -18,7 +18,7 @@ class SearchViewController: WebViewController {
         if let searchField = view.value(forKey: "searchField") as? UITextField {
             searchField.textColor = NAVBAR_TINT_COLOR
             searchField.backgroundColor = NAVBAR_BG_COLOR
-            searchField.attributedPlaceholder = NSAttributedString(string: "search placeholder".localized, attributes: [NSForegroundColorAttributeName: searchField.textColor!])
+            searchField.attributedPlaceholder = NSAttributedString(string: "search placeholder".localized, attributes: [NSAttributedStringKey.foregroundColor: searchField.textColor!])
             // 修改左侧搜索图标颜色
             if let searchImageView = searchField.leftView as? UIImageView, let searchImage = searchImageView.image {
                 view.setImage(searchImage.imageWithColor(searchField.textColor!), for: .search, state: UIControlState())
@@ -76,7 +76,7 @@ extension SearchViewController: UISearchBarDelegate {
 }
 
 // MARK: - action
-
+@objc
 extension SearchViewController {
     
     func cancelButtonAction() {
