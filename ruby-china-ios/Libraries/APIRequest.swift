@@ -45,7 +45,9 @@ class APIRequest {
                 
                 var result: JSON? = nil
                 if let data = response.data {
-                    result = JSON(data: data)
+                    do {
+                        try result = JSON(data: data)
+                    } catch {}
                 }
                 callback(response, result)
                 break

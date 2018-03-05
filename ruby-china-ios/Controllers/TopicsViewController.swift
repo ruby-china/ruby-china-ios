@@ -99,10 +99,10 @@ extension TopicsViewController {
             }
             self.isLoading = false
             
-            if (self.tableView.mj_header.isRefreshing()) {
+            if (self.tableView.mj_header.isRefreshing) {
                 self.tableView.mj_header.endRefreshing()
             }
-            if (self.tableView.mj_footer.isRefreshing()) {
+            if (self.tableView.mj_footer.isRefreshing) {
                 self.tableView.mj_footer.endRefreshing()
             }
             self.tableView.mj_footer.isHidden = result == nil ? true : (result!.count < limit)

@@ -43,8 +43,11 @@ class OAuth2 {
         accessToken = accessTokenStore.retrieveAccessToken()?.accessToken
         if (accessToken != nil) {
             if let userData = UserDefaults.standard.data(forKey: "loginUserJSON") {
-                let jsonObject = JSON(data: userData)
-                currentUser = User(json: jsonObject)
+                do {
+                    let jsonObject = try JSON(data: userData)
+                    currentUser = User(json: jsonObject)
+                } catch {
+                }
             }
             
             reloadCurrentUser()
