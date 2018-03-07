@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import AMScrollingNavbar
 
 class RootTopicsViewController: TopicsViewController {
     
@@ -80,7 +81,7 @@ extension RootTopicsViewController {
             sender.dismiss(animated: true, completion: nil)
         }
         
-        let nc = UINavigationController(rootViewController: vc)
+        let nc = ScrollingNavigationController(rootViewController: vc)
         self.present(nc, animated: true, completion: nil)
     }
     

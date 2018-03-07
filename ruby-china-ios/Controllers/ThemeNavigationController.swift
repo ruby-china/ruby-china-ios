@@ -7,12 +7,11 @@
 //
 
 import UIKit
+import AMScrollingNavbar
 
-class ThemeNavigationController: UINavigationController {
+class ThemeNavigationController: ScrollingNavigationController {
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        navigationBar.bottomBorder = true
     }
     
     override func dismiss(animated flag: Bool, completion: (() -> Void)?) {

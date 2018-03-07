@@ -31,5 +31,4 @@ extension UIScrollView {
         footer?.isHidden = true
         self.mj_footer = footer
     }
-    
 }

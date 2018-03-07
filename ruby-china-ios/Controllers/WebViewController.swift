@@ -8,6 +8,7 @@ class WebViewController: VisitableViewController {
             visitableURL = urlWithPath(currentPath)
         }
     }
+    
     fileprivate lazy var router: Router = {
         let router = Router()
         router.bind("/topics") { [weak self] (req) in
@@ -52,7 +53,6 @@ class WebViewController: VisitableViewController {
         }
         router.bind("/wiki/:id") { [weak self] (req) in
             self?.pageTitle = "title wiki details".localized
-            self?.addMoreButton()
         }
         
         router.bind("/search") { [weak self] (req) in
@@ -86,6 +86,8 @@ class WebViewController: VisitableViewController {
         addObserver()
     }
     
+    
+    
     override func visitableDidRender() {
         // 覆盖 visitableDidRender，避免设置 title
         navigationItem.title = pageTitle
@@ -96,13 +98,6 @@ class WebViewController: VisitableViewController {
 // MARK: - public
 
 extension WebViewController {
-    
-    func addMoreButton() {
-        var rightBarButtonItems = self.navigationItem.rightBarButtonItems ?? [UIBarButtonItem.fixNavigationSpacer()]
-        let menuButton = UIBarButtonItem.narrowButtonItem(image: UIImage(named: "dropdown"), target: self, action: #selector(moreAction))
-        rightBarButtonItems.append(menuButton)
-        self.navigationItem.rightBarButtonItems = rightBarButtonItems
-    }
     
     func presentError(_ error: Error) {
         errorView.error = error
@@ -141,6 +136,10 @@ extension WebViewController {
         if let url = components.url {
             share(title, url: url)
         }
+    }
+    
+    func backAction() {
+        navigationController?.popToRootViewController(animated: true)
     }
     
     func moreAction() {

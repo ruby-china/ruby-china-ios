@@ -15,4 +15,5 @@ target 'ruby-china-ios' do
   pod 'MBProgressHUD'
   pod 'MJRefresh'
   pod 'YYKeyboardManager'
+  pod 'AMScrollingNavbar'
 end

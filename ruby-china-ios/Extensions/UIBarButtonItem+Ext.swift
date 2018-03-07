@@ -31,7 +31,7 @@ extension UIBarButtonItem {
     /// - returns: (UIBarButtonItem, UIButton)
     static func narrowButtonItem2(image: UIImage?, target: AnyObject?, action: Selector) -> (UIBarButtonItem, UIButton) {
         let button = UIButton(frame: CGRect(x: 0, y: 0, width: 30, height: 44))
-        button.setImage(image?.imageWithColor(NAVBAR_TINT_COLOR), for: UIControlState())
+        button.setImage(image?.imageWithColor(PRIMARY_COLOR), for: UIControlState())
         button.addTarget(target, action: action, for: .touchUpInside)
         return (UIBarButtonItem(customView: button), button)
     }

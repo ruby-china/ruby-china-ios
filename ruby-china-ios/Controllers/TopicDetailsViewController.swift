@@ -19,14 +19,49 @@ class TopicDetailsViewController: WebViewController {
     convenience init(topicID: Int, topicPath: String? = nil) {
         self.init(path: topicPath ?? "/topics/\(topicID)")
         self.topicID = topicID
+
+        navigationController?.title = "阅读话题"
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        addMoreButton()
-        addTopicActionButton()
+        setToolbars()
         loadTopicActionButtonStatus()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        navigationController?.isNavigationBarHidden = true
+        navigationController?.isToolbarHidden = false
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        navigationController?.isNavigationBarHidden = false
+        navigationController?.isToolbarHidden = true
+    }
+    
+    func setToolbars() {
+        let statusBarView = UIView(frame: UIApplication.shared.statusBarFrame)
+        let statusBarColor = UIColor.white
+        statusBarView.backgroundColor = statusBarColor
+        view.addSubview(statusBarView)
+
+        let (backItem, _) = UIBarButtonItem.narrowButtonItem2(image: UIImage(named: "back"), target: self, action: #selector(backAction))
+        let (moreItem, _) = UIBarButtonItem.narrowButtonItem2(image: UIImage(named: "dropdown"), target: self, action: #selector(moreAction))
+        
+        let (followItem, followBtn) = UIBarButtonItem.narrowButtonItem2(image: UIImage(named: "invisible"), target: self, action: #selector(topicAction(_:)))
+        followButton = followBtn
+        
+        let (likeItem, likeBtn) = UIBarButtonItem.narrowButtonItem2(image: UIImage(named: "like"), target: self, action: #selector(topicAction(_:)))
+        likeBtn.frame.size.width = 50
+        likeBtn.titleLabel?.font = UIFont.systemFont(ofSize: 13)
+        likeBtn.setTitleColor(PRIMARY_COLOR, for: UIControlState())
+        likeButton = likeBtn
+        
+        let fixedBar = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
+        
+        toolbarItems = [backItem, fixedBar, likeItem, fixedBar, followItem, moreItem]
     }
     
     override func reloadByLoginStatusChanged() {
@@ -128,22 +163,6 @@ private let checkedTag = 1;
 
 extension TopicDetailsViewController {
     
-    fileprivate func addTopicActionButton() {
-        var rightBarButtonItems = navigationItem.rightBarButtonItems ?? [UIBarButtonItem.fixNavigationSpacer()]
-        
-        let (followItem, followBtn) = UIBarButtonItem.narrowButtonItem2(image: UIImage(named: "invisible"), target: self, action: #selector(topicAction(_:)))
-        followButton = followBtn
-        
-        let (likeItem, likeBtn) = UIBarButtonItem.narrowButtonItem2(image: UIImage(named: "like"), target: self, action: #selector(topicAction(_:)))
-        likeBtn.frame.size.width = 50
-        likeBtn.titleLabel?.font = UIFont.systemFont(ofSize: 13)
-        likeBtn.setTitleColor(NAVBAR_TINT_COLOR, for: UIControlState())
-        likeButton = likeBtn
-        
-        rightBarButtonItems += [followItem, likeItem]
-        navigationItem.rightBarButtonItems = rightBarButtonItems
-    }
-    
     fileprivate func loadTopicActionButtonStatus() {
         guard let id = topicID , OAuth2.shared.isLogined else {
             self.setButton(followButton, checked: false)
@@ -180,7 +199,7 @@ extension TopicDetailsViewController {
         
         button.tag = checked ? checkedTag : uncheckedTag
         let image = UIImage(named: checked ? checkedImageNamed : uncheckedImageNamed)
-        button.setImage(image?.imageWithColor(NAVBAR_TINT_COLOR), for: UIControlState())
+        button.setImage(image?.imageWithColor(PRIMARY_COLOR), for: UIControlState())
         button.setTitle(title, for: UIControlState())
         // 选中动画
         if let imageView = button.imageView , checked {

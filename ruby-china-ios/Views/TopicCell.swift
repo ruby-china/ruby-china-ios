@@ -11,13 +11,14 @@ import SnapKit
 import Kingfisher
 import FontAwesome_swift
 
-private let kContentPadding = UIEdgeInsetsMake(10, 15, 10, 15)
-private let kTitleTextSize: CGFloat = 14
-private let kTextSize: CGFloat = 12
-private let kTextFont = UIFont.systemFont(ofSize: kTextSize)
-private let kTitleTextFont = UIFont.systemFont(ofSize: kTitleTextSize)
-private let kAvatarSize = CGSize(width: 32, height: 32)
-private let kButtonTitleColor = UIColor(red: 171.0 / 255.0, green: 168.0 / 255.0, blue: 166.0 / 255.0, alpha: 1)
+private let kContentPadding = UIEdgeInsetsMake(15, 25, 15, 25)
+private let kTitleTextSize: CGFloat = 16
+private let kTextSize: CGFloat = 14
+private let kTextFont = UIFont.systemFont(ofSize: kTextSize, weight: UIFont.Weight.regular)
+private let kTitleTextFont = UIFont.systemFont(ofSize: kTitleTextSize, weight: UIFont.Weight.medium)
+private let kAvatarSize = CGSize(width: 18, height: 18)
+private let kAvatarColor = UIColor(red: 0.5, green: 0.5, blue: 0.5, alpha: 1.0)
+private let kNodeColor = UIColor(red: 0.5, green: 0.5, blue: 0.5, alpha: 1.0)
 
 class TopicCell: UITableViewCell {
     
@@ -27,7 +28,6 @@ class TopicCell: UITableViewCell {
         contentView.addSubview(titleLabel)
         contentView.addSubview(repliesCountLabel)
         contentView.addSubview(nodeButton)
-        contentView.addSubview(separateLabel)
         contentView.addSubview(userNameButton)
         setupConstraints()
     }
@@ -85,21 +85,14 @@ class TopicCell: UITableViewCell {
     fileprivate lazy var nodeButton: UIButton = {
         let view = UIButton()
         view.titleLabel?.font = kTextFont
-        view.setTitleColor(kButtonTitleColor, for: UIControlState())
+        view.setTitleColor(kNodeColor, for: UIControlState())
         view.addTarget(self, action: #selector(nodeAction), for: .touchUpInside)
-        return view
-    }()
-    fileprivate lazy var separateLabel: UILabel = {
-        let view = UILabel()
-        view.font = kTextFont
-        view.textColor = kButtonTitleColor
-        view.text = " • "
         return view
     }()
     fileprivate lazy var userNameButton: UIButton = {
         let view = UIButton()
         view.titleLabel?.font = kTextFont
-        view.setTitleColor(kButtonTitleColor, for: UIControlState())
+        view.setTitleColor(kAvatarColor, for: UIControlState())
         view.addTarget(self, action: #selector(userAction), for: .touchUpInside)
         return view
     }()
@@ -133,27 +126,24 @@ extension TopicCell {
             make.left.top.equalToSuperview().inset(kContentPadding)
             make.size.equalTo(kAvatarSize)
         }
-        repliesCountLabel.snp.makeConstraints { (make) in
-            make.top.right.equalToSuperview().inset(kContentPadding)
-            make.width.equalTo(30)
-        }
-        titleLabel.snp.makeConstraints { (make) in
-            make.left.equalTo(avatarImageView.snp.right).offset(10)
-            make.top.equalToSuperview().inset(kContentPadding)
-            make.right.equalTo(repliesCountLabel.snp.left)
+        userNameButton.snp.makeConstraints { (make) in
+            make.left.equalTo(avatarImageView.snp.right).offset(6)
+            make.centerY.equalTo(avatarImageView)
         }
         nodeButton.snp.makeConstraints { (make) in
-            make.left.equalTo(titleLabel)
-            make.top.equalTo(titleLabel.snp.bottom)
-            make.bottom.equalToSuperview()
+            make.right.top.equalToSuperview().inset(kContentPadding)
+            make.centerY.equalTo(avatarImageView)
         }
-        separateLabel.snp.makeConstraints { (make) in
-            make.left.equalTo(nodeButton.snp.right)
-            make.centerY.equalTo(nodeButton)
+        titleLabel.snp.makeConstraints { (make) in
+            make.left.equalTo(avatarImageView)
+            make.right.equalTo(repliesCountLabel.snp.left)
+            make.top.equalTo(avatarImageView.snp.bottom).offset(5)
+            make.bottom.equalToSuperview().inset(kContentPadding)
         }
-        userNameButton.snp.makeConstraints { (make) in
-            make.left.equalTo(separateLabel.snp.right)
-            make.centerY.equalTo(nodeButton)
+        repliesCountLabel.snp.makeConstraints { (make) in
+            make.top.equalTo(titleLabel)
+            make.right.equalToSuperview().inset(kContentPadding)
+            make.width.equalTo(30)
         }
     }
     
@@ -164,20 +154,16 @@ extension TopicCell {
         func addIcon(name fontAwesomeName: FontAwesome, color: UIColor) {
             let attributes = [NSAttributedStringKey.font : UIFont.fontAwesome(ofSize: kTitleTextSize),
                               NSAttributedStringKey.foregroundColor : color]
-            let diamondString = " \(String.fontAwesomeIcon(name: fontAwesomeName))"
+            let diamondString = "  \(String.fontAwesomeIcon(name: fontAwesomeName))"
             let diamondAttributed = NSAttributedString(string: diamondString, attributes: attributes)
             attributedString.append(diamondAttributed)
         }
         
-        if let _ = data.suggestedAt {
-            addIcon(name: .angleDoubleUp, color: UIColor(white: 0.6, alpha: 1))
-        }
         if data.excellent {
-            addIcon(name: .diamond, color: PRIMARY_COLOR)
+            addIcon(name: .diamond, color: kNodeColor)
         }
         if let _ = data.closedAt {
-            let iconColor = UIColor(red: 69.0 / 255.0, green: 199.0 / 255.0, blue: 34.0 / 255.0, alpha: 1)
-            addIcon(name: .check, color: iconColor)
+            addIcon(name: .check, color: kNodeColor)
         }
         
         return attributedString

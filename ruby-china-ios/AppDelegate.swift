@@ -3,6 +3,7 @@ import Turbolinks
 import SafariServices
 import WebKit
 import SideMenu
+import AMScrollingNavbar
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -15,6 +16,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     fileprivate func initAppearance() {
         UINavigationBar.appearance().theme = true
         UITabBar.appearance().theme = true
+        UIToolbar.appearance().theme = true
 
         UITabBarItem.appearance().setTitleTextAttributes([NSAttributedStringKey.foregroundColor: BLACK_COLOR], for: UIControlState())
         UITabBarItem.appearance().setTitleTextAttributes([NSAttributedStringKey.foregroundColor: PRIMARY_COLOR], for: .selected)
@@ -82,29 +84,28 @@ extension UINavigationBar {
     var theme: Bool {
         get { return false }
         set {
-            self.barStyle = .black
+            self.barStyle = .default
             self.isTranslucent = false
-            self.tintColor = NAVBAR_TINT_COLOR
+            self.tintColor = PRIMARY_COLOR
             self.barTintColor = NAVBAR_BG_COLOR
 
             self.backIndicatorImage = UIImage(named: "back")
             self.backIndicatorTransitionMaskImage = UIImage(named: "back")
         }
     }
+}
 
-    var bottomBorder: Bool {
+extension UIToolbar {
+    var theme: Bool {
         get { return false }
         set {
-            // Border bottom line
-            let navBorder = UIView(frame: CGRect(x: 0, y: self.frame.size.height - 1, width: self.frame.size.width, height: 1))
+            self.barStyle = .default
+            self.tintColor = PRIMARY_COLOR
+            self.barTintColor = TABBAR_BG_COLOR
+            
+            let navBorder = UIView(frame: CGRect(x: 0, y: 0, width: self.frame.size.width, height: 1))
             navBorder.backgroundColor = NAVBAR_BORDER_COLOR
             self.addSubview(navBorder)
-
-            // Shadow
-            self.layer.shadowOffset = CGSize(width: 0, height: 0.5)
-            self.layer.shadowRadius = 1
-            self.layer.shadowColor = UIColor.black.cgColor
-            self.layer.shadowOpacity = 0.05
         }
     }
 }
@@ -113,7 +114,7 @@ extension UITabBar {
     var theme: Bool {
         get { return false }
         set {
-            self.barStyle = .black
+            self.barStyle = .default
             self.isTranslucent = false
 
             self.tintColor = PRIMARY_COLOR
@@ -121,7 +122,7 @@ extension UITabBar {
 
             // Border top line
             let navBorder = UIView(frame: CGRect(x: 0, y: 0, width: self.frame.size.width, height: 1))
-            navBorder.backgroundColor = UIColor(red:0.93, green:0.92, blue:0.91, alpha:1.0)
+            navBorder.backgroundColor = NAVBAR_BORDER_COLOR
             self.addSubview(navBorder)
         }
     }
@@ -129,7 +130,7 @@ extension UITabBar {
 
 extension UIApplication {
     /// 获取应用主UINavigationController
-    static var appNavigationController: UINavigationController {
-        return UIApplication.shared.keyWindow!.rootViewController as! UINavigationController
+    static var appNavigationController: ScrollingNavigationController {
+        return UIApplication.shared.keyWindow!.rootViewController as! ScrollingNavigationController
     }
 }

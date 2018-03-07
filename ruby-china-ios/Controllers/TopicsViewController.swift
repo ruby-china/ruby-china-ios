@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import AMScrollingNavbar
 
 class TopicsViewController: UITableViewController {
 
@@ -21,15 +22,32 @@ class TopicsViewController: UITableViewController {
         fatalError("loadTopics(offset:callback:) has not been implemented")
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        if let navigationController = navigationController as? ScrollingNavigationController {
+            navigationController.followScrollView(tableView, delay: 50.0)
+        }
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        
+        if let navigationController = navigationController as? ScrollingNavigationController {
+            navigationController.stopFollowingScrollView()
+        }
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
         clearsSelectionOnViewWillAppear = true
         
         tableView.register(TopicCell.self, forCellReuseIdentifier: kCellReuseIdentifier)
-        tableView.separatorColor = UIColor(white: 0.94, alpha: 1)
+        // color: #F0F0F0
+        tableView.separatorColor = UIColor.init(red: 0.8, green: 0.8, blue: 0.8, alpha: 1)
         tableView.tableFooterView = UIView()
-        tableView.separatorInset = UIEdgeInsets.zero
+        tableView.separatorInset = UIEdgeInsetsMake(0, 4, 0, 4)
         tableView.estimatedRowHeight = 56
         tableView.headerWithRefreshingBlock { [weak self] in
             guard let `self` = self else {

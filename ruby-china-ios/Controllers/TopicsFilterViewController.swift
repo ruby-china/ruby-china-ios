@@ -76,7 +76,7 @@ class TopicsFilterViewController: UIViewController {
     
     fileprivate lazy var cellSelectedImage: UIImage? = {
         let cellSize = (self.collectionView.collectionViewLayout as! UICollectionViewFlowLayout).itemSize
-        return UIImage.roundedCorner(imageSize: cellSize, radius: 5, backgroundColor: NAVBAR_BG_COLOR, borderWidth: 0, borderColor: NAVBAR_BG_COLOR)
+        return UIImage.roundedCorner(imageSize: cellSize, radius: 5, backgroundColor: PRIMARY_COLOR, borderWidth: 0, borderColor: PRIMARY_COLOR)
     }()
     fileprivate lazy var cellNormalImage: UIImage? = {
         let cellSize = (self.collectionView.collectionViewLayout as! UICollectionViewFlowLayout).itemSize
@@ -110,7 +110,7 @@ class TopicsFilterViewController: UIViewController {
     }
     
     override var preferredStatusBarStyle : UIStatusBarStyle {
-        return .lightContent
+        return .default
     }
 
 }

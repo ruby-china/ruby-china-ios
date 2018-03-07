@@ -8,6 +8,7 @@
 
 import UIKit
 import SideMenu
+import AMScrollingNavbar
 
 class RootViewController: UITabBarController {
     fileprivate let kTopicsTag = 0
@@ -82,8 +83,8 @@ class RootViewController: UITabBarController {
         resetNavigationItem(viewControllers![selectedIndex])
     }
     
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
         isDidAppear = true
         
         if let app = UIApplication.shared.delegate as? AppDelegate {
@@ -94,6 +95,7 @@ class RootViewController: UITabBarController {
             needDisplayNotifications = false
             displayNotifications()
         }
+        
     }
     
     fileprivate func resetNavigationItem(_ viewController: UIViewController) {

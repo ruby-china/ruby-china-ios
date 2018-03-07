@@ -16,7 +16,7 @@ class SearchViewController: WebViewController {
         let view = UISearchBar()
         view.delegate = self
         if let searchField = view.value(forKey: "searchField") as? UITextField {
-            searchField.textColor = NAVBAR_TINT_COLOR
+            searchField.textColor = PRIMARY_COLOR
             searchField.backgroundColor = NAVBAR_BG_COLOR
             searchField.attributedPlaceholder = NSAttributedString(string: "search placeholder".localized, attributes: [NSAttributedStringKey.foregroundColor: searchField.textColor!])
             // 修改左侧搜索图标颜色
