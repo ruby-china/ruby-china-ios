@@ -1,6 +1,6 @@
 import UIKit
 
-#if DEBUG
+#if DEBUG1
     let ROOT_URL = "http://localhost:3000"
     let OAUTH_CLIENT_ID = "1c58e228"
     let OAUTH_SECRET = "6d2c9cbef3e4baa56e1cf1d0db41d213105221aeff01281ac7009d21af810c58"
