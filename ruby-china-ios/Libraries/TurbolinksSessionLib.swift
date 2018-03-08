@@ -60,7 +60,7 @@ class TurbolinksSessionLib: NSObject {
             if req.url.fragment != nil {
                 idString = idString.replacingOccurrences(of: "%23", with: "#")
             }
-            let idStringList = idString.characters.split { $0 == "#" }.map(String.init)
+            let idStringList = idString.split { $0 == "#" }.map(String.init)
             if
                 idStringList.count > 0,
                 let id = Int(idStringList[0]),

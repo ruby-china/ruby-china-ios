@@ -1,6 +1,6 @@
 PODS:
   - Alamofire (4.7.0)
-  - AMScrollingNavbar (4.2.2)
+  - AMScrollingNavbar (4.2.4)
   - FontAwesome.swift (1.3.2)
   - Heimdallr (3.6.1):
     - Heimdallr/Core (= 3.6.1)
@@ -42,7 +42,7 @@ EXTERNAL SOURCES:
 
 CHECKOUT OPTIONS:
   Router:
-    :commit: 409ac172500c0a0349beaa59f39243a5e0374fe6
+    :commit: f4b20dae4332f1dd454465457617904df4b07572
     :git: https://github.com/klaus01/Router.git
   Turbolinks:
     :commit: ac09406eefedf37fc96ecab56bb05879289e0858
@@ -50,7 +50,7 @@ CHECKOUT OPTIONS:
 
 SPEC CHECKSUMS:
   Alamofire: 907e0a98eb68cdb7f9d1f541a563d6ac5dc77b25
-  AMScrollingNavbar: ddeb2d3bdc2b2403ae63f76c649e10d797dbf4ae
+  AMScrollingNavbar: e5676bc9caae93d1a3dd5a708d7d9b0cf2fd89d3
   FontAwesome.swift: b4e4c8ccbbecb12f9b592bc533ff237af3706667
   Heimdallr: d2a8b1dc3ecc7ad249c9ffd20c990e2248fcd599
   Kingfisher: 98e6d5b5e807645743e8ed5ececd25d688d38452

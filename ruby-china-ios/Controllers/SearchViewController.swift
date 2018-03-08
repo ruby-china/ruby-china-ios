@@ -48,7 +48,7 @@ class SearchViewController: WebViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        if searchBar.text == nil || searchBar.text!.characters.count <= 0 {
+        if searchBar.text == nil || searchBar.text!.count <= 0 {
             searchBar.becomeFirstResponder()
         }
     }

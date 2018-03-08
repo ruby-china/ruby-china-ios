@@ -90,7 +90,7 @@ class TopicsFilterViewController: UIViewController {
         view.addSubview(collectionView)
         closeButton.snp.makeConstraints { (make) in
             make.left.top.right.equalToSuperview()
-            make.height.equalTo(64)
+            make.height.equalTo(self.view.frame.height == 812 ? 88 : 64)
         }
         collectionView.snp.makeConstraints { (make) in
             make.top.equalTo(closeButton.snp.bottom)

@@ -31,14 +31,14 @@ class TopicDetailsViewController: WebViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        navigationController?.isNavigationBarHidden = true
-        navigationController?.isToolbarHidden = false
+        navigationController?.setNavigationBarHidden(true, animated: animated)
+        navigationController?.setToolbarHidden(false, animated: animated)
     }
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        navigationController?.isNavigationBarHidden = false
-        navigationController?.isToolbarHidden = true
+        navigationController?.setNavigationBarHidden(false, animated: animated)
+        navigationController?.setToolbarHidden(true, animated: animated)
     }
     
     func setToolbars() {
