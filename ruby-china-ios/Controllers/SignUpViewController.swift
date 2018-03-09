@@ -21,7 +21,7 @@ class SignUpViewController: PopupWebViewController {
     override func doDidFinished(toURL: URL) {
         super.doDidFinished(toURL: toURL)
         DispatchQueue.main.async {
-            NotificationCenter.default.post(name: NSNotification.Name.clearSession, object: nil)
+            self.clearSession()
             RBHUD.success("sign up success tips".localized)
         }
     }

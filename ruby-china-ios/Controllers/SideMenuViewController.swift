@@ -190,7 +190,11 @@ extension SideMenuViewController {
             UIApplication.shared.openURL(url)
         } else if router.match(URL(string: url.path)!) == nil {
             dismiss(animated: true, completion: {
-                NotificationCenter.default.post(name: Notification.Name.menuClicked, object: self, userInfo: ["path": url.path])
+                if let host = url.host, host != URL(string: ROOT_URL)!.host! {
+                    TurbolinksSessionLib.shared.safariOpen(url)
+                } else {
+                    TurbolinksSessionLib.shared.action(.Advance, path: url.path)
+                }
             })
         }
     }

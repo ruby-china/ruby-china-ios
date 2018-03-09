@@ -9,14 +9,6 @@
 import Foundation
 
 extension Notification.Name {
-    /// 显示侧栏
-    static let displayMenu = Notification.Name("displayMenu")
-    /// 侧栏菜单项被点击
-    static let menuClicked = Notification.Name("menuClicked")
-    
-    /// 清除 Session
-    static let clearSession = Notification.Name("clearSession")
-    
     /// 登录成功
     static let userSignin = Notification.Name("userSignin")
     /// 退出登录
