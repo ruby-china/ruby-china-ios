@@ -8,7 +8,6 @@ import AMScrollingNavbar
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
     var window: UIWindow?
-    private(set) var unreadNotificationCount: Int = 0
 
     fileprivate lazy var rootViewController: RootViewController = {
         return RootViewController()
@@ -22,8 +21,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         UITabBarItem.appearance().setTitleTextAttributes([NSAttributedStringKey.foregroundColor: BLACK_COLOR], for: UIControlState())
         UITabBarItem.appearance().setTitleTextAttributes([NSAttributedStringKey.foregroundColor: PRIMARY_COLOR], for: .selected)
     }
-
-    fileprivate var becomeActivePage = String()
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         initAppearance()
@@ -57,31 +54,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             // 应用在后台时，点击系推送消息启动应用
             rootViewController.displayNotifications()
         } else {
-            refreshUnreadNotificationCount()
+            OAuth2.shared.refreshUnreadNotifications()
         }
     }
 
     func applicationDidBecomeActive(_ application: UIApplication) {
-        refreshUnreadNotificationCount()
+        OAuth2.shared.refreshUnreadNotifications()
     }
 
-    func refreshUnreadNotificationCount() {
-        if OAuth2.shared.isLogined {
-            OAuth2.shared.refreshUnreadNotifications({ [weak self] (count) in
-                self?.setBadge(count)
-            })
-        } else {
-            setBadge(0)
-        }
-    }
-
-    func setBadge(_ count: Int) {
-        UIApplication.shared.applicationIconBadgeNumber = count > 0 ? count : 0
-        if unreadNotificationCount != count {
-            unreadNotificationCount = count
-            NotificationCenter.default.post(name: NSNotification.Name.userUnreadNotificationChanged, object: nil)
-        }
-    }
 }
 
 extension UINavigationBar {

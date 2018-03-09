@@ -67,6 +67,7 @@ class RootTopicsViewController: TopicsViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         checkRefreshContent()
+        OAuth2.shared.refreshUnreadNotifications()
     }
     
     override func viewDidDisappear(_ animated: Bool) {
@@ -128,15 +129,15 @@ extension RootTopicsViewController {
             self?.resetDisappearTime()
         }
         NotificationCenter.default.addObserver(forName: NSNotification.Name.userUnreadNotificationChanged, object: nil, queue: nil) { [weak self](notification) in
+            UIApplication.shared.applicationIconBadgeNumber = OAuth2.shared.unreadNotificationCount
             self?.refreshBadgeLabel()
         }
     }
     
     fileprivate func refreshBadgeLabel() {
-        if let app = UIApplication.shared.delegate as? AppDelegate {
-            badgeLabel.isHidden = app.unreadNotificationCount <= 0
-            badgeLabel.text = "\(app.unreadNotificationCount > 99 ? 99 : app.unreadNotificationCount)"
-        }
+        let count = OAuth2.shared.unreadNotificationCount
+        badgeLabel.isHidden = count <= 0
+        badgeLabel.text = "\(min(99, count))"
     }
     
     fileprivate func resetTitle(_ filterData: TopicsFilterViewController.NodeData) {

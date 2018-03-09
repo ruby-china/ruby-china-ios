@@ -49,18 +49,12 @@ class RootViewController: UITabBarController {
         setupSideMenu()
         setupViewControllers()
         
-        NotificationCenter.default.addObserver(self, selector: #selector(updateLoginState), name: NSNotification.Name.userChanged, object: nil)
-        
         resetNavigationItem(viewControllers![selectedIndex])
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         isDidAppear = true
-        
-        if let app = UIApplication.shared.delegate as? AppDelegate {
-            app.refreshUnreadNotificationCount()
-        }
         
         if needDisplayNotifications {
             needDisplayNotifications = false
@@ -72,12 +66,6 @@ class RootViewController: UITabBarController {
         navigationItem.title = viewController.navigationItem.title
         navigationItem.titleView = viewController.navigationItem.titleView
         navigationItem.rightBarButtonItems = viewController.navigationItem.rightBarButtonItems
-    }
-    
-    @objc func updateLoginState() {
-        if let app = UIApplication.shared.delegate as? AppDelegate {
-            app.refreshUnreadNotificationCount()
-        }
     }
     
     func displayNotifications() {
