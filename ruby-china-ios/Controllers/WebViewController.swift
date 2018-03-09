@@ -184,15 +184,15 @@ extension WebViewController {
     }
     
     fileprivate func addObserver() {
-        NotificationCenter.default.addObserver(self, selector: #selector(reloadByLoginStatusChanged), name: NSNotification.Name(NOTICE_SIGNIN_SUCCESS), object: nil)
-        NotificationCenter.default.addObserver(forName: NSNotification.Name(NOTICE_SIGNOUT), object: nil, queue: nil) { [weak self] (notification) in
+        NotificationCenter.default.addObserver(self, selector: #selector(reloadByLoginStatusChanged), name: NSNotification.Name.userSignin, object: nil)
+        NotificationCenter.default.addObserver(forName: NSNotification.Name.userSignout, object: nil, queue: nil) { [weak self] (notification) in
             guard let `self` = self else {
                 return
             }
             self.clearSession()
             self.reloadByLoginStatusChanged()
         }
-        NotificationCenter.default.addObserver(forName: NSNotification.Name(NOTICE_CLEAR_SESSION), object: nil, queue: nil) { [weak self] (notification) in
+        NotificationCenter.default.addObserver(forName: NSNotification.Name.clearSession, object: nil, queue: nil) { [weak self] (notification) in
             self?.clearSession()
         }
     }

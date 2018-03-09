@@ -17,7 +17,7 @@ class FavoriteTopicsViewController: TopicsViewController {
         title = "favorites".localized
         tableView.mj_header.beginRefreshing()
         
-        NotificationCenter.default.addObserver(self, selector: #selector(favoriteChangedAction), name: NSNotification.Name(NOTICE_FAVORITE_CHANGED), object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(favoriteChangedAction), name: NSNotification.Name.userFavoriteChanged, object: nil)
     }
     
     override func loadTopics(offset: Int, limit: Int, callback: @escaping (APICallbackResponse, [Topic]?) -> ()) {

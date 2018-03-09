@@ -42,6 +42,7 @@
 		249C0A7F1D75C1E600097458 /* String+Localize.swift in Sources */ = {isa = PBXBuildFile; fileRef = 249C0A7E1D75C1E600097458 /* String+Localize.swift */; };
 		24A6A3EC1DB796D400EC89DB /* UIScrollView+MJRefreshDefault.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24A6A3EB1DB796D400EC89DB /* UIScrollView+MJRefreshDefault.swift */; };
 		24A6A3EE1DB7B82500EC89DB /* LikesService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24A6A3ED1DB7B82500EC89DB /* LikesService.swift */; };
+		24B058822052DAE90086B6E1 /* NotificationName+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24B058812052DAE90086B6E1 /* NotificationName+Ext.swift */; };
 		24B228ED1DAA877600DEC44D /* TopicsService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24B228EC1DAA877600DEC44D /* TopicsService.swift */; };
 		24B228EF1DAA8B1600DEC44D /* Topic.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24B228EE1DAA8B1600DEC44D /* Topic.swift */; };
 		24B228F31DAA972500DEC44D /* String+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24B228F21DAA972500DEC44D /* String+Ext.swift */; };
@@ -99,6 +100,7 @@
 		249C0A811D75D51F00097458 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		24A6A3EB1DB796D400EC89DB /* UIScrollView+MJRefreshDefault.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIScrollView+MJRefreshDefault.swift"; sourceTree = "<group>"; };
 		24A6A3ED1DB7B82500EC89DB /* LikesService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LikesService.swift; sourceTree = "<group>"; };
+		24B058812052DAE90086B6E1 /* NotificationName+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NotificationName+Ext.swift"; sourceTree = "<group>"; };
 		24B228EC1DAA877600DEC44D /* TopicsService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TopicsService.swift; sourceTree = "<group>"; };
 		24B228EE1DAA8B1600DEC44D /* Topic.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Topic.swift; sourceTree = "<group>"; };
 		24B228F21DAA972500DEC44D /* String+Ext.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "String+Ext.swift"; sourceTree = "<group>"; };
@@ -210,6 +212,7 @@
 				24B228F21DAA972500DEC44D /* String+Ext.swift */,
 				24A6A3EB1DB796D400EC89DB /* UIScrollView+MJRefreshDefault.swift */,
 				24FDFBBB1DBBAE06004BB9A6 /* UIBarButtonItem+Ext.swift */,
+				24B058812052DAE90086B6E1 /* NotificationName+Ext.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -457,6 +460,7 @@
 				24887F351DBAFED300BB7EDC /* SearchViewController.swift in Sources */,
 				24B228ED1DAA877600DEC44D /* TopicsService.swift in Sources */,
 				2432ACDF1DCA392800F95C7D /* NodeTopicsViewController.swift in Sources */,
+				24B058822052DAE90086B6E1 /* NotificationName+Ext.swift in Sources */,
 				24742CEF1D50FE2E00D16CA9 /* EditAccountViewController.swift in Sources */,
 				24887F371DBB2FBD00BB7EDC /* TopicsFilterViewController.swift in Sources */,
 				24742CF51D50FE2E00D16CA9 /* SideMenuNavigationController.swift in Sources */,

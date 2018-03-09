@@ -26,7 +26,7 @@ class OAuth2 {
     
     fileprivate(set) var currentUser: User? {
         didSet {
-            NotificationCenter.default.post(name: NSNotification.Name(NOTICE_USER_CHANGED), object: nil)
+            NotificationCenter.default.post(name: NSNotification.Name.userChanged, object: nil)
         }
     }
     
@@ -138,6 +138,6 @@ class OAuth2 {
         UserDefaults.standard.removeObject(forKey: "loginUserJSON")
         UserDefaults.standard.synchronize()
         
-        NotificationCenter.default.post(name: NSNotification.Name(NOTICE_SIGNOUT), object: nil)
+        NotificationCenter.default.post(name: NSNotification.Name.userSignout, object: nil)
     }
 }

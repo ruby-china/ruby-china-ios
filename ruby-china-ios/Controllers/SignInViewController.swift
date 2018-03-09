@@ -181,7 +181,7 @@ extension SignInViewController: OAuth2Delegate {
         dismiss(animated: false, completion: {
             self.delegate?.signInViewControllerDidAuthenticate(self)
             self.onDidAuthenticate?(self)
-            NotificationCenter.default.post(name: Notification.Name(rawValue: NOTICE_SIGNIN_SUCCESS), object: nil)
+            NotificationCenter.default.post(name: Notification.Name.userSignin, object: nil)
         })
     }
     

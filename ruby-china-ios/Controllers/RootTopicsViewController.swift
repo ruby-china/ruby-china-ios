@@ -123,7 +123,7 @@ extension RootTopicsViewController {
         NotificationCenter.default.addObserver(forName: NSNotification.Name.UIApplicationWillResignActive, object: nil, queue: nil) { [weak self](notification) in
             self?.resetDisappearTime()
         }
-        NotificationCenter.default.addObserver(forName: NSNotification.Name(rawValue: NOTICE_UNREAD_NOTIFICATIONS_CHANGED), object: nil, queue: nil) { [weak self](notification) in
+        NotificationCenter.default.addObserver(forName: NSNotification.Name.userUnreadNotificationChanged, object: nil, queue: nil) { [weak self](notification) in
             self?.refreshBadgeLabel()
         }
     }

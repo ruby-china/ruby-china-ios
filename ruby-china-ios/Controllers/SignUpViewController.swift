@@ -12,7 +12,7 @@ class SignUpViewController: PopupWebViewController {
     
     @discardableResult static func show() -> SignUpViewController {
         let controller = SignUpViewController(path: "/account/sign_up")
-        NotificationCenter.default.post(name: NSNotification.Name(NOTICE_SIGNOUT), object: nil)
+        NotificationCenter.default.post(name: NSNotification.Name.userSignout, object: nil)
         let navController = ThemeNavigationController(rootViewController: controller)
         UIApplication.currentViewController()?.present(navController, animated: true, completion: nil)
         return controller
@@ -21,7 +21,7 @@ class SignUpViewController: PopupWebViewController {
     override func doDidFinished(toURL: URL) {
         super.doDidFinished(toURL: toURL)
         DispatchQueue.main.async {
-            NotificationCenter.default.post(name: NSNotification.Name(NOTICE_CLEAR_SESSION), object: nil)
+            NotificationCenter.default.post(name: NSNotification.Name.clearSession, object: nil)
             RBHUD.success("sign up success tips".localized)
         }
     }

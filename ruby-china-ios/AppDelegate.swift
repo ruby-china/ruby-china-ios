@@ -79,7 +79,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         UIApplication.shared.applicationIconBadgeNumber = count > 0 ? count : 0
         if unreadNotificationCount != count {
             unreadNotificationCount = count
-            NotificationCenter.default.post(name: NSNotification.Name(rawValue: NOTICE_UNREAD_NOTIFICATIONS_CHANGED), object: nil)
+            NotificationCenter.default.post(name: NSNotification.Name.userUnreadNotificationChanged, object: nil)
         }
     }
 }

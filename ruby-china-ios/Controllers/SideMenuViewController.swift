@@ -61,7 +61,7 @@ class SideMenuViewController: UITableViewController {
         
         title = "Ruby China"
         
-        NotificationCenter.default.addObserver(self, selector: #selector(updateLoginState), name: NSNotification.Name(NOTICE_USER_CHANGED), object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(updateLoginState), name: NSNotification.Name.userChanged, object: nil)
         updateLoginState()
         
         tableView.backgroundColor = SIDEMENU_BG_COLOR
@@ -190,7 +190,7 @@ extension SideMenuViewController {
             UIApplication.shared.openURL(url)
         } else if router.match(URL(string: url.path)!) == nil {
             dismiss(animated: true, completion: {
-                NotificationCenter.default.post(name: Notification.Name(rawValue: NOTICE_MENU_CLICKED), object: self, userInfo: [NOTICE_MENU_CLICKED_PATH: url.path])
+                NotificationCenter.default.post(name: Notification.Name.menuClicked, object: self, userInfo: ["path": url.path])
             })
         }
     }

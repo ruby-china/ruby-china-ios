@@ -38,7 +38,7 @@ class RootViewController: UITabBarController {
     }
     
     @objc func actionMenuClicked(_ note: Notification) {
-        let path = (note as NSNotification).userInfo![NOTICE_MENU_CLICKED_PATH] as! String
+        let path = (note as NSNotification).userInfo!["path"] as! String
         
         if let url = URL(string: path), let host = url.host , host != URL(string: ROOT_URL)!.host! {
             TurbolinksSessionLib.shared.safariOpen(url)
@@ -59,9 +59,9 @@ class RootViewController: UITabBarController {
         setupSideMenu()
         setupViewControllers()
         
-        NotificationCenter.default.addObserver(self, selector: #selector(displaySideMenu), name: NSNotification.Name(NOTICE_DISPLAY_MENU), object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(actionMenuClicked), name: NSNotification.Name(NOTICE_MENU_CLICKED), object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(updateLoginState), name: NSNotification.Name(NOTICE_USER_CHANGED), object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(displaySideMenu), name: NSNotification.Name.displayMenu, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(actionMenuClicked), name: NSNotification.Name.menuClicked, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(updateLoginState), name: NSNotification.Name.userChanged, object: nil)
         
         resetNavigationItem(viewControllers![selectedIndex])
     }

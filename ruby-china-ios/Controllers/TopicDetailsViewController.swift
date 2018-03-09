@@ -141,14 +141,14 @@ extension TopicDetailsViewController {
             TopicsService.unfavorite(topicID) { [weak self] (response) in
                 if let code = response.response?.statusCode , code == 200 {
                     self?.favorited = false
-                    NotificationCenter.default.post(name: NSNotification.Name(NOTICE_FAVORITE_CHANGED), object: nil)
+                    NotificationCenter.default.post(name: NSNotification.Name.userFavoriteChanged, object: nil)
                 }
             }
         } else {
             TopicsService.favorite(topicID) { [weak self] (response) in
                 if let code = response.response?.statusCode , code == 200 {
                     self?.favorited = true
-                    NotificationCenter.default.post(name: NSNotification.Name(NOTICE_FAVORITE_CHANGED), object: nil)
+                    NotificationCenter.default.post(name: NSNotification.Name.userFavoriteChanged, object: nil)
                 }
             }
         }
