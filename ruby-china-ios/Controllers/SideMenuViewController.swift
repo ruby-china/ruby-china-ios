@@ -28,25 +28,19 @@ class SideMenuViewController: UITableViewController {
     }()
     
     fileprivate var userItems = [ItemData]()
-    fileprivate let userImageColors = [
-        UIColor(red: 94 / 255.0, green: 151 / 255.0, blue: 246 / 255.0, alpha: 1),
-        UIColor(red: 156 / 255.0, green: 204 / 255.0, blue: 101 / 255.0, alpha: 1),
-        UIColor(red: 224 / 255.0, green: 96 / 255.0, blue: 85 / 255.0, alpha: 1),
-        UIColor(red: 79 / 255.0, green: 195 / 255.0, blue: 247 / 255.0, alpha: 1),
-        ]
     fileprivate lazy var appItems: [ItemData] = {
         let build = Bundle.main.infoDictionary!["CFBundleVersion"] as! String
         return [
             ItemData(
                 name: "copyright".localized,
                 image: UIImage(named: "copyright")!.withRenderingMode(.alwaysTemplate),
-                imageColor: UIColor(red: 246 / 255.0, green: 191 / 255.0, blue: 50 / 255.0, alpha: 1),
+                imageColor: PRIMARY_COLOR,
                 actionURL: URL(string: COPYRIGHT_URL)!
             ),
             ItemData(
                 name: "v\(APP_VERSION) (build \(build))",
                 image: UIImage(named: "versions")!.withRenderingMode(.alwaysTemplate),
-                imageColor: UIColor(red: 87 / 255.0, green: 187 / 255.0, blue: 138 / 255.0, alpha: 1),
+                imageColor: PRIMARY_COLOR,
                 actionURL: nil
             )
         ]
@@ -107,25 +101,25 @@ extension SideMenuViewController {
                 ItemData(
                     name: user.login,
                     image: UIImage(named: "profile")!.withRenderingMode(.alwaysTemplate),
-                    imageColor: userImageColors[0],
+                    imageColor: PRIMARY_COLOR,
                     actionURL: URL(string: "\(ROOT_URL)/\(user.login)")!
                 ),
                 ItemData(
                     name: "edit account".localized,
                     image: UIImage(named: "edit-user")!.withRenderingMode(.alwaysTemplate),
-                    imageColor: userImageColors[1],
+                    imageColor: PRIMARY_COLOR,
                     actionURL: URL(string: "\(ROOT_URL)/account/edit")!
                 ),
                 ItemData(
                     name: "notes".localized,
                     image: UIImage(named: "notes")!.withRenderingMode(.alwaysTemplate),
-                    imageColor: userImageColors[2],
+                    imageColor: PRIMARY_COLOR,
                     actionURL: URL(string: "\(ROOT_URL)/notes")!
                 ),
                 ItemData(
                     name: "sign out".localized,
                     image: UIImage(named: "logout")!.withRenderingMode(.alwaysTemplate),
-                    imageColor: userImageColors[3],
+                    imageColor: PRIMARY_COLOR,
                     actionURL: URL(string: "\(ROOT_URL)/logout")!
                 )
             ]
@@ -148,13 +142,13 @@ extension SideMenuViewController {
                 ItemData(
                     name: "sign in".localized,
                     image: UIImage(named: "login")!.withRenderingMode(.alwaysTemplate),
-                    imageColor: userImageColors[0],
+                    imageColor: PRIMARY_COLOR,
                     actionURL: URL(string: "\(ROOT_URL)/account/sign_in")!
                 ),
                 ItemData(
                     name: "sign up".localized,
                     image: UIImage(named: "profile")!.withRenderingMode(.alwaysTemplate),
-                    imageColor: userImageColors[1],
+                    imageColor: PRIMARY_COLOR,
                     actionURL: URL(string: "\(ROOT_URL)/account/sign_up")!
                 )
             ]

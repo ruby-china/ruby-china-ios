@@ -27,7 +27,7 @@ let USER_AGENT = "turbolinks-app, ruby-china, official, iOS, version:" + APP_VER
 let BLACK_COLOR = UIColor(red: 0.04, green: 0.02, blue: 0.02, alpha: 1.0)
 let PRIMARY_COLOR = UIColor(red: 0, green: 0, blue: 0, alpha: 1.0)
 let SIDEMENU_NAVBAR_BG_COLOR = UIColor(red: 1, green: 1, blue: 1, alpha: 1.0)
-let SIDEMENU_BG_COLOR = UIColor(red: 0.95, green: 0.94, blue: 0.94, alpha: 1.0)
+let SIDEMENU_BG_COLOR = UIColor(red: 0.98, green: 0.98, blue: 0.98, alpha: 1.0)
 
 let NAVBAR_BG_COLOR = UIColor(red: 1, green: 1, blue: 1, alpha: 1.0)
 let NAVBAR_BORDER_COLOR = UIColor(red: 0.9, green: 0.9, blue: 0.9, alpha: 1.0)
