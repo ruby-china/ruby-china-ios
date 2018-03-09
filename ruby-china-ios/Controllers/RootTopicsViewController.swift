@@ -18,13 +18,34 @@ class RootTopicsViewController: TopicsViewController {
     fileprivate var disappearTime: Date?
     fileprivate var filterData = TopicsFilterViewController.NodeData.listType(.last_actived)
     fileprivate var listType = TopicsService.ListType.popular
+    fileprivate lazy var badgeLabel: UILabel = {
+        let view = UILabel(frame: CGRect(x: 0, y: 0, width: 18, height: 18))
+        view.clipsToBounds = true
+        view.layer.cornerRadius = view.bounds.height / 2.0
+        view.backgroundColor = UIColor.red
+        view.textColor = UIColor.white
+        view.textAlignment = .center
+        view.font = UIFont.systemFont(ofSize: 13, weight: .medium)
+        view.isHidden = true
+        return view
+    }()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        let notificationsButton = UIButton(frame: CGRect(x: 0, y: 0, width: 30, height: 44))
+        notificationsButton.setImage(UIImage(named: "notifications")?.imageWithColor(PRIMARY_COLOR), for: UIControlState())
+        notificationsButton.addTarget(self, action: #selector(notificationsAction), for: .touchUpInside)
+        let notificationsView = UIView(frame: notificationsButton.frame)
+        notificationsView.addSubview(notificationsButton)
+        notificationsView.addSubview(badgeLabel)
+        badgeLabel.center.x = notificationsButton.frame.maxX - 3
+        badgeLabel.frame.origin.y = notificationsButton.center.y - badgeLabel.frame.height
+        let notificationsItem = UIBarButtonItem(customView: notificationsView)
+        
         navigationItem.rightBarButtonItems = [
             UIBarButtonItem.fixNavigationSpacer(),
-            UIBarButtonItem.narrowButtonItem(image: UIImage(named: "new"), target: self, action: #selector(newTopicAction)),
+            notificationsItem,
             UIBarButtonItem.narrowButtonItem(image: UIImage(named: "search"), target: self, action: #selector(searchAction)),
             UIBarButtonItem.narrowButtonItem(image: UIImage(named: "filter"), target: self, action: #selector(filterAction)),
         ]
@@ -40,6 +61,7 @@ class RootTopicsViewController: TopicsViewController {
         
         resetTitle(filterData)
         reloadTopics(filterData)
+        refreshBadgeLabel()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -85,8 +107,8 @@ extension RootTopicsViewController {
         self.present(nc, animated: true, completion: nil)
     }
     
-    func newTopicAction() {
-        TurbolinksSessionLib.shared.action(.Replace, path: "/topics/new")
+    func notificationsAction() {
+        navigationController?.pushViewController(NotificationsViewController(path: "/notifications"), animated: true)
     }
     
 }
@@ -100,6 +122,16 @@ extension RootTopicsViewController {
         }
         NotificationCenter.default.addObserver(forName: NSNotification.Name.UIApplicationWillResignActive, object: nil, queue: nil) { [weak self](notification) in
             self?.resetDisappearTime()
+        }
+        NotificationCenter.default.addObserver(forName: NSNotification.Name(rawValue: NOTICE_UNREAD_NOTIFICATIONS_CHANGED), object: nil, queue: nil) { [weak self](notification) in
+            self?.refreshBadgeLabel()
+        }
+    }
+    
+    fileprivate func refreshBadgeLabel() {
+        if let app = UIApplication.shared.delegate as? AppDelegate {
+            badgeLabel.isHidden = app.unreadNotificationCount <= 0
+            badgeLabel.text = "\(app.unreadNotificationCount > 99 ? 99 : app.unreadNotificationCount)"
         }
     }
     

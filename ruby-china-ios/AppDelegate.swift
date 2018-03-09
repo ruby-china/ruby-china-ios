@@ -8,6 +8,7 @@ import AMScrollingNavbar
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
     var window: UIWindow?
+    private(set) var unreadNotificationCount: Int = 0
 
     fileprivate lazy var rootViewController: RootViewController = {
         return RootViewController()
@@ -66,7 +67,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func refreshUnreadNotificationCount() {
         if OAuth2.shared.isLogined {
-            OAuth2.shared.refreshUnreadNotifications({ [weak self](count) in
+            OAuth2.shared.refreshUnreadNotifications({ [weak self] (count) in
                 self?.setBadge(count)
             })
         } else {
@@ -76,7 +77,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func setBadge(_ count: Int) {
         UIApplication.shared.applicationIconBadgeNumber = count > 0 ? count : 0
-        self.rootViewController.tabBar.items?.last?.badgeValue = count > 0 ? "\(count)" : nil
+        if unreadNotificationCount != count {
+            unreadNotificationCount = count
+            NotificationCenter.default.post(name: NSNotification.Name(rawValue: NOTICE_UNREAD_NOTIFICATIONS_CHANGED), object: nil)
+        }
     }
 }
 

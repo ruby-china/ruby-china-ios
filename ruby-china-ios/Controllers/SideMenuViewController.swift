@@ -27,10 +27,18 @@ class SideMenuViewController: UITableViewController {
         return router
     }()
     
-    fileprivate var userItems = [ItemData]()
-    fileprivate lazy var appItems: [ItemData] = {
+    private lazy var datas: [[ItemData]] = {
+        var datas = [[ItemData]]()
+        
+        datas.append([ItemData]())
         let build = Bundle.main.infoDictionary!["CFBundleVersion"] as! String
-        return [
+        datas.append([
+            ItemData(
+                name: "wiki".localized,
+                image: UIImage(named: "wiki")!.withRenderingMode(.alwaysTemplate),
+                imageColor: PRIMARY_COLOR,
+                actionURL: URL(string: "\(ROOT_URL)/wiki")!
+            ),
             ItemData(
                 name: "copyright".localized,
                 image: UIImage(named: "copyright")!.withRenderingMode(.alwaysTemplate),
@@ -43,7 +51,9 @@ class SideMenuViewController: UITableViewController {
                 imageColor: PRIMARY_COLOR,
                 actionURL: nil
             )
-        ]
+        ])
+        
+        return datas
     }()
     
     override func viewDidLoad() {
@@ -61,20 +71,16 @@ class SideMenuViewController: UITableViewController {
     }
     
     override func numberOfSections(in tableView: UITableView) -> Int {
-        return 2
+        return datas.count
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        switch section {
-        case 0: return userItems.count
-        case 1: return appItems.count
-        default: return 0
-        }
+        return datas[section].count
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath)
-        let itemData = indexPath.section == 0 ? userItems[indexPath.row] : appItems[indexPath.row]
+        let itemData = datas[indexPath.section][indexPath.row]
         cell.textLabel!.text = itemData.name
         cell.imageView?.image = itemData.image
         cell.imageView?.tintColor = itemData.imageColor
@@ -83,7 +89,7 @@ class SideMenuViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let itemData = indexPath.section == 0 ? userItems[indexPath.row] : appItems[indexPath.row]
+        let itemData = datas[indexPath.section][indexPath.row]
         if let url = itemData.actionURL {
             action(forURL: url)
         }
@@ -96,8 +102,9 @@ class SideMenuViewController: UITableViewController {
 extension SideMenuViewController {
     
     func updateLoginState() {
+        let kUserSection = 0
         if let user = OAuth2.shared.currentUser , OAuth2.shared.isLogined {
-            userItems = [
+            datas[kUserSection] = [
                 ItemData(
                     name: user.login,
                     image: UIImage(named: "profile")!.withRenderingMode(.alwaysTemplate),
@@ -109,6 +116,18 @@ extension SideMenuViewController {
                     image: UIImage(named: "edit-user")!.withRenderingMode(.alwaysTemplate),
                     imageColor: PRIMARY_COLOR,
                     actionURL: URL(string: "\(ROOT_URL)/account/edit")!
+                ),
+                ItemData(
+                    name: "title new topic".localized,
+                    image: UIImage(named: "new")!.withRenderingMode(.alwaysTemplate),
+                    imageColor: PRIMARY_COLOR,
+                    actionURL: URL(string: "\(ROOT_URL)/topics/new")!
+                ),
+                ItemData(
+                    name: "favorites".localized,
+                    image: UIImage(named: "favorites")!.withRenderingMode(.alwaysTemplate),
+                    imageColor: PRIMARY_COLOR,
+                    actionURL: URL(string: "\(ROOT_URL)/topics/favorites")!
                 ),
                 ItemData(
                     name: "notes".localized,
@@ -132,13 +151,13 @@ extension SideMenuViewController {
                     return
                 }
                 let avatarImage = UIImage(cgImage: cgImage, scale: 2, orientation: image.imageOrientation)
-                let oldData = self.userItems[0]
+                let oldData = self.datas[kUserSection][0]
                 let newData = ItemData(name: oldData.name, image: avatarImage, imageColor: oldData.imageColor, actionURL: oldData.actionURL)
-                self.userItems[0] = newData
+                self.datas[kUserSection][0] = newData
                 self.tableView.reloadData()
             })
         } else {
-            userItems = [
+            datas[kUserSection] = [
                 ItemData(
                     name: "sign in".localized,
                     image: UIImage(named: "login")!.withRenderingMode(.alwaysTemplate),

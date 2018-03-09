@@ -34,6 +34,9 @@ class TurbolinksSessionLib: NSObject {
         router.bind("/topics/new") { req in
             self.presentEditTopicController(req.route.route)
         }
+        router.bind("/topics/favorites") { req in
+            self.pushFavoritesController()
+        }
         router.bind("/topics/node:id") { req in
             if let idString = req.param("id"), let nodeID = Int(idString) {
                 self.pushNodeTopicsController(nodeID)
@@ -207,6 +210,15 @@ class TurbolinksSessionLib: NSObject {
     
     fileprivate func pushNodeTopicsController(_ nodeID: Int) {
         let controller = NodeTopicsViewController(nodeID: nodeID)
+        UIApplication.currentViewController()?.navigationController?.pushViewController(controller, animated: true)
+    }
+    
+    fileprivate func pushFavoritesController() {
+        if (!OAuth2.shared.isLogined) {
+            presentLoginController()
+            return
+        }
+        let controller = FavoriteTopicsViewController()
         UIApplication.currentViewController()?.navigationController?.pushViewController(controller, animated: true)
     }
 }
