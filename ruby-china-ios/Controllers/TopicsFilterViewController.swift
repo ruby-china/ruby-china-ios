@@ -80,7 +80,7 @@ class TopicsFilterViewController: UIViewController {
     }()
     fileprivate lazy var cellNormalImage: UIImage? = {
         let cellSize = (self.collectionView.collectionViewLayout as! UICollectionViewFlowLayout).itemSize
-        return UIImage.roundedCorner(imageSize: cellSize, radius: 5, backgroundColor: UIColor.clear, borderWidth: 1, borderColor: SEGMENT_BG_COLOR)
+        return UIImage.roundedCorner(imageSize: cellSize, radius: 5, backgroundColor: UIColor.clear, borderWidth: 1, borderColor: PRIMARY_COLOR)
     }()
     
     override func viewDidLoad() {

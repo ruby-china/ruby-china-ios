@@ -36,7 +36,7 @@ class TopicsFilterNodeCell: UICollectionViewCell {
     
     override var isSelected: Bool {
         didSet {
-            label.textColor = isSelected ? NAVBAR_TINT_COLOR : SEGMENT_BG_COLOR
+            label.textColor = isSelected ? NAVBAR_TINT_COLOR : PRIMARY_COLOR
             imageView.image = isSelected ? selectedImage : normalImage
         }
     }
