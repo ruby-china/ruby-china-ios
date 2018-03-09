@@ -13,12 +13,10 @@ class CustomImageCache: SKImageCacheable {
     fileprivate let cache = KingfisherManager.shared.cache
     
     func imageForKey(_ key: String) -> UIImage? {
-        guard let cacheType = cache.isImageCached(forKey: key).cacheType else { return nil }
-        
-        switch cacheType {
+        switch cache.imageCachedType(forKey: key) {
         case .disk: return cache.retrieveImageInDiskCache(forKey: key)
         case .memory: return cache.retrieveImageInMemoryCache(forKey: key)
-        default: return nil
+        case .none: return nil
         }
     }
     
