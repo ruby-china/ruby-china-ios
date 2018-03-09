@@ -108,7 +108,11 @@ extension RootTopicsViewController {
     }
     
     func notificationsAction() {
-        navigationController?.pushViewController(NotificationsViewController(path: "/notifications"), animated: true)
+        if !OAuth2.shared.isLogined {
+            SignInViewController.show()
+        } else {
+            navigationController?.pushViewController(NotificationsViewController(path: "/notifications"), animated: true)
+        }
     }
     
 }

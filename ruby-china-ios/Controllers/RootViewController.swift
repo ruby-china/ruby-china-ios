@@ -97,6 +97,9 @@ class RootViewController: UITabBarController {
             needDisplayNotifications = true
             return
         }
+        if !OAuth2.shared.isLogined {
+            return
+        }
         
         if presentedViewController != nil {
             dismiss(animated: false, completion: nil)
