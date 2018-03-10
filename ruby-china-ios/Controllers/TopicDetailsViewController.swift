@@ -33,6 +33,7 @@ class TopicDetailsViewController: WebViewController {
         super.viewWillAppear(animated)
         navigationController?.setNavigationBarHidden(true, animated: animated)
         navigationController?.setToolbarHidden(false, animated: animated)
+        navigationController?.interactivePopGestureRecognizer?.delegate = nil
     }
     
     override func viewWillDisappear(_ animated: Bool) {
