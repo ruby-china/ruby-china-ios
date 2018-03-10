@@ -27,6 +27,7 @@ class TopicsViewController: UITableViewController {
         
         if let navigationController = navigationController as? ScrollingNavigationController {
             navigationController.followScrollView(tableView, delay: 50.0)
+            navigationController.scrollingNavbarDelegate = self
         }
     }
     
@@ -35,6 +36,7 @@ class TopicsViewController: UITableViewController {
         
         if let navigationController = navigationController as? ScrollingNavigationController {
             navigationController.stopFollowingScrollView()
+            scrollingNavigationController(navigationController, didChangeState: .expanded)
         }
     }
     
@@ -99,6 +101,22 @@ class TopicsViewController: UITableViewController {
         let data = topicList![(indexPath as NSIndexPath).row]
         let vc = TopicDetailsViewController(topicID: data.id)
         navigationController?.pushViewController(vc, animated: true)
+    }
+    
+}
+
+extension TopicsViewController: ScrollingNavigationControllerDelegate {
+    
+    func scrollingNavigationController(_ controller: ScrollingNavigationController, didChangeState state: NavigationBarState) {
+        switch state {
+        case .collapsed:
+            navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)
+            navigationController?.navigationBar.shadowImage = UIImage()
+        case .expanded:
+            navigationController?.navigationBar.setBackgroundImage(nil, for: .default)
+            navigationController?.navigationBar.shadowImage = nil
+        case .scrolling: break
+        }
     }
     
 }
