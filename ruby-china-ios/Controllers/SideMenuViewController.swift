@@ -29,7 +29,7 @@ class SideMenuViewController: UITableViewController {
     
     private lazy var datas: [[ItemData]] = {
         var datas = [[ItemData]]()
-        
+        datas.append([ItemData]())
         datas.append([ItemData]())
         let build = Bundle.main.infoDictionary!["CFBundleVersion"] as! String
         datas.append([
@@ -38,7 +38,10 @@ class SideMenuViewController: UITableViewController {
                 image: UIImage(named: "wiki")!.withRenderingMode(.alwaysTemplate),
                 imageColor: PRIMARY_COLOR,
                 actionURL: URL(string: "\(ROOT_URL)/wiki")!
-            ),
+            )
+        ])
+        
+        datas.append([
             ItemData(
                 name: "copyright".localized,
                 image: UIImage(named: "copyright")!.withRenderingMode(.alwaysTemplate),
@@ -102,8 +105,16 @@ class SideMenuViewController: UITableViewController {
 extension SideMenuViewController {
     
     func updateLoginState() {
-        let kUserSection = 0
+        let kUserSection = 1
         if let user = OAuth2.shared.currentUser , OAuth2.shared.isLogined {
+            datas[0] = [
+                ItemData(
+                    name: "title new topic".localized,
+                    image: UIImage(named: "new")!.withRenderingMode(.alwaysTemplate),
+                    imageColor: PRIMARY_COLOR,
+                    actionURL: URL(string: "\(ROOT_URL)/topics/new")!
+                )
+            ]
             datas[kUserSection] = [
                 ItemData(
                     name: user.login,
@@ -116,12 +127,6 @@ extension SideMenuViewController {
                     image: UIImage(named: "edit-user")!.withRenderingMode(.alwaysTemplate),
                     imageColor: PRIMARY_COLOR,
                     actionURL: URL(string: "\(ROOT_URL)/account/edit")!
-                ),
-                ItemData(
-                    name: "title new topic".localized,
-                    image: UIImage(named: "new")!.withRenderingMode(.alwaysTemplate),
-                    imageColor: PRIMARY_COLOR,
-                    actionURL: URL(string: "\(ROOT_URL)/topics/new")!
                 ),
                 ItemData(
                     name: "favorites".localized,
@@ -157,7 +162,7 @@ extension SideMenuViewController {
                 self.tableView.reloadData()
             })
         } else {
-            datas[kUserSection] = [
+            datas[0] = [
                 ItemData(
                     name: "sign in".localized,
                     image: UIImage(named: "login")!.withRenderingMode(.alwaysTemplate),
@@ -171,6 +176,7 @@ extension SideMenuViewController {
                     actionURL: URL(string: "\(ROOT_URL)/account/sign_up")!
                 )
             ]
+            datas[1] = []
         }
         
         self.tableView.reloadData()
