@@ -144,7 +144,7 @@ extension WebViewController {
     }
     
     func backAction() {
-        navigationController?.popToRootViewController(animated: true)
+        navigationController?.popViewController(animated: true)
     }
     
     func moreAction() {
