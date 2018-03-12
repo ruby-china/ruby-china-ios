@@ -49,10 +49,10 @@ class TopicDetailsViewController: WebViewController {
         let (backItem, _) = UIBarButtonItem.narrowButtonItem2(image: UIImage(named: "back"), target: self, action: #selector(backAction))
         let (moreItem, _) = UIBarButtonItem.narrowButtonItem2(image: UIImage(named: "dropdown"), target: self, action: #selector(moreAction))
         
-        let (followItem, followBtn) = UIBarButtonItem.narrowButtonItem2(image: UIImage(named: "invisible"), target: self, action: #selector(topicAction(_:)))
+        let (followItem, followBtn) = UIBarButtonItem.narrowButtonItem2(image: UIImage(named: "subscription"), target: self, action: #selector(followAction(_:)))
         followButton = followBtn
         
-        let (likeItem, likeBtn) = UIBarButtonItem.narrowButtonItem2(image: UIImage(named: "like"), target: self, action: #selector(topicAction(_:)))
+        let (likeItem, likeBtn) = UIBarButtonItem.narrowButtonItem2(image: UIImage(named: "like"), target: self, action: #selector(likeAction(_:)))
         likeBtn.frame.size.width = 50
         likeBtn.titleLabel?.font = UIFont.systemFont(ofSize: 13)
         likeBtn.setTitleColor(PRIMARY_COLOR, for: UIControlState())
@@ -94,39 +94,49 @@ extension TopicDetailsViewController {
         self.present(sheet, animated: true, completion: nil)
     }
     
-    func topicAction(_ button: UIButton) {
+    func likeAction(_ button: UIButton) {
         if !OAuth2.shared.isLogined {
             SignInViewController.show()
             return
         }
-        guard let id = topicID else {
-            return
-        }
         
-        func callback1(_ response: APICallbackResponse) {
-            callback2(response, likesCount: nil)
-        }
-        func callback2(_ response: APICallbackResponse, likesCount: Int?) {
-            guard let code = response.response?.statusCode , code == 200 else {
+        let callback: (APICallbackResponse, Int?) -> Void = { [weak self] (response, likesCount) in
+            guard let `self` = self, let code = response.response?.statusCode, code == 200 else {
                 return
             }
             
             let checked = button.tag == uncheckedTag
+            RBHUD.success((checked ? "like success" : "cancel like success").localized)
             self.setButton(button, checked: checked, likesCount: likesCount)
         }
         
-        if button == followButton {
-            if button.tag == uncheckedTag {
-                TopicsService.follow(id, callback: callback1)
-            } else {
-                TopicsService.unfollow(id, callback: callback1)
+        if button.tag == uncheckedTag {
+            LikesService.like(.topic, id: topicID, callback: callback)
+        } else {
+            LikesService.unlike(.topic, id: topicID, callback: callback)
+        }
+    }
+    
+    func followAction(_ button: UIButton) {
+        if !OAuth2.shared.isLogined {
+            SignInViewController.show()
+            return
+        }
+        
+        let callback: (APICallbackResponse) -> Void = { [weak self] (response) in
+            guard let `self` = self, let code = response.response?.statusCode, code == 200 else {
+                return
             }
-        } else if button == likeButton {
-            if button.tag == uncheckedTag {
-                LikesService.like(.topic, id: id, callback: callback2)
-            } else {
-                LikesService.unlike(.topic, id: id, callback: callback2)
-            }
+            
+            let checked = button.tag == uncheckedTag
+            RBHUD.success((checked ? "follow success" : "cancel follow success").localized)
+            self.setButton(button, checked: checked, likesCount: nil)
+        }
+        
+        if button.tag == uncheckedTag {
+            TopicsService.follow(topicID, callback: callback)
+        } else {
+            TopicsService.unfollow(topicID, callback: callback)
         }
     }
     
@@ -140,6 +150,7 @@ extension TopicDetailsViewController {
             TopicsService.unfavorite(topicID) { [weak self] (response) in
                 if let code = response.response?.statusCode , code == 200 {
                     self?.favorited = false
+                    RBHUD.success("cancel favorites success".localized)
                     NotificationCenter.default.post(name: NSNotification.Name.userFavoriteChanged, object: nil)
                 }
             }
@@ -147,6 +158,7 @@ extension TopicDetailsViewController {
             TopicsService.favorite(topicID) { [weak self] (response) in
                 if let code = response.response?.statusCode , code == 200 {
                     self?.favorited = true
+                    RBHUD.success("favorites success".localized)
                     NotificationCenter.default.post(name: NSNotification.Name.userFavoriteChanged, object: nil)
                 }
             }
@@ -186,8 +198,8 @@ extension TopicDetailsViewController {
         var checkedImageNamed, uncheckedImageNamed: String!
         var title: String?
         if button == followButton {
-            checkedImageNamed = "invisible-filled"
-            uncheckedImageNamed = "invisible"
+            checkedImageNamed = "subscription-filled"
+            uncheckedImageNamed = "subscription"
         } else if button == likeButton {
             checkedImageNamed = "like-filled"
             uncheckedImageNamed = "like"
