@@ -27,45 +27,15 @@ class SideMenuViewController: UITableViewController {
         return router
     }()
     
-    private lazy var datas: [[ItemData]] = {
-        var datas = [[ItemData]]()
-        datas.append([ItemData]())
-        datas.append([ItemData]())
-        let build = Bundle.main.infoDictionary!["CFBundleVersion"] as! String
-        datas.append([
-            ItemData(
-                name: "wiki".localized,
-                image: UIImage(named: "wiki")!.withRenderingMode(.alwaysTemplate),
-                imageColor: PRIMARY_COLOR,
-                actionURL: URL(string: "\(ROOT_URL)/wiki")!
-            )
-        ])
-        
-        datas.append([
-            ItemData(
-                name: "copyright".localized,
-                image: UIImage(named: "copyright")!.withRenderingMode(.alwaysTemplate),
-                imageColor: PRIMARY_COLOR,
-                actionURL: URL(string: COPYRIGHT_URL)!
-            ),
-            ItemData(
-                name: "v\(APP_VERSION) (build \(build))",
-                image: UIImage(named: "versions")!.withRenderingMode(.alwaysTemplate),
-                imageColor: PRIMARY_COLOR,
-                actionURL: nil
-            )
-        ])
-        
-        return datas
-    }()
+    private lazy var datas = [[ItemData]]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         title = "Ruby China"
         
-        NotificationCenter.default.addObserver(self, selector: #selector(updateLoginState), name: NSNotification.Name.userChanged, object: nil)
-        updateLoginState()
+        NotificationCenter.default.addObserver(self, selector: #selector(refreshDatas), name: NSNotification.Name.userChanged, object: nil)
+        refreshDatas()
         
         tableView.backgroundColor = SIDEMENU_BG_COLOR
         
@@ -104,18 +74,20 @@ class SideMenuViewController: UITableViewController {
 @objc
 extension SideMenuViewController {
     
-    func updateLoginState() {
-        let kUserSection = 1
-        if let user = OAuth2.shared.currentUser , OAuth2.shared.isLogined {
-            datas[0] = [
+    func refreshDatas() {
+        datas.removeAll()
+        
+        if let user = OAuth2.shared.currentUser, OAuth2.shared.isLogined {
+            datas.append([
                 ItemData(
                     name: "title new topic".localized,
                     image: UIImage(named: "new")!.withRenderingMode(.alwaysTemplate),
                     imageColor: PRIMARY_COLOR,
                     actionURL: URL(string: "\(ROOT_URL)/topics/new")!
                 )
-            ]
-            datas[kUserSection] = [
+            ])
+            
+            datas.append([
                 ItemData(
                     name: user.login,
                     image: UIImage(named: "profile")!.withRenderingMode(.alwaysTemplate),
@@ -146,8 +118,8 @@ extension SideMenuViewController {
                     imageColor: PRIMARY_COLOR,
                     actionURL: URL(string: "\(ROOT_URL)/logout")!
                 )
-            ]
-            
+            ])
+            let kUserSection = datas.count - 1
             // 下载用户头像
             let avatarSize = CGSize(width: 44, height: 44)
             let imageProcessor = RoundCornerImageProcessor(cornerRadius: avatarSize.width * 0.5, targetSize: avatarSize)
@@ -156,13 +128,15 @@ extension SideMenuViewController {
                     return
                 }
                 let avatarImage = UIImage(cgImage: cgImage, scale: 2, orientation: image.imageOrientation)
-                let oldData = self.datas[kUserSection][0]
+                let row = 0
+                let oldData = self.datas[kUserSection][row]
                 let newData = ItemData(name: oldData.name, image: avatarImage, imageColor: oldData.imageColor, actionURL: oldData.actionURL)
-                self.datas[kUserSection][0] = newData
-                self.tableView.reloadData()
+                self.datas[kUserSection][row] = newData
+                let indexPath = IndexPath(row: row, section: kUserSection)
+                self.tableView.reloadRows(at: [indexPath], with: .none)
             })
         } else {
-            datas[0] = [
+            datas.append([
                 ItemData(
                     name: "sign in".localized,
                     image: UIImage(named: "login")!.withRenderingMode(.alwaysTemplate),
@@ -175,9 +149,33 @@ extension SideMenuViewController {
                     imageColor: PRIMARY_COLOR,
                     actionURL: URL(string: "\(ROOT_URL)/account/sign_up")!
                 )
-            ]
-            datas[1] = []
+            ])
         }
+        
+        datas.append([
+            ItemData(
+                name: "wiki".localized,
+                image: UIImage(named: "wiki")!.withRenderingMode(.alwaysTemplate),
+                imageColor: PRIMARY_COLOR,
+                actionURL: URL(string: "\(ROOT_URL)/wiki")!
+            )
+        ])
+        
+        let build = Bundle.main.infoDictionary!["CFBundleVersion"] as! String
+        datas.append([
+            ItemData(
+                name: "copyright".localized,
+                image: UIImage(named: "copyright")!.withRenderingMode(.alwaysTemplate),
+                imageColor: PRIMARY_COLOR,
+                actionURL: URL(string: COPYRIGHT_URL)!
+            ),
+            ItemData(
+                name: "v\(APP_VERSION) (build \(build))",
+                image: UIImage(named: "versions")!.withRenderingMode(.alwaysTemplate),
+                imageColor: PRIMARY_COLOR,
+                actionURL: nil
+            )
+        ])
         
         self.tableView.reloadData()
     }
