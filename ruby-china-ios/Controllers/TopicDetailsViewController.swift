@@ -14,7 +14,6 @@ class TopicDetailsViewController: WebViewController {
     fileprivate var followButton: UIButton!
     fileprivate var likeButton: UIButton!
     fileprivate var favorited: Bool = false
-    fileprivate var interactivePopDelegate: UIGestureRecognizerDelegate?
     
     convenience init(topicID: Int, topicPath: String? = nil) {
         self.init(path: topicPath ?? "/topics/\(topicID)")
@@ -33,15 +32,12 @@ class TopicDetailsViewController: WebViewController {
         super.viewWillAppear(animated)
         navigationController?.setNavigationBarHidden(true, animated: animated)
         navigationController?.setToolbarHidden(false, animated: animated)
-        interactivePopDelegate = navigationController?.interactivePopGestureRecognizer?.delegate
-        navigationController?.interactivePopGestureRecognizer?.delegate = nil
     }
     
     override func viewWillDisappear(_ animated: Bool) {
-        super.viewDidAppear(animated)
+        super.viewWillDisappear(animated)
         navigationController?.setNavigationBarHidden(false, animated: animated)
         navigationController?.setToolbarHidden(true, animated: animated)
-        navigationController?.interactivePopGestureRecognizer?.delegate = interactivePopDelegate
     }
     
     func setToolbars() {

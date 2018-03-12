@@ -16,4 +16,6 @@ target 'ruby-china-ios' do
   pod 'MJRefresh'
   pod 'YYKeyboardManager'
   pod 'AMScrollingNavbar'
+  pod 'SwipeTransition'
+  pod 'SwipeTransitionAutoSwipeBack'
 end
