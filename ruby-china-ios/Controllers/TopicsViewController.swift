@@ -75,25 +75,6 @@ class TopicsViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: kCellReuseIdentifier, for: indexPath) as! TopicCell
         cell.data = topicList![(indexPath as NSIndexPath).row]
-        cell.onUserClick = { (data) in
-            guard let topic = data else {
-                return
-            }
-            TurbolinksSessionLib.shared.action(.Advance, path: "/\(topic.user.login)")
-        }
-        cell.onNodeClick = { [weak self] (data) in
-            guard let `self` = self, let topic = data else {
-                return
-            }
-            
-            if (self.nodeID > 0) {
-                // 已经在节点帖子列表界面，再点击节点，则不再打开节点帖子界面，而直接进入帖子
-                let vc = TopicDetailsViewController(topicID: topic.id)
-                self.navigationController?.pushViewController(vc, animated: true)
-            } else {
-                TurbolinksSessionLib.shared.action(.Advance, path: "/topics/node\(topic.nodeID)")
-            }
-        }
         return cell
     }
 

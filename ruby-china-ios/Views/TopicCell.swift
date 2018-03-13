@@ -60,12 +60,21 @@ class TopicCell: UITableViewCell {
         }
     }
     
-    var onUserClick: ((_ data: Topic?) -> ())?
-    var onNodeClick: ((_ data: Topic?) -> ())?
+    var onUserClick: ((_ data: Topic?) -> ())? {
+        didSet {
+            avatarImageView.isUserInteractionEnabled = onUserClick != nil
+            userNameButton.isEnabled = onUserClick != nil
+        }
+    }
+    var onNodeClick: ((_ data: Topic?) -> ())? {
+        didSet {
+            nodeButton.isEnabled = onNodeClick != nil
+        }
+    }
     
     fileprivate lazy var avatarImageView: UIImageView = {
         let view = UIImageView()
-        view.isUserInteractionEnabled = true
+        view.isUserInteractionEnabled = false
         view.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(userAction)))
         return view
     }()
@@ -87,6 +96,7 @@ class TopicCell: UITableViewCell {
         view.titleLabel?.font = kTextFont
         view.setTitleColor(kNodeColor, for: UIControlState())
         view.addTarget(self, action: #selector(nodeAction), for: .touchUpInside)
+        view.isEnabled = false
         return view
     }()
     fileprivate lazy var userNameButton: UIButton = {
@@ -94,6 +104,7 @@ class TopicCell: UITableViewCell {
         view.titleLabel?.font = kTextFont
         view.setTitleColor(kAvatarColor, for: UIControlState())
         view.addTarget(self, action: #selector(userAction), for: .touchUpInside)
+        view.isEnabled = false
         return view
     }()
     
