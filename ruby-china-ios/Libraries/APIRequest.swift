@@ -36,7 +36,7 @@ class APIRequest {
         manager.request("\(ROOT_URL)\(path)", method: method, parameters: parameters).responseData { response in
             switch response.result {
             case .success:
-                print(method, path, response.response!.statusCode)
+                log.debug([method, path, response.response!.statusCode])
                 let statusCode = response.response!.statusCode
                 if (statusCode == 401) {
                     OAuth2.shared.logout()
@@ -52,7 +52,7 @@ class APIRequest {
                 callback(response, result)
                 break
             case .failure(let error):
-                print(method, path, error)
+                log.error([method, path, error])
                 callback(response, nil)
                 break
             }

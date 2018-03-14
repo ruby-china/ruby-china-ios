@@ -4,6 +4,23 @@ import SafariServices
 import WebKit
 import SideMenu
 import AMScrollingNavbar
+import XCGLogger
+
+let log: XCGLogger = {
+    let log = XCGLogger.default
+    #if DEBUG
+        log.outputLevel = .debug
+        log.levelDescriptions[.verbose] = "🗯"
+        log.levelDescriptions[.debug] = "🔹"
+        log.levelDescriptions[.info] = "ℹ️"
+        log.levelDescriptions[.warning] = "⚠️"
+        log.levelDescriptions[.error] = "‼️"
+        log.levelDescriptions[.severe] = "💣"
+    #else
+        log.outputLevel = .none
+    #endif
+    return log
+}()
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -44,7 +61,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(_ application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
         let deviceTokenString: String = deviceToken.reduce("", {$0 + String(format: "%02.2hhX", $1)})
-        print("DeviceToken \(deviceTokenString)")
+        log.info("DeviceToken \(deviceTokenString)")
 
         OAuth2.shared.deviceToken = deviceTokenString
     }

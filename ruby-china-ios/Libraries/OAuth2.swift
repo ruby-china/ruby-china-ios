@@ -68,7 +68,7 @@ class OAuth2 {
             switch result {
             case .success:
                 guard let accessToken = self.accessTokenStore.retrieveAccessToken()?.accessToken else {
-                    print("Login is successful but the access_Token is missing")
+                    log.info("Login is successful but the access_Token is missing")
                     let err = NSError(domain: "customize", code: -1, userInfo: [NSLocalizedDescriptionKey: "get accessToken failed".localized])
                     
                     DispatchQueue.main.async {
@@ -76,7 +76,7 @@ class OAuth2 {
                     }
                     return
                 }
-                print("Login successed. accessToken=\(accessToken)")
+                log.info("Login successed. accessToken=\(accessToken)")
                 self.accessToken = accessToken
                 self.submitDeviceToken()
                 self.reloadCurrentUser() { (response, user) in
@@ -114,7 +114,7 @@ class OAuth2 {
             switch response.result {
             case .success(let data) where user != nil:
                 self.currentUser = user!
-                debugPrint(self.currentUser as Any)
+                log.info(self.currentUser)
                 UserDefaults.standard.setValue(data, forKey: "loginUserJSON")
                 UserDefaults.standard.synchronize()
             default:
@@ -132,7 +132,7 @@ class OAuth2 {
         APIRequest.shared.get("/api/v3/notifications/unread_count", parameters: nil) { [weak self] (response, result) in
             if let result = result, !result.isEmpty {
                 let unreadCount = result["count"].intValue
-                print("Unread notification count", unreadCount)
+                log.info(["Unread notification count", unreadCount])
                 self?.unreadNotificationCount = unreadCount
             }
         }

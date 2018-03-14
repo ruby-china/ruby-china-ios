@@ -9,6 +9,9 @@ PODS:
   - Kingfisher (4.6.3)
   - MBProgressHUD (1.1.0)
   - MJRefresh (3.1.15.3)
+  - ObjcExceptionBridging (1.0.1):
+    - ObjcExceptionBridging/ObjcExceptionBridging (= 1.0.1)
+  - ObjcExceptionBridging/ObjcExceptionBridging (1.0.1)
   - Result (3.2.4)
   - Router (1.0.0)
   - SideMenu (3.1.5)
@@ -19,6 +22,10 @@ PODS:
   - SwipeTransitionAutoSwipeBack (0.2.8):
     - SwipeTransition (~> 0.2.8)
   - Turbolinks (3.0.0)
+  - XCGLogger (6.0.2):
+    - XCGLogger/Core (= 6.0.2)
+  - XCGLogger/Core (6.0.2):
+    - ObjcExceptionBridging
   - YYKeyboardManager (1.0.1)
 
 DEPENDENCIES:
@@ -37,6 +44,7 @@ DEPENDENCIES:
   - SwipeTransition
   - SwipeTransitionAutoSwipeBack
   - Turbolinks (from `https://github.com/turbolinks/turbolinks-ios.git`)
+  - XCGLogger
   - YYKeyboardManager
 
 EXTERNAL SOURCES:
@@ -61,6 +69,7 @@ SPEC CHECKSUMS:
   Kingfisher: 98e6d5b5e807645743e8ed5ececd25d688d38452
   MBProgressHUD: e7baa36a220447d8aeb12769bf0585582f3866d9
   MJRefresh: b48380ae2b927b46c4ef000de9adb8dc748e1df7
+  ObjcExceptionBridging: c30e00eb3700467e695faeea30e26e18bd445001
   Result: d2d07204ce72856f1fd9130bbe42c35a7b0fea10
   Router: 6088d6d321e097070d5ea4bd792cb015dfa0fbb4
   SideMenu: 47dbf9e4d878062d8994aed43f6e4bf6c1fea30b
@@ -70,8 +79,9 @@ SPEC CHECKSUMS:
   SwipeTransition: 64702b8fd1ff6e6eed89b19ceac47a123145eaa5
   SwipeTransitionAutoSwipeBack: 05fc903885c8e1452ffbab7a14b792d87aa1b529
   Turbolinks: 4e3a5ce8132e96019236ca7f8f274a0034de2a39
+  XCGLogger: c9601cae9a8912de34a58666ba931ed3d624dd31
   YYKeyboardManager: ff53d2e80d1808567a7f004028bd200d9469a89f
 
-PODFILE CHECKSUM: 4a28e772862d019278491b25121753d6c32b2971
+PODFILE CHECKSUM: c4b783bf62cb3eff2fc533a7fcc31a668354b3de
 
 COCOAPODS: 1.4.0

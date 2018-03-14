@@ -177,7 +177,7 @@ extension SignInViewController: OAuth2Delegate {
         UserDefaults.standard.setValue(loginField.text, forKey: "loginName")
         UserDefaults.standard.synchronize()
         
-        print("Login successed", accessToken)
+        log.info(["Login successed", accessToken])
         dismiss(animated: false, completion: {
             self.delegate?.signInViewControllerDidAuthenticate(self)
             self.onDidAuthenticate?(self)
@@ -186,7 +186,7 @@ extension SignInViewController: OAuth2Delegate {
     }
     
     func oauth2DidLoginFailed(_ error: NSError) {
-        print("Login failed", error)
+        log.error(["Login failed", error])
         
         var errorMessage = ""
         if error.code == 3 {

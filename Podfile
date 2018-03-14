@@ -18,4 +18,5 @@ target 'ruby-china-ios' do
   pod 'AMScrollingNavbar'
   pod 'SwipeTransition'
   pod 'SwipeTransitionAutoSwipeBack'
+  pod 'XCGLogger'
 end
