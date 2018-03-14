@@ -61,6 +61,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func applicationDidBecomeActive(_ application: UIApplication) {
         OAuth2.shared.refreshUnreadNotifications()
     }
+    
+    func applicationWillResignActive(_ application: UIApplication) {
+        UIApplication.shared.applicationIconBadgeNumber = OAuth2.shared.unreadNotificationCount
+    }
 
 }
 

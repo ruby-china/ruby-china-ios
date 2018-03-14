@@ -137,8 +137,6 @@ extension RootTopicsViewController {
         let count = OAuth2.shared.unreadNotificationCount
         badgeLabel.isHidden = count <= 0
         badgeLabel.text = "\(min(99, count))"
-        
-        UIApplication.shared.applicationIconBadgeNumber = count
     }
     
     fileprivate func resetTitle(_ filterData: TopicsFilterViewController.NodeData) {
