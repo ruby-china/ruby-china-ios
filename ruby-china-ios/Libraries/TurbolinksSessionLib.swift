@@ -236,7 +236,7 @@ extension TurbolinksSessionLib: SessionDelegate {
     }
     
     func session(_ session: Session, didFailRequestForVisitable visitable: Visitable, withError error: NSError) {
-        NSLog("ERROR: %@", error)
+        log.error(error)
         guard let viewController = visitable as? WebViewController, let errorCode = ErrorCode(rawValue: error.code) else { return }
         
         switch errorCode {
@@ -279,32 +279,41 @@ extension TurbolinksSessionLib: WKNavigationDelegate {
             return
         }
         
+        guard let url = navigationAction.request.url else {
+            decisionHandler(.cancel)
+            return
+        }
+        
         // kelei 2016-10-08
         // 帖子中有 Youtube 视频时，会触发此方法。
         // po navigationAction 返回 <WKNavigationAction: 0x7fd0f9422eb0; navigationType = -1; syntheticClickType = 0; request = <NSMutableURLRequest: 0x61800001e700> { URL: https://www.youtube.com/embed/xMFs9DTympQ }; sourceFrame = (null); targetFrame = <WKFrameInfo: 0x7fd0f9401030; isMainFrame = NO; request = (null)>>
         // 所有这里判断一下 navigationType 值来修复进入帖子自动打开 Youtube 网页的问题
-        if navigationAction.navigationType.rawValue < 0 {
+        if navigationAction.navigationType.rawValue < 0, let host = url.host, host != URL(string: ROOT_URL)!.host! {
             decisionHandler(.allow)
             return
         }
         
-        if let url = navigationAction.request.url {
-            let ext = url.pathExtension.lowercased()
-            if (["jpg", "jpeg", "png", "gif"].filter{ ext.hasPrefix($0) }).count > 0 {
-                // 查看图片
-                presentImageBrowserController(url)
-            } else if let host = url.host , host != URL(string: ROOT_URL)!.host! {
-                // 外部网站, open in SafariView
-                safariOpen(url)
-            } else if var newURL = URLComponents(url: url, resolvingAgainstBaseURL: false) {
-                newURL.scheme = nil
-                newURL.host = nil
-                newURL.port = nil
-                if let path = newURL.string {
-                    action(.Advance, path: path)
-                }
+        if url.scheme == "about" {
+            decisionHandler(.allow)
+            return
+        }
+        
+        let ext = url.pathExtension.lowercased()
+        if ["jpg", "jpeg", "png", "gif"].first(where: { $0 == ext }) != nil {
+            // 查看图片
+            presentImageBrowserController(url)
+        } else if let host = url.host, host != URL(string: ROOT_URL)!.host! {
+            // 外部网站, open in SafariView
+            safariOpen(url)
+        } else if var newURL = URLComponents(url: url, resolvingAgainstBaseURL: false) {
+            newURL.scheme = nil
+            newURL.host = nil
+            newURL.port = nil
+            if let path = newURL.string {
+                action(.Advance, path: path)
             }
         }
+        
         decisionHandler(.cancel)
     }
 }
