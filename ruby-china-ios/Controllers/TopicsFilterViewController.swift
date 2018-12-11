@@ -8,6 +8,7 @@
 
 import UIKit
 import SwiftyJSON
+import SnapKit
 
 class TopicsFilterViewController: UIViewController {
     
@@ -88,13 +89,19 @@ class TopicsFilterViewController: UIViewController {
         
         view.addSubview(closeButton)
         view.addSubview(collectionView)
+        collectionView.snp.makeConstraints { (make) in
+            let topConstraint: ConstraintMakerEditable
+            if #available(iOS 11.0, *) {
+                topConstraint = make.top.equalTo(view.safeAreaLayoutGuide)
+            } else {
+                topConstraint = make.top.equalToSuperview()
+            }
+            topConstraint.offset(44)
+            make.left.bottom.right.equalToSuperview()
+        }
         closeButton.snp.makeConstraints { (make) in
             make.left.top.right.equalToSuperview()
-            make.height.equalTo(self.view.frame.height == 812 ? 88 : 64)
-        }
-        collectionView.snp.makeConstraints { (make) in
-            make.top.equalTo(closeButton.snp.bottom)
-            make.left.bottom.right.equalToSuperview()
+            make.bottom.equalTo(collectionView.snp.top)
         }
         
         initGroupDatas()
