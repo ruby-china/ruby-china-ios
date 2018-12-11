@@ -36,7 +36,7 @@ DEPENDENCIES:
   - Kingfisher
   - MBProgressHUD
   - MJRefresh
-  - Router (from `/Users/kelei/Documents/self/git/Router`)
+  - Router (from `https://github.com/klaus01/Router.git`)
   - SideMenu
   - SKPhotoBrowser
   - SnapKit
@@ -69,11 +69,14 @@ SPEC REPOS:
 
 EXTERNAL SOURCES:
   Router:
-    :path: "/Users/kelei/Documents/self/git/Router"
+    :git: https://github.com/klaus01/Router.git
   Turbolinks:
     :git: https://github.com/turbolinks/turbolinks-ios.git
 
 CHECKOUT OPTIONS:
+  Router:
+    :commit: e62d4efacbd441df4b03d3502b3740e9d9f50e00
+    :git: https://github.com/klaus01/Router.git
   Turbolinks:
     :commit: a98e7b016b12839d04ec2fd9ae6075d8a3c513d0
     :git: https://github.com/turbolinks/turbolinks-ios.git
@@ -88,7 +91,7 @@ SPEC CHECKSUMS:
   MJRefresh: 697f8ec75ebdbe9207767bb682cf0f51b0d8a41f
   ObjcExceptionBridging: c30e00eb3700467e695faeea30e26e18bd445001
   Result: d2d07204ce72856f1fd9130bbe42c35a7b0fea10
-  Router: af829aad02aa27eb5c51149be0cee12b98dce6c1
+  Router: 6088d6d321e097070d5ea4bd792cb015dfa0fbb4
   SideMenu: 87efd943737bb83aedf0358884d09fcf5576636d
   SKPhotoBrowser: 76eb862685761707b5745fde7762757966565e07
   SnapKit: fe8a619752f3f27075cc9a90244d75c6c3f27e2a
@@ -99,6 +102,6 @@ SPEC CHECKSUMS:
   XCGLogger: 7f7f43f15dfe3a305fa1342b7dc29af656289abd
   YYKeyboardManager: ff53d2e80d1808567a7f004028bd200d9469a89f
 
-PODFILE CHECKSUM: 6186f30810f85452278d3c07018033cb22a32c21
+PODFILE CHECKSUM: 29dbead3bafb783d8c156b7010ecc85204585e68
 
 COCOAPODS: 1.5.3
