@@ -70,7 +70,7 @@ class TopicsFilterViewController: UIViewController {
         view.dataSource = self
         view.backgroundColor = UIColor(white: 1, alpha: 0.9)
         view.register(TopicsFilterNodeCell.self, forCellWithReuseIdentifier: self.cellIdentifier)
-        view.register(TopicsFilterNodeSectionHeaderView.self, forSupplementaryViewOfKind: UICollectionElementKindSectionHeader, withReuseIdentifier: self.headerIdentifier)
+        view.register(TopicsFilterNodeSectionHeaderView.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: self.headerIdentifier)
         return view
     }()
     
@@ -128,7 +128,7 @@ extension TopicsFilterViewController: UICollectionViewDelegate, UICollectionView
     }
     
     func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
-        if kind == UICollectionElementKindSectionHeader {
+        if kind == UICollectionView.elementKindSectionHeader {
             let view = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: headerIdentifier, for: indexPath) as! TopicsFilterNodeSectionHeaderView
             view.name = groupDatas[(indexPath as NSIndexPath).section].name
             return view
@@ -163,7 +163,7 @@ extension TopicsFilterViewController {
         let vc = TopicsFilterViewController()
         let window = UIWindow(frame: UIScreen.main.bounds)
         window.rootViewController = vc
-        window.windowLevel = UIWindowLevelAlert
+        window.windowLevel = UIWindow.Level.alert
         window.makeKeyAndVisible()
         window.alpha = 0
         UIView.animate(withDuration: 0.3, animations: {

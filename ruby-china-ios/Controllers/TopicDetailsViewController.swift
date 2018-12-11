@@ -55,7 +55,7 @@ class TopicDetailsViewController: WebViewController {
         let (likeItem, likeBtn) = UIBarButtonItem.narrowButtonItem2(image: UIImage(named: "like"), target: self, action: #selector(likeAction(_:)))
         likeBtn.frame.size.width = 50
         likeBtn.titleLabel?.font = UIFont.systemFont(ofSize: 13)
-        likeBtn.setTitleColor(PRIMARY_COLOR, for: UIControlState())
+        likeBtn.setTitleColor(PRIMARY_COLOR, for: .normal)
         likeButton = likeBtn
         
         let fixedBar = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
@@ -210,12 +210,12 @@ extension TopicDetailsViewController {
         
         button.tag = checked ? checkedTag : uncheckedTag
         let image = UIImage(named: checked ? checkedImageNamed : uncheckedImageNamed)
-        button.setImage(image?.imageWithColor(PRIMARY_COLOR), for: UIControlState())
-        button.setTitle(title, for: UIControlState())
+        button.setImage(image?.imageWithColor(PRIMARY_COLOR), for: .normal)
+        button.setTitle(title, for: .normal)
         // 选中动画
         if let imageView = button.imageView , checked {
             imageView.transform = CGAffineTransform(scaleX: 0.0, y: 0.0)
-            UIView.animate(withDuration: 0.3, delay: 0, usingSpringWithDamping: 0.5, initialSpringVelocity: 20, options: UIViewAnimationOptions.curveLinear, animations: {
+            UIView.animate(withDuration: 0.3, delay: 0, usingSpringWithDamping: 0.5, initialSpringVelocity: 20, options: .curveLinear, animations: {
                 imageView.transform = CGAffineTransform(scaleX: 1, y: 1)
             }, completion: nil)
         }

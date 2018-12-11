@@ -18,14 +18,14 @@ class SearchViewController: WebViewController {
         if let searchField = view.value(forKey: "searchField") as? UITextField {
             searchField.textColor = PRIMARY_COLOR
             searchField.backgroundColor = NAVBAR_BG_COLOR
-            searchField.attributedPlaceholder = NSAttributedString(string: "search placeholder".localized, attributes: [NSAttributedStringKey.foregroundColor: searchField.textColor!])
+            searchField.attributedPlaceholder = NSAttributedString(string: "search placeholder".localized, attributes: [.foregroundColor: searchField.textColor!])
             // 修改左侧搜索图标颜色
             if let searchImageView = searchField.leftView as? UIImageView, let searchImage = searchImageView.image {
-                view.setImage(searchImage.imageWithColor(searchField.textColor!), for: .search, state: UIControlState())
+                view.setImage(searchImage.imageWithColor(searchField.textColor!), for: .search, state: .normal)
             }
             // 修改右侧清除图标颜色
-            if let clearButton = searchField.value(forKey: "_clearButton") as? UIButton, let clearImage = clearButton.image(for: UIControlState()) {
-                view.setImage(clearImage.imageWithColor(searchField.textColor!), for: .clear, state: UIControlState())
+            if let clearButton = searchField.value(forKey: "_clearButton") as? UIButton, let clearImage = clearButton.image(for: .normal) {
+                view.setImage(clearImage.imageWithColor(searchField.textColor!), for: .clear, state: .normal)
             }
         }
         return view

@@ -34,11 +34,11 @@ class FavoriteTopicsViewController: TopicsViewController {
         return true
     }
     
-    override func tableView(_ tableView: UITableView, editingStyleForRowAt indexPath: IndexPath) -> UITableViewCellEditingStyle {
+    override func tableView(_ tableView: UITableView, editingStyleForRowAt indexPath: IndexPath) -> UITableViewCell.EditingStyle {
         return .delete
     }
     
-    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
+    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if let topic = topicList?.remove(at: indexPath.row), editingStyle == .delete {
             TopicsService.unfavorite(topic.id)
             tableView.deleteRows(at: [indexPath], with: .automatic)

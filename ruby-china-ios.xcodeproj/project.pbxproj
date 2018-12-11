@@ -33,6 +33,7 @@
 		24742D001D50FE2E00D16CA9 /* ErrorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24742CED1D50FE2E00D16CA9 /* ErrorView.swift */; };
 		24742D011D50FE2E00D16CA9 /* RBTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24742CEE1D50FE2E00D16CA9 /* RBTextField.swift */; };
 		24758CEB1D620FFA00D8C743 /* UIImage+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24758CEA1D620FFA00D8C743 /* UIImage+Ext.swift */; };
+		24835A6821BF6D1B00975619 /* Launch Screen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 24835A6721BF6D1B00975619 /* Launch Screen.storyboard */; };
 		24887F351DBAFED300BB7EDC /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24887F341DBAFED300BB7EDC /* SearchViewController.swift */; };
 		24887F371DBB2FBD00BB7EDC /* TopicsFilterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24887F361DBB2FBD00BB7EDC /* TopicsFilterViewController.swift */; };
 		24887F391DBB334200BB7EDC /* TopicsFilterNodeCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24887F381DBB334200BB7EDC /* TopicsFilterNodeCell.swift */; };
@@ -89,6 +90,7 @@
 		24742CED1D50FE2E00D16CA9 /* ErrorView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ErrorView.swift; sourceTree = "<group>"; };
 		24742CEE1D50FE2E00D16CA9 /* RBTextField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RBTextField.swift; sourceTree = "<group>"; };
 		24758CEA1D620FFA00D8C743 /* UIImage+Ext.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIImage+Ext.swift"; sourceTree = "<group>"; };
+		24835A6721BF6D1B00975619 /* Launch Screen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = "Launch Screen.storyboard"; sourceTree = "<group>"; };
 		24887F341DBAFED300BB7EDC /* SearchViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchViewController.swift; sourceTree = "<group>"; };
 		24887F361DBB2FBD00BB7EDC /* TopicsFilterViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TopicsFilterViewController.swift; sourceTree = "<group>"; };
 		24887F381DBB334200BB7EDC /* TopicsFilterNodeCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TopicsFilterNodeCell.swift; sourceTree = "<group>"; };
@@ -231,6 +233,7 @@
 				961580A61D477A7600B32BDA /* Assets.xcassets */,
 				969E3CE11D448676004D7403 /* ErrorView.xib */,
 				9670F1931D4235D200128F8A /* Main.storyboard */,
+				24835A6721BF6D1B00975619 /* Launch Screen.storyboard */,
 				9670F19B1D4235D200128F8A /* Info.plist */,
 				961F70FC1D6AB0440079212C /* Localizable.strings */,
 			);
@@ -292,7 +295,6 @@
 				9670F1891D4235D200128F8A /* Frameworks */,
 				9670F18A1D4235D200128F8A /* Resources */,
 				A493C2F4C2D843A7EC1873C7 /* [CP] Embed Pods Frameworks */,
-				B1E4A300D82B62D2BD015D93 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -358,6 +360,7 @@
 				961F70FA1D6AB0440079212C /* Localizable.strings in Resources */,
 				9670F1951D4235D200128F8A /* Main.storyboard in Resources */,
 				961580A71D477A7600B32BDA /* Assets.xcassets in Resources */,
+				24835A6821BF6D1B00975619 /* Launch Screen.storyboard in Resources */,
 				969E3CE21D448676004D7403 /* ErrorView.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -435,21 +438,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-ruby-china-ios/Pods-ruby-china-ios-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		B1E4A300D82B62D2BD015D93 /* [CP] Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Copy Pods Resources";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-ruby-china-ios/Pods-ruby-china-ios-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
@@ -585,6 +573,7 @@
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 4.2;
 			};
 			name = Debug;
 		};
@@ -633,6 +622,7 @@
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
 				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
+				SWIFT_VERSION = 4.2;
 				VALIDATE_PRODUCT = YES;
 			};
 			name = Release;
@@ -643,7 +633,6 @@
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = "$(inherited)";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_ENTITLEMENTS = "ruby-china-ios/Ruby China.entitlements";
 				DEVELOPMENT_TEAM = A38T799N53;
 				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
@@ -653,7 +642,6 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "org.ruby-china.app";
 				PRODUCT_NAME = "Ruby China";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
-				SWIFT_VERSION = 4.0;
 			};
 			name = Debug;
 		};
@@ -663,7 +651,6 @@
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = "$(inherited)";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_ENTITLEMENTS = "ruby-china-ios/Ruby China.entitlements";
 				DEVELOPMENT_TEAM = A38T799N53;
 				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
@@ -671,7 +658,6 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "org.ruby-china.app";
 				PRODUCT_NAME = "Ruby China";
-				SWIFT_VERSION = 4.0;
 			};
 			name = Release;
 		};

@@ -35,11 +35,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         UITabBar.appearance().theme = true
         UIToolbar.appearance().theme = true
 
-        UITabBarItem.appearance().setTitleTextAttributes([NSAttributedStringKey.foregroundColor: BLACK_COLOR], for: UIControlState())
-        UITabBarItem.appearance().setTitleTextAttributes([NSAttributedStringKey.foregroundColor: PRIMARY_COLOR], for: .selected)
+        UITabBarItem.appearance().setTitleTextAttributes([.foregroundColor: BLACK_COLOR], for: .normal)
+        UITabBarItem.appearance().setTitleTextAttributes([.foregroundColor: PRIMARY_COLOR], for: .selected)
     }
 
-    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
+    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         initAppearance()
         let navigationController = ThemeNavigationController(rootViewController: rootViewController)
         navigationController.view.backgroundColor = UIColor.white
@@ -49,7 +49,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         application.registerUserNotificationSettings(notificationSettings)
         application.registerForRemoteNotifications()
 
-        if let launchOptions = launchOptions, let _ = launchOptions[UIApplicationLaunchOptionsKey.remoteNotification] {
+        if let launchOptions = launchOptions, let _ = launchOptions[UIApplication.LaunchOptionsKey.remoteNotification] {
             // 点击推送消息启动的应用
             rootViewController.displayNotifications()
         }

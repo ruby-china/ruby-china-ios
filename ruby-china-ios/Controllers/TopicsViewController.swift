@@ -49,7 +49,7 @@ class TopicsViewController: UITableViewController {
         // color: #F0F0F0
         tableView.separatorColor = UIColor.init(red: 0.8, green: 0.8, blue: 0.8, alpha: 1)
         tableView.tableFooterView = UIView()
-        tableView.separatorInset = UIEdgeInsetsMake(0, 4, 0, 4)
+        tableView.separatorInset = UIEdgeInsets(top: 0, left: 4, bottom: 0, right: 4)
         tableView.estimatedRowHeight = 56
         tableView.headerWithRefreshingBlock { [weak self] in
             guard let `self` = self else {

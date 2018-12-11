@@ -37,6 +37,8 @@
 	<string>上传照片</string>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>上传照片</string>
+	<key>UILaunchStoryboardName</key>
+	<string>Launch Screen</string>
 	<key>UIMainStoryboardFile</key>
 	<string>Main</string>
 	<key>UIRequiredDeviceCapabilities</key>

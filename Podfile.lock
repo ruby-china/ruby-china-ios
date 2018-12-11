@@ -1,30 +1,30 @@
 PODS:
-  - Alamofire (4.7.0)
-  - AMScrollingNavbar (4.2.4)
-  - FontAwesome.swift (1.3.2)
+  - Alamofire (4.8.0)
+  - AMScrollingNavbar (5.2.0)
+  - FontAwesome.swift (1.4.6)
   - Heimdallr (3.6.1):
     - Heimdallr/Core (= 3.6.1)
   - Heimdallr/Core (3.6.1):
     - Result (~> 3.0)
-  - Kingfisher (4.6.3)
+  - Kingfisher (4.10.1)
   - MBProgressHUD (1.1.0)
-  - MJRefresh (3.1.15.3)
+  - MJRefresh (3.1.15.7)
   - ObjcExceptionBridging (1.0.1):
     - ObjcExceptionBridging/ObjcExceptionBridging (= 1.0.1)
   - ObjcExceptionBridging/ObjcExceptionBridging (1.0.1)
   - Result (3.2.4)
   - Router (1.0.0)
-  - SideMenu (3.1.5)
-  - SKPhotoBrowser (5.0.6)
-  - SnapKit (4.0.0)
-  - SwiftyJSON (4.0.0)
-  - SwipeTransition (0.2.8)
-  - SwipeTransitionAutoSwipeBack (0.2.8):
-    - SwipeTransition (~> 0.2.8)
+  - SideMenu (5.0.1)
+  - SKPhotoBrowser (6.0.0)
+  - SnapKit (4.2.0)
+  - SwiftyJSON (4.2.0)
+  - SwipeTransition (0.3.3)
+  - SwipeTransitionAutoSwipeBack (0.3.3):
+    - SwipeTransition (~> 0.3.3)
   - Turbolinks (3.0.0)
-  - XCGLogger (6.0.2):
-    - XCGLogger/Core (= 6.0.2)
-  - XCGLogger/Core (6.0.2):
+  - XCGLogger (6.1.0):
+    - XCGLogger/Core (= 6.1.0)
+  - XCGLogger/Core (6.1.0):
     - ObjcExceptionBridging
   - YYKeyboardManager (1.0.1)
 
@@ -36,7 +36,7 @@ DEPENDENCIES:
   - Kingfisher
   - MBProgressHUD
   - MJRefresh
-  - Router (from `https://github.com/klaus01/Router.git`)
+  - Router (from `/Users/kelei/Documents/self/git/Router`)
   - SideMenu
   - SKPhotoBrowser
   - SnapKit
@@ -47,41 +47,58 @@ DEPENDENCIES:
   - XCGLogger
   - YYKeyboardManager
 
+SPEC REPOS:
+  https://github.com/cocoapods/specs.git:
+    - Alamofire
+    - AMScrollingNavbar
+    - FontAwesome.swift
+    - Heimdallr
+    - Kingfisher
+    - MBProgressHUD
+    - MJRefresh
+    - ObjcExceptionBridging
+    - Result
+    - SideMenu
+    - SKPhotoBrowser
+    - SnapKit
+    - SwiftyJSON
+    - SwipeTransition
+    - SwipeTransitionAutoSwipeBack
+    - XCGLogger
+    - YYKeyboardManager
+
 EXTERNAL SOURCES:
   Router:
-    :git: https://github.com/klaus01/Router.git
+    :path: "/Users/kelei/Documents/self/git/Router"
   Turbolinks:
     :git: https://github.com/turbolinks/turbolinks-ios.git
 
 CHECKOUT OPTIONS:
-  Router:
-    :commit: f4b20dae4332f1dd454465457617904df4b07572
-    :git: https://github.com/klaus01/Router.git
   Turbolinks:
-    :commit: ac09406eefedf37fc96ecab56bb05879289e0858
+    :commit: a98e7b016b12839d04ec2fd9ae6075d8a3c513d0
     :git: https://github.com/turbolinks/turbolinks-ios.git
 
 SPEC CHECKSUMS:
-  Alamofire: 907e0a98eb68cdb7f9d1f541a563d6ac5dc77b25
-  AMScrollingNavbar: e5676bc9caae93d1a3dd5a708d7d9b0cf2fd89d3
-  FontAwesome.swift: b4e4c8ccbbecb12f9b592bc533ff237af3706667
+  Alamofire: 3ec537f71edc9804815215393ae2b1a8ea33a844
+  AMScrollingNavbar: 9df3652d6757f1a24646d8e90cb458591d8b1a6a
+  FontAwesome.swift: 18fb500c0decc2bbfadf2ae16a936704ec2c49bd
   Heimdallr: d2a8b1dc3ecc7ad249c9ffd20c990e2248fcd599
-  Kingfisher: 98e6d5b5e807645743e8ed5ececd25d688d38452
+  Kingfisher: c148cd7b47ebde9989f6bc7c27dcaa79d81279a0
   MBProgressHUD: e7baa36a220447d8aeb12769bf0585582f3866d9
-  MJRefresh: b48380ae2b927b46c4ef000de9adb8dc748e1df7
+  MJRefresh: 697f8ec75ebdbe9207767bb682cf0f51b0d8a41f
   ObjcExceptionBridging: c30e00eb3700467e695faeea30e26e18bd445001
   Result: d2d07204ce72856f1fd9130bbe42c35a7b0fea10
-  Router: 6088d6d321e097070d5ea4bd792cb015dfa0fbb4
-  SideMenu: 47dbf9e4d878062d8994aed43f6e4bf6c1fea30b
-  SKPhotoBrowser: 84235d73342a0f561d6b52ad9a9e09a8f10689d6
-  SnapKit: a42d492c16e80209130a3379f73596c3454b7694
-  SwiftyJSON: 070dabdcb1beb81b247c65ffa3a79dbbfb3b48aa
-  SwipeTransition: 64702b8fd1ff6e6eed89b19ceac47a123145eaa5
-  SwipeTransitionAutoSwipeBack: 05fc903885c8e1452ffbab7a14b792d87aa1b529
+  Router: af829aad02aa27eb5c51149be0cee12b98dce6c1
+  SideMenu: 87efd943737bb83aedf0358884d09fcf5576636d
+  SKPhotoBrowser: 76eb862685761707b5745fde7762757966565e07
+  SnapKit: fe8a619752f3f27075cc9a90244d75c6c3f27e2a
+  SwiftyJSON: c4bcba26dd9ec7a027fc8eade48e2c911f229e96
+  SwipeTransition: d6f54986ec7b2e3b659b65ad277e831fe1438eb5
+  SwipeTransitionAutoSwipeBack: e2c75db2bec77b3100d22a560f1467c25a4062fd
   Turbolinks: 4e3a5ce8132e96019236ca7f8f274a0034de2a39
-  XCGLogger: c9601cae9a8912de34a58666ba931ed3d624dd31
+  XCGLogger: 7f7f43f15dfe3a305fa1342b7dc29af656289abd
   YYKeyboardManager: ff53d2e80d1808567a7f004028bd200d9469a89f
 
-PODFILE CHECKSUM: c4b783bf62cb3eff2fc533a7fcc31a668354b3de
+PODFILE CHECKSUM: 6186f30810f85452278d3c07018033cb22a32c21
 
-COCOAPODS: 1.4.0
+COCOAPODS: 1.5.3

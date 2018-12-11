@@ -11,7 +11,7 @@ import SnapKit
 import Kingfisher
 import FontAwesome_swift
 
-private let kContentPadding = UIEdgeInsetsMake(15, 25, 15, 25)
+private let kContentPadding = UIEdgeInsets(top: 15, left: 25, bottom: 15, right: 25)
 private let kTitleTextSize: CGFloat = 16
 private let kTextSize: CGFloat = 14
 private let kTextFont = UIFont.systemFont(ofSize: kTextSize, weight: UIFont.Weight.regular)
@@ -22,7 +22,7 @@ private let kNodeColor = UIColor(red: 0.5, green: 0.5, blue: 0.5, alpha: 1.0)
 
 class TopicCell: UITableViewCell {
     
-    override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
+    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         contentView.addSubview(avatarImageView)
         contentView.addSubview(titleLabel)
@@ -48,14 +48,14 @@ class TopicCell: UITableViewCell {
                 
                 titleLabel.attributedText = titleAttributedText(data)
                 repliesCountLabel.text = data.repliesCount > 0 ? "\(data.repliesCount)" : nil
-                nodeButton.setTitle(data.nodeName, for: UIControlState())
-                userNameButton.setTitle(data.user.login, for: UIControlState())
+                nodeButton.setTitle(data.nodeName, for: .normal)
+                userNameButton.setTitle(data.user.login, for: .normal)
             } else {
                 avatarImageView.kf.setImage(with: nil)
                 titleLabel.attributedText = nil
                 repliesCountLabel.text = nil
-                nodeButton.setTitle(nil, for: UIControlState())
-                userNameButton.setTitle(nil, for: UIControlState())
+                nodeButton.setTitle(nil, for: .normal)
+                userNameButton.setTitle(nil, for: .normal)
             }
         }
     }
@@ -94,7 +94,7 @@ class TopicCell: UITableViewCell {
     fileprivate lazy var nodeButton: UIButton = {
         let view = UIButton()
         view.titleLabel?.font = kTextFont
-        view.setTitleColor(kNodeColor, for: UIControlState())
+        view.setTitleColor(kNodeColor, for: .normal)
         view.addTarget(self, action: #selector(nodeAction), for: .touchUpInside)
         view.isEnabled = false
         return view
@@ -102,7 +102,7 @@ class TopicCell: UITableViewCell {
     fileprivate lazy var userNameButton: UIButton = {
         let view = UIButton()
         view.titleLabel?.font = kTextFont
-        view.setTitleColor(kAvatarColor, for: UIControlState())
+        view.setTitleColor(kAvatarColor, for: .normal)
         view.addTarget(self, action: #selector(userAction), for: .touchUpInside)
         view.isEnabled = false
         return view
@@ -159,21 +159,21 @@ extension TopicCell {
     }
     
     fileprivate func titleAttributedText(_ data: Topic) -> NSAttributedString {
-        let attributes = [NSAttributedStringKey.font : kTitleTextFont]
+        let attributes = [NSAttributedString.Key.font : kTitleTextFont]
         let attributedString = NSMutableAttributedString(string: data.title, attributes: attributes)
         
         func addIcon(name fontAwesomeName: FontAwesome, color: UIColor) {
-            let attributes = [NSAttributedStringKey.font : UIFont.fontAwesome(ofSize: kTitleTextSize),
-                              NSAttributedStringKey.foregroundColor : color]
+            let attributes = [NSAttributedString.Key.font : UIFont.fontAwesome(ofSize: kTitleTextSize, style: .solid),
+                              NSAttributedString.Key.foregroundColor : color]
             let diamondString = "  \(String.fontAwesomeIcon(name: fontAwesomeName))"
             let diamondAttributed = NSAttributedString(string: diamondString, attributes: attributes)
             attributedString.append(diamondAttributed)
         }
         
         if data.excellent {
-            addIcon(name: .diamond, color: kNodeColor)
+            addIcon(name: .gem, color: kNodeColor)
         }
-        if let _ = data.closedAt {
+        if data.closedAt != nil {
             addIcon(name: .check, color: kNodeColor)
         }
         

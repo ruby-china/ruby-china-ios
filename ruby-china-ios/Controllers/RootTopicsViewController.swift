@@ -34,7 +34,7 @@ class RootTopicsViewController: TopicsViewController {
         super.viewDidLoad()
         
         let notificationsButton = UIButton(frame: CGRect(x: 0, y: 0, width: 30, height: 44))
-        notificationsButton.setImage(UIImage(named: "notifications")?.imageWithColor(PRIMARY_COLOR), for: UIControlState())
+        notificationsButton.setImage(UIImage(named: "notifications")?.imageWithColor(PRIMARY_COLOR), for: .normal)
         notificationsButton.addTarget(self, action: #selector(notificationsAction), for: .touchUpInside)
         let notificationsView = UIView(frame: notificationsButton.frame)
         notificationsView.addSubview(notificationsButton)
@@ -53,7 +53,7 @@ class RootTopicsViewController: TopicsViewController {
         // Turbolinks.VisitableViewController 第一个实例显示很慢
         // hideWebViewController 是为解决此问题而生
         // 启动应用时实例化一个看不见的 Turbolinks.VisitableViewController 以便之后的 Turbolinks.VisitableViewController 显示快些
-        addChildViewController(hideWebViewController)
+        addChild(hideWebViewController)
         view.addSubview(hideWebViewController.view)
         hideWebViewController.view.frame = CGRect(x: -view.bounds.width, y: 0, width: 100, height: 100)
         
@@ -122,10 +122,10 @@ extension RootTopicsViewController {
 
 extension RootTopicsViewController {
     fileprivate func addObserver() {
-        NotificationCenter.default.addObserver(forName: NSNotification.Name.UIApplicationDidBecomeActive, object: nil, queue: nil) { [weak self](notification) in
+        NotificationCenter.default.addObserver(forName: UIApplication.didBecomeActiveNotification, object: nil, queue: nil) { [weak self](notification) in
             self?.checkRefreshContent()
         }
-        NotificationCenter.default.addObserver(forName: NSNotification.Name.UIApplicationWillResignActive, object: nil, queue: nil) { [weak self](notification) in
+        NotificationCenter.default.addObserver(forName: UIApplication.willResignActiveNotification, object: nil, queue: nil) { [weak self](notification) in
             self?.resetDisappearTime()
         }
         NotificationCenter.default.addObserver(forName: NSNotification.Name.userUnreadNotificationChanged, object: nil, queue: nil) { [weak self](notification) in

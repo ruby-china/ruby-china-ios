@@ -107,7 +107,7 @@ extension SignInViewController {
         loginField.placeholder = "login name".localized
         loginField.delegate = self
         loginField.returnKeyType = .next
-        loginField.addTarget(self, action: #selector(textFieldDidChanged), for: UIControlEvents.editingChanged)
+        loginField.addTarget(self, action: #selector(textFieldDidChanged), for: .editingChanged)
         loginField.text = UserDefaults.standard.string(forKey: "loginName")
         
         passwordField = RBTextField(frame: CGRect(x: margin, y: loginField.frame.maxY + margin, width: view.frame.width - margin * 2, height: 44))
@@ -115,13 +115,13 @@ extension SignInViewController {
         passwordField.isSecureTextEntry = true
         passwordField.delegate = self
         passwordField.returnKeyType = .done
-        passwordField.addTarget(self, action: #selector(textFieldDidChanged), for: UIControlEvents.editingChanged)
+        passwordField.addTarget(self, action: #selector(textFieldDidChanged), for: .editingChanged)
         
         loginButton = UIButton(frame: CGRect(x: margin, y: passwordField.frame.maxY + margin, width: view.frame.width - margin * 2, height: 44))
-        loginButton.setTitle("sign in".localized, for: UIControlState())
-        loginButton.setBackgroundImage(UIImage.fromColor(NAVBAR_BG_COLOR), for: UIControlState())
+        loginButton.setTitle("sign in".localized, for: .normal)
+        loginButton.setBackgroundImage(UIImage.fromColor(NAVBAR_BG_COLOR), for: .normal)
         loginButton.setBackgroundImage(UIImage.fromColor(NAVBAR_BORDER_COLOR), for: .highlighted)
-        loginButton.setTitleColor(UIColor.white, for: UIControlState())
+        loginButton.setTitleColor(UIColor.white, for: .normal)
         loginButton.addTarget(self, action: #selector(actionLogin), for: .touchDown)
         
         contentView = UIView(frame: CGRect(x: 0, y: 0, width: view.frame.width, height: loginButton.frame.maxY))
