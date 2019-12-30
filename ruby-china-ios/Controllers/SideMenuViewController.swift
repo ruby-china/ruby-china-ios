@@ -123,6 +123,7 @@ extension SideMenuViewController {
             // 下载用户头像
             let avatarSize = CGSize(width: 44, height: 44)
             let imageProcessor = RoundCornerImageProcessor(cornerRadius: avatarSize.width * 0.5, targetSize: avatarSize)
+            var retrieveImageOver = false
             KingfisherManager.shared.retrieveImage(with: user.avatarUrl, options: [.processor(imageProcessor)], progressBlock: nil, completionHandler: { [weak self] (image, error, cacheType, imageURL) in
                 guard let `self` = self, let image = image, let cgImage = image.cgImage else {
                     return
@@ -132,9 +133,12 @@ extension SideMenuViewController {
                 let oldData = self.datas[kUserSection][row]
                 let newData = ItemData(name: oldData.name, image: avatarImage, imageColor: oldData.imageColor, actionURL: oldData.actionURL)
                 self.datas[kUserSection][row] = newData
-                let indexPath = IndexPath(row: row, section: kUserSection)
-                self.tableView.reloadRows(at: [indexPath], with: .none)
+                if retrieveImageOver {
+                    let indexPath = IndexPath(row: row, section: kUserSection)
+                    self.tableView.reloadRows(at: [indexPath], with: .none)
+                }
             })
+            retrieveImageOver = true
         } else {
             datas.append([
                 ItemData(
