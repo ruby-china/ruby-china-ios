@@ -48,7 +48,7 @@ DEPENDENCIES:
   - YYKeyboardManager
 
 SPEC REPOS:
-  https://github.com/cocoapods/specs.git:
+  https://mirrors.tuna.tsinghua.edu.cn/git/CocoaPods/Specs.git:
     - Alamofire
     - AMScrollingNavbar
     - FontAwesome.swift
@@ -62,10 +62,11 @@ SPEC REPOS:
     - SKPhotoBrowser
     - SnapKit
     - SwiftyJSON
-    - SwipeTransition
     - SwipeTransitionAutoSwipeBack
     - XCGLogger
     - YYKeyboardManager
+  trunk:
+    - SwipeTransition
 
 EXTERNAL SOURCES:
   Router:
@@ -104,4 +105,4 @@ SPEC CHECKSUMS:
 
 PODFILE CHECKSUM: 29dbead3bafb783d8c156b7010ecc85204585e68
 
-COCOAPODS: 1.5.3
+COCOAPODS: 1.8.3
