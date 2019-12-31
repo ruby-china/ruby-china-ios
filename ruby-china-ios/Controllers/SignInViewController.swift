@@ -17,6 +17,7 @@ class SignInViewController: UIViewController {
         return controller
     }
     
+    fileprivate var webView: WKWebView!
     fileprivate var appNameLabel: UILabel!
     fileprivate var contentView: UIView!
     fileprivate var loginField: RBTextField!
@@ -91,6 +92,10 @@ extension SignInViewController {
 extension SignInViewController {
     
     fileprivate func setupViews() {
+        webView = WKWebView(frame: view.bounds, configuration: TurbolinksSessionLib.shared.webViewConfiguration)
+        webView.frame.origin.x = -webView.frame.width;
+        webView.navigationDelegate = self
+        
         appNameLabel = UILabel()
         appNameLabel.text = "Ruby China"
         appNameLabel.textColor = PRIMARY_COLOR
@@ -131,6 +136,7 @@ extension SignInViewController {
         contentView.addSubview(loginField)
         contentView.addSubview(passwordField)
         contentView.addSubview(loginButton)
+        view.addSubview(webView)
         view.addSubview(appNameLabel)
         view.addSubview(contentView)
         
@@ -173,16 +179,11 @@ extension SignInViewController: UITextFieldDelegate {
 
 extension SignInViewController: OAuth2Delegate {
     func oauth2DidLoginSuccessed(_ accessToken: String) {
-        RBHUD.progressHidden()
-        UserDefaults.standard.setValue(loginField.text, forKey: "loginName")
-        UserDefaults.standard.synchronize()
+        log.info(["API Login successed", accessToken])
         
-        log.info(["Login successed", accessToken])
-        dismiss(animated: false, completion: {
-            self.delegate?.signInViewControllerDidAuthenticate(self)
-            self.onDidAuthenticate?(self)
-            NotificationCenter.default.post(name: Notification.Name.userSignin, object: nil)
-        })
+        var request = URLRequest(url: URL(string: ROOT_URL)!)
+        request.addValue("Bearer " + accessToken, forHTTPHeaderField: "Authorization")
+        webView.load(request)
     }
     
     func oauth2DidLoginFailed(_ error: NSError) {
@@ -200,5 +201,27 @@ extension SignInViewController: OAuth2Delegate {
         
         RBHUD.progressHidden()
         RBHUD.error(errorMessage)
+    }
+}
+
+extension SignInViewController: WKNavigationDelegate {
+    func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
+        log.info("webView login successed")
+        RBHUD.progressHidden()
+        UserDefaults.standard.setValue(loginField.text, forKey: "loginName")
+        UserDefaults.standard.synchronize()
+
+        dismiss(animated: false, completion: {
+            self.delegate?.signInViewControllerDidAuthenticate(self)
+            self.onDidAuthenticate?(self)
+            NotificationCenter.default.post(name: .userSignin, object: nil)
+        })
+    }
+
+    func webView(_ webView: WKWebView, didFail navigation: WKNavigation!, withError error: Error) {
+        log.error(["webView login failed", error])
+
+        RBHUD.progressHidden()
+        RBHUD.error((error as NSError).localizedDescription)
     }
 }

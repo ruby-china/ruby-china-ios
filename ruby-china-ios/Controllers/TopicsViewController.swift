@@ -132,7 +132,7 @@ extension TopicsViewController {
                 }
                 self.tableView.reloadData()
             } else {
-                var error: Error!
+                var error: RCError!
                 switch response.result {
                 case .success:
                     guard let statusCode = response.response?.statusCode else {
@@ -142,12 +142,12 @@ extension TopicsViewController {
                     case 200..<300:
                         return
                     case 404:
-                        error = Error.HTTPNotFoundError
+                        error = RCError.HTTPNotFoundError
                     default:
-                        error = Error(HTTPStatusCode: statusCode)
+                        error = RCError(HTTPStatusCode: statusCode)
                     }
                 case .failure(let err):
-                    error = Error(title: "网络连接错误", message: err.localizedDescription)
+                    error = RCError(title: "网络连接错误", message: err.localizedDescription)
                 }
                 
                 if let list = self.topicList , list.count > 0 {
@@ -175,7 +175,7 @@ extension TopicsViewController {
 
 extension TopicsViewController {
     
-    fileprivate func presentError(_ error: Error) {
+    fileprivate func presentError(_ error: RCError) {
         errorView?.removeFromSuperview()
         
         errorView = Bundle.main.loadNibNamed("ErrorView", owner: self, options: nil)!.first as? ErrorView

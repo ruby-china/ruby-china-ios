@@ -88,7 +88,7 @@ class TurbolinksSessionLib: NSObject {
     
     fileprivate let kMessageHandlerName = "NativeApp"
     
-    fileprivate lazy var webViewConfiguration: WKWebViewConfiguration = {
+    lazy var webViewConfiguration: WKWebViewConfiguration = {
         let configuration = WKWebViewConfiguration()
         configuration.userContentController.add(self, name: self.kMessageHandlerName)
         configuration.applicationNameForUserAgent = USER_AGENT
@@ -124,10 +124,7 @@ class TurbolinksSessionLib: NSObject {
                 return
             }
             
-            var urlString = ROOT_URL + newPath
-            if let accessToken = OAuth2.shared.accessToken {
-                urlString += "?access_token=" + accessToken
-            }
+            let urlString = (ROOT_URL as NSString).appendingPathComponent(newPath)
             topWebViewController.visitableURL = URL(string: urlString)!
             session.reload()
         } else {
@@ -250,7 +247,7 @@ extension TurbolinksSessionLib: SessionDelegate {
             case 404:
                 viewController.presentError(.HTTPNotFoundError)
             default:
-                viewController.presentError(Error(HTTPStatusCode: statusCode))
+                viewController.presentError(RCError(HTTPStatusCode: statusCode))
             }
         case .networkFailure:
             viewController.presentError(.NetworkError)
@@ -293,9 +290,12 @@ extension TurbolinksSessionLib: WKNavigationDelegate {
             return
         }
         
-        if url.scheme == "about" {
+        switch url.scheme {
+        case "about", "mailto":
             decisionHandler(.allow)
             return
+        default:
+            break
         }
         
         let ext = url.pathExtension.lowercased()

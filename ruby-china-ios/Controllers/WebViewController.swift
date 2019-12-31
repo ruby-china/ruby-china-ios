@@ -99,7 +99,7 @@ class WebViewController: VisitableViewController {
 
 extension WebViewController {
     
-    func presentError(_ error: Error) {
+    func presentError(_ error: RCError) {
         errorView.error = error
         view.addSubview(errorView)
         view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|[view]|", options: [], metrics: nil, views: ["view": errorView]))
@@ -174,16 +174,6 @@ extension WebViewController {
         urlComponents.scheme = rootURLComponents.scheme
         urlComponents.host = rootURLComponents.host
         urlComponents.port = rootURLComponents.port
-        
-        if let accessToken = OAuth2.shared.accessToken {
-            var queryItems = urlComponents.queryItems ?? [URLQueryItem]()
-            if var item = queryItems.filter({ $0.name == "access_token" }).first {
-                item.value = accessToken
-            } else {
-                queryItems.append(URLQueryItem(name: "access_token", value: accessToken))
-            }
-            urlComponents.queryItems = queryItems
-        }
         
         return urlComponents.url!
     }

@@ -5,7 +5,7 @@ class ErrorView: UIView {
     @IBOutlet var messageLabel: UILabel!
     @IBOutlet var retryButton: UIButton!
     
-    var error: Error? {
+    var error: RCError? {
         didSet {
             retryButton.tintColor = PRIMARY_COLOR
             retryButton.setTitle("retry".localized, for: .normal)
