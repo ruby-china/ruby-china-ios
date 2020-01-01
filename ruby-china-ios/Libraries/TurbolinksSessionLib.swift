@@ -166,14 +166,6 @@ class TurbolinksSessionLib: NSObject {
         UIApplication.currentViewController()?.present(navController, animated: true, completion: nil)
     }
     
-    fileprivate func presentProfileController(_ path: String) {
-        let controller = ProfileViewController(path: path)
-        controller.delegate = self
-        
-        let navController = ThemeNavigationController(rootViewController: controller)
-        UIApplication.currentViewController()?.present(navController, animated: true, completion: nil)
-    }
-    
     fileprivate func presentEditReplyController(_ path: String) {
         if (!OAuth2.shared.isLogined) {
             presentLoginController()

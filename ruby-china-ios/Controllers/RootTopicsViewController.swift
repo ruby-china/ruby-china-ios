@@ -105,6 +105,7 @@ extension RootTopicsViewController {
         }
         
         let nc = ScrollingNavigationController(rootViewController: vc)
+        nc.modalPresentationStyle = .fullScreen
         self.present(nc, animated: true, completion: nil)
     }
     
@@ -153,7 +154,7 @@ extension RootTopicsViewController {
     fileprivate func load(listType: TopicsService.ListType, nodeID: Int, offset: Int) {
         self.listType = listType
         self.nodeID = nodeID
-        self.tableView.mj_header.beginRefreshing()
+        self.tableView.mj_header?.beginRefreshing()
     }
     
     fileprivate func reloadTopics(_ filterData: TopicsFilterViewController.NodeData) {
@@ -176,7 +177,7 @@ extension RootTopicsViewController {
         disappearTime = nil
         
         if -time.timeIntervalSinceNow > (60 * 60 * 2.0) {
-            self.tableView.mj_header.beginRefreshing()
+            self.tableView.mj_header?.beginRefreshing()
         }
     }
 }

@@ -59,7 +59,6 @@
 		967684771D45D88300EC9BD9 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 967684761D45D88300EC9BD9 /* Constants.swift */; };
 		969E3CE21D448676004D7403 /* ErrorView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 969E3CE11D448676004D7403 /* ErrorView.xib */; };
 		96F9FD6B1D59A168004FD824 /* PopupWebViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96F9FD6A1D59A168004FD824 /* PopupWebViewController.swift */; };
-		96F9FD6D1D59A814004FD824 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96F9FD6C1D59A814004FD824 /* ProfileViewController.swift */; };
 		E8009FD8B1AB73F4FB8C336F /* Pods_ruby_china_ios.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3D8873230E620CCF5BBCEE42 /* Pods_ruby_china_ios.framework */; };
 /* End PBXBuildFile section */
 
@@ -122,7 +121,6 @@
 		967684761D45D88300EC9BD9 /* Constants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		969E3CE11D448676004D7403 /* ErrorView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ErrorView.xib; sourceTree = "<group>"; };
 		96F9FD6A1D59A168004FD824 /* PopupWebViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PopupWebViewController.swift; sourceTree = "<group>"; };
-		96F9FD6C1D59A814004FD824 /* ProfileViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
 		C095BB2F4502B2B10DA854CC /* Pods-ruby-china-ios.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ruby-china-ios.debug.xcconfig"; path = "Pods/Target Support Files/Pods-ruby-china-ios/Pods-ruby-china-ios.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -155,7 +153,6 @@
 				2432ACE01DCA3C1100F95C7D /* FavoriteTopicsViewController.swift */,
 				24742CE31D50FE2E00D16CA9 /* WebViewController.swift */,
 				96F9FD6A1D59A168004FD824 /* PopupWebViewController.swift */,
-				96F9FD6C1D59A814004FD824 /* ProfileViewController.swift */,
 				24F8FA9C1DEFE00800D5F57A /* SignUpViewController.swift */,
 				24E5B3FF1D6B2C82006515E3 /* ThemeNavigationController.swift */,
 				24887F341DBAFED300BB7EDC /* SearchViewController.swift */,
@@ -318,7 +315,7 @@
 					9670F18B1D4235D200128F8A = {
 						CreatedOnToolsVersion = 7.3.1;
 						DevelopmentTeam = A38T799N53;
-						LastSwiftMigration = 0800;
+						LastSwiftMigration = 1130;
 						SystemCapabilities = {
 							com.apple.Keychain = {
 								enabled = 1;
@@ -481,7 +478,6 @@
 				24B228F31DAA972500DEC44D /* String+Ext.swift in Sources */,
 				2432ACE11DCA3C1100F95C7D /* FavoriteTopicsViewController.swift in Sources */,
 				24742CF41D50FE2E00D16CA9 /* RootViewController.swift in Sources */,
-				96F9FD6D1D59A814004FD824 /* ProfileViewController.swift in Sources */,
 				24742CF61D50FE2E00D16CA9 /* SideMenuViewController.swift in Sources */,
 				24E5B4001D6B2C82006515E3 /* ThemeNavigationController.swift in Sources */,
 				24742CFE1D50FE2E00D16CA9 /* User.swift in Sources */,
@@ -646,6 +642,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "org.ruby-china.app";
 				PRODUCT_NAME = "Ruby China";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
 			};
 			name = Debug;
 		};
@@ -662,6 +659,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "org.ruby-china.app";
 				PRODUCT_NAME = "Ruby China";
+				SWIFT_VERSION = 5.0;
 			};
 			name = Release;
 		};

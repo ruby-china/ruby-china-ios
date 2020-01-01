@@ -15,7 +15,7 @@ class FavoriteTopicsViewController: TopicsViewController {
         super.viewDidLoad()
         
         title = "favorites".localized
-        tableView.mj_header.beginRefreshing()
+        tableView.mj_header?.beginRefreshing()
         
         NotificationCenter.default.addObserver(self, selector: #selector(favoriteChangedAction), name: NSNotification.Name.userFavoriteChanged, object: nil)
     }

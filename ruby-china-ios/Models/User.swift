@@ -76,12 +76,14 @@ struct User {
     }
 }
 
-extension User: Hashable, Equatable {
-    internal var hashValue: Int {
-        return "User#\(self.id)".hashValue
+extension User: Hashable {
+    internal func hash(into hasher: inout Hasher) {
+        hasher.combine(self.id)
     }
 }
 
-func ==(lhs: User, rhs: User) -> Bool {
-    return lhs.id == rhs.id
+extension User: Equatable {
+    static func == (lhs: Self, rhs: Self) -> Bool {
+        return lhs.id == rhs.id
+    }
 }

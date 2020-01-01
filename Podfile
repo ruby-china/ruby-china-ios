@@ -4,7 +4,7 @@ inhibit_all_warnings!
 target 'ruby-china-ios' do
   pod 'Router', :git => 'https://github.com/klaus01/Router.git'
   pod 'Turbolinks', :git => 'https://github.com/turbolinks/turbolinks-ios.git'
-  pod 'Heimdallr'
+  pod 'Heimdallr', :git => 'https://github.com/trivago/Heimdallr.swift'
   pod 'SideMenu'
   pod 'SwiftyJSON'
   pod 'Alamofire'

@@ -116,13 +116,13 @@ extension TopicsViewController {
             }
             self.isLoading = false
             
-            if (self.tableView.mj_header.isRefreshing) {
-                self.tableView.mj_header.endRefreshing()
+            if let header = self.tableView.mj_header, header.isRefreshing {
+                header.endRefreshing()
             }
-            if (self.tableView.mj_footer.isRefreshing) {
-                self.tableView.mj_footer.endRefreshing()
+            if let footer = self.tableView.mj_footer, footer.isRefreshing {
+                footer.endRefreshing()
             }
-            self.tableView.mj_footer.isHidden = result == nil ? true : (result!.count < limit)
+            self.tableView.mj_footer?.isHidden = result == nil ? true : (result!.count < limit)
             
             if let topics = result {
                 if self.topicList == nil || offset == 0 {
@@ -166,7 +166,7 @@ extension TopicsViewController {
 extension TopicsViewController {
     
     func errorViewRetryAction() {
-        tableView.mj_header.beginRefreshing()
+        tableView.mj_header?.beginRefreshing()
     }
     
 }

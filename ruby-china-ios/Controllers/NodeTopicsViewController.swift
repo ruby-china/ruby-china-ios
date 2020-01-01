@@ -22,7 +22,7 @@ class NodeTopicsViewController: TopicsViewController {
             self?.title = result == nil ? "title node".localized : result!.name;
         }
         
-        tableView.mj_header.beginRefreshing()
+        tableView.mj_header?.beginRefreshing()
     }
 
     override func loadTopics(offset: Int, limit: Int, callback: @escaping (APICallbackResponse, [Topic]?) -> ()) {
