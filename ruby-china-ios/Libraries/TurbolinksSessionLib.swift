@@ -283,8 +283,12 @@ extension TurbolinksSessionLib: WKNavigationDelegate {
         }
         
         switch url.scheme {
-        case "about", "mailto":
+        case "about":
             decisionHandler(.allow)
+            return
+        case "mailto":
+            decisionHandler(.cancel)
+            UIApplication.shared.openURL(url)
             return
         default:
             break
