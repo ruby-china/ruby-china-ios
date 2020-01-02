@@ -634,10 +634,12 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = "$(inherited)";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = "ruby-china-ios/Ruby China.entitlements";
+				CURRENT_PROJECT_VERSION = 70;
 				DEVELOPMENT_TEAM = A38T799N53;
 				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				INFOPLIST_FILE = "ruby-china-ios/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				MARKETING_VERSION = 2.2.3;
 				OTHER_SWIFT_FLAGS = "$(inherited) \"-D\" \"DEBUG\"";
 				PRODUCT_BUNDLE_IDENTIFIER = "org.ruby-china.app";
 				PRODUCT_NAME = "Ruby China";
@@ -653,10 +655,12 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = "$(inherited)";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = "ruby-china-ios/Ruby China.entitlements";
+				CURRENT_PROJECT_VERSION = 70;
 				DEVELOPMENT_TEAM = A38T799N53;
 				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				INFOPLIST_FILE = "ruby-china-ios/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				MARKETING_VERSION = 2.2.3;
 				PRODUCT_BUNDLE_IDENTIFIER = "org.ruby-china.app";
 				PRODUCT_NAME = "Ruby China";
 				SWIFT_VERSION = 5.0;
